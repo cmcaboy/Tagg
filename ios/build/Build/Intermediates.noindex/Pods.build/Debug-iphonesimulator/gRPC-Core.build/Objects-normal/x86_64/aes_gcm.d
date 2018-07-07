@@ -1,0 +1,46 @@
+dependencies: \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/gRPC-Core/src/core/tsi/alts/crypt/aes_gcm.cc \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Target\ Support\ Files/gRPC-Core/gRPC-Core-prefix.pch \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/support/port_platform.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/port_platform.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/gRPC-Core/src/core/tsi/alts/crypt/gsec.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/grpc.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/status.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/status.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/byte_buffer.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/byte_buffer.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/grpc_types.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/compression_types.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/gpr_types.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/slice.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/gpr_slice.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/slice_buffer.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/slice.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/support/sync.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/sync.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/sync_generic.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/atm.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/atm_gcc_atomic.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/sync_posix.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/connectivity_state.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/impl/codegen/propagation_bits.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/support/time.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/bio.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/base.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/is_boringssl.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/opensslconf.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/buffer.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/buf.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/err.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/ex_data.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/stack.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/type_check.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/thread.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/evp.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/aead.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/base64.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/cipher.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/digest.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/nid.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Public/BoringSSL/openssl/hmac.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/Headers/Private/gRPC-Core/grpc/support/alloc.h

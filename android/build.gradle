@@ -1,0 +1,44 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.google.gms:google-services:4.0.1'
+        //classpath 'com.google.gms:google-services:3.1.2'
+
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url "$rootDir/../node_modules/react-native/android"
+        }
+        maven {
+            url 'https://maven.google.com'
+        }
+        maven {
+            url "$rootDir/../node_modules/react-native-background-geolocation/android/libs"
+        }
+        maven {
+            url "$rootDir/../node_modules/react-native-background-fetch/android/libs"
+        }
+    }
+}
+
+ext {
+    compileSdkVersion   = 26
+    targetSdkVersion    = 26
+    buildToolsVersion   = "26.0.2"
+    supportLibVersion   = "27.1.1"
+    googlePlayServicesVersion = "15.0.1"
+}

@@ -1,0 +1,34 @@
+dependencies: \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/ReactNativePermissions.m \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/ReactNativePermissions.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridge.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeDelegate.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTJavaScriptLoader.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFrameUpdate.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTConvert.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAnimationType.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBorderStyle.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTPointerEvents.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTTextDecorationLineType.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTEventDispatcher.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/Permissions/RNPLocation.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/RCTConvert+RNPStatus.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/Permissions/RNPBluetooth.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/Permissions/RNPNotification.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/Permissions/RNPAudioVideo.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/Permissions/RNPEvent.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/Permissions/RNPPhoto.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/Permissions/RNPContacts.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/Permissions/RNPBackgroundRefresh.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/Permissions/RNPSpeechRecognition.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/Permissions/RNPMediaLibrary.h \
+  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-permissions/ios/Permissions/RNPMotion.h

@@ -1,0 +1,60 @@
+yarn run v1.7.0
+$ forever restart dist/index.js || forever start dist/index.js
+[32minfo[39m:    Forever restarted process(es):
+[90mdata[39m:    [37m   [39m [37muid[39m  [90mcommand[39m                                           [90mscript[39m        [37mforever[39m [37mpid[39m   [37mid[39m [35mlogfile[39m                         [33muptime[39m  
+[90mdata[39m:    [0] sGr8 [90m/home/cmcaboy/.nvm/versions/node/v8.11.2/bin/node[39m [90mdist/index.js[39m 14371   15587    [35m/home/cmcaboy/.forever/sGr8.log[39m [31mSTOPPED[39m 
+Done in 0.42s.
+yarn run v1.7.0
+$ forever restart dist/index.js || forever start dist/index.js
+[32minfo[39m:    Forever restarted process(es):
+[90mdata[39m:    [37m   [39m [37muid[39m  [90mcommand[39m                                           [90mscript[39m        [37mforever[39m [37mpid[39m   [37mid[39m [35mlogfile[39m                         [33muptime[39m  
+[90mdata[39m:    [0] sGr8 [90m/home/cmcaboy/.nvm/versions/node/v8.11.2/bin/node[39m [90mdist/index.js[39m 14371   15734    [35m/home/cmcaboy/.forever/sGr8.log[39m [31mSTOPPED[39m 
+Done in 0.41s.
+yarn run v1.7.0
+$ forever restart dist/index.js || forever start dist/index.js
+[32minfo[39m:    Forever restarted process(es):
+[90mdata[39m:    [37m   [39m [37muid[39m  [90mcommand[39m                                           [90mscript[39m        [37mforever[39m [37mpid[39m   [37mid[39m [35mlogfile[39m                         [33muptime[39m       
+[90mdata[39m:    [0] sGr8 [90m/home/cmcaboy/.nvm/versions/node/v8.11.2/bin/node[39m [90mdist/index.js[39m 14371   15877    [35m/home/cmcaboy/.forever/sGr8.log[39m [33m0:0:1:18.166[39m 
+Done in 0.41s.
+yarn run v1.7.0
+$ forever restart dist/index.js || forever start dist/index.js
+[33mwarn[39m:    --minUptime not set. Defaulting to: 1000ms
+[33mwarn[39m:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+[32minfo[39m:    Forever processing file: [90mdist/index.js[39m
+Done in 0.68s.
+yarn run v1.7.0
+$ forever restart dist/index.js || forever start dist/index.js
+[33mwarn[39m:    --minUptime not set. Defaulting to: 1000ms
+[33mwarn[39m:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+[32minfo[39m:    Forever processing file: [90mdist/index.js[39m
+Done in 1.42s.
+yarn run v1.7.0
+$ forever restart dist/index.js || forever start dist/index.js
+[33mwarn[39m:    --minUptime not set. Defaulting to: 1000ms
+[33mwarn[39m:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+[32minfo[39m:    Forever processing file: [90mdist/index.js[39m
+Done in 0.94s.
+yarn run v1.7.0
+$ forever restart dist/index.js || forever start dist/index.js
+[32minfo[39m:    Forever restarted process(es):
+[90mdata[39m:    [37m   [39m [37muid[39m  [90mcommand[39m       [90mscript[39m        [37mforever[39m [37mpid[39m  [37mid[39m [35mlogfile[39m                         [33muptime[39m  
+[90mdata[39m:    [0] 4MIN [90m/usr/bin/node[39m [90mdist/index.js[39m 8991    8998    [35m/home/cmcaboy/.forever/4MIN.log[39m [31mSTOPPED[39m 
+Done in 0.59s.
+yarn run v1.7.0
+$ forever start dist/index.js
+[33mwarn[39m:    --minUptime not set. Defaulting to: 1000ms
+[33mwarn[39m:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+[32minfo[39m:    Forever processing file: [90mdist/index.js[39m
+Done in 0.50s.
+yarn run v1.7.0
+$ forever start dist/index.js
+[33mwarn[39m:    --minUptime not set. Defaulting to: 1000ms
+[33mwarn[39m:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+[32minfo[39m:    Forever processing file: [90mdist/index.js[39m
+Done in 0.56s.
+yarn run v1.7.0
+$ forever start dist/index.js
+[33mwarn[39m:    --minUptime not set. Defaulting to: 1000ms
+[33mwarn[39m:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+[32minfo[39m:    Forever processing file: [90mdist/index.js[39m
+Done in 0.56s.

@@ -1,0 +1,37 @@
+{
+  "name": "functions",
+  "scripts": {
+    "lint": "tslint --project tsconfig.json",
+    "build": "tsc",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && firebase experimental:functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "apollo-server-express": "^1.3.6",
+    "body-parser": "^1.18.2",
+    "busboy": "^0.2.14",
+    "content-type": "^1.0.4",
+    "cors": "^2.8.4",
+    "expo-server-sdk": "^2.3.3",
+    "express": "^4.16.2",
+    "express-graphql": "^0.6.12",
+    "firebase-admin": "~5.8.1",
+    "firebase-functions": "^1.0.4",
+    "graphql": "^0.13.2",
+    "graphql-tools": "^3.0.2",
+    "moment": "^2.22.1",
+    "neo4j-driver": "^1.6.1",
+    "node-uuid": "^1.4.8",
+    "raw-body": "^2.3.2",
+    "subscriptions-transport-ws": "^0.9.9"
+  },
+  "devDependencies": {
+    "tslint": "^5.8.0",
+    "typescript": "^2.5.3"
+  },
+  "private": true
+}

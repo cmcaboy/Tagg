@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    //"lib": ["es6"],
+    "lib": ["es6", "dom", "esnext"],
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "outDir": "lib",
+    "sourceMap": true,
+    "target": "es6"
+  },
+  "compileOnSave": true,
+  "include": [
+    "src"
+  ]
+}
