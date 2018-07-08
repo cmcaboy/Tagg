@@ -18,7 +18,7 @@ import {
     Button,
     RefreshControl,
 } from 'react-native';
-import {Card,Spinner,MyAppText} from './common';
+import {Card,Spinner,MyAppText,WideCard} from './common';
 //import {Location,Notifications} from 'expo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Foundation from 'react-native-vector-icons/Foundation';
@@ -40,6 +40,8 @@ class Stagg extends Component {
         super(props);
 
         this.locationTracker;
+
+        this.state = {loading: false};
     }
 
     componentDidMount = () => this.trackLocation();
@@ -155,6 +157,8 @@ class Stagg extends Component {
     }
 
     render() {
+        console.log('this.props.queue: ',this.props.queue);
+        console.log('this.props.queue.length: ',this.props.queue.length);
         if (!this.props.queue.length) {
             return this.noProspects();
         }

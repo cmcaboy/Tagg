@@ -224,7 +224,8 @@ const resolvers = {
                         return {
                             ...record._fields[0].properties,
                             distanceApart: record._fields[1],
-                            order: record._fields[3]
+                            order: record._fields[3],
+                            profilePic: !!properties.pics? properties.pics[0]: null,
                         }   
                     })
                     if(list.length === 0) {
@@ -319,7 +320,8 @@ const resolvers = {
                         return {
                             ...record._fields[0].properties,
                             distanceApart: record._fields[1],
-                            order: record._fields[3]
+                            order: record._fields[3],
+                            profilePic: !!properties.pics? properties.pics[0]: null,
                         }   
                     })
                     if(list.length === 0) {

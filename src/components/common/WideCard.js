@@ -1,6 +1,6 @@
 import React from 'react';
 import {View,Image,Text,TouchableOpacity} from 'react-native';
-import {MyAppText} from './index.js';
+import {MyAppText, Button} from './index.js';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -16,7 +16,7 @@ class WideCard extends React.Component  {
     constructor(props) {
         super(props);
         this.state = {
-            isFollowing = this.props.isFollowing
+            isFollowing: this.props.isFollowing
         }
     }
 
@@ -44,6 +44,7 @@ class WideCard extends React.Component  {
         )
     }
     render() {
+        console.log('user: ',this.props.user);
         const {profilePic,school,work,name,distanceApart,age} = this.props.user;
         const {isFollowing,header} = this.props;
         return (
@@ -56,15 +57,15 @@ class WideCard extends React.Component  {
                     <View>
                         <MyAppText>{name} {!!age? `, ${age}`:null}</MyAppText>
                         {!!school && (
-                            <View style={subHeading}>
-                                <Ionicons name="md-school" size={14} color="black" style={iconText}/>
-                                <MyAppText style={schoolText}>{school}</MyAppText>
+                            <View style={styles.subHeading}>
+                                <Ionicons name="md-school" size={14} color="black" style={styles.iconText}/>
+                                <MyAppText style={styles.schoolText}>{school}</MyAppText>
                             </View>
                         )}
                         {!!work && (
-                            <View style={subHeading}>
-                                <MaterialIcons name="work" size={14} color="black" style={iconText}/>
-                                <MyAppText style={[schoolText,{paddingLeft:4}]}>{work}</MyAppText>
+                            <View style={styles.subHeading}>
+                                <MaterialIcons name="work" size={14} color="black" style={styles.iconText}/>
+                                <MyAppText style={[styles.schoolText,{paddingLeft:4}]}>{work}</MyAppText>
                             </View>
                         )} 
                     </View>
@@ -115,6 +116,15 @@ const styles = {
         opacity: 0.7,
         fontSize: 12
     },
+    iconText: {
+        fontSize: 14,
+        opacity: 0.7,
+      },
+      schoolText: {
+        fontSize: 14,
+        opacity: 0.7,
+        paddingLeft: 5
+      },
 };
 
 export {WideCard};

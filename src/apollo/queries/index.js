@@ -41,6 +41,7 @@ query user($id: String!) {
                 school
                 distanceApart
                 order
+                profilePic
             }
         }
     }
