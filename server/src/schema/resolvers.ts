@@ -225,7 +225,7 @@ const resolvers = {
                             ...record._fields[0].properties,
                             distanceApart: record._fields[1],
                             order: record._fields[3],
-                            profilePic: !!record._fields.properties.pics? record._fields.properties.pics[0]: null,
+                            profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
                         }   
                     })
                     if(list.length === 0) {
@@ -321,7 +321,7 @@ const resolvers = {
                             ...record._fields[0].properties,
                             distanceApart: record._fields[1],
                             order: record._fields[3],
-                            profilePic: !!record._fields.properties.pics? record._fields.properties.pics[0]: null,
+                            profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
                         }   
                     })
                     if(list.length === 0) {
