@@ -1,25 +1,24 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
-const Button = ({onPress, children, buttonStyleOverride, textStyleOverride}) => {
-    const {buttonStyle, textStyle} = styles;
+const Button = ({onPress, children, buttonStyle, textStyle, invertColors = false}) => {
+    const {buttonStyleDefault, textStyleDefault, invertedColorsButton, invertedColorsText} = styles;
     return (
-        <TouchableOpacity onPress={onPress} style={[buttonStyle,buttonStyleOverride]}>
-            <Text style={[textStyle,textStyleOverride]}>{children}</Text>
+        <TouchableOpacity onPress={onPress} style={[buttonStyleDefault,buttonStyle,invertColors && invertedColorsButton]}>
+            <Text style={[textStyleDefault,textStyle,invertColors && invertedColorsText]}>{children}</Text>
         </TouchableOpacity>
     );
 };
 
 const styles = {
-    textStyle: {
+    textStyleDefault: {
         alignSelf: 'center',
         color: '#007aff',
         fontSize: 16,
         fontWeight: '600',
-        paddingTop: 10,
-        paddingBottom: 10
+        padding: 6,
     },
-    buttonStyle: {
+    buttonStyleDefault: {
         flex: 1,
         alignSelf: 'stretch',
         backgroundColor: '#fff',
@@ -28,6 +27,12 @@ const styles = {
         borderColor: '#007aff',
         marginLeft: 5,
         marginRight: 5
+    },
+    invertedColorsButton: {
+        backgroundColor: '#007aff',
+    },
+    invertedColorsText: {
+        color: '#fff'
     }
 }
 

@@ -1,8 +1,9 @@
 import React from 'react';
-import {View,Image,Text,TouchableOpacity} from 'react-native';
+import {View,Image,Text,TouchableOpacity,Dimensions} from 'react-native';
 import {MyAppText, Button} from './index.js';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {PRIMARY_COLOR} from '../../variables';
 
 class WideCard extends React.Component  {
     // Takes the following props
@@ -29,53 +30,79 @@ class WideCard extends React.Component  {
         this.flipFollow();
         this.props.onUnfollow();
     }
+    onPress = () => this.props.navigation.navigate('UserProfile',{id:this.props.user.id,name:this.props.user.name})
     followButton = () => {
         if(this.state.isFollowing) {
             return (
                 <TouchableOpacity>
-                    <Button onPress={this.unfollow}>Following</Button>
+                    <Button invertColors={true} buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={this.unfollow}>Following</Button>
                 </TouchableOpacity>
             )
         }
         return (
             <TouchableOpacity>
-                <Button onPress={this.follow}>Follow</Button>
+                <Button buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={this.follow}>Follow</Button>
             </TouchableOpacity>
         )
     }
     render() {
         console.log('user: ',this.props.user);
         const {profilePic,school,work,name,distanceApart,age} = this.props.user;
-        const {isFollowing,header} = this.props;
+        const {isFollowing,footer} = this.props;
         return (
-            <View style={[styles.containerStyle]}>
-                <Image
-                    source={{uri:profilePic}}
-                    style={{height: 30,width: 30}}
-                />
-                <View style={styles.userInfo}>
-                    <View>
-                        <MyAppText>{name} {!!age? `, ${age}`:null}</MyAppText>
-                        {!!school && (
-                            <View style={styles.subHeading}>
-                                <Ionicons name="md-school" size={14} color="black" style={styles.iconText}/>
-                                <MyAppText style={styles.schoolText}>{school}</MyAppText>
+            <View style={styles.containerStyle}>
+                
+                <View style={styles.bodyStyle}>
+                <TouchableOpacity onPress={this.onPress}>
+                    <Image
+                        source={{uri:profilePic}}
+                        style={{height: 115,width: 115, borderRadius: 5}}
+                    />
+                </TouchableOpacity>
+                    <View style={styles.userInfo}>
+                        <View style={{justifyContent:'space-between'}}> 
+                            <View style={styles.description}>
+                            <TouchableOpacity onPress={this.onPress}>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <MyAppText style={styles.nameText}>{name} </MyAppText><MyAppText style={styles.ageText}>{!!age? `, ${age}`:null}</MyAppText>
+                                        </View>
+                                    </TouchableOpacity>
+                                {!!school && (
+                                    <View style={styles.subHeading}>
+                                        {/*<Ionicons name="md-school" size={14} color="black" style={styles.iconText}/>*/}
+                                        <MyAppText style={styles.schoolText}>{school}</MyAppText>
+                                    </View>
+                                )}
+                                {!!work && (
+                                    <View style={styles.subHeading}>
+                                        {/*<MaterialIcons name="work" size={14} color="black" style={styles.iconText}/>*/}
+                                        <MyAppText style={[styles.schoolText]}>{work}</MyAppText>
+                                    </View>
+                                )} 
                             </View>
-                        )}
-                        {!!work && (
-                            <View style={styles.subHeading}>
-                                <MaterialIcons name="work" size={14} color="black" style={styles.iconText}/>
-                                <MyAppText style={[styles.schoolText,{paddingLeft:4}]}>{work}</MyAppText>
-                            </View>
-                        )} 
+                            <View></View>
+                        </View>
+                        <View style={styles.rightCard}>
+                            <MyAppText style={styles.distance}>{Math.round(distanceApart)} 
+                                {Math.round(distanceApart) === 1 ? " mile away" : " miles away"}
+                            </MyAppText>
+                            {this.followButton()}
+                        </View>
                     </View>
-                    <View>
-                        <MyAppText style={styles.distance}>{Math.round(distanceApart)} 
-                          {Math.round(distanceApart) === 1 ? " mile away" : " miles away"}
-                        </MyAppText>
-                        {this.followButton()}
-                    </View>
+                    
                 </View>
+                {!!footer && (
+                    <View style={styles.footer}>
+                        <View
+                            style={{
+                                borderTopColor: 'gray',
+                                borderTopWidth: 1,
+                                opacity: 0.7,
+                            }}
+                        />
+                        <View style={styles.footerContent}><MyAppText style={{color: 'red'}}>{name} is looking for a date on <MyAppText style={{fontWeight: 'bold'}}>Sep 1 @ 7pm</MyAppText></MyAppText></View>
+                    </View>
+                )}
             </View>
         )
     }
@@ -96,35 +123,75 @@ const styles = {
         // elevation makes items appear to jump out
         elevation: 1,
         // margin operates just as they do in css
-        padding: 10,
         backgroundColor: '#FFFFFF',
-        marginBottom: 10,
+        //alignItems: 'center',
+        minHeight: 130,
+        margin: 5,
+    },
+    bodyStyle: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems: 'center',
-        minHeight: 200,
+        padding: 10,
+        
+    },
+    buttonStyle: {
+        borderRadius: 10,
+        //padding: 4,
+    },
+    buttonText: {
+        fontSize: 12,
+        fontWeight: '500',
+        padding: 4,
+    },
+    rightCard: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    description: {
+        
+        justifyContent: 'flex-start',
     },
     userInfo: {
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        //alignItems: 'center',
+        marginLeft: 8,
     },
     subHeading: {
         flexDirection: 'row',
     },
+    nameText: {
+        fontSize: 22,
+        color: '#000',
+        fontWeight: '400',
+    },
+    ageText: {
+        fontSize: 22,
+        //color: '#000',
+        fontWeight: '100',
+        opacity: 0.85,
+    },
     distance: {
-        opacity: 0.7,
-        fontSize: 12
+        opacity: 0.6,
+        fontSize: 11,
+        fontStyle: 'italic',
     },
     iconText: {
         fontSize: 14,
         opacity: 0.7,
       },
-      schoolText: {
-        fontSize: 14,
-        opacity: 0.7,
-        paddingLeft: 5
-      },
+    schoolText: {
+    fontSize: 13,
+    opacity: 0.7,
+    },
+    footer: {
+
+    },
+    footerContent: {
+        padding: 10,
+        color: 'red',
+    },
 };
 
 export {WideCard};

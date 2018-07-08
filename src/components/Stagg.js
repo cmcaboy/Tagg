@@ -164,19 +164,22 @@ class Stagg extends Component {
         }
         return (
             // I'll need to change this to a FlatList eventually
-            <ScrollView>
-                {this.props.queue.map(prospect => this.renderCard(prospect))}
-            </ScrollView>
+            <View style={styles.staggContainer}>
+                <ScrollView>
+                    {this.props.queue.map(prospect => this.renderCard(prospect))}
+                </ScrollView>
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
     staggContainer: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        backgroundColor: '#FFFFFF'
+        //flex: 1,
+        //justifyContent: 'flex-start',
+        //alignItems: 'center',
+        marginTop: 5,
+        marginBottom: 5,
     },
     cardStyle: {
         width: SCREEN_WIDTH,
