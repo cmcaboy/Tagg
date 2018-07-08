@@ -39,33 +39,7 @@ class Stagg extends Component {
     constructor(props) {
         super(props);
 
-        const position = new Animated.ValueXY();
-
-        const panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: () => true,
-            onPanResponderMove: (event,gesture) => {
-                position.setValue({x:gesture.dx,y:gesture.dy})
-            },
-            onMoveShouldSetPanResponder: (evt, gestureState) => {
-                //return true if user is swiping, return false if it's a single click
-                //console.log('gestureState: ',{...gestureState});
-                return !(Math.abs(gestureState.dx) <= 0.5 && Math.abs(gestureState.dy) <= 0.5) 
-            },
-            onPanResponderRelease: (event,gesture) => {
-                if(gesture.dx > SWIPE_THRESHOLD) {
-                    this.forceSwipe('right');
-                } else if (gesture.dx < -SWIPE_THRESHOLD) {
-                    this.forceSwipe('left');
-                } else {
-                    this.resetPosition();
-                }
-            }
-        })
-
         this.locationTracker;
-
-        this.position = position;
-        this.state = {panResponder, position,index:0, status: 'granted', loading: false}
     }
 
     componentDidMount = () => this.trackLocation();
@@ -76,23 +50,6 @@ class Stagg extends Component {
         UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
         // The next time the component changes, add a spring affect to it.
         LayoutAnimation.spring();
-    }
-
-
-    askPermission = async () => {
-        try {
-            const response = await Permissions.request('location');
-            //console.log('location request response: ',response);
-    
-            if(response === 'granted') {
-                return this.trackLocation();
-            }
-    
-            this.setState(() => ({status:response}));
-        } catch(e) {
-            console.warn('Error getting Location permission: ',e)
-            this.setState(() => ({status: 'undetermined'}))
-        }
     }
 
     onLocation = (location) => console.log(' - [event] location: ',location)
@@ -144,84 +101,20 @@ class Stagg extends Component {
           });
     }
 
-    forceSwipe(direction) {
-        // same as spring, but the animation plays out slightly differently. Timing is more linear while
-        // spring is more bouncy.
-        //console.log('force swipe ',direction);
-        Animated.timing(this.state.position, {
-            toValue: { x:direction==='right'?SCREEN_WIDTH+150:-SCREEN_WIDTH-150, y:0},
-            duration: SWIPE_OUT_DURATION
-            // the start function can accept a callback.
-        }).start(async () => this.onSwipeComplete(direction));
-    }
-    onSwipeComplete(direction) {
-        // data is the array the comes in through props. It is the list of cards
-        const {onSwipeLeft,onSwipeRight,queue} = this.props;
-        const item = queue[this.state.index]
-
-        direction === 'right' ? this.onSwipeRight(item.id) : this.onSwipeLeft(item.id);
-        // Reset the card's position to be in default onscreen position
-
-        // As an alternative, I could use shift on the array
-        this.setState((prev) => ({index:prev.index + 1}));
-
-        this.state.position.setValue({x:0,y:0});
-
-        console.log(`queue length: ${this.props.queue.length}, index position: ${this.state.index}`)
-
-        if((this.props.queue.length -1 - this.state.index) <= MIN_QUEUE_LENGTH ) {
-            this.props.fetchMoreQueue();
-        }
-        
-        //console.log('queue length: ', queue.length);
-        //console.log('index: ', (this.state.index + 1));
-        
-    } 
-    onSwipeRight = (id) => this.props.likeUser(id);
-    onSwipeLeft  = (id) => this.props.dislikeUser(id);
-    resetPosition() {
-        Animated.spring(this.state.position, {
-            toValue: {x:0, y:0}
-        }).start();
-    }
-    getCardStyle() {
-        const {position} = this.state;
-        // position contains references to x and y position at any given time
-        // interpolate allows us to translate one scale to another.
-        const rotate = position.x.interpolate({
-            // inputRange - the horizontal distance that the card has been dragged left or right.
-            // It is not good to hard code these values as the device size can be different.
-            // Instead, we should tie the deminsions to the width of the screen.
-            // We can also decrease the rotation by increasing the scale of inputRange or decreasing
-            // the outputRange
-            inputRange: [-SCREEN_WIDTH,0,SCREEN_WIDTH],
-            outputRange: ['-60deg','0deg','60deg']
-        });
-        return {
-            ...this.state.position.getLayout(),
-            transform: [{rotate}]
-        }
-    }
-
-    renderCard = (prospect,cacheImages) => {
+    renderCard = (prospect) => {
         // Instead of rendering a card, I could render an ImageBackground
         //console.log('stagg ancillary: ',prospect.ancillaryPics);
 
+        // I could wrap each card with a mutation component right here
         return (
-            
-            <StaggCard 
+            <WideCard 
                 key={prospect.id}
-                id={prospect.id}
-                pics={prospect.pics}
-                name={prospect.name}
-                work={prospect.work}
-                school={prospect.school}
-                description={prospect.description}
-                distanceApart={prospect.distanceApart}
-                cacheImages={!!cacheImages}
+                user={prospect}
                 navigation={this.props.navigation}
+                isFollowing={false}
+                onFollow={() => {}}
+                onUnfollow={() => {}}
             />
-            
         )
     }
 
@@ -240,8 +133,6 @@ class Stagg extends Component {
                     />
                 }
             >
-
-
                     <Ionicons 
                         name="md-sad"
                         size={100}
@@ -258,83 +149,21 @@ class Stagg extends Component {
                             Search Again
                         </Text>
                     </TouchableOpacity>
-
             </ScrollView>
             
         )
     }
 
-    renderGranted = () => {
-        //console.log('queue: ', this.props.queue);
-        if ((this.props.queue.length) <= this.state.index) {
+    render() {
+        if (!this.props.queue.length) {
             return this.noProspects();
         }
         return (
-            <Animated.View style={styles.staggContainer}>
-                {this.props.queue.map((prospect,i) => {
-                    //console.log('i',i);
-                    //console.log('state index: ',this.state.index);
-                    if(i < this.state.index) { return null }
-                    else if (i === this.state.index) {
-                        return (
-                            <Animated.View 
-                                key={prospect.id} 
-                                style={[this.getCardStyle(),styles.cardStyle]}
-                                {...this.state.panResponder.panHandlers}
-                            >
-                                {this.renderCard(prospect,true)}
-                            </Animated.View>
-                        )
-                    } else {
-                        return (
-                            <Animated.View
-                                key={prospect.id}
-                                style={[styles.cardStyle]}
-                                {...this.state.panResponder.panHandlers}
-                            >
-                                {this.renderCard(prospect)}
-                            </Animated.View>
-                        )
-                    }
-                }).reverse()}
-            </Animated.View>
-            )
-    }
-
-    render() {
-        //console.log('status: ',this.state.status);
-        if(this.state.status === 'granted'){
-            return this.renderGranted();
-        } else if(this.state.status === 'denied') {
-            return this.renderGranted();
-            // return (
-            //     <View style={styles.center}>
-            //         <Foundation name='alert' size={50}/>
-            //         <Text style={{textAlign:'center'}}>
-            //             You denied your location. You can fix this by visiting your settings and enabling location services for this app.
-            //         </Text>
-            //     </View>
-            // )
-        } else if (this.state.status === 'undetermined') {
-            return (
-                
-                <View style={styles.center}>
-                    <Foundation name='alert' size={50} />
-                    <Text style={{textAlign: 'center'}}>
-                        You need to enable location services for this app.
-                    </Text>
-                    <TouchableOpacity onPress={this.askPermission} style={styles.button}>
-                        <Text style={styles.buttonText}>
-                            Enable
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-            )
-        } else if (this.state.status === null) {
-            return (
-                <Spinner />
-            )
-        }
+            // I'll need to change this to a FlatList eventually
+            <ScrollView>
+                {this.props.queue.map(prospect => this.renderCard(prospect))}
+            </ScrollView>
+        )
     }
 }
 
