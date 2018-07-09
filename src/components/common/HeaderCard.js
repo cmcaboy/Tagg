@@ -1,14 +1,13 @@
 import React from 'react';
 import {View,StyleSheet} from 'react-native';
 
-const WideCard = (props) =>  {
+const HeaderCard = (props) =>  {
     return (
-        <View style={styles.containerStyle}>
+        <View style={[styles.containerStyle,props.styles]}>
             {props.children}
         </View>
     )
 }
-
 
 // We put the styles in the component
 const styles = StyleSheet.create({
@@ -27,9 +26,13 @@ const styles = StyleSheet.create({
         // margin operates just as they do in css
         backgroundColor: '#FFFFFF',
         //alignItems: 'center',
-        minHeight: 130,
-        margin: 5,
+        minHeight: 50,
+        //margin: 5,
+        marginTop: 5,
+        marginBottom: 5,
+        marginRight: 5,
+        marginLeft: 5,
     },  
 });
 
-export {WideCard};
+export {HeaderCard};

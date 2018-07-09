@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const Button = ({onPress, children, buttonStyle, textStyle, invertColors = false}) => {
     const {buttonStyleDefault, textStyleDefault, invertedColorsButton, invertedColorsText} = styles;
@@ -10,7 +10,7 @@ const Button = ({onPress, children, buttonStyle, textStyle, invertColors = false
     );
 };
 
-const styles = {
+const styles = StyleSheet.create({
     textStyleDefault: {
         alignSelf: 'center',
         color: '#007aff',
@@ -34,7 +34,7 @@ const styles = {
     invertedColorsText: {
         color: '#fff'
     }
-}
+});
 
 export {Button};
 

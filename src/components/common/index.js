@@ -3,6 +3,7 @@ export * from './Card';
 export * from './WideCard';
 export * from './CardSection';
 export * from './Header';
+export * from './HeaderCard';
 export * from './Spinner';
 export * from './Input';
 export * from './CirclePicture';

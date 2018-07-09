@@ -18,11 +18,12 @@ import {
     Button,
     RefreshControl,
 } from 'react-native';
-import {Card,Spinner,MyAppText,WideCard} from './common';
+import StaggCard from './StaggCard';
+import StaggHeader from './StaggHeader';
+import {Card,Spinner,MyAppText} from './common';
 //import {Location,Notifications} from 'expo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Foundation from 'react-native-vector-icons/Foundation';
-import StaggCard from './StaggCard';
 //import registerForNotifications from '../services/push_notifications';
 import gql from 'graphql-tag';
 import Permissions from 'react-native-permissions';
@@ -109,7 +110,7 @@ class Stagg extends Component {
 
         // I could wrap each card with a mutation component right here
         return (
-            <WideCard 
+            <StaggCard 
                 key={prospect.id}
                 user={prospect}
                 navigation={this.props.navigation}
@@ -165,6 +166,7 @@ class Stagg extends Component {
         return (
             // I'll need to change this to a FlatList eventually
             <View style={styles.staggContainer}>
+                <StaggHeader />
                 <ScrollView>
                     {this.props.queue.map(prospect => this.renderCard(prospect))}
                 </ScrollView>
@@ -180,6 +182,9 @@ const styles = StyleSheet.create({
         //alignItems: 'center',
         marginTop: 5,
         marginBottom: 5,
+    },
+    header: {
+        backgroundColor: 'black',
     },
     cardStyle: {
         width: SCREEN_WIDTH,

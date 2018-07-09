@@ -1,180 +1,177 @@
-import React,{Component} from 'react';
-import {
-    View, 
-    Text, 
-    TouchableOpacity, 
-    StyleSheet, 
-    Platform, 
-    Image,
-    Dimensions,
-    ScrollView,
-    TouchableWithoutFeedback,
-    ActivityIndicator,
-    ImageBackground,
-    LayoutAnimation,
-    NativeModules
-} from 'react-native';
+import React from 'react';
+import {View,Image,Text,TouchableOpacity,Dimensions,StyleSheet} from 'react-native';;
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import UserProfilePhotos from './UserProfilePhotos';
-import Collapsible from 'react-native-collapsible';
-import {TAB_BAR_HEIGHT, PRIMARY_COLOR} from '../variables';
-import {Card,MyAppText} from './common';
+import {PRIMARY_COLOR} from '../variables';
+import {WideCard,MyAppText,Button} from './common';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const CARD_MARGIN = 5;
-
-const { UIManager } = NativeModules;
-UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-
-class StaggCard extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isCollasped: true
+class StaggCard extends React.Component  {
+    // Takes the following props
+    // -------------------------
+    // onFollow() = function executed when user clicks follow button
+    // onUnfollow() = function executed when user clicks on following button
+    // user = object containing user information: name, age, distanceApart, school, work, profilePic
+    // navigation = react navigation object
+    // isFollowing = boolean that indicates whether the logged in user is following this user
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            isFollowing: this.props.isFollowing
+        }
     }
-  }
 
-  componentWillMount() {
-    //LayoutAnimation.spring();
-  }
-
-  toggleCollaspe = () => {
-    LayoutAnimation.spring();
-    this.setState((prev) => ({isCollasped: !prev.isCollasped}))
-  }
-
-  render() {
-    //console.log('stagg card');
-    const {pics,style,name,description,work,school,id} = this.props; 
-    const distanceApart = Math.round(this.props.distanceApart);
-
-    const picHeight = SCREEN_HEIGHT - (CARD_MARGIN*2 + TAB_BAR_HEIGHT +25);
-    const picWidth = SCREEN_WIDTH - CARD_MARGIN*2;
-
-    //console.log('pics: ',pics);
-
-    return (
-            <View style={{margin:CARD_MARGIN}}>
-    {/*
-                <UserProfilePhotos 
-                  pics={pics} 
-                  picHeight={SCREEN_HEIGHT - (CARD_MARGIN*2 + TAB_BAR_HEIGHT +25)} 
-                  picWidth={SCREEN_WIDTH - CARD_MARGIN*2}
-                  customPicStyle={styles.customPicStyle} 
-                  borderRadius={7}
-                  cacheImages={this.props.cacheImages}
-                >
-    */}
-                <ImageBackground 
-                  key={pics[0]} 
-                  source={{uri:pics[0]}} 
-                  style={[
-                    {height:picHeight},
-                    {width:picWidth},
-                    styles.customPicStyle,
-                    {borderRadius:7}
-                    ]}
-                  imageStyle={{borderRadius: 7}}
-                >
-                <TouchableWithoutFeedback 
-                  onPress={() => this.props.navigation.navigate('UserProfile',{id:id,name:name})}
-                >
-                    <View style={[{width:picWidth},{height:picHeight}]}></View>
-                </TouchableWithoutFeedback>   
-                  <TouchableWithoutFeedback 
-                    onPress={() => this.toggleCollaspe()}
-                    
-                  >
-                    <View style={styles.expandable}>
-                    <View>
-                      <View style={styles.firstLine}>
-                        <MyAppText style={styles.nameText}>{name}</MyAppText> 
-                        <MyAppText style={styles.distance}>{Math.round(distanceApart)} 
-                          {Math.round(distanceApart) === 1 ? " mile away" : " miles away"}
-                        </MyAppText>
-                      </View>
-                      {!!school && (
-                        <View style={styles.subHeading}>
-                            <Ionicons name="md-school" size={14} color="black" style={styles.schoolText}/>
-                            <MyAppText style={[styles.schoolText,{paddingLeft:4}]}>{school}</MyAppText>
-                        </View>
-                      )}
-                      {!!work && (
-                        <View style={styles.subHeading}>
-                            <MaterialIcons name="work" size={14} color="black" style={styles.schoolText}/>
-                            <MyAppText style={[styles.schoolText,{paddingLeft:4}]}>{work}</MyAppText>
-                        </View>
-                      )}
-                     
-                    </View>
-                      <View style={{display: this.state.isCollasped?'none':'flex'}}>
-                        <View style={styles.horizontalLine}/>
-                          <MyAppText>{description}</MyAppText> 
-                      </View>
-                    </View>
-                  </TouchableWithoutFeedback>
-                 </ImageBackground>
-             {/* </UserProfilePhotos> */} 
-            
-          </View>
+    flipFollow = () => this.setState(prev => ({isFollowing:!prev.isFollowing}))
+    follow = () => {
+        this.flipFollow();
+        this.props.onFollow();
+    }
+    unfollow = () => {
+        this.flipFollow();
+        this.props.onUnfollow();
+    }
+    onPress = () => this.props.navigation.navigate('UserProfile',{id:this.props.user.id,name:this.props.user.name})
+    followButton = () => {
+        if(this.state.isFollowing) {
+            return (
+                <TouchableOpacity>
+                    <Button invertColors={true} buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={this.unfollow}>Following</Button>
+                </TouchableOpacity>
+            )
+        }
+        return (
+            <TouchableOpacity>
+                <Button buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={this.follow}>Follow</Button>
+            </TouchableOpacity>
         )
-      }
+    }
+    render() {
+        console.log('user: ',this.props.user);
+        const {profilePic,school,work,name,distanceApart,age} = this.props.user;
+        const {isFollowing,footer} = this.props;
+        return (
+            <WideCard>
+                <View style={styles.bodyStyle}>
+                <TouchableOpacity onPress={this.onPress}>
+                    <Image
+                        source={{uri:profilePic}}
+                        style={{height: 115,width: 115, borderRadius: 5}}
+                    />
+                </TouchableOpacity>
+                    <View style={styles.userInfo}>
+                        <View style={{justifyContent:'space-between'}}> 
+                            <View style={styles.description}>
+                            <TouchableOpacity onPress={this.onPress}>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <MyAppText style={styles.nameText}>{name} </MyAppText><MyAppText style={styles.ageText}>{!!age? `, ${age}`:null}</MyAppText>
+                                        </View>
+                                    </TouchableOpacity>
+                                {!!school && (
+                                    <View style={styles.subHeading}>
+                                        {/*<Ionicons name="md-school" size={14} color="black" style={styles.iconText}/>*/}
+                                        <MyAppText style={styles.schoolText}>{school}</MyAppText>
+                                    </View>
+                                )}
+                                {!!work && (
+                                    <View style={styles.subHeading}>
+                                        {/*<MaterialIcons name="work" size={14} color="black" style={styles.iconText}/>*/}
+                                        <MyAppText style={[styles.schoolText]}>{work}</MyAppText>
+                                    </View>
+                                )} 
+                            </View>
+                            <View></View>
+                        </View>
+                        <View style={styles.rightCard}>
+                            <MyAppText style={styles.distance}>{Math.round(distanceApart)} 
+                                {Math.round(distanceApart) === 1 ? " mile away" : " miles away"}
+                            </MyAppText>
+                            {this.followButton()}
+                        </View>
+                    </View>
+                </View>
+                {!!footer && (
+                    <View style={styles.footer}>
+                        <View
+                            style={{
+                                borderTopColor: 'gray',
+                                borderTopWidth: 1,
+                                opacity: 0.7,
+                            }}
+                        />
+                        <View style={styles.footerContent}><MyAppText style={{color: 'red'}}>{name} is looking for a date on <MyAppText style={{fontWeight: 'bold'}}>Sep 1 @ 7pm</MyAppText></MyAppText></View>
+                    </View>
+                )}
+            </WideCard>
+        )
+    }
 }
 
+// We put the styles in the component
 const styles = StyleSheet.create({
-  customPicStyle: {
-    borderWidth: 0,
-    borderRadius: 7,
-    borderColor: '#ddd',
-    borderBottomWidth: 0,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2},
-    shadowOpacity: 0.5,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-  expandable: {
-    position:'absolute',
-    bottom: CARD_MARGIN,
-    marginHorizontal: CARD_MARGIN,
-    backgroundColor: '#fff',
-    width: SCREEN_WIDTH - CARD_MARGIN*2*2, 
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
-    zIndex: 5,
-    elevation: 4
-  },
-  subHeading: {
-    flexDirection: 'row',
-    marginTop: 2
-  },
-  schoolText: {
-    fontSize: 12,
-    opacity: 0.7
-  },
-  nameText: {
-    fontSize: 24,
-    color: PRIMARY_COLOR
-},
-  horizontalLine: {
-    borderBottomColor:'black',
-    borderBottomWidth:1,
-    paddingVertical: 10,
-    marginBottom: 10,
-    opacity: 0.7
-  },
-  firstLine: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  distance: {
+    bodyStyle: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        padding: 10,
+        
+    },
+    buttonStyle: {
+        borderRadius: 10,
+        //padding: 4,
+    },
+    buttonText: {
+        fontSize: 12,
+        fontWeight: '500',
+        padding: 4,
+    },
+    rightCard: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    description: {
+        
+        justifyContent: 'flex-start',
+    },
+    userInfo: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        //alignItems: 'center',
+        marginLeft: 8,
+    },
+    subHeading: {
+        flexDirection: 'row',
+    },
+    nameText: {
+        fontSize: 22,
+        color: '#000',
+        fontWeight: '400',
+    },
+    ageText: {
+        fontSize: 22,
+        //color: '#000',
+        fontWeight: '100',
+        opacity: 0.85,
+    },
+    distance: {
+        opacity: 0.6,
+        fontSize: 11,
+        fontStyle: 'italic',
+    },
+    iconText: {
+        fontSize: 14,
+        opacity: 0.7,
+      },
+    schoolText: {
+    fontSize: 13,
     opacity: 0.7,
-    fontSize: 12
-  }
-})
+    },
+    footer: {
+
+    },
+    footerContent: {
+        padding: 10,
+        color: 'red',
+    },
+});
 
 export default StaggCard;
