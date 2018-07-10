@@ -20,6 +20,8 @@ import {
 } from 'react-native';
 import StaggCard from './StaggCard';
 import StaggHeader from './StaggHeader';
+import NewDateModal from './NewDateModal';
+import FilterModal from './FilterModal';
 import {Card,Spinner,MyAppText} from './common';
 //import {Location,Notifications} from 'expo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -42,8 +44,18 @@ class Stagg extends Component {
 
         this.locationTracker;
 
-        this.state = {loading: false};
-    }
+        this.state = {
+            loading: false,
+            newDateModal: false,
+            filterModal: false,
+        };
+    };
+
+    flipNewDateModal = () => this.setState(prev => ({newDateModal:!prev.newDateModal}));
+    flipFilterModal  = () => {
+        console.log('flip FilterModal status: ',this.state.filterModal);
+        this.setState(prev => ({filterModal:!prev.filterModal}))
+    };
 
     componentDidMount = () => this.trackLocation();
     
@@ -166,7 +178,18 @@ class Stagg extends Component {
         return (
             // I'll need to change this to a FlatList eventually
             <View style={styles.staggContainer}>
-                <StaggHeader />
+                <StaggHeader 
+                    flipNewDateModal={this.flipNewDateModal}
+                    flipFilterModal={this.flipFilterModal}
+                />
+                <NewDateModal 
+                    isVisible={this.state.newDateModal} 
+                    flipNewDateModal={this.flipNewDateModal}
+                />
+                <FilterModal 
+                    isVisible={this.state.filterModal} 
+                    flipFilterModal={this.flipFilterModal}
+                />
                 <ScrollView>
                     {this.props.queue.map(prospect => this.renderCard(prospect))}
                 </ScrollView>

@@ -17,34 +17,31 @@ class StaggHeader extends React.Component  {
     constructor(props) {
         super(props);
         this.state = {
-            modal: this.props.modal,
+            newDateModal: false,
             filter: false,
         }
     }
 
-    viewDates = () => console.log('view dates');
-    newDate   = () => console.log('new date');
+    viewDates  = () => console.log('view dates');
+    newDate    = () => this.props.flipNewDateModal();
+    showFitler = () => this.props.flipFilterModal();
 
-    showFitler = () => this.setState(prev => ({filter: !prev.filter}))
     render() {
         console.log('user: ',this.props.user);
         const {distance,age,totalBids,totalDates} = this.props;
         return (
             <HeaderCard styles={styles.overRide}>
                 <View style={styles.header}>
-            
                     <TouchableOpacity onPress={this.newDate} style={{flex: 1}}>
-                        <View style={[styles.headerItem,{borderRightWidth:1,borderRightColor:'black'}]}>
+                        <View style={[styles.headerItem]}>
                             <MyAppText style={styles.textStyle}>New Date</MyAppText>
                         </View>
                     </TouchableOpacity>
-                  
                     <TouchableOpacity onPress={this.showFilter}  style={{flex: 1}}>
                         <View style={[styles.headerItem,{borderLeftWidth:1,borderLeftColor:'black'}]}>
                             <MyAppText style={styles.textStyle}>Filter</MyAppText>
                         </View>
                     </TouchableOpacity>
-                   
                 </View>
             </HeaderCard>
         )
@@ -68,6 +65,8 @@ const styles = StyleSheet.create({
     },
     overRide: {
         backgroundColor: '#FFF',
+        borderWidth: 1,
+        borderColor: '#000',
     },
     headerItem: {
         justifyContent: 'space-around',
