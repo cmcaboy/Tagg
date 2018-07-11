@@ -51,6 +51,7 @@ class EditSettingsContainer extends Component {
                         maxAgePreference={maxAgePreference}
                         distance={distance}
                         sendNotifications={sendNotifications}
+                        hideNotifications={this.props.hideNotifications}
                     />
                 }}
             </Query>

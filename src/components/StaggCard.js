@@ -46,7 +46,7 @@ class StaggCard extends React.Component  {
         )
     }
     render() {
-        console.log('user: ',this.props.user);
+        //console.log('user: ',this.props.user);
         const {profilePic,school,work,name,distanceApart,age} = this.props.user;
         const {isFollowing,footer} = this.props;
         return (

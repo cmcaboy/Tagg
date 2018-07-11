@@ -1,6 +1,8 @@
 import React from 'react';
-import {View,Image,Text,TouchableOpacity,Dimensions,StyleSheet,Modal} from 'react-native';
+import {View,Image,Text,TouchableOpacity,Dimensions,StyleSheet} from 'react-native';
+import Modal from 'react-native-modal';
 import {MyAppText, Button,HeaderCard} from './common';
+import EditSettingsContainer from './EditSettingsContainer';
 import {PRIMARY_COLOR} from '../variables';
 
 class FilterModal extends React.Component  {
@@ -28,15 +30,12 @@ class FilterModal extends React.Component  {
         console.log('FilterModal isVisible: ',this.props.isVisible);
         return (
             <Modal
-                visible={this.props.isVisible}
+                isVisible={this.props.isVisible}
                 transparent={false}
-                animationType='slide'
-                onDismiss={this.resetState}
-                onRequestClose={this.resetState}
             >
-                <View>
-                    <MyAppText>This is the FilterModal</MyAppText>
-                    <Button onPress={this.resetState}>
+                <View style={{flex: 1}}>
+                    <EditSettingsContainer hideNotifications={true} />
+                    <Button buttonStyle={styles.buttonStyle} onPress={this.resetState}>
                         Dismiss
                     </Button>
                 </View>
@@ -44,5 +43,12 @@ class FilterModal extends React.Component  {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    buttonStyle: {
+        height: 100,
+        width: 200,
+    }
+})
 
 export default FilterModal;

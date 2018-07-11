@@ -40,7 +40,7 @@ class EditSettings extends Component {
 
   render() {
     const {ageValues,distance,sendNotifications} = this.state;
-    const {id} = this.props;
+    const {id,showNotifications} = this.props;
   return (
     <View style={styles.containerStyle}>
     <Card>
@@ -102,24 +102,26 @@ class EditSettings extends Component {
         </View>    
       </View>
     </Card>
-    <Card>
-      <View style={styles.titleSlider}>
-        <Text>Send Notifications</Text> 
-        <Mutation mutation={SET_NOTIFICATIONS}>
-          {(updateSendNotifications, { data }) => {
-            return (
-              <Switch 
-                onValueChange={() => {
-                  const newSendNotifications = !sendNotifications;
-                  updateSendNotifications({variables: {id, sendNotifications: newSendNotifications}})
-                  this.notificationChange();
-                }}
-                value={sendNotifications}
-              />
-            )}}
-        </Mutation>
-      </View>
-    </Card>
+    {!this.props.hideNotifications && 
+      <Card>
+        <View style={styles.titleSlider}>
+          <Text>Send Notifications</Text> 
+          <Mutation mutation={SET_NOTIFICATIONS}>
+            {(updateSendNotifications, { data }) => {
+              return (
+                <Switch 
+                  onValueChange={() => {
+                    const newSendNotifications = !sendNotifications;
+                    updateSendNotifications({variables: {id, sendNotifications: newSendNotifications}})
+                    this.notificationChange();
+                  }}
+                  value={sendNotifications}
+                />
+              )}}
+          </Mutation>
+        </View>
+      </Card>
+    }
   </View>
   )}
 }

@@ -1,5 +1,6 @@
 import React from 'react';
-import {View,Image,Text,TouchableOpacity,Dimensions,StyleSheet,Modal} from 'react-native';
+import {View,Image,Text,TouchableOpacity,Dimensions,StyleSheet} from 'react-native';
+import Modal from 'react-native-modal';
 import {MyAppText, Button,HeaderCard} from './common';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -29,15 +30,12 @@ class NewDateModal extends React.Component  {
         console.log('NewDateModal isVisible: ',this.props.isVisible);
         return (
             <Modal
-                visible={this.props.isVisible}
+                isVisible={this.props.isVisible}
                 transparent={false}
-                animationType='slide'
-                onDismiss={this.resetState}
-                onRequestClose={this.resetState}
             >
                 <View style={{flex: 1}}>
                     <MyAppText>This is the NewDateModal</MyAppText>
-                    <Button onPress={this.resetState}>
+                    <Button buttonStyle={styles.buttonStyle} onPress={this.resetState}>
                         Dismiss
                     </Button>
                 </View>
@@ -45,5 +43,12 @@ class NewDateModal extends React.Component  {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    buttonStyle: {
+        height: 100,
+        width: 300,
+    }
+})
 
 export default NewDateModal;

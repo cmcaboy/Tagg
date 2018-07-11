@@ -170,8 +170,8 @@ class Stagg extends Component {
     }
 
     render() {
-        console.log('this.props.queue: ',this.props.queue);
-        console.log('this.props.queue.length: ',this.props.queue.length);
+        //console.log('this.props.queue: ',this.props.queue);
+        //console.log('this.props.queue.length: ',this.props.queue.length);
         if (!this.props.queue.length) {
             return this.noProspects();
         }
