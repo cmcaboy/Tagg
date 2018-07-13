@@ -22,7 +22,7 @@ functions/node_modules
 functions/lib
 
 #Variables
-#src/variables/sensitive.js
+src/variables/sensitive.js
 
 #ios/build
 android/app/build

@@ -200,7 +200,7 @@ class Stagg extends Component {
 
 const styles = StyleSheet.create({
     staggContainer: {
-        //flex: 1,
+        flex: 1,
         //justifyContent: 'flex-start',
         //alignItems: 'center',
         marginTop: 5,

@@ -1,7 +1,12 @@
 import React from 'react';
-import {View,Image,Text,TouchableOpacity,Dimensions,StyleSheet} from 'react-native';
-import Modal from 'react-native-modal';
-import {MyAppText,Button,HeaderCard,HorizontalLine,MyTitleText} from './common';
+import {View,Image,Text,TouchableOpacity,Dimensions,StyleSheet,TextInput} from 'react-native';
+import {MyAppText,
+    Button,
+    HeaderCard,
+    HorizontalLine,
+    MyTitleText,
+    MyAppModal
+} from './common';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DatePicker from 'react-native-datepicker';
@@ -31,42 +36,53 @@ class NewDateModal extends React.Component  {
         console.log('NewDateModal isVisible: ',this.props.isVisible);
         console.log('this.state newDateModal: ',this.state)
         return (
-            <Modal
-                isVisible={this.props.isVisible}
-                transparent={false}
-            >
-                <View style={styles.container}>
-                    <MyTitleText>New Date Request</MyTitleText>
-                    <HorizontalLine />
-                    <DatePicker 
-                        mode="datetime"
-                        date={this.state.datetime}
-                        confirmBtnText="Confirm"
-                        cancelBtnText="Cancel"
-                        onDateChange={(datetime) => {this.setState({datetime})}}
-                    />
-                    <View style={styles.buttonView}>
-                        <Button  onPress={this.resetState}>
-                            Submit
-                        </Button>
-                        <Button  onPress={this.resetState}>
-                            Cancel
-                        </Button>
-                    </View>
+            <MyAppModal isVisible={this.props.isVisible} close={this.resetState}>
+                <MyTitleText>New Date Request</MyTitleText>
+                <HorizontalLine />
+                <DatePicker 
+                    style={styles.dateInput}
+                    mode="datetime"
+                    date={this.state.datetime}
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    onDateChange={(datetime) => {this.setState({datetime})}}
+                    placeholder="When will this date take place?"
+                />
+                <TextInput 
+                    style={styles.textInput}
+                    multiline={true}
+                    placeholder="What kind of date are you looking for?"
+                    onChangeText={(text) => this.setState({description:text})}
+                    value={this.state.description}
+                    maxLength={300}
+                />
+                <View style={styles.buttonView}>
+                    <Button  onPress={this.resetState}>
+                        Submit
+                    </Button>
+                    <Button  onPress={this.resetState}>
+                        Cancel
+                    </Button>
                 </View>
-            </Modal>
+            </MyAppModal>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1, 
-        backgroundColor: 'white',
-        padding: 25,
+    textInput: {
         borderWidth: 1,
-        borderRadius: 8,
-
+        height: 75,
+        width: 250,
+        marginBottom: 10,
+        borderRadius: 2,
+    },
+    dateInput: {
+        width: 250,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderRadius: 2,
+        textAlign: 'left',
     },
     buttonStyle: {
         height: 50,

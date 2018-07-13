@@ -1,7 +1,6 @@
 import React from 'react';
 import {View,Image,Text,TouchableOpacity,Dimensions,StyleSheet} from 'react-native';
-import Modal from 'react-native-modal';
-import {MyAppText, Button,HeaderCard} from './common';
+import {MyAppText, Button,HeaderCard, MyAppModal} from './common';
 import EditSettingsContainer from './EditSettingsContainer';
 import {PRIMARY_COLOR} from '../variables';
 
@@ -29,17 +28,15 @@ class FilterModal extends React.Component  {
     render() {
         console.log('FilterModal isVisible: ',this.props.isVisible);
         return (
-            <Modal
+            <MyAppModal
                 isVisible={this.props.isVisible}
-                transparent={false}
+                close={this.props.resetState}
             >
-                <View style={{flex: 1, backgroundColor: 'white'}}>
-                    <EditSettingsContainer hideNotifications={true} />
-                    <Button onPress={this.resetState}>
-                        Dismiss
-                    </Button>
-                </View>
-            </Modal>
+                <EditSettingsContainer hideNotifications={true} />
+                <Button onPress={this.resetState}>
+                    Dismiss
+                </Button>
+            </MyAppModal>
         )
     }
 }
