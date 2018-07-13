@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
         padding: 6,
     },
     buttonStyleDefault: {
-        flex: 1,
         alignSelf: 'stretch',
         backgroundColor: '#fff',
         borderRadius: 5,

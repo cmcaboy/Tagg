@@ -12,3 +12,5 @@ export * from './Prospect';
 export * from './CondInput';
 export * from './ActionIcon';
 export * from './MyAppText';
+export * from './MyTitleText';
+export * from './HorizontalLine';

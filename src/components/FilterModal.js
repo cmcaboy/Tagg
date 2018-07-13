@@ -33,9 +33,9 @@ class FilterModal extends React.Component  {
                 isVisible={this.props.isVisible}
                 transparent={false}
             >
-                <View style={{flex: 1}}>
+                <View style={{flex: 1, backgroundColor: 'white'}}>
                     <EditSettingsContainer hideNotifications={true} />
-                    <Button buttonStyle={styles.buttonStyle} onPress={this.resetState}>
+                    <Button onPress={this.resetState}>
                         Dismiss
                     </Button>
                 </View>

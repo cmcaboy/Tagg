@@ -30,3 +30,5 @@ functions/lib
 
 android/local.properties
 #android/.idea
+
+server/etc
