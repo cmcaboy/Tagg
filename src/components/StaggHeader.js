@@ -23,14 +23,8 @@ class StaggHeader extends React.Component  {
     }
 
     viewDates  = () => console.log('view dates');
-    newDate    = () => {
-        console.log('newDate press');
-        this.props.flipNewDateModal();
-    }
-    showFilter = () => {
-        console.log('showFilter click');
-        this.props.flipFilterModal();
-    }
+    newDate    = () => this.props.flipNewDateModal();
+    showFilter = () => this.props.flipFilterModal();
 
     render() {
         console.log('user: ',this.props.user);

@@ -1,6 +1,6 @@
+import {NEO4J_USERNAME,NEO4J_PASSWORD,NEO4J_URL} from '../../../src/variables/sensitive';
 const neo4j = require('neo4j-driver').v1;
 
-const driver = neo4j.driver('bolt://hobby-khdldknhlicigbkenklmdfal.dbs.graphenedb.com:24786',neo4j.auth.basic("test", "b.IZSvc43dQbXa.KMsEveqgk5PS1spd"));
-//const session = driver.session();
+const driver = neo4j.driver(NEO4J_URL,neo4j.auth.basic(NEO4J_USERNAME, NEO4J_PASSWORD));
 
 export {driver};
