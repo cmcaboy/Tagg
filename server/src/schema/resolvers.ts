@@ -276,7 +276,7 @@ const resolvers = {
                     .run(`MATCH(a:User{id:'${parentValue.id}'})-[r:FOLLOWING]->(b:User) RETURN b`)
                         .then(result => result.records)
                         .then(records => {
-                            const list = records.map(record => record._fields[0].properties))
+                            const list = records.map(record => record._fields[0].properties)
                             return {
                                 list,
                                 cursor: null,
