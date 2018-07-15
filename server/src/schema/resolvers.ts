@@ -272,11 +272,14 @@ const resolvers = {
     User: {
         following: (parentValue, _) => {
             // Need to factor in pagination
+            console.log('following parentValue: ',parentValue);
                 return session
                     .run(`MATCH(a:User{id:'${parentValue.id}'})-[r:FOLLOWING]->(b:User) RETURN b`)
                         .then(result => result.records)
                         .then(records => {
+                            console.log('following records: ',records);
                             const list = records.map(record => record._fields[0].properties)
+                            console.log('following list: ',list);
                             return {
                                 list,
                                 cursor: null,
