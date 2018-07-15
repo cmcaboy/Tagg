@@ -532,17 +532,6 @@ const resolvers = {
         }
     },
     Mutation: {
-        dislikeUser: (_,args) => {
-            const query = `MATCH (a:User {id:'${args.id}'}), (b:User {id:'${args.dislikedId}'}) MERGE (a)-[r:DISLIKES]->(b) return a,b,r`;
-
-            return session
-                .run(query)
-                .then(result => {
-                    return result.records
-                })
-                .then(records => records[0]._fields[0].properties)
-                .catch(e => console.log('disLikeUser error: ',e))
-        },
         editUser: (_, args) => {
             const isBoolean = val => 'boolean' === typeof val;
             console.log('args: ',args)
@@ -578,46 +567,6 @@ const resolvers = {
                 })
                 .then(records => records[0]._fields[0].properties)
                 .catch(e => console.log('editUser error: ',e))
-        },
-        likeUser: async (_,args) => {
-            // ------------------------------------------------------------------------------------------
-            // likeUser does take slightly longer to process because we are checking to see if the like
-            // is mutual. If it is, we create a new matchId in Firestore and assign both likes a matchId.
-            // ------------------------------------------------------------------------------------------
-
-            // command to create like
-            const mutate = `MATCH (a:User {id:'${args.id}'}), (b:User {id:'${args.likedId}'}) MERGE (a)-[r:LIKES]->(b) return b`;
-            // query to check to see if like is mutual
-            const query = `MATCH (a:User {id:'${args.id}'})<-[r:LIKES]-(b:User {id:'${args.likedId}'}) return b`;
-
-            // Create the like in neo4j
-            const result = await session.run(mutate);
-            const user = result.records[0]._fields[0].properties;
-
-            // Check Match
-            const resultMatch = await session.run(query);
-            
-            // Check to see if the like is mutual
-            if(resultMatch.records.length > 0) {
-                // If the like is mutual, assign the relationship a matchId and create a match entry
-                // in Firestore
-
-                const matchId = uuid.v1();
-
-                try {
-                    await session.run(`MATCH (a:User {id:'${args.id}'})<-[r:LIKES]-(b:User {id:'${args.likedId}'}) SET r.matchId='${matchId}'`)
-                    await session.run(`MATCH (a:User {id:'${args.id}'})-[r:LIKES]->(b:User {id:'${args.likedId}'}) SET r.matchId='${matchId}'`)
-                    await db.collection(`matches`).doc(`${matchId}`).set({
-                        user1: args.id,
-                        user2: args.likedId,
-                        matchTime: new Date()
-                    })
-                } catch(e) {
-                    console.log('likeUser error creating match: ',e)
-                }
-                return { id: args.likedId, user, match: true, matchId}
-            }
-            return { id: args.likedId, user, match: false}
         },
         newUser: (_,args) => {
             console.log('args: ',args)
