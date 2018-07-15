@@ -285,11 +285,13 @@ const resolvers = {
                         .catch(e => console.log('following error: ',e))
         },
         bids: (parentValue, _) => {
+            console.log('bids parentValue: ',parentValue);
             // Need to factor in pagination
             return session
                     .run(`MATCH(a:User{id:'${parentValue.id}'})-[:BID]->(d:Date)<-[:CREATE]-(b:User) RETURN b,d`)
                         .then(result => result.records)
                         .then(records => {
+                            console.log('bids records: ',records);
                             const list = records.map(record => ({
                                 id: record._fields[1].dateId,
                                 datetimeOfBid: record._fields[1].datetimeOfBid,
@@ -297,6 +299,7 @@ const resolvers = {
                                 bidPlace: record._fields[1].bidPlace,
                                 user: record._fields[0].properties,
                             }))
+                            console.log('bids list: ',list);
                             return {
                                 list,
                                 cursor: null,
