@@ -246,8 +246,8 @@ const resolvers = {
                             distanceApart: record._fields[1],
                             order: record._fields[3],
                             profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
-                            isFollowing,
-                            hasDateOpen, 
+                            isFollowing: record._fields[4],
+                            hasDateOpen: record._fields[5], 
                         }   
                     })
                     if(list.length === 0) {
@@ -412,8 +412,8 @@ const resolvers = {
                             distanceApart: record._fields[1],
                             order: record._fields[3],
                             profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
-                            isFollowing,
-                            hasDateOpen, 
+                            isFollowing: record._fields[4],
+                            hasDateOpen: record._fields[5], 
                         }   
                     })
                     if(list.length === 0) {
@@ -695,7 +695,7 @@ const resolvers = {
         bid: (_,args) => {
             const datetimeOfBid = Date.now();
             let query = `MATCH (a:User {id:'${args.id}'}), (d:Date {id:'${args.dateId}'}) 
-                MERGE (a)-[r:BID{datetimeOfBid: '${datetimeOfBid}',` +
+                MERGE (a)-[r:BID{datetimeOfBid: '${datetimeOfBid}',`;
                 !!args.bidPlace && (query = query+ `bidPlace:'${args.bidPlace}',`) +
                 !!args.bidDescription && (query = query+ `bidDescription:'${args.bidDescription}',`);
             query = query.slice(-1) === ','? query.slice(0,-1) : query;
@@ -732,7 +732,7 @@ const resolvers = {
             const creationTime = Date.now();
             const dateId = uuid();
 
-            let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}'` + 
+            let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}'`; 
                 !!args.datetimeOfDate && (query = query+ `datetimeOfDate:'${args.datetimeOfDate}',`) +
                 !!args.description && (query = query+ `description:'${args.description}',`);
             
@@ -750,9 +750,11 @@ const resolvers = {
         chooseWinner: async (_,args) => {
             const {id, winnerId, dateId} = args;
 
+            let date;
+
             // Update neo4j values
             try {
-                const date = await session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:${args.dateId}})<-[r:BID]-(b:User{b:${winnerId}}) 
+                date = await session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:${args.dateId}})<-[r:BID]-(b:User{b:${winnerId}}) 
                     SET r.winner=TRUE,
                     d.winner='${winnerId}',
                     d.open=FALSE
