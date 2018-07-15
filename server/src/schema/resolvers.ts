@@ -9,6 +9,7 @@ const session = driver.session();
 const NEW_MESSAGE = 'NEW_MESSAGE';
 const MESSAGE_PAGE_LENGTH = 20;
 const QUEUE_PAGE_LENGTH = 5;
+const MATCH_PAGE_LENGTH = 5;
 
 const resolvers = {
     Subscription: {
@@ -121,6 +122,23 @@ const resolvers = {
                 cursor,
             }
         },
+        otherBids: (_, args) => {
+            // dateID should be passed in as the id
+            // Need to factor in pagination
+            return session
+                    .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) RETURN b,d,r`)
+                        .then(result => result.records)
+                        .then(records => records.map(record => ({
+                            id: args.id,
+                            datetimeOfBid: record._fields[2].datetimeOfBid,
+                            bidDescription: record._fields[2].bidDescription,
+                            bidPlace: record._fields[2].bidPlace,
+                            user: record._fields[0].properties,
+
+                        })
+                        ))
+                        .catch(e => console.log('bid error: ',e))
+        },
         moreMessages: async (_,args) => {
             console.log('in moreMessages');
             console.log('args: ',args);
@@ -202,15 +220,17 @@ const resolvers = {
             }
 
             return session.run(`MATCH(a:User{id:'${args.id}'}),(b:User) 
-                WITH a,b, size((b)<-[:LIKES]-()) as num_likes,
+                WITH a,b, size((b)<-[:FOLLOWING]-()) as num_likes,
                 ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:LIKES]-())+1)))) as order,
-                distance(point(a),point(b))*0.000621371 as distanceApart
-                where NOT (a)-[:LIKES|DISLIKES]->(b) AND 
+                distance(point(a),point(b))*0.000621371 as distanceApart,
+                exists((a)-[:FOLLOWING]->(b)) as isFollowing,
+                exists((b)-[:CREATE]->(:Date{open:TRUE})) as HasDateOpen
+                where
                 NOT b.id=a.id AND
                 NOT b.gender=a.gender AND
                 distanceApart < a.distance AND
                 order > ${args.cursor}
-                RETURN b, distanceApart, num_likes, order
+                RETURN b, distanceApart, num_likes, order, isFollowing, hasDateOpen
                 ORDER BY order
                 LIMIT ${QUEUE_PAGE_LENGTH}`)
                 .then(result => result.records)
@@ -226,6 +246,8 @@ const resolvers = {
                             distanceApart: record._fields[1],
                             order: record._fields[3],
                             profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
+                            isFollowing,
+                            hasDateOpen, 
                         }   
                     })
                     if(list.length === 0) {
@@ -248,50 +270,114 @@ const resolvers = {
         }
     },
     User: {
-        likes: (parentValue, args) => {
+        following: (parentValue, _) => {
+            // Need to factor in pagination
                 return session
-                    .run(`MATCH(a:User{id:'${parentValue.id}'})-[r:LIKES]->(b:User) RETURN b`)
+                    .run(`MATCH(a:User{id:'${parentValue.id}'})-[r:FOLLOWING]->(b:User) RETURN b`)
                         .then(result => result.records)
-                        .then(records => records.map(record => record._fields[0].properties))
-                        .catch(e => console.log('likes error: ',e))
+                        .then(records => {
+                            const list = records.map(record => record._fields[0].properties))
+                            return {
+                                list,
+                                cursor: null,
+                            }
+                        })
+                        .catch(e => console.log('following error: ',e))
         },
-        dislikes: (parentValue, args) => {
+        bids: (parentValue, _) => {
+            // Need to factor in pagination
             return session
-                    .run(`MATCH(a:User{id:'${parentValue.id}'})-[r:DISLIKES]->(b:User) RETURN b`)
+                    .run(`MATCH(a:User{id:'${parentValue.id}'})-[:BID]->(d:Date)<-[:CREATE]-(b:User) RETURN b,d`)
                         .then(result => result.records)
-                        .then(records => records.map(record => record._fields[0].properties))
-                        .catch(e => console.log('dislikes error: ',e))
+                        .then(records => {
+                            const list = records.map(record => ({
+                                id: record._fields[1].dateId,
+                                datetimeOfBid: record._fields[1].datetimeOfBid,
+                                bidDescription: record._fields[1].bidDescription,
+                                bidPlace: record._fields[1].bidPlace,
+                                user: record._fields[0].properties,
+                            }))
+                            return {
+                                list,
+                                cursor: null,
+                            }
+                        })
+                        .catch(e => console.log('bid error: ',e))
         },
-        matches: (parentValue, args) => {
-            let query = '';
-            console.log('args: ',args);
-            console.log('pareventValue.id: ',parentValue.id);
-                if(args.otherId) {
-                    query = `MATCH(a:User{id:'${parentValue.id}'})-[r:LIKES]->(b:User{id:'${args.otherId}'}) where r.matchId IS NOT NULL RETURN b,r.matchId`;
-                } else {
-                    query = `MATCH(a:User{id:'${parentValue.id}'})-[r:LIKES]->(b:User) where r.matchId IS NOT NULL RETURN b,r.matchId`;
-                }
-                console.log('query: ',query);
+        dateRequests: (parentValue, _) => {
+            // Need to factor in pagination
+            return session
+                .run(`MATCH(a:User{id:'${parentValue.id}'})-[:CREATE]->(d:Date) 
+                    WITH a, d, size((d)<-[:BID]-(:User)) as num_bids
+                    RETURN a,d,num_bids`)
+                    .then(result => result.records)
+                    .then(records => {
+                        const list = records.forEach(record => ({
+                            id: record._fields[1].properties.id,
+                            creator: record._fields[0].properties,
+                            creationTime: record._fields[1].properties.creationTime,
+                            datetimeOfDate: record._fields[1].properties.datetimeOfDate,
+                            description: record._fields[1].properties.description,
+                            num_bids: record._fields[2],
+                            open: record._fields[1].properties.open,
+                        }))
+
+                        return {
+                            list,
+                            cursor: null,
+                        }
+                    })
+                    .catch(e => console.log('dateRequest error: ',e))
+        },
+        matchedDates: (parentValue, _) => {
+            // A potential performance improvement would be to query Firestore directly
+            // to get our list of matches
+            // These matches should be sorted as well.
+
+            //console.log('args: ',args);
+            console.log('pareventValue.id: ',parentValue.id);               
+            const query = `MATCH(a:User{id:'${parentValue.id}'}),(b:User),(d:Date)
+                WHERE (a)-[:CREATE]->(d)<-[:BID{winner:TRUE}]-(b) OR
+                (a)-[:BID{winner:TRUE}]->(d)<-[:CREATE]-(b)
+                RETURN b,d.id`;               
+            
+            console.log('query: ',query);
                 return session
                     .run(query)
                         .then(result => {
                             return result.records
                         })
                         .then(records => {
-                            return records.map(record => {
+                            const list = records.map(record => {
                                 // console.log('record: ',record)
                                 // console.log('record field 1: ',record._fields[0])
                                 return {
-                                user: record._fields[0].properties,
-                                matchId: record._fields[1]
+                                    user: record._fields[0].properties,
+                                    matchId: record._fields[1], // Call it dateId?
                                 }
                             })
+                            if(list.length === 0) {
+                                // If the list is empty, return a blank list and a null cursor
+                                return {
+                                    list: [],
+                                    cursor: null,
+                                }
+                            }
+        
+                            //const newCursor = list.length >= MATCH_PAGE_LENGTH ? list[list.length - 1].order : null;
+                            const newCursor = null;
+
+                            return {
+                                list,
+                                cursor: newCursor,
+                            }
+
                         })
                         .catch(e => console.log('matches error: ',e))
         },
-        queue: (parentValue, args) => {
+        queue: (parentValue, _) => {
             console.log('parentValue: ',parentValue);
-            console.log('args: ',args);
+            //console.log('args: ',args);
             // for pagination, I would like to sort by the following algorithm
             // order = [1/(# of likes)] x (distanceApart) x (time on platform)
             // Priority is given by the lowest order number.
@@ -299,14 +385,16 @@ const resolvers = {
             // The query is sorted by smallest value first by default.
             // 
             return session.run(`MATCH(a:User{id:'${parentValue.id}'}),(b:User)
-                WITH a,b, size((b)<-[:LIKES]-()) as num_likes,
+                WITH a,b, size((b)<-[:FOLLOWING]-()) as num_likes,
                 distance(point(a),point(b))*0.000621371 as distanceApart,
-                ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:LIKES]-())+1)))) as order
-                where NOT (a)-[:LIKES|DISLIKES]->(b) AND 
+                ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
+                exists((a)-[:FOLLOWING]->(b)) as isFollowing,
+                exists((b)-[:CREATE]->(:Date{open:TRUE})) as HasDateOpen
+                where 
                 NOT b.id=a.id AND
                 NOT b.gender=a.gender AND
                 distanceApart < a.distance
-                RETURN b, distanceApart, num_likes, order
+                RETURN b, distanceApart, num_likes, order, isFollowing, hasDateOpen
                 ORDER BY order
                 LIMIT ${QUEUE_PAGE_LENGTH}`)
                 .then(result => result.records)
@@ -317,11 +405,15 @@ const resolvers = {
                         console.log('field 1: ',record._fields[1]);
                         console.log('field 2: ',record._fields[2]);
                         console.log('field 3: ',record._fields[3]);
+                        console.log('field 4: ',record._fields[4]);
+                        console.log('field 5: ',record._fields[5]);
                         return {
                             ...record._fields[0].properties,
                             distanceApart: record._fields[1],
                             order: record._fields[3],
                             profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
+                            isFollowing,
+                            hasDateOpen, 
                         }   
                     })
                     if(list.length === 0) {
@@ -341,6 +433,27 @@ const resolvers = {
                 }
                 )
                 .catch(e => console.log('queue error: ',e))
+        }
+    },
+    DateItem: {
+        bids: (parentValue, _) => {
+            return session
+                .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${parentValue.id}'}) RETURN b,d,r`)
+                    .then(result => result.records)
+                    .then(records => {
+                        const list = records.map(record => ({
+                        id: args.id,
+                        datetimeOfBid: record._fields[2].datetimeOfBid,
+                        bidDescription: record._fields[2].bidDescription,
+                        bidPlace: record._fields[2].bidPlace,
+                        user: record._fields[0].properties,
+                    }))
+                        return {
+                            list,
+                            cursor: null,
+                        }
+                    })
+                    .catch(e => console.log('bid error: ',e))
         }
     },
     Match: {
@@ -578,7 +691,90 @@ const resolvers = {
 
             return message;
 
-        }
+        },
+        bid: (_,args) => {
+            const datetimeOfBid = Date.now();
+            let query = `MATCH (a:User {id:'${args.id}'}), (d:Date {id:'${args.dateId}'}) 
+                MERGE (a)-[r:BID{datetimeOfBid: '${datetimeOfBid}',` +
+                !!args.bidPlace && (query = query+ `bidPlace:'${args.bidPlace}',`) +
+                !!args.bidDescription && (query = query+ `bidDescription:'${args.bidDescription}',`);
+            query = query.slice(-1) === ','? query.slice(0,-1) : query;
+                
+            query = query + `}]->(d) RETURN a,d,r`;
+
+            console.log('query in bid: ',query);
+
+            return session
+                .run(query)
+                .then(result => {
+                    return result.records[0]
+                })
+                .then(record => ({
+                    id: record._fields[1].id,
+                    datetimeOfBid: record._fields[2].dateTimeOfBid,
+                    bidDescription: record._fields[2].bidDescription,
+                    bidPlace: record._fields[2].bidPlace,
+                }))
+                .catch(e => console.log('bid mutation error: ',e))
+        },
+        follow: (_,args) => {
+            const query = `MATCH (a:User {id:'${args.id}'}), (b:User {id:'${args.followId}'}) MERGE (a)-[r:FOLLOW}]->(b) RETURN b`;
+
+            return session
+                .run(query)
+                .then(result => {
+                    return result.records[0]
+                })
+                .then(record => record.fields[0].properties)
+                .catch(e => console.log('follow mutation error: ',e))
+        },
+        createDate: (_,args) => {
+            const creationTime = Date.now();
+            const dateId = uuid();
+
+            let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}'` + 
+                !!args.datetimeOfDate && (query = query+ `datetimeOfDate:'${args.datetimeOfDate}',`) +
+                !!args.description && (query = query+ `description:'${args.description}',`);
+            
+            query = query.slice(-1) === ','? query.slice(0,-1) : query;    
+            query = query + `}) RETURN d`;
+
+            console.log('query in bid: ',query);
+
+            return session
+                .run(query)
+                .then(result => result.records[0])
+                .then(record => record._fields[0].properties)
+                .catch(e => console.log('bid mutation error: ',e))
+        },
+        chooseWinner: async (_,args) => {
+            const {id, winnerId, dateId} = args;
+
+            // Update neo4j values
+            try {
+                const date = await session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:${args.dateId}})<-[r:BID]-(b:User{b:${winnerId}}) 
+                    SET r.winner=TRUE,
+                    d.winner='${winnerId}',
+                    d.open=FALSE
+                    return d`)
+            } catch(e) {
+                console.error('Error updating winner value on bid ${}');
+                return null;
+            }
+
+            // Create new document in Firestore for match
+            try {
+                await db.collection(`matches`).doc(dateId).set({
+                    user1: id,
+                    user2: winnerId,
+                    matchTime: Date.now(),
+                })
+            } catch(e) {
+                console.error(`chooseWinner error updating Firestore: ${e}`);
+                return null;
+            }
+            return date.result.records[0].fields[0].properties;
+        },
     }
 }
 

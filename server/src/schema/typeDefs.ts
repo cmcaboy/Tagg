@@ -22,17 +22,57 @@ const typeDefs = `
         registerDateTime: String
         pics: [String]
         profilePic: String
-        likes: [User]
-        dislikes: [User]
-        matches(otherId: String): [Match]
+        hasDateOpen: Boolean
+        isFollowing: Boolean
+        following: Following
+        bids: DateBidList
+        dateRequests: DateList
         queue: Queue
+        matchedDates: [Match]
+    }
+
+    type DateList {
+        list: [DateItem]
+        cursor: Float
+    }
+
+    type DateBidList {
+        list: [DateBid]
+        cursor: Float
+    }
+
+    type Following {
+        list: [User]
+        cursor: Float
     }
 
     type Queue {
         list: [User]
         cursor: Float
     }
-    
+
+    type DateItem {
+        id: String
+        creator: User
+        winner: User
+        creationTime: String
+        datetimeOfDate: String
+        description: String
+        bids: DateBidList
+        num_bids: Int
+        open: Boolean
+        creationTimeEpoch: Float
+        order: Float
+    }
+
+    type DateBid {
+        id: String
+        datetimeOfBid: String
+        bidDescription: String
+        bidPlace: String
+        user: User
+    }
+
     type MessageItem {
         name: String
         avatar: String
@@ -49,13 +89,6 @@ const typeDefs = `
         list: [MessageItem]!
     }
 
-    type LikeUser {
-        id: String
-        user: User
-        match: Boolean
-        matchId: String
-    }
-
     type Match {
         matchId: String
         user: User
@@ -66,8 +99,12 @@ const typeDefs = `
     type Query {
         user(id: String!): User
         messages(id: String!): Message
+        date(id: String!): DateItem
         moreMessages(id: String!, cursor: String!): Message
         moreQueue(id: String!, cursor: Float!): Queue
+        moreDates(id: String!, cursor: Float!): DateList
+        moreDateBids(id:String!, cursor: Float!): DateBidList
+        moreFollowing(id: String!, cursor: Float!): Following
     }
 
     type Subscription {
@@ -133,6 +170,10 @@ const typeDefs = `
             uid: String
             _id: String
         ): MessageItem
+        follow (id: String!, followId: String!): User
+        bid(id: String!, dateId: String!, bidPlace: String, bidDescription: String): DateBid
+        createDate(id: String!, datetimeOfDate: String, description: String): DateItem
+        chooseWinner(id: String!, winnerId: String!, dateId: String!): DateItem
     }
 
     schema {
