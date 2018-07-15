@@ -442,9 +442,9 @@ const resolvers = {
                     .then(result => result.records)
                     .then(records => {
                         const list = records.map(record => ({
-                        id: args.id,
-                        datetimeOfBid: record._fields[2].datetimeOfBid,
-                        bidDescription: record._fields[2].bidDescription,
+                        id: record._fields[1].properties.id,
+                        datetimeOfBid: record._fields[2].properties.datetimeOfBid,
+                        bidDescription: record._fields[2].properties.bidDescription,
                         bidPlace: record._fields[2].bidPlace,
                         user: record._fields[0].properties,
                     }))
