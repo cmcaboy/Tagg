@@ -112,14 +112,6 @@ const typeDefs = `
     }
 
     type Mutation {
-        dislikeUser (
-            id: String! 
-            dislikedId: String!
-        ): User
-        likeUser (
-            id: String!
-            likedId: String!
-        ): LikeUser
         editUser (
             id: String!
             name: String
