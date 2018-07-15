@@ -224,7 +224,7 @@ const resolvers = {
                 ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:LIKES]-())+1)))) as order,
                 distance(point(a),point(b))*0.000621371 as distanceApart,
                 exists((a)-[:FOLLOWING]->(b)) as isFollowing,
-                exists((b)-[:CREATE]->(:Date{open:TRUE})) as HasDateOpen
+                exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
                 where
                 NOT b.id=a.id AND
                 NOT b.gender=a.gender AND
@@ -392,7 +392,7 @@ const resolvers = {
                 distance(point(a),point(b))*0.000621371 as distanceApart,
                 ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
                 exists((a)-[:FOLLOWING]->(b)) as isFollowing,
-                exists((b)-[:CREATE]->(:Date{open:TRUE})) as HasDateOpen
+                exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
                 where 
                 NOT b.id=a.id AND
                 NOT b.gender=a.gender AND
