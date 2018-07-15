@@ -100,6 +100,7 @@ const typeDefs = `
         user(id: String!): User
         messages(id: String!): Message
         date(id: String!): DateItem
+        otherBids(id: String!): DateBidList
         moreMessages(id: String!, cursor: String!): Message
         moreQueue(id: String!, cursor: Float!): Queue
         moreDates(id: String!, cursor: Float!): DateList
