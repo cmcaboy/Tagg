@@ -372,6 +372,7 @@ const resolvers = {
         
                             //const newCursor = list.length >= MATCH_PAGE_LENGTH ? list[list.length - 1].order : null;
                             const newCursor = null;
+                            console.log('matchedDates list: ',list);
 
                             return {
                                 list,

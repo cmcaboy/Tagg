@@ -28,7 +28,7 @@ const typeDefs = `
         bids: DateBidList
         dateRequests: DateList
         queue: Queue
-        matchedDates: [Match]
+        matchedDates: MatchList
     }
 
     type DateList {
@@ -48,6 +48,11 @@ const typeDefs = `
 
     type Queue {
         list: [User]
+        cursor: Float
+    }
+
+    type MatchList {
+        list: [Match]
         cursor: Float
     }
 
