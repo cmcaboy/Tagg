@@ -666,7 +666,7 @@ const resolvers = {
                 !!args.bidDescription && (query = query+ `bidDescription:"${args.bidDescription}",`);
             query = query.slice(-1) === ','? query.slice(0,-1) : query;
                 
-            query = query + `}]->(d) RETURN a,d,r`;
+            query = query + `}]->(d) RETURN d.id,r`;
 
             console.log('query in bid: ',query);
 
@@ -676,10 +676,8 @@ const resolvers = {
                     return result.records[0]
                 })
                 .then(record => ({
-                    id: record._fields[1].id,
-                    datetimeOfBid: record._fields[2].dateTimeOfBid,
-                    bidDescription: record._fields[2].bidDescription,
-                    bidPlace: record._fields[2].bidPlace,
+                    id: record._fields[0],
+                    ...record._fields[1].properties,
                 }))
                 .catch(e => console.log('bid mutation error: ',e))
         },
