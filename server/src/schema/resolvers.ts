@@ -662,8 +662,8 @@ const resolvers = {
             const datetimeOfBid = Date.now();
             let query = `MATCH (a:User {id:'${args.id}'}), (d:Date {id:'${args.dateId}'}) 
                 MERGE (a)-[r:BID{datetimeOfBid: '${datetimeOfBid}',`;
-                !!args.bidPlace && (query = query+ `bidPlace:'${args.bidPlace}',`) +
-                !!args.bidDescription && (query = query+ `bidDescription:'${args.bidDescription}',`);
+                !!args.bidPlace && (query = query+ `bidPlace:"${args.bidPlace}",`) +
+                !!args.bidDescription && (query = query+ `bidDescription:"${args.bidDescription}",`);
             query = query.slice(-1) === ','? query.slice(0,-1) : query;
                 
             query = query + `}]->(d) RETURN a,d,r`;
