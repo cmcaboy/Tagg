@@ -715,7 +715,7 @@ const resolvers = {
             // the date creator and the new date node.
             try {
                 rawDate = await session.run(query);
-                date = rawDate.result.records[0]._fields[0].properties;
+                date = rawDate.records[0]._fields[0].properties;
             } catch(e){
                 console.log('bid mutation error d node: ',e);
                 return null;
