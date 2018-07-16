@@ -274,11 +274,17 @@ const resolvers = {
             // Need to factor in pagination
             console.log('following parentValue: ',parentValue);
                 return session
-                    .run(`MATCH(a:User{id:'${parentValue.id}'})-[r:FOLLOWING]->(b:User) RETURN b`)
+                    .run(`MATCH(a:User{id:'${parentValue.id}'})-[r:FOLLOWING]->(b:User) 
+                        WITH a,r,b, 
+                        exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
+                        RETURN b,hasDateOpen`)
                         .then(result => result.records)
                         .then(records => {
                             console.log('following records: ',records);
-                            const list = records.map(record => record._fields[0].properties)
+                            const list = records.map(record => ({
+                                ...record._fields[0].properties,
+                                hasDateOpen: record._fields[1]
+                            }))
                             console.log('following list: ',list);
                             return {
                                 list,
@@ -295,8 +301,10 @@ const resolvers = {
                         .then(result => result.records)
                         .then(records => {
                             console.log('bids records: ',records);
+                            console.log('bids d[0]: ',records[1]._fields[0]);
+                            console.log('bids d[1]: ',records[1]._fields[1]);
                             const list = records.map(record => ({
-                                id: record._fields[1].dateId,
+                                id: record._fields[1].id,
                                 datetimeOfBid: record._fields[1].datetimeOfBid,
                                 bidDescription: record._fields[1].bidDescription,
                                 bidPlace: record._fields[1].bidPlace,
