@@ -759,6 +759,7 @@ const resolvers = {
                 console.error(`chooseWinner error updating Firestore: ${e}`);
                 return null;
             }
+            console.log('chooseWinner date: ',date);
             return date.records[0]._fields[0].properties;
         },
     }
