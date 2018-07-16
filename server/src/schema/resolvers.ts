@@ -268,7 +268,7 @@ const resolvers = {
                 )
                 .catch(e => console.log('moreQueue error: ',e))           
         },
-        moreDate: (_,args) => {},
+        moreDates: (_,args) => {},
         moreDateBids: (_,args) => {},
         moreFollowing: (_,args) => {},
 
