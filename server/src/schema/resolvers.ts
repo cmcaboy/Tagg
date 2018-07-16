@@ -267,7 +267,11 @@ const resolvers = {
                 }
                 )
                 .catch(e => console.log('moreQueue error: ',e))           
-        }
+        },
+        moreDate: (_,args) => {},
+        moreDateBids: (_,args) => {},
+        moreFollowing: (_,args) => {},
+
     },
     User: {
         following: (parentValue, _) => {
@@ -301,12 +305,6 @@ const resolvers = {
                         .then(result => result.records)
                         .then(records => {
                             console.log('bids records: ',records);
-                            // if(records.length === 0) {
-                            //     return {
-                            //         list: [],
-                            //         cursor: null,
-                            //     }
-                            // }
                             const list = records.map(record => ({
                                 ...record._fields[2].properties,
                                 id: record._fields[1].properties.id,
@@ -686,7 +684,7 @@ const resolvers = {
                 .catch(e => console.log('bid mutation error: ',e))
         },
         follow: (_,args) => {
-            const query = `MATCH (a:User {id:'${args.id}'}), (b:User {id:'${args.followId}'}) MERGE (a)-[r:FOLLOW}]->(b) RETURN b`;
+            const query = `MATCH (a:User {id:'${args.id}'}), (b:User {id:'${args.followId}'}) MERGE (a)-[r:FOLLOW]->(b) RETURN b`;
 
             return session
                 .run(query)
