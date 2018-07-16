@@ -691,7 +691,7 @@ const resolvers = {
                 .then(result => {
                     return result.records[0]
                 })
-                .then(record => record.fields[0].properties)
+                .then(record => record._fields[0].properties)
                 .catch(e => console.log('follow mutation error: ',e))
         },
         createDate: (_,args) => {
