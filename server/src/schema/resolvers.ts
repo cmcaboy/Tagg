@@ -301,8 +301,12 @@ const resolvers = {
                         .then(result => result.records)
                         .then(records => {
                             console.log('bids records: ',records);
-                            console.log('bids d[0]: ',records[1]._fields[0]);
-                            console.log('bids d[1]: ',records[1]._fields[1]);
+                            // if(records.length === 0) {
+                            //     return {
+                            //         list: [],
+                            //         cursor: null,
+                            //     }
+                            // }
                             const list = records.map(record => ({
                                 ...record._fields[2].properties,
                                 id: record._fields[1].properties.id,
