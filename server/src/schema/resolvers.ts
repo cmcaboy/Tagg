@@ -320,7 +320,7 @@ const resolvers = {
                     .then(result => result.records)
                     .then(records => {
                         console.log('dateRequests records: ',records);
-                        const list = records.forEach(record => ({
+                        const list = records.map(record => ({
                             id: record._fields[1].properties.id,
                             creator: record._fields[0].properties,
                             creationTime: record._fields[1].properties.creationTime,
