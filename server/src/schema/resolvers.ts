@@ -312,12 +312,14 @@ const resolvers = {
         },
         dateRequests: (parentValue, _) => {
             // Need to factor in pagination
+            console.log('dateRequests parentValue: ',parentValue);
             return session
                 .run(`MATCH(a:User{id:'${parentValue.id}'})-[:CREATE]->(d:Date) 
                     WITH a, d, size((d)<-[:BID]-(:User)) as num_bids
                     RETURN a,d,num_bids`)
                     .then(result => result.records)
                     .then(records => {
+                        console.log('dateRequests records: ',records);
                         const list = records.forEach(record => ({
                             id: record._fields[1].properties.id,
                             creator: record._fields[0].properties,
@@ -327,7 +329,7 @@ const resolvers = {
                             num_bids: record._fields[2],
                             open: record._fields[1].properties.open,
                         }))
-
+                        console.log('dateRequests list: ',list);
                         return {
                             list,
                             cursor: null,
