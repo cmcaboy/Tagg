@@ -659,6 +659,7 @@ const resolvers = {
 
         },
         bid: (_,args) => {
+            // Need to make sure client cannot input doublequote ("). It will break the query.
             const datetimeOfBid = Date.now();
             let query = `MATCH (a:User {id:'${args.id}'}), (d:Date {id:'${args.dateId}'}) 
                 MERGE (a)-[r:BID{datetimeOfBid: '${datetimeOfBid}',`;
@@ -692,11 +693,13 @@ const resolvers = {
                 .then(record => record._fields[0].properties)
                 .catch(e => console.log('follow mutation error: ',e))
         },
-        createDate: (_,args) => {
+        createDate: async (_,args) => {
+            // Currently, I am only creating the node field, but I also need to create the :CREATE relationship
+
             const creationTime = Date.now();
             const dateId = uuid();
 
-            let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}'`; 
+            let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}',`; 
                 !!args.datetimeOfDate && (query = query+ `datetimeOfDate:'${args.datetimeOfDate}',`) +
                 !!args.description && (query = query+ `description:'${args.description}',`);
             
@@ -705,11 +708,25 @@ const resolvers = {
 
             console.log('query in bid: ',query);
 
-            return session
-                .run(query)
-                .then(result => result.records[0])
-                .then(record => record._fields[0].properties)
-                .catch(e => console.log('bid mutation error: ',e))
+            let rawDate;
+            let date;
+
+            // In order to create a new date, we need to create a date node and a :CREATE relationship between
+            // the date creator and the new date node.
+            try {
+                rawDate = await session.run(query);
+                date = rawDate.result.records[0]._fields[0].properties;
+            } catch(e){
+                console.log('bid mutation error d node: ',e);
+                return null;
+            }
+            try {
+                await session.run(`MATCH (a:User {id:'${args.id}'}), (d:Date {id:'${dateId}'}) MERGE (a)-[r:CREATE]->(d)`)
+            } catch(e) {
+                console.log('bid mutation error relationship create: ',e);
+                return null;
+            }
+            return date;
         },
         chooseWinner: async (_,args) => {
             const {id, winnerId, dateId} = args;
