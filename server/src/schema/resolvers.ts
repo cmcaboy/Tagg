@@ -749,7 +749,7 @@ const resolvers = {
                     ...data.records[0]._fields[0].properties,
                     creator: data.records[0]._fields[1].properties,
                     winner: data.records[0]._fields[2].properties,
-                    num_bids: data.records[0]._fields[2].properties,
+                    num_bids: data.records[0]._fields[3].properties,
                 }
 
             } catch(e) {
