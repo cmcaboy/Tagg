@@ -734,15 +734,22 @@ const resolvers = {
             // two.
             const {id, winnerId, dateId} = args;
 
+            
             let date;
 
             // Update neo4j values
             try {
-                date = await session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'}) 
+                const data = await session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'}) 
                     SET r.winner=TRUE,
                     d.winner='${winnerId}',
                     d.open=FALSE
-                    return d`)
+                    return d,a,b`)
+                date = {
+                    ...data.records[0]._fields[0].properties,
+                    creator: data.records[0]._fields[1].properties,
+                    winner: data.records[0]._fields[2].properties,
+                }
+
             } catch(e) {
                 console.error('Error updating winner value on bid: ',e);
                 return null;
@@ -760,7 +767,7 @@ const resolvers = {
                 return null;
             }
             console.log('chooseWinner date: ',date);
-            return date.records[0]._fields[0].properties;
+            return date;
         },
     }
 }
