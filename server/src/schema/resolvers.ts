@@ -271,6 +271,17 @@ const resolvers = {
         moreDates: (_,args) => {},
         moreDateBids: (_,args) => {},
         moreFollowing: (_,args) => {},
+        date: (_,args) => {
+            return session
+            .run(`MATCH(d:Date{id:'${args.id}'}) 
+                RETURN d`)
+                .then(result => result.records[0])
+                .then(record => record._fields[0].properties)
+                .catch(e => {
+                    console.log('dateRequest error: ',e);
+                    return null;
+                })
+        },
 
     },
     User: {
