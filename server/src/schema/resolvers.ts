@@ -481,6 +481,22 @@ const resolvers = {
                     .then(record => record._fields[0])
                     .catch(e => console.log('num_bids error: ',e))
         },
+        creator: (parentValue, _) => {
+            return session
+                .run(`MATCH(a:User)-[:CREATE]->(d:Date{id:'${parentValue.id}'})
+                    RETURN a`)
+                    .then(result => result.records[0])
+                    .then(record => record._fields[0].properties)
+                    .catch(e => console.log('creator error: ',e))
+        },
+        winner: (parentValue, _) => {
+            return session
+                .run(`MATCH(d:Date{id:'${parentValue.id}'})<-[r:BID{winner:TRUE}]-(b:User)
+                    RETURN b`)
+                    .then(result => result.records[0])
+                    .then(record => record._fields[0].properties)
+                    .catch(e => console.log('winner error: ',e))
+        },
     },
     Match: {
         messages: async (parentValue, args) => {
