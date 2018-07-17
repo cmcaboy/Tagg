@@ -758,7 +758,7 @@ const resolvers = {
             const creationTime = Date.now();
             const dateId = uuid();
 
-            let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}',open:TRUE,`; 
+            let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}',open:FALSE,`; 
                 !!args.datetimeOfDate && (query = query+ `datetimeOfDate:'${args.datetimeOfDate}',`) +
                 !!args.description && (query = query+ `description:'${args.description}',`);
             
