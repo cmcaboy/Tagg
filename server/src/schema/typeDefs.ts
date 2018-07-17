@@ -75,7 +75,9 @@ const typeDefs = `
         datetimeOfBid: String
         bidDescription: String
         bidPlace: String
-        user: User
+        dateUser: User
+        bidUser: User
+        date: DateItem
     }
 
     type MessageItem {

@@ -498,6 +498,32 @@ const resolvers = {
                     .catch(e => console.log('winner error: ',e))
         },
     },
+    DateBid: {
+        dateUser: (parentValue, _) => {
+            return session
+                .run(`MATCH(a:User)-[:CREATE]->(d:Date)<-[r:BID{id:'${parentValue.id}'}]-(b:User)
+                    RETURN a`)
+                    .then(result => result.records[0])
+                    .then(record => record._fields[0].properties)
+                    .catch(e => console.log('winner error: ',e))
+        },
+        bidUser: (parentValue, _) => {
+            return session
+                .run(`MATCH(a:User)-[:CREATE]->(d:Date)<-[r:BID{id:'${parentValue.id}'}]-(b:User)
+                    RETURN b`)
+                    .then(result => result.records[0])
+                    .then(record => record._fields[0].properties)
+                    .catch(e => console.log('winner error: ',e))
+        },
+        date: (parentValue, _) => {
+            return session
+                .run(`MATCH(a:User)-[:CREATE]->(d:Date)<-[r:BID{id:'${parentValue.id}'}]-(b:User)
+                    RETURN d`)
+                    .then(result => result.records[0])
+                    .then(record => record._fields[0].properties)
+                    .catch(e => console.log('winner error: ',e))
+        },
+    },
     Match: {
         messages: async (parentValue, args) => {
             console.log('messages resolver');
@@ -686,13 +712,15 @@ const resolvers = {
         bid: (_,args) => {
             // Need to make sure client cannot input doublequote ("). It will break the query.
             const datetimeOfBid = Date.now();
+            const bidId = uuid();
+
             let query = `MATCH (a:User {id:'${args.id}'}), (d:Date {id:'${args.dateId}'}) 
-                MERGE (a)-[r:BID{datetimeOfBid: '${datetimeOfBid}',`;
+                MERGE (a)-[r:BID{id: '${bidId}',datetimeOfBid: '${datetimeOfBid}',`;
                 !!args.bidPlace && (query = query+ `bidPlace:"${args.bidPlace}",`) +
                 !!args.bidDescription && (query = query+ `bidDescription:"${args.bidDescription}",`);
             query = query.slice(-1) === ','? query.slice(0,-1) : query;
                 
-            query = query + `}]->(d) RETURN d.id,r`;
+            query = query + `}]->(d) RETURN r`;
 
             console.log('query in bid: ',query);
 
@@ -702,8 +730,7 @@ const resolvers = {
                     return result.records[0]
                 })
                 .then(record => ({
-                    id: record._fields[0],
-                    ...record._fields[1].properties,
+                    ...record._fields[0].properties,
                 }))
                 .catch(e => console.log('bid mutation error: ',e))
         },
