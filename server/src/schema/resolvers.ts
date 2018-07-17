@@ -471,7 +471,7 @@ const resolvers = {
                         }
                     })
                     .catch(e => console.log('bid error: ',e))
-        }
+        },
     },
     Match: {
         messages: async (parentValue, args) => {
@@ -740,14 +740,16 @@ const resolvers = {
             // Update neo4j values
             try {
                 const data = await session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'}) 
+                    WITH d,a,b, size((d)<-[:BID]-(:User)) as num_bids
                     SET r.winner=TRUE,
                     d.winner='${winnerId}',
                     d.open=FALSE
-                    return d,a,b`)
+                    return d,a,b,num_bids`)
                 date = {
                     ...data.records[0]._fields[0].properties,
                     creator: data.records[0]._fields[1].properties,
                     winner: data.records[0]._fields[2].properties,
+                    num_bids: data.records[0]._fields[2].properties,
                 }
 
             } catch(e) {
