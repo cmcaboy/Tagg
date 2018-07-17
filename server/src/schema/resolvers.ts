@@ -466,15 +466,11 @@ const resolvers = {
     DateItem: {
         bids: (parentValue, _) => {
             return session
-                .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${parentValue.id}'}) RETURN b,d,r`)
+                .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${parentValue.id}'}) RETURN r`)
                     .then(result => result.records)
                     .then(records => {
                         const list = records.map(record => ({
-                        id: record._fields[1].properties.id,
-                        datetimeOfBid: record._fields[2].properties.datetimeOfBid,
-                        bidDescription: record._fields[2].properties.bidDescription,
-                        bidPlace: record._fields[2].properties.bidPlace,
-                        user: record._fields[0].properties,
+                            ...record._fields[0].properties,
                     }))
                         return {
                             list,
