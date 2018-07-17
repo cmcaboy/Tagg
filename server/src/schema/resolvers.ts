@@ -740,7 +740,7 @@ const resolvers = {
             // Update neo4j values
             try {
                 const data = await session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'}) 
-                    WITH d,a,b, size((d)<-[:BID]-(:User)) as num_bids
+                    WITH d,a,b,r, size((d)<-[:BID]-(:User)) as num_bids
                     SET r.winner=TRUE,
                     d.winner='${winnerId}',
                     d.open=FALSE
