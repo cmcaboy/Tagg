@@ -472,7 +472,8 @@ const resolvers = {
                     })
                     .catch(e => console.log('bid error: ',e))
         },
-        num_bids: (parentValue, _) => {
+        num_bids: (parentValue, args) => {
+            console.log('num_bids args: ',args)
             return session
                 .run(`MATCH(d:Date{id:'${parentValue.id}'})
                     WITH size((d)<-[:BID]-(:User)) as num_bids
@@ -758,7 +759,6 @@ const resolvers = {
             // Then we need to create a new document in the Firestore database, which will store messages between the
             // two.
             const {id, winnerId, dateId} = args;
-
             
             let date;
 
@@ -793,7 +793,7 @@ const resolvers = {
                 console.error(`chooseWinner error updating Firestore: ${e}`);
                 return null;
             }
-            console.log('chooseWinner date: ',date);
+            //console.log('chooseWinner date: ',date);
             return date;
         },
     }
