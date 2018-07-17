@@ -472,8 +472,7 @@ const resolvers = {
                     })
                     .catch(e => console.log('bid error: ',e))
         },
-        num_bids: (parentValue, args) => {
-            console.log('num_bids args: ',args)
+        num_bids: (parentValue, _) => {
             return session
                 .run(`MATCH(d:Date{id:'${parentValue.id}'})
                     WITH size((d)<-[:BID]-(:User)) as num_bids
@@ -725,7 +724,7 @@ const resolvers = {
             const creationTime = Date.now();
             const dateId = uuid();
 
-            let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}',`; 
+            let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}',open:TRUE,`; 
                 !!args.datetimeOfDate && (query = query+ `datetimeOfDate:'${args.datetimeOfDate}',`) +
                 !!args.description && (query = query+ `description:'${args.description}',`);
             
