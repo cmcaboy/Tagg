@@ -107,8 +107,8 @@ class StaggCard extends React.Component  {
                                                 }
                                             },
                                             update: (store,data) => {
-                                                console.log('updateFollow store: ',store);
-                                                console.log('updateFollow data: ',data);
+                                                // console.log('updateFollow store: ',store);
+                                                // console.log('updateFollow data: ',data);
                                                 let storeData = store.readFragment({
                                                     id: this.props.user.id,
                                                     fragment: gql`
@@ -118,7 +118,7 @@ class StaggCard extends React.Component  {
                                                     `,
                                                     //variables: {id:this.props.user.id},
                                                 });
-                                                console.log('storeData: ',storeData);
+                                                // console.log('storeData: ',storeData);
 
                                                 store.writeFragment({
                                                     id: this.props.user.id,
