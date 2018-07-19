@@ -170,7 +170,7 @@ const typeDefs = `
             uid: String
             _id: String
         ): MessageItem
-        follow (id: String!, followId: String!): User
+        follow (id: String!, followId: String!, isFollowing: Boolean): User
         unFollow (id: String!, unFollowId: String!): User
         bid(id: String!, dateId: String!, bidPlace: String, bidDescription: String): DateBid
         createDate(id: String!, datetimeOfDate: String, description: String): DateItem

@@ -53,8 +53,8 @@ mutation dislikeUser($id: String!, $dislikedId: String!) {
 `;
 
 export const FOLLOW = gql`
-mutation follow($id: String!, $followId: String!) {
-    follow(id: $id, followId: $followId) {
+mutation follow($id: String!, $followId: String!, $isFollowing: Boolean) {
+    follow(id: $id, followId: $followId, isFollowing: $isFollowing) {
         id
         name
         isFollowing
