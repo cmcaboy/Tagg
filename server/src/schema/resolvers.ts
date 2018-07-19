@@ -747,6 +747,7 @@ const resolvers = {
             const {isFollowing, id, followId} = args;
 
             console.log('follow start');
+            console.log('args: ',args);
             console.log('isFollowing: ',isFollowing);
             console.log('followId: ',followId);
             console.log('id: ',id);
