@@ -7,6 +7,7 @@ import {WideCard,MyAppText,Button} from './common';
 import {Mutation} from 'react-apollo';
 import {GET_QUEUE} from '../apollo/queries';
 import {FOLLOW,UNFOLLOW} from '../apollo/mutations';
+import gql from 'graphql-tag';
 
 class StaggCard extends React.Component  {
     // Takes the following props
@@ -49,7 +50,7 @@ class StaggCard extends React.Component  {
         )
     }
     render() {
-        //console.log('user: ',this.props.user);
+        console.log('user: ',this.props.user);
         const {profilePic,school,work,name,distanceApart,age,isFollowing,hasDateOpen} = this.props.user;
         const {id} = this.props;
         return (
@@ -98,18 +99,40 @@ class StaggCard extends React.Component  {
                                                 isFollowing,
                                             },
                                             optimisticResponse: {
-                                                __typename: "Mutation",
                                                 follow: {
+                                                    id: this.props.user.id,
+                                                    name,
                                                     isFollowing,
+                                                    __typename: "User",
                                                 }
                                             },
                                             update: (store,data) => {
                                                 console.log('updateFollow store: ',store);
                                                 console.log('updateFollow data: ',data);
-                                                let storeData = store.readQuery({
-                                                    query: GET_QUEUE,
-                                                    variables: {id},
+                                                let storeData = store.readFragment({
+                                                    id: this.props.user.id,
+                                                    fragment: gql`
+                                                    fragment User on User {
+                                                        isFollowing
+                                                    }
+                                                    `,
+                                                    //variables: {id:this.props.user.id},
                                                 });
+                                                console.log('storeData: ',storeData);
+
+                                                store.writeFragment({
+                                                    id: this.props.user.id,
+                                                    fragment: gql`
+                                                        fragment User on User {
+                                                            isFollowing
+                                                        }
+                                                    `,
+                                                    data: {
+                                                        ...storeData,
+                                                        isFollowing: data.data.follow.isFollowing,
+                                                    }
+                                                })
+                                                
 
                                                 //store.writeQuery({query: GET_QUEUE, data: storeData})
                                             },

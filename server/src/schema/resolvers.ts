@@ -753,9 +753,9 @@ const resolvers = {
             console.log('id: ',id);
 
             if(isFollowing) {
-                query = `MATCH (a:User {id:'${id}'}), (b:User {id:'${followId}'}) MERGE (a)-[r:FOLLOW]->(b) RETURN b`;
+                query = `MATCH (a:User {id:'${id}'}), (b:User {id:'${followId}'}) MERGE (a)-[r:FOLLOWING]->(b) RETURN b`;
             } else {
-                query = `MATCH (a:User {id:'${id}'})-[r:FOLLOW]->(b:User {id:'${followId}'}) DELETE r RETURN b`;
+                query = `MATCH (a:User {id:'${id}'})-[r:FOLLOWING]->(b:User {id:'${followId}'}) DELETE r RETURN b`;
             }
 
             console.log('query: ',query)
@@ -770,7 +770,7 @@ const resolvers = {
                 .catch(e => console.log('follow mutation error: ',e))
         },
         unFollow: (_,args) => {
-            const query = `MATCH (a:User {id:'${args.id}'})-[r:FOLLOW]->(b:User {id:'${args.unFollowId}'}) DELETE r RETURN b`;
+            const query = `MATCH (a:User {id:'${args.id}'})-[r:FOLLOWING]->(b:User {id:'${args.unFollowId}'}) DELETE r RETURN b`;
 
             return session
                 .run(query)

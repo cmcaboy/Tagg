@@ -15,7 +15,7 @@ import {resolvers, typeDefs, defaults} from './localState';
 // This file is the setup file for Apollo client
 
 // Initiate the cache
-const cache = new InMemoryCache();  
+const cache = new InMemoryCache({dataIdFromObject: object => object.id});  
 
 // persistCache allows apollo to store the cache or local state to AsyncStorage
 // This works similar to redux-persist.
