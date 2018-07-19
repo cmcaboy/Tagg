@@ -746,15 +746,23 @@ const resolvers = {
             let query;
             const {isFollowing, id, followId} = args;
 
+            console.log('follow start');
+            console.log('isFollowing: ',isFollowing);
+            console.log('followId: ',followId);
+            console.log('id: ',id);
+
             if(isFollowing) {
                 query = `MATCH (a:User {id:'${id}'}), (b:User {id:'${followId}'}) MERGE (a)-[r:FOLLOW]->(b) RETURN b`;
             } else {
                 query = `MATCH (a:User {id:'${id}'})-[r:FOLLOW]->(b:User {id:'${followId}'}) DELETE r RETURN b`;
             }
 
+            console.log('query: ',query)
+
             return session
                 .run(query)
                 .then(result => {
+                    console.log('result: ',result);
                     return result.records[0]
                 })
                 .then(record => ({...record._fields[0].properties,isFollowing}))

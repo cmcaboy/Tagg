@@ -34,17 +34,17 @@ class StaggCard extends React.Component  {
         this.props.onUnfollow();
     }
     onPress = () => this.props.navigation.navigate('UserProfile',{id:this.props.user.id,name:this.props.user.name})
-    followButton = ({isFollowing = false,updateFollowStart}) => {
+    followButton = ({isFollowing = false,updateFollow}) => {
         if(isFollowing) {
             return (
                 <TouchableOpacity>
-                    <Button invertColors={true} buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={updateFollowStart(!isFollowing)}>Following</Button>
+                    <Button invertColors={true} buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={() => updateFollow(!isFollowing)}>Following</Button>
                 </TouchableOpacity>
             )
         }
         return (
             <TouchableOpacity>
-                <Button buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={updateFollowStart(!isFollowing)}>Follow</Button>
+                <Button buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={() => updateFollow(!isFollowing)}>Follow</Button>
             </TouchableOpacity>
         )
     }
@@ -88,7 +88,7 @@ class StaggCard extends React.Component  {
                             <MyAppText style={styles.distance}>{Math.round(distanceApart)} 
                                 {Math.round(distanceApart) === 1 ? " mile away" : " miles away"}
                             </MyAppText>
-                            <Mutation mutation={UPDATE_ISFOLLOWING} ignoreResults={false}>
+                            <Mutation mutation={FOLLOW} ignoreResults={false}>
                                 {(follow,_) => {
                                     const updateFollow = (isFollowing) => {
                                         follow({
@@ -99,12 +99,13 @@ class StaggCard extends React.Component  {
                                             },
                                             optimisticResponse: {
                                                 __typename: "Mutation",
-                                                updateFollow: {
+                                                follow: {
                                                     isFollowing,
                                                 }
                                             },
                                             update: (store,data) => {
-                                                console.log('updateFollow store: ',store)
+                                                console.log('updateFollow store: ',store);
+                                                console.log('updateFollow data: ',data);
                                                 let storeData = store.readQuery({
                                                     query: GET_QUEUE,
                                                     variables: {id},
