@@ -749,7 +749,18 @@ const resolvers = {
                 .then(result => {
                     return result.records[0]
                 })
-                .then(record => record._fields[0].properties)
+                .then(record => ({...record._fields[0].properties,isFollowing: true}))
+                .catch(e => console.log('follow mutation error: ',e))
+        },
+        unFollow: (_,args) => {
+            const query = `MATCH (a:User {id:'${args.id}'})-[r:FOLLOW]->(b:User {id:'${args.unFollowId}'}) DELETE r RETURN b`;
+
+            return session
+                .run(query)
+                .then(result => {
+                    return result.records[0]
+                })
+                .then(record => ({...record._fields[0].properties,isFollowing: false}))
                 .catch(e => console.log('follow mutation error: ',e))
         },
         createDate: async (_,args) => {

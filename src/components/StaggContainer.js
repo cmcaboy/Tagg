@@ -22,7 +22,7 @@ class StaggContainer extends Component {
                 return (
                     <Query query={GET_QUEUE} variables={{id}}>
                     {({loading, error, data, fetchMore, networkStatus, refetch }) => {
-                        //console.log('data stagg: ',data);
+                        // console.log('data stagg: ',data);
                         // console.log('error stagg: ',error);
                         // console.log('loading stagg: ',loading);
                         console.log('networkStatus: ',networkStatus);

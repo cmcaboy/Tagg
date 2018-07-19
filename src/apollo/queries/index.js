@@ -25,6 +25,7 @@ query user($id: String!) {
 }
 `
 
+// I may expand this later to include date requests for queue users
 export const GET_QUEUE = gql`
 query user($id: String!) {
     user(id: $id) {
@@ -42,6 +43,8 @@ query user($id: String!) {
                 distanceApart
                 order
                 profilePic
+                isFollowing
+                hasDateOpen
             }
         }
     }
@@ -63,6 +66,9 @@ query moreQueue($id: String!, $cursor: Float!) {
             school
             distanceApart
             order
+            profilePic
+            isFollowing
+            hasDateOpen
         }
     }
 }

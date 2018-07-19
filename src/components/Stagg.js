@@ -126,7 +126,6 @@ class Stagg extends Component {
                 key={prospect.id}
                 user={prospect}
                 navigation={this.props.navigation}
-                isFollowing={false}
                 onFollow={() => {}}
                 onUnfollow={() => {}}
             />

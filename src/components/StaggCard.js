@@ -4,6 +4,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {PRIMARY_COLOR} from '../variables';
 import {WideCard,MyAppText,Button} from './common';
+import {Mutation} from 'react-apollo';
+import {GET_QUEUE} from '../apollo/queries';
+import {UPDATE_FOLLOW} from '../apollo/mutations';
 
 class StaggCard extends React.Component  {
     // Takes the following props
@@ -17,7 +20,7 @@ class StaggCard extends React.Component  {
     constructor(props) {
         super(props);
         this.state = {
-            isFollowing: this.props.isFollowing
+            isFollowing: this.props.user.isFollowing
         }
     }
 
@@ -31,24 +34,23 @@ class StaggCard extends React.Component  {
         this.props.onUnfollow();
     }
     onPress = () => this.props.navigation.navigate('UserProfile',{id:this.props.user.id,name:this.props.user.name})
-    followButton = () => {
-        if(this.state.isFollowing) {
+    followButton = ({isFollowing = false,updateFollowStart}) => {
+        if(isFollowing) {
             return (
                 <TouchableOpacity>
-                    <Button invertColors={true} buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={this.unfollow}>Following</Button>
+                    <Button invertColors={true} buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={updateFollowStart(!isFollowing)}>Following</Button>
                 </TouchableOpacity>
             )
         }
         return (
             <TouchableOpacity>
-                <Button buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={this.follow}>Follow</Button>
+                <Button buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={updateFollowStart(!isFollowing)}>Follow</Button>
             </TouchableOpacity>
         )
     }
     render() {
         //console.log('user: ',this.props.user);
-        const {profilePic,school,work,name,distanceApart,age} = this.props.user;
-        const {isFollowing,footer} = this.props;
+        const {profilePic,school,work,name,distanceApart,age,isFollowing,hasDateOpen} = this.props.user;
         return (
             <WideCard>
                 <View style={styles.bodyStyle}>
@@ -85,11 +87,39 @@ class StaggCard extends React.Component  {
                             <MyAppText style={styles.distance}>{Math.round(distanceApart)} 
                                 {Math.round(distanceApart) === 1 ? " mile away" : " miles away"}
                             </MyAppText>
-                            {this.followButton()}
+                            <Mutation mutation={UPDATE_ISFOLLOWING} ignoreResults={false}>
+                                {(updateFollow,_) => {
+                                    const updateFollowStart = (isFollowing) => {
+                                        updateFollow({
+                                            variables: {
+                                                id,
+                                                isFollowing
+                                            },
+                                            optimisticResponse: {
+                                                __typename: "Mutation",
+                                                updateFollow: {
+                                                    isFollowing
+                                                }
+                                            },
+                                            update: (store,data) => {
+                                                console.log('updateFollow store: ',store)
+                                                let storeData = store.readQuery({
+                                                    query: GET_QUEUE,
+                                                    variables: {id},
+                                                });
+
+                                                //store.writeQuery({query: GET_QUEUE, data: storeData})
+                                            },
+                                               
+                                        })
+                                    }
+                                    return this.followButton({isFollowing, updateFollowStart})
+                                }}
+                            </Mutation>
                         </View>
                     </View>
                 </View>
-                {!!footer && (
+                {!!hasDateOpen && (
                     <View style={styles.footer}>
                         <View
                             style={{
