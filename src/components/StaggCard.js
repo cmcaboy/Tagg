@@ -6,7 +6,7 @@ import {PRIMARY_COLOR} from '../variables';
 import {WideCard,MyAppText,Button} from './common';
 import {Mutation} from 'react-apollo';
 import {GET_QUEUE} from '../apollo/queries';
-import {UPDATE_FOLLOW} from '../apollo/mutations';
+import {FOLLOW,UNFOLLOW} from '../apollo/mutations';
 
 class StaggCard extends React.Component  {
     // Takes the following props
@@ -51,6 +51,7 @@ class StaggCard extends React.Component  {
     render() {
         //console.log('user: ',this.props.user);
         const {profilePic,school,work,name,distanceApart,age,isFollowing,hasDateOpen} = this.props.user;
+        const {id} = this.props;
         return (
             <WideCard>
                 <View style={styles.bodyStyle}>
@@ -88,17 +89,18 @@ class StaggCard extends React.Component  {
                                 {Math.round(distanceApart) === 1 ? " mile away" : " miles away"}
                             </MyAppText>
                             <Mutation mutation={UPDATE_ISFOLLOWING} ignoreResults={false}>
-                                {(updateFollow,_) => {
-                                    const updateFollowStart = (isFollowing) => {
-                                        updateFollow({
+                                {(follow,_) => {
+                                    const updateFollow = (isFollowing) => {
+                                        follow({
                                             variables: {
                                                 id,
-                                                isFollowing
+                                                followId: this.props.user.id,
+                                                isFollowing,
                                             },
                                             optimisticResponse: {
                                                 __typename: "Mutation",
                                                 updateFollow: {
-                                                    isFollowing
+                                                    isFollowing,
                                                 }
                                             },
                                             update: (store,data) => {
@@ -113,7 +115,7 @@ class StaggCard extends React.Component  {
                                                
                                         })
                                     }
-                                    return this.followButton({isFollowing, updateFollowStart})
+                                    return this.followButton({isFollowing, updateFollow})
                                 }}
                             </Mutation>
                         </View>

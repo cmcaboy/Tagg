@@ -742,14 +742,22 @@ const resolvers = {
                 .catch(e => console.log('bid mutation error: ',e))
         },
         follow: (_,args) => {
-            const query = `MATCH (a:User {id:'${args.id}'}), (b:User {id:'${args.followId}'}) MERGE (a)-[r:FOLLOW]->(b) RETURN b`;
+            // supports both follow and unfollow
+            let query;
+            const {isFollowing, id, followId} = args;
+
+            if(isFollowing) {
+                query = `MATCH (a:User {id:'${id}'}), (b:User {id:'${followId}'}) MERGE (a)-[r:FOLLOW]->(b) RETURN b`;
+            } else {
+                query = `MATCH (a:User {id:'${id}'})-[r:FOLLOW]->(b:User {id:'${followId}'}) DELETE r RETURN b`;
+            }
 
             return session
                 .run(query)
                 .then(result => {
                     return result.records[0]
                 })
-                .then(record => ({...record._fields[0].properties,isFollowing: true}))
+                .then(record => ({...record._fields[0].properties,isFollowing}))
                 .catch(e => console.log('follow mutation error: ',e))
         },
         unFollow: (_,args) => {
