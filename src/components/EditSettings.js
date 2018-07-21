@@ -56,7 +56,7 @@ class EditSettings extends Component {
                 <MultiSlider 
                   containerStyle={{height: 12}}
                   markerOffsetX={0}
-                  sliderLength={SLIDER_WIDTH}
+                  sliderLength={!!this.props.hideNotifications? (SLIDER_WIDTH * .70) : SLIDER_WIDTH}
                   markerStyle={styles.markerStyle}
                   step={1}
                   values={ageValues}

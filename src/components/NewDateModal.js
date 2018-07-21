@@ -10,6 +10,19 @@ import {MyAppText,
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DatePicker from 'react-native-datepicker';
+import gql from 'graphql-tag';
+import {Mutation} from 'react-apollo';
+
+const NEW_DATE = gql`
+mutation createDate($id: String!, $datetimeOfDate: String, $description: String) {
+    createDate(id: $id, datetimeOfDate: $datetimeOfDate, description: $description) {
+        id
+        creationTime
+        datetimeOfDate
+        description
+    }
+}
+`;
 
 class NewDateModal extends React.Component  {
 
@@ -34,7 +47,8 @@ class NewDateModal extends React.Component  {
 
     render() {
         console.log('NewDateModal isVisible: ',this.props.isVisible);
-        console.log('this.state newDateModal: ',this.state)
+        console.log('this.state newDateModal: ',this.state);
+        const {id} = this.props;
         return (
             <MyAppModal isVisible={this.props.isVisible} close={this.resetState}>
                 <MyTitleText>New Date Request</MyTitleText>
@@ -57,9 +71,21 @@ class NewDateModal extends React.Component  {
                     maxLength={300}
                 />
                 <View style={styles.buttonView}>
-                    <Button  onPress={this.resetState}>
-                        Submit
-                    </Button>
+                    <Mutation mutation={NEW_DATE}>
+                        {(newDate) => (
+                            <Button  onPress={() => {
+                                this.props.flipNewDateModal();
+                                return newDate({variables: {
+                                    id,
+                                    datetimeOfDate:this.state.datetime,
+                                    description:this.state.description,
+                                }})
+                            }}
+                            >
+                                Submit
+                            </Button>
+                        )}
+                    </Mutation>
                     <Button  onPress={this.resetState}>
                         Cancel
                     </Button>

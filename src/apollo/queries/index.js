@@ -80,21 +80,23 @@ query user($id: String!) {
         id
         name
         profilePic
-        matches {
-            matchId
-            user {
-                id
-                name
-                pics
-                age
-                description
-                work
-                school
-            }
-            lastMessage {
-              	text
-                name
-                createdAt
+        matchedDates {
+            list {
+                matchId
+                user {
+                    id
+                    name
+                    pics
+                    age
+                    description
+                    work
+                    school
+                }
+                lastMessage {
+                    text
+                    name
+                    createdAt
+                }
             }
         }
     }

@@ -26,9 +26,14 @@ class StaggContainer extends Component {
                         // console.log('error stagg: ',error);
                         // console.log('loading stagg: ',loading);
                         console.log('networkStatus: ',networkStatus);
-                        if(networkStatus === 1) {
-                            return <Spinner />
+                        switch(networkStatus) {
+                            case 1: return <Spinner />
+                            case 2: return <Spinner />
+                            case 4: return <Spinner />
                         }
+                        // if(networkStatus === 1) {
+                        //     return <Spinner />
+                        // } else if() {}
                         //if(loading) return <Spinner />
                         if(error) return <Text>Error! {error.message}</Text>
                         const refetchQueue = async () => {

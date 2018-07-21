@@ -787,8 +787,8 @@ const resolvers = {
             const dateId = uuid();
 
             let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}',open:FALSE,`; 
-                !!args.datetimeOfDate && (query = query+ `datetimeOfDate:'${args.datetimeOfDate}',`) +
-                !!args.description && (query = query+ `description:'${args.description}',`);
+                !!args.datetimeOfDate && (query = query+ `datetimeOfDate:"${args.datetimeOfDate}",`) +
+                !!args.description && (query = query+ `description:"${args.description}",`);
             
             query = query.slice(-1) === ','? query.slice(0,-1) : query;    
             query = query + `}) RETURN d`;

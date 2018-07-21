@@ -105,7 +105,7 @@ class Matches extends Component {
               if(loading) return <Spinner />
               if(error) {
                 console.log('error: ',error);  
-                return <Text>Error! {error.message}</Text>
+                return <Text>Local Error! {error.message}</Text>
               }
               const { id } = data.user;
               return (
@@ -117,7 +117,7 @@ class Matches extends Component {
                     if(loading) return <Spinner />
                     if(error) return <Text>Error! {error.message}</Text>
                     console.log('data in matches: ',data);
-                    return this.renderContent({matches:data.user.matches,id,name:data.user.name,pic:data.user.profilePic})
+                    return this.renderContent({matches:data.user.matchedDates.list,id,name:data.user.name,pic:data.user.profilePic})
                   }}
                   </Query>
               ) 

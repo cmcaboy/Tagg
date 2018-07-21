@@ -50,7 +50,7 @@ class StaggCard extends React.Component  {
         )
     }
     render() {
-        console.log('user: ',this.props.user);
+        // console.log('user: ',this.props.user);
         const {profilePic,school,work,name,distanceApart,age,isFollowing,hasDateOpen} = this.props.user;
         const {id} = this.props;
         return (
@@ -65,11 +65,11 @@ class StaggCard extends React.Component  {
                     <View style={styles.userInfo}>
                         <View style={{justifyContent:'space-between'}}> 
                             <View style={styles.description}>
-                            <TouchableOpacity onPress={this.onPress}>
+                                <TouchableOpacity onPress={this.onPress}>
                                     <View style={{flexDirection: 'row'}}>
                                         <MyAppText style={styles.nameText}>{name} </MyAppText><MyAppText style={styles.ageText}>{!!age? `, ${age}`:null}</MyAppText>
-                                        </View>
-                                    </TouchableOpacity>
+                                    </View>
+                                </TouchableOpacity>
                                 {!!school && (
                                     <View style={styles.subHeading}>
                                         {/*<Ionicons name="md-school" size={14} color="black" style={styles.iconText}/>*/}
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     },
     buttonStyle: {
         borderRadius: 10,
+        minWidth: 70,
         //padding: 4,
     },
     buttonText: {
@@ -182,6 +183,7 @@ const styles = StyleSheet.create({
     rightCard: {
         flexDirection: 'column',
         justifyContent: 'space-between',
+        alignItems: 'flex-end', 
     },
     description: {
         
@@ -218,7 +220,7 @@ const styles = StyleSheet.create({
         opacity: 0.7,
       },
     schoolText: {
-    fontSize: 13,
+    fontSize: 11,
     opacity: 0.7,
     },
     footer: {
@@ -226,7 +228,6 @@ const styles = StyleSheet.create({
     },
     footerContent: {
         padding: 10,
-        color: 'red',
     },
 });
 

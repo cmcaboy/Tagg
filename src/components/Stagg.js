@@ -17,6 +17,7 @@ import {
     Alert,
     Button,
     RefreshControl,
+    FlatList,
 } from 'react-native';
 import StaggCard from './StaggCard';
 import StaggHeader from './StaggHeader';
@@ -148,6 +149,7 @@ class Stagg extends Component {
                     />
                 }
             >
+                <View style={styles.noProspects}>
                     <Ionicons 
                         name="md-sad"
                         size={100}
@@ -164,6 +166,7 @@ class Stagg extends Component {
                             Search Again
                         </Text>
                     </TouchableOpacity>
+                </View>
             </ScrollView>
             
         )
@@ -172,9 +175,9 @@ class Stagg extends Component {
     render() {
         //console.log('this.props.queue: ',this.props.queue);
         //console.log('this.props.queue.length: ',this.props.queue.length);
-        if (!this.props.queue.length) {
-            return this.noProspects();
-        }
+        // if (!this.props.queue.length) {
+        //     return this.noProspects();
+        // }
         return (
             // I'll need to change this to a FlatList eventually
             <View style={styles.staggContainer}>
@@ -183,6 +186,7 @@ class Stagg extends Component {
                     flipFilterModal={this.flipFilterModal}
                 />
                 <NewDateModal 
+                    id={this.props.id}
                     isVisible={this.state.newDateModal} 
                     flipNewDateModal={this.flipNewDateModal}
                 />
@@ -190,9 +194,21 @@ class Stagg extends Component {
                     isVisible={this.state.filterModal} 
                     flipFilterModal={this.flipFilterModal}
                 />
-                <ScrollView>
-                    {this.props.queue.map(prospect => this.renderCard(prospect))}
-                </ScrollView>
+                {/*this.noProspects()*/}
+
+                {!!this.props.queue.length? (
+                    <FlatList 
+                        data={this.props.queue}
+                        renderItem={({item}) => this.renderCard(item)}
+                        keyExtractor={(item,index) => item.id}
+                        onEndReached={() => this.props.fetchMoreQueue()} // fetchMore
+                        onEndReachedThreshold={1}
+                        refreshing={false}
+                        onRefresh={() => this.props.refetchQueue()} // refetch
+                    />
+                ) : (
+                    this.noProspects()
+                )}
             </View>
         )
     }
