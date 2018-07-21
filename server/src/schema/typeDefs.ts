@@ -47,7 +47,7 @@ const typeDefs = `
     }
 
     type Queue {
-        id
+        id: String
         list: [User]
         cursor: Float
     }
