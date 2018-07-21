@@ -64,6 +64,7 @@ class StaggContainer extends Component {
                                         user: {
                                             ...prev.user,
                                             queue: {
+                                                id: prev.user.queue.id,
                                                 list: [...prev.user.queue.list,...newQueue],
                                                 cursor: newCursor,
                                                 __typename: 'Queue'
