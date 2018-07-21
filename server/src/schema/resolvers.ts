@@ -212,9 +212,9 @@ const resolvers = {
             if(!args.cursor) {
                 console.log('No cursor passed in. You must be at the end of the list. No more values to retreive.');
                 return {
-                    id: args.id,
                     list: [],
                     cursor: null,
+                    id: args.id,
                 }
             } else if (!args.id) {
                 console.error('Error! No id passed in!');
@@ -254,18 +254,18 @@ const resolvers = {
                     if(list.length === 0) {
                         // If the list is empty, return a blank list and a null cursor
                         return {
-                            id: args.id,
                             list: [],
                             cursor: null,
+                            id: args.id,
                         }
                     }
 
                     const newCursor = list.length >= QUEUE_PAGE_LENGTH ? list[list.length - 1].order : null;
 
                     return {
-                        id: args.id,
                         list,
                         cursor: newCursor,
+                        id: args.id,
                     }
                 }
                 )
@@ -450,18 +450,18 @@ const resolvers = {
                     if(list.length === 0) {
                         // If the list is empty, return a blank list and a null cursor
                         return {
-                            id: parentValue.id,
                             list: [],
                             cursor: null,
+                            id: parentValue.id,
                         }
                     }
 
                     const newCursor = list.length >= QUEUE_PAGE_LENGTH ? list[list.length - 1].order : null;
 
                     return {
-                        id: parentValue.id,
                         list,
                         cursor: newCursor,
+                        id: parentValue.id,
                     }
                 }
                 )
