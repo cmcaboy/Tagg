@@ -31,6 +31,7 @@ query user($id: String!) {
     user(id: $id) {
         id
         queue {
+            id
             cursor
             list {
                 id
@@ -55,6 +56,7 @@ query user($id: String!) {
 export const MORE_QUEUE = gql`
 query moreQueue($id: String!, $cursor: Float!) {
     moreQueue(id: $id, cursor: $cursor) {
+        id
         cursor
         list {
             id

@@ -3,7 +3,7 @@ import {View,Image,Text,TouchableOpacity,Dimensions,StyleSheet} from 'react-nati
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {PRIMARY_COLOR} from '../variables';
-import {WideCard,MyAppText,Button} from './common';
+import {WideCard,MyAppText,Button,AskButton} from './common';
 import {Mutation} from 'react-apollo';
 import {GET_QUEUE} from '../apollo/queries';
 import {FOLLOW,UNFOLLOW} from '../apollo/mutations';
@@ -37,17 +37,9 @@ class StaggCard extends React.Component  {
     onPress = () => this.props.navigation.navigate('UserProfile',{id:this.props.user.id,name:this.props.user.name})
     followButton = ({isFollowing = false,updateFollow}) => {
         if(isFollowing) {
-            return (
-                <TouchableOpacity>
-                    <Button invertColors={true} buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={() => updateFollow(!isFollowing)}>Following</Button>
-                </TouchableOpacity>
-            )
+            return <Button invertColors={true} textStyle={styles.buttonText} onPress={() => updateFollow(!isFollowing)}>Following</Button>  
         }
-        return (
-            <TouchableOpacity>
-                <Button buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={() => updateFollow(!isFollowing)}>Follow</Button>
-            </TouchableOpacity>
-        )
+        return <Button buttonStyle={styles.buttonStyle} textStyle={styles.buttonText} onPress={() => updateFollow(!isFollowing)}>Follow</Button>
     }
     render() {
         // console.log('user: ',this.props.user);
@@ -107,7 +99,7 @@ class StaggCard extends React.Component  {
                                                 }
                                             },
                                             update: (store,data) => {
-                                                // console.log('updateFollow store: ',store);
+                                                console.log('updateFollow store: ',store);
                                                 // console.log('updateFollow data: ',data);
                                                 let storeData = store.readFragment({
                                                     id: this.props.user.id,
@@ -154,7 +146,10 @@ class StaggCard extends React.Component  {
                                 opacity: 0.7,
                             }}
                         />
-                        <View style={styles.footerContent}><MyAppText style={{color: 'red'}}>{name} is looking for a date on <MyAppText style={{fontWeight: 'bold'}}>Sep 1 @ 7pm</MyAppText></MyAppText></View>
+                        <View style={{flexDirection: 'row',alignItems: 'center'}}>
+                            <AskButton onPress={() => console.log('ask')} />
+                            <View style={styles.footerContent}><MyAppText style={{}}>{name} is looking for a date on <MyAppText style={{fontWeight: 'bold'}}>Sep 1 @ 7pm</MyAppText></MyAppText></View>
+                        </View>
                     </View>
                 )}
             </WideCard>
@@ -227,7 +222,7 @@ const styles = StyleSheet.create({
 
     },
     footerContent: {
-        padding: 10,
+        padding: 5,
     },
 });
 

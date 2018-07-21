@@ -212,6 +212,7 @@ const resolvers = {
             if(!args.cursor) {
                 console.log('No cursor passed in. You must be at the end of the list. No more values to retreive.');
                 return {
+                    id: args.id,
                     list: [],
                     cursor: null,
                 }
@@ -253,6 +254,7 @@ const resolvers = {
                     if(list.length === 0) {
                         // If the list is empty, return a blank list and a null cursor
                         return {
+                            id: args.id,
                             list: [],
                             cursor: null,
                         }
@@ -261,6 +263,7 @@ const resolvers = {
                     const newCursor = list.length >= QUEUE_PAGE_LENGTH ? list[list.length - 1].order : null;
 
                     return {
+                        id: args.id,
                         list,
                         cursor: newCursor,
                     }
@@ -447,6 +450,7 @@ const resolvers = {
                     if(list.length === 0) {
                         // If the list is empty, return a blank list and a null cursor
                         return {
+                            id: parentValue.id,
                             list: [],
                             cursor: null,
                         }
@@ -455,6 +459,7 @@ const resolvers = {
                     const newCursor = list.length >= QUEUE_PAGE_LENGTH ? list[list.length - 1].order : null;
 
                     return {
+                        id: parentValue.id,
                         list,
                         cursor: newCursor,
                     }
@@ -793,7 +798,7 @@ const resolvers = {
             query = query.slice(-1) === ','? query.slice(0,-1) : query;    
             query = query + `}) RETURN d`;
 
-            console.log('query in bid: ',query);
+            console.log('query in createDate: ',query);
 
             let rawDate;
             let date;
@@ -804,13 +809,13 @@ const resolvers = {
                 rawDate = await session.run(query);
                 date = rawDate.records[0]._fields[0].properties;
             } catch(e){
-                console.log('bid mutation error d node: ',e);
+                console.log('createDate mutation error d node: ',e);
                 return null;
             }
             try {
                 await session.run(`MATCH (a:User {id:'${args.id}'}), (d:Date {id:'${dateId}'}) MERGE (a)-[r:CREATE]->(d)`)
             } catch(e) {
-                console.log('bid mutation error relationship create: ',e);
+                console.log('createDate mutation error relationship create: ',e);
                 return null;
             }
             return date;
