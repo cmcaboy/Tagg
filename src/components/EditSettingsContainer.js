@@ -29,19 +29,19 @@ class EditSettingsContainer extends Component {
     return (
       <Query query={GET_ID}>
         {({ loading, error, data}) => {
-          console.log('local data: ',data);
-          console.log('local error: ',error);
-          console.log('local loading: ',loading);
+          // console.log('local data: ',data);
+          // console.log('local error: ',error);
+          // console.log('local loading: ',loading);
           if(loading) return <Spinner />
           if(error) return <Text>Error! {error.message}</Text>
           const id = data.user.id;
-          console.log('id: ',id);
+
           return (
             <Query query={GET_SETTINGS} variables={{id}}>
                 {({loading, error, data}) => {
-                console.log('loading: ',loading);
-                console.log('error: ',error);
-                console.log('data: ',data);
+                // console.log('loading: ',loading);
+                // console.log('error: ',error);
+                // console.log('data: ',data);
                 if(loading) return <Spinner />
                 if(error) return <Text>Error! {error.message}</Text>
                 const { minAgePreference, maxAgePreference, distance, sendNotifications } = data.user;
@@ -52,6 +52,7 @@ class EditSettingsContainer extends Component {
                         distance={distance}
                         sendNotifications={sendNotifications}
                         hideNotifications={this.props.hideNotifications}
+                        refetchQueue={this.props.refetchQueue}
                     />
                 }}
             </Query>

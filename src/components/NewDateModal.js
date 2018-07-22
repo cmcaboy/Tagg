@@ -46,8 +46,6 @@ class NewDateModal extends React.Component  {
     }
 
     render() {
-        console.log('NewDateModal isVisible: ',this.props.isVisible);
-        console.log('this.state newDateModal: ',this.state);
         const {id} = this.props;
         return (
             <MyAppModal isVisible={this.props.isVisible} close={this.resetState}>

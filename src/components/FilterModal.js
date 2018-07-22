@@ -23,16 +23,19 @@ class FilterModal extends React.Component  {
         console.log('flip state request');
         this.props.flipFilterModal();
         this.setState(this.BlankState);
+
+        !!this.props.refetchQueue && this.props.refetchQueue();
     }
 
     render() {
-        console.log('FilterModal isVisible: ',this.props.isVisible);
         return (
             <MyAppModal
                 isVisible={this.props.isVisible}
                 close={this.props.resetState}
             >
-                <EditSettingsContainer hideNotifications={true} />
+                <EditSettingsContainer 
+                    hideNotifications={true}  
+                />
                 <Button onPress={this.resetState}>
                     Dismiss
                 </Button>

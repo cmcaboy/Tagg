@@ -27,7 +27,6 @@ class StaggHeader extends React.Component  {
     showFilter = () => this.props.flipFilterModal();
 
     render() {
-        console.log('user: ',this.props.user);
         const {distance,age,totalBids,totalDates} = this.props;
         return (
             <HeaderCard styles={styles.overRide}>

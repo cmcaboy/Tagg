@@ -175,6 +175,7 @@ query user($id: String!) {
       maxAgePreference
       distance
       sendNotifications
+      followerDisplay
   }
 }
 `;

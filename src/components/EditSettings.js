@@ -7,8 +7,10 @@ import { db } from '../firebase';
 import { testFemale, testMale } from '../tests/testUser';
 import uuid from 'uuid';
 import { Query, Mutation } from 'react-apollo';
-//import gql from 'graphql-tag';
+import gql from 'graphql-tag';
 import {GET_SETTINGS} from '../apollo/queries';
+import {updateQueue,updateDistance} from '../apollo/local/queries/cache';
+import RNPickerSelect from 'react-native-picker-select';
 import {SET_AGE_PREFERENCE,SET_DISTANCE,SET_NOTIFICATIONS} from '../apollo/mutations';
 import { 
   SET_AGE_PREFERENCE_LOCAL, 
@@ -23,6 +25,21 @@ import {
 const SLIDER_WIDTH = Dimensions.get('window').width * 0.85;
 const isBoolean = val => 'boolean' === typeof val;
 
+const followerDisplayItems = [
+  {
+    label: 'Following Only',
+    value: 'Following Only',
+  },
+  {
+    label: 'Non-Following Only',
+    value: 'Non-Following Only',
+  },
+  {
+    label: 'Both',
+    value: 'Both',
+  },
+]
+
 class EditSettings extends Component {
   constructor(props) {
     super(props);
@@ -30,6 +47,7 @@ class EditSettings extends Component {
       ageValues: [this.props.minAgePreference,this.props.maxAgePreference],
       distance: this.props.distance,
       sendNotifications: this.props.sendNotifications,
+      followerDisplay: this.props.followerDisplay,
     } 
   }
     
@@ -39,7 +57,7 @@ class EditSettings extends Component {
   }
 
   render() {
-    const {ageValues,distance,sendNotifications} = this.state;
+    const {ageValues,distance,sendNotifications,followerDisplay} = this.state;
     const {id,showNotifications} = this.props;
   return (
     <View style={styles.containerStyle}>
@@ -64,7 +82,40 @@ class EditSettings extends Component {
                   min={18}
                   onValuesChange={(ageValues) => this.setState({ageValues})}
                   onValuesChangeFinish={(ageValues) => {
-                    return updateAgePreference({variables: {id, minAgePreference: ageValues[0], maxAgePreference:ageValues[1]}})}
+                    return updateAgePreference({
+                      variables: {id, minAgePreference: ageValues[0], maxAgePreference:ageValues[1]},
+                      optimisticResponse: {
+                        __typename: 'Mutation',
+                        editUser: {
+                          id,
+                          minAgePreference: ageValues[0],
+                          maxAgePreference: ageValues[1],
+                          __typename: 'User'
+                        }
+                      },
+                      update: (store,data) => {
+                        const fragment = gql`
+                            fragment updateAgePreference on User {
+                                minAgePreference
+                                maxAgePreference
+                        }
+                        `;
+                        let storeData = store.readFragment({
+                            id: data.data.editUser.id,
+                            fragment: fragment,
+                        });
+
+                        store.writeFragment({
+                            id: data.data.editUser.id,
+                            fragment: fragment,
+                            data: {
+                                ...storeData,
+                                minAgePreference: data.data.editUser.minAgePreference,
+                                maxAgePreference: data.data.editUser.maxAgePreference,
+                            }
+                        })
+                      }
+                    })}
                   }
                 />
               )
@@ -87,12 +138,46 @@ class EditSettings extends Component {
                   step={1}
                   value={distance}
                   maximumValue={50}
-                  minimumValue={0}
+                  minimumValue={1}
                   disabled={false}
                   onValueChange={(distance) => this.setState({distance})}
                   onSlidingComplete={(distance) => {
                     console.log('distance (server): ',distance);
-                    return updateDistance({variables: {id, distance}})
+                    return updateDistance({
+                      variables: {id, distance},
+                      optimisticResponse: {
+                        __typename: 'Mutation',
+                        editUser: {
+                          id,
+                          distance,
+                          __typename: 'User'
+                        }
+                      },
+                      //update: (store,data) => updateQueue(store,data)
+                      update: (store,data) => {
+                        console.log('store: ',store);
+                        console.log('data: ',data);
+                        const fragment = gql`
+                            fragment updateDistance on User {
+                                distance
+                        }
+                        `;
+                        let storeData = store.readFragment({
+                            id: data.data.editUser.id,
+                            fragment: fragment,
+                        });
+
+                        console.log('storeData: ',storeData);
+                        store.writeFragment({
+                            id: data.data.editUser.id,
+                            fragment: fragment,
+                            data: {
+                                ...storeData,
+                                distance: data.data.editUser.distance,
+                            }
+                        })
+                      },
+                    })
                   }}
                 />
               )
@@ -117,32 +202,32 @@ class EditSettings extends Component {
                           id, 
                           sendNotifications: newSendNotifications
                       },
+                      optimisticResponse: {
+                        __typename: 'Mutation',
+                        editUser: {
+                          id,
+                          sendNotifications: newSendNotifications,
+                          __typename: 'User'
+                        }
+                      },
                       update: (store, data) => {
-                        console.log('data: ',data);
+                        const fragment = gql`
+                            fragment updateNotifications on User {
+                                sendNotifications
+                        }
+                        `;
                         let storeData = store.readFragment({
-                          id: `${id}q`,
-                          fragment: gql`
-                            fragment Queue on Queue {
-                              list
-                              cursor
-                              id
-                            }
-                          `,
+                            id: data.data.editUser.id,
+                            fragment: fragment,
                         });
+
                         store.writeFragment({
-                          id:  `${id}q`,
-                          fragment: gql`
-                            fragment Queue on Queue {
-                              list 
-                              cursor 
-                              id
+                            id: data.data.editUser.id,
+                            fragment: fragment,
+                            data: {
+                                ...storeData,
+                                sendNotifications: data.data.editUser.sendNotifications,
                             }
-                          `,
-                          data: {
-                            ...storeData,
-                            list: data.data.editUserQueue.list,
-                            cursor: data.data.editUserQueue.cursor,
-                          }
                         })
                       }
                       })
@@ -155,6 +240,58 @@ class EditSettings extends Component {
         </View>
       </Card>
     }
+    <Card>
+        <View style={styles.titleSlider}>
+          <Text>Follower Display</Text> 
+          <Mutation mutation={SET_FOLLOWER_DISPLAY}>
+            {(changeFollowerDisplay, { data }) => {
+              return (
+                <RNPickerSelect
+                  placeholder={{value:this.props.followerDisplay}} 
+                  value={this.props.followerDisplay}
+                  items={followerDisplayItems}
+                  onValueChange={(newFollowerDisplay) => {
+                   
+                    changeFollowerDisplay({
+                      variables: {
+                          id, 
+                          followerDisplay: newFollowerDisplay,
+                      },
+                      optimisticResponse: {
+                        __typename: 'Mutation',
+                        editUser: {
+                          id,
+                          followerDisplay: newFollowerDisplay,
+                          __typename: 'User'
+                        }
+                      },
+                      update: (store, data) => {
+                        const fragment = gql`
+                            fragment updateFollowerDisplay on User {
+                                followerDisplay
+                        }
+                        `;
+                        let storeData = store.readFragment({
+                            id: data.data.editUser.id,
+                            fragment: fragment,
+                        });
+
+                        store.writeFragment({
+                            id: data.data.editUser.id,
+                            fragment: fragment,
+                            data: {
+                                ...storeData,
+                                followerDisplay: data.data.editUser.followerDisplay,
+                            }
+                        })
+                      }
+                      })
+                  }}
+                />
+              )}}
+          </Mutation>
+        </View>
+      </Card>
   </View>
   )}
 }

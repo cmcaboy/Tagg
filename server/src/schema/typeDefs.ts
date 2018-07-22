@@ -16,6 +16,7 @@ const typeDefs = `
         longitude: Float
         minAgePreference: Int
         maxAgePreference: Int
+        followerDisplay: String
         match: Boolean
         distanceApart: Float
         order: Float
@@ -139,7 +140,7 @@ const typeDefs = `
             registerDateTime: String
             minAgePreference: Int
             maxAgePreference: Int
-            followPreference: Int
+            followerDisplay: String
             pics: [String]
         ): User
         editUserQueue (
@@ -168,6 +169,7 @@ const typeDefs = `
             registerDateTime: String
             minAgePreference: Int
             maxAgePreference: Int
+            followerDisplay
             pics: [String]
         ): User
         newMessage (

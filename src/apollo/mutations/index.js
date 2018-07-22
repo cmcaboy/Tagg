@@ -92,8 +92,8 @@ export const SET_AGE_PREFERENCE = gql`
 mutation editUser($id: String!, $minAgePreference: Int, $maxAgePreference: Int ) {
   editUser(id: $id, minAgePreference: $minAgePreference, maxAgePreference: $maxAgePreference) {
     	id
-      minAgePreference
-      maxAgePreference
+        minAgePreference
+        maxAgePreference
   }
 }
 `;
@@ -110,10 +110,18 @@ mutation editUser($id: String!, $distance: Int ) {
 
 export const SET_NOTIFICATIONS = gql`
 mutation editUser($id: String!, $sendNotifications: Boolean ) {
-  editUserQueue(id: $id, sendNotifications: $sendNotifications) {
+  editUser(id: $id, sendNotifications: $sendNotifications) {
     	id
-        list
-        cursor
+        sendNotifications
+  }
+}
+`;
+
+export const SET_FOLLOWER_DISPLAY = gql`
+mutation editUser($id: String!, $followerDisplay: String ) {
+  editUser(id: $id, followerDisplay: $followerDisplay) {
+        id
+        followerDisplay
   }
 }
 `;
@@ -123,7 +131,7 @@ export const SET_NAME = gql`
 mutation editUser($id: String!, $name: String ) {
   editUser(id: $id, name: $name) {
     	id
-      name
+        name
   }
 }
 `
@@ -131,7 +139,7 @@ export const SET_AGE = gql`
 mutation editUser($id: String!, $age: Int ) {
   editUser(id: $id, age: $age) {
     	id
-      age
+        age
   }
 }
 `

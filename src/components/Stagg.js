@@ -193,6 +193,7 @@ class Stagg extends Component {
                 <FilterModal 
                     isVisible={this.state.filterModal} 
                     flipFilterModal={this.flipFilterModal}
+                    refetchQueue={() => this.props.refetchQueue()}
                 />
                 {/*this.noProspects()*/}
 

@@ -562,9 +562,9 @@ const resolvers = {
             !!args.email && (query = query+ `a.email='${args.email}',`)
             !!args.gender && (query = query+ `a.gender='${args.gender}',`)
             !!args.age && (query = query+ `a.age=${args.age},`)
-            !!args.description && (query = query+ `a.description='${args.description}',`)
-            !!args.school && (query = query+ `a.school='${args.school}',`)
-            !!args.work && (query = query+ `a.work='${args.work}',`)
+            !!args.description && (query = query+ `a.description="${args.description}",`)
+            !!args.school && (query = query+ `a.school="${args.school}",`)
+            !!args.work && (query = query+ `a.work="${args.work}",`)
             !!args.token && (query = query+ `a.token='${args.token}',`)
             !!args.registerDateTime && (query = query+ `a.registerDateTime='${args.registerDateTime}',`)
             isBoolean(args.sendNotifications) && (query = query+ `a.sendNotifications=${args.sendNotifications},`)
@@ -573,6 +573,7 @@ const resolvers = {
             !!args.longitude && (query = query+ `a.longitude=${args.longitude},`)
             !!args.minAgePreference && (query = query+ `a.minAgePreference=${args.minAgePreference},`)
             !!args.maxAgePreference && (query = query+ `a.maxAgePreference=${args.maxAgePreference},`)
+            !!args.followerDisplay && (query = query+ `a.followerDisplay='${args.followerDisplay}',`)
             !!args.pics && (query = query+ `a.pics=[${args.pics.map(pic => `"${pic}"`)}],`)
 
             console.log('query slice: ',query.slice(0,-1));
@@ -627,9 +628,9 @@ const resolvers = {
                 email: '${args.email}',
                 gender: '${args.gender}',`;
             !!args.age && (query = query+ `age:${args.age},`)
-            !!args.description && (query = query+ `description:'${args.description}',`)
-            !!args.school && (query = query+ `school:'${args.school}',`)
-            !!args.work && (query = query+ `work:'${args.work}',`)
+            !!args.description && (query = query+ `description:"${args.description}",`)
+            !!args.school && (query = query+ `school:"${args.school}",`)
+            !!args.work && (query = query+ `work:"${args.work}",`)
             !!args.token && (query = query+ `token:'${args.token}',`)
             !!args.registerDateTime && (query = query+ `registerDateTime:'${args.registerDateTime}',`)
             !!args.sendNotifications && (query = query+ `sendNotifications:${args.sendNotifications},`)
@@ -638,6 +639,7 @@ const resolvers = {
             !!args.longitude && (query = query+ `longitude:${args.longitude},`)
             !!args.minAgePreference && (query = query+ `minAgePreference:${args.minAgePreference},`)
             !!args.maxAgePreference && (query = query+ `maxAgePreference:${args.maxAgePreference},`)
+            !!args.followerDisplay && (query = query+ `followerDisplay='${args.followerDisplay}',`)
             !!args.pics && (query = query+ `pics:[${args.pics.map(pic => `"${pic}"`)}],`)
 
             query = query.slice(-1) === ','? query.slice(0,-1) : query;
