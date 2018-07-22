@@ -615,7 +615,6 @@ const resolvers = {
                 console.log('editUserQueue error: ',e);
                 return null;
             }
-            console.log('return result editUserQueue: ',e);
             return result;
              
         },

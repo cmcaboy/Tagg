@@ -1,8 +1,10 @@
 import {driver} from '../db/neo4j';
 const session = driver.session();
 
+const QUEUE_PAGE_LENGTH = 5;
+
 export const getQueue = (id) => {
-    console.log('parentValue: ',parentValue);
+    console.log('id: ',id);
             //console.log('args: ',args);
             // for pagination, I would like to sort by the following algorithm
             // order = [1/(# of likes)] x (distanceApart) x (time on platform)
@@ -10,7 +12,7 @@ export const getQueue = (id) => {
             // I don't have 'time on platform' factored in yet, but I will add it soon.
             // The query is sorted by smallest value first by default.
 
-            return session.run(`MATCH(a:User{id:'${parentValue.id}'}),(b:User)
+            return session.run(`MATCH(a:User{id:'${id}'}),(b:User)
                 WITH a,b, size((b)<-[:FOLLOWING]-()) as num_likes,
                 distance(point(a),point(b))*0.000621371 as distanceApart,
                 ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
@@ -47,7 +49,7 @@ export const getQueue = (id) => {
                         return {
                             list: [],
                             cursor: null,
-                            id: `${parentValue.id}q`,
+                            id: `${id}q`,
                         }
                     }
 
@@ -56,7 +58,7 @@ export const getQueue = (id) => {
                     return {
                         list,
                         cursor: newCursor,
-                        id: `${parentValue.id}q`,
+                        id: `${id}q`,
                     }
                 }
                 )
