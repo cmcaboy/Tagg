@@ -169,7 +169,7 @@ const typeDefs = `
             registerDateTime: String
             minAgePreference: Int
             maxAgePreference: Int
-            followerDisplay
+            followerDisplay: String
             pics: [String]
         ): User
         newMessage (
