@@ -112,7 +112,40 @@ class EditSettings extends Component {
                 <Switch 
                   onValueChange={() => {
                     const newSendNotifications = !sendNotifications;
-                    updateSendNotifications({variables: {id, sendNotifications: newSendNotifications}})
+                    updateSendNotifications({
+                      variables: {
+                          id, 
+                          sendNotifications: newSendNotifications
+                      },
+                      update: (store, data) => {
+                        console.log('data: ',data);
+                        let storeData = store.readFragment({
+                          id: `${id}q`,
+                          fragment: gql`
+                            fragment Queue on Queue {
+                              list
+                              cursor
+                              id
+                            }
+                          `,
+                        });
+                        store.writeFragment({
+                          id:  `${id}q`,
+                          fragment: gql`
+                            fragment Queue on Queue {
+                              list 
+                              cursor 
+                              id
+                            }
+                          `,
+                          data: {
+                            ...storeData,
+                            list: data.data.editUserQueue.list,
+                            cursor: data.data.editUserQueue.cursor,
+                          }
+                        })
+                      }
+                      })
                     this.notificationChange();
                   }}
                   value={sendNotifications}

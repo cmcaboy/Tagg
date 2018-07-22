@@ -110,9 +110,10 @@ mutation editUser($id: String!, $distance: Int ) {
 
 export const SET_NOTIFICATIONS = gql`
 mutation editUser($id: String!, $sendNotifications: Boolean ) {
-  editUser(id: $id, sendNotifications: $sendNotifications) {
+  editUserQueue(id: $id, sendNotifications: $sendNotifications) {
     	id
-        sendNotifications
+        list
+        cursor
   }
 }
 `;

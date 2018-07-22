@@ -139,8 +139,17 @@ const typeDefs = `
             registerDateTime: String
             minAgePreference: Int
             maxAgePreference: Int
+            followPreference: Int
             pics: [String]
         ): User
+        editUserQueue (
+            id: String!
+            sendNotifications: Boolean
+            distance: Int
+            minAgePreference: Int
+            maxAgePreference: Int
+            followPreference: Int
+        ): Queue
         newUser (
             id: String!
             name: String

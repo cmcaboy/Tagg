@@ -1,5 +1,6 @@
 import {driver} from '../db/neo4j';
 import {db} from '../db/firestore';
+import {getQueue} from '../middleware/queue';
 const uuid = require('node-uuid');
 import { PubSub, withFilter } from 'graphql-subscriptions';
 
@@ -406,67 +407,7 @@ const resolvers = {
                         })
                         .catch(e => console.log('matches error: ',e))
         },
-        queue: (parentValue, _) => {
-            console.log('parentValue: ',parentValue);
-            //console.log('args: ',args);
-            // for pagination, I would like to sort by the following algorithm
-            // order = [1/(# of likes)] x (distanceApart) x (time on platform)
-            // Priority is given by the lowest order number.
-            // I don't have 'time on platform' factored in yet, but I will add it soon.
-            // The query is sorted by smallest value first by default.
-            // 
-            return session.run(`MATCH(a:User{id:'${parentValue.id}'}),(b:User)
-                WITH a,b, size((b)<-[:FOLLOWING]-()) as num_likes,
-                distance(point(a),point(b))*0.000621371 as distanceApart,
-                ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
-                exists((a)-[:FOLLOWING]->(b)) as isFollowing,
-                exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
-                where 
-                NOT b.id=a.id AND
-                NOT b.gender=a.gender AND
-                distanceApart < a.distance
-                RETURN b, distanceApart, num_likes, order, isFollowing, hasDateOpen
-                ORDER BY order
-                LIMIT ${QUEUE_PAGE_LENGTH}`)
-                .then(result => result.records)
-                .then(records => {
-                    const list = records.map(record => {
-                        console.log('queue record: ',record);
-                        console.log('field 0: ',record._fields[0]);
-                        console.log('field 1: ',record._fields[1]);
-                        console.log('field 2: ',record._fields[2]);
-                        console.log('field 3: ',record._fields[3]);
-                        console.log('field 4: ',record._fields[4]);
-                        console.log('field 5: ',record._fields[5]);
-                        return {
-                            ...record._fields[0].properties,
-                            distanceApart: record._fields[1],
-                            order: record._fields[3],
-                            profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
-                            isFollowing: record._fields[4],
-                            hasDateOpen: record._fields[5], 
-                        }   
-                    })
-                    if(list.length === 0) {
-                        // If the list is empty, return a blank list and a null cursor
-                        return {
-                            list: [],
-                            cursor: null,
-                            id: `${parentValue.id}q`,
-                        }
-                    }
-
-                    const newCursor = list.length >= QUEUE_PAGE_LENGTH ? list[list.length - 1].order : null;
-
-                    return {
-                        list,
-                        cursor: newCursor,
-                        id: `${parentValue.id}q`,
-                    }
-                }
-                )
-                .catch(e => console.log('queue error: ',e))
-        }
+        queue: (parentValue, _) => getQueue(parentValue.id),
     },
     DateItem: {
         bids: (parentValue, _) => {
@@ -648,6 +589,36 @@ const resolvers = {
                 .then(records => records[0]._fields[0].properties)
                 .catch(e => console.log('editUser error: ',e))
         },
+        editUserQueue: async (_,args) => {
+            const isBoolean = val => 'boolean' === typeof val;
+            console.log('args: ',args);
+            let query = `MATCH(a:User{id: '${args.id}'}) SET `;
+            isBoolean(args.sendNotifications) && (query = query+ `a.sendNotifications=${args.sendNotifications},`)
+            !!args.distance && (query = query+ `a.distance=${args.distance},`)
+            !!args.minAgePreference && (query = query+ `a.minAgePreference=${args.minAgePreference},`)
+            !!args.maxAgePreference && (query = query+ `a.maxAgePreference=${args.maxAgePreference},`)
+
+            query = query.slice(-1) === ','? query.slice(0,-1) : query;
+            query = query + ` RETURN a`;
+            console.log('query: ',query);
+            
+            try {
+                await session.run(query)
+            } catch(e) {
+                console.log('editUserQueue error: ',e);
+                return null;
+            } 
+            let result
+            try {
+                result = await getQueue(args.id);
+            } catch(e) {
+                console.log('editUserQueue error: ',e);
+                return null;
+            }
+            console.log('return result editUserQueue: ',e);
+            return result;
+             
+        }
         newUser: (_,args) => {
             console.log('args: ',args)
             let query = `CREATE(a:User{
