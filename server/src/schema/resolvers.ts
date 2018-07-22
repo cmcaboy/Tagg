@@ -618,9 +618,9 @@ const resolvers = {
             console.log('return result editUserQueue: ',e);
             return result;
              
-        }
+        },
         newUser: (_,args) => {
-            console.log('args: ',args)
+            console.log('args: ',args);
             let query = `CREATE(a:User{
                 id: '${args.id}',
                 name: '${args.name}',
