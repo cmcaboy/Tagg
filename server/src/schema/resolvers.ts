@@ -253,11 +253,6 @@ const resolvers = {
                 .then(result => result.records)
                 .then(records => {
                     const list = records.map(record => {
-                        console.log('queue record: ',record);
-                        console.log('field 0: ',record._fields[0]);
-                        console.log('field 1: ',record._fields[1]);
-                        console.log('field 2: ',record._fields[2]);
-                        console.log('field 3: ',record._fields[3]);
                         return {
                             ...record._fields[0].properties,
                             distanceApart: record._fields[1],

@@ -36,7 +36,8 @@ class StaggContainer extends Component {
                         // } else if() {}
                         //if(loading) return <Spinner />
                         if(error) return <Text>Error! {error.message}</Text>
-                        const {followerDisplay} = data.user
+                        const {followerDisplay} = data.user;
+                        console.log('followerDisplay: ',followerDisplay);
                         const refetchQueue = async () => {
                             console.log('in refetchQueue');
 
