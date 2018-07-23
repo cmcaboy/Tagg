@@ -52,6 +52,8 @@ export const getQueue = async (id) => {
             ORDER BY order
             LIMIT ${QUEUE_PAGE_LENGTH}`;
 
+            console.log('query: ',query);
+
             return session.run(query)
                 .then(result => result.records)
                 .then(records => {
