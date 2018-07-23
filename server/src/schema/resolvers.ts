@@ -407,7 +407,10 @@ const resolvers = {
                         })
                         .catch(e => console.log('matches error: ',e))
         },
-        queue: (parentValue, _) => getQueue(parentValue),
+        queue: (parentValue, _) => {
+            console.log('queue');
+            return getQueue(parentValue);
+        },
     },
     DateItem: {
         bids: (parentValue, _) => {
