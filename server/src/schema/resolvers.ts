@@ -407,9 +407,9 @@ const resolvers = {
                         })
                         .catch(e => console.log('matches error: ',e))
         },
-        queue: (parentValue, _) => {
+        queue: async (parentValue, _) => {
             console.log('queue');
-            return getQueue(parentValue);
+            return await getQueue(parentValue);
         },
     },
     DateItem: {
