@@ -3,7 +3,7 @@ const session = driver.session();
 
 const QUEUE_PAGE_LENGTH = 5;
 
-export const getQueue = async (id) => {
+export const getQueue = ({id,followerDisplay}) => {
     console.log('id: ',id);
             //console.log('args: ',args);
             // for pagination, I would like to sort by the following algorithm
@@ -12,17 +12,17 @@ export const getQueue = async (id) => {
             // I don't have 'time on platform' factored in yet, but I will add it soon.
             // The query is sorted by smallest value first by default.
 
-            let followerDisplay;
+            // let followerDisplay;
 
-            try{
-                const followRaw = await session.run(`MATCH(a:User{id:'${id}'}) return a.followerDisplay`)
-                followerDisplay = followRaw.records[0]._fields[0];
-            }
-            catch(e) {
-                console.log('Erroring looking up followerDisplay preference: ',e);
-                console.log('Could not find followerDisplay preference. Defaulting to both.');
-                followerDisplay="Both";
-            }
+            // try{
+            //     const followRaw = await session.run(`MATCH(a:User{id:'${id}'}) return a.followerDisplay`)
+            //     followerDisplay = followRaw.records[0]._fields[0];
+            // }
+            // catch(e) {
+            //     console.log('Erroring looking up followerDisplay preference: ',e);
+            //     console.log('Could not find followerDisplay preference. Defaulting to both.');
+            //     followerDisplay="Both";
+            // }
 
             let followQuery;
 
