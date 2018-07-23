@@ -210,6 +210,20 @@ const resolvers = {
             console.log('in Queue');
             console.log('args: ',args);
 
+            let followQuery;
+
+            switch(args.followerDisplay) {
+                case "Following Only":
+                    followQuery=`AND isFollowing`;
+                    break;
+                case "Non-Following Only":
+                    followQuery=`AND NOT isFollowing`;
+                    break;
+                default:
+                    followQuery=``;
+            }
+
+
             if(!args.cursor) {
                 console.log('No cursor passed in. You must be at the end of the list. No more values to retreive.');
                 return {
@@ -232,6 +246,7 @@ const resolvers = {
                 NOT b.gender=a.gender AND
                 distanceApart < a.distance AND
                 order > ${args.cursor}
+                ${followQuery}
                 RETURN b, distanceApart, num_likes, order, isFollowing, hasDateOpen
                 ORDER BY order
                 LIMIT ${QUEUE_PAGE_LENGTH}`)

@@ -36,6 +36,7 @@ class StaggContainer extends Component {
                         // } else if() {}
                         //if(loading) return <Spinner />
                         if(error) return <Text>Error! {error.message}</Text>
+                        const {followerDisplay} = data.user
                         const refetchQueue = async () => {
                             console.log('in refetchQueue');
 
@@ -51,7 +52,7 @@ class StaggContainer extends Component {
                             }
                             return fetchMore({
                                 query: MORE_QUEUE,
-                                variables: {id, cursor: data.user.queue.cursor},
+                                variables: {id, followerDisplay, cursor: data.user.queue.cursor},
                                 updateQuery: (prev,{fetchMoreResult}) => {
                                     console.log('fetchMore queue');
                                     console.log('new queue: ', fetchMoreResult);

@@ -111,7 +111,7 @@ const typeDefs = `
         date(id: String!): DateItem
         otherBids(id: String!): DateBidList
         moreMessages(id: String!, cursor: String!): Message
-        moreQueue(id: String!, cursor: Float!): Queue
+        moreQueue(id: String!, followerDisplay: String, cursor: Float!): Queue
         moreDates(id: String!, cursor: Float!): DateList
         moreDateBids(id:String!, cursor: Float!): DateBidList
         moreFollowing(id: String!, cursor: Float!): Following
