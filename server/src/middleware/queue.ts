@@ -35,6 +35,8 @@ export const getQueue = ({id,followerDisplay}) => {
                     followQuery=``;
             }
 
+            console.log('followQuery: ',followQuery);
+
             let query = `MATCH(a:User{id:'${id}'}),(b:User)
             WITH a,b, size((b)<-[:FOLLOWING]-()) as num_likes,
             distance(point(a),point(b))*0.000621371 as distanceApart,
@@ -56,13 +58,13 @@ export const getQueue = ({id,followerDisplay}) => {
                 .then(result => result.records)
                 .then(records => {
                     const list = records.map(record => {
-                        console.log('queue record: ',record);
-                        console.log('field 0: ',record._fields[0]);
-                        console.log('field 1: ',record._fields[1]);
-                        console.log('field 2: ',record._fields[2]);
-                        console.log('field 3: ',record._fields[3]);
-                        console.log('field 4: ',record._fields[4]);
-                        console.log('field 5: ',record._fields[5]);
+                        // console.log('queue record: ',record);
+                        // console.log('field 0: ',record._fields[0]);
+                        // console.log('field 1: ',record._fields[1]);
+                        // console.log('field 2: ',record._fields[2]);
+                        // console.log('field 3: ',record._fields[3]);
+                        // console.log('field 4: ',record._fields[4]);
+                        // console.log('field 5: ',record._fields[5]);
                         return {
                             ...record._fields[0].properties,
                             distanceApart: record._fields[1],
