@@ -29,10 +29,8 @@ export const getQueue = ({id,followerDisplay}) => {
             switch(followerDisplay) {
                 case "Following Only":
                     followQuery=`AND a.isFollowing`;
-                    return;
                 case "Non-Following Only":
                     followQuery=`AND NOT a.isFollowing`;
-                    return
                 default:
                     followQuery=``;
             }
