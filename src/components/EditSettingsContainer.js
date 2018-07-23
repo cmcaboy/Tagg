@@ -44,13 +44,14 @@ class EditSettingsContainer extends Component {
                 // console.log('data: ',data);
                 if(loading) return <Spinner />
                 if(error) return <Text>Error! {error.message}</Text>
-                const { minAgePreference, maxAgePreference, distance, sendNotifications } = data.user;
+                const { minAgePreference, maxAgePreference, distance, sendNotifications, followerDisplay } = data.user;
                     return <EditSettings 
                         id={id} 
                         minAgePreference={minAgePreference}
                         maxAgePreference={maxAgePreference}
                         distance={distance}
                         sendNotifications={sendNotifications}
+                        followerDisplay={followerDisplay}
                         hideNotifications={this.props.hideNotifications}
                         refetchQueue={this.props.refetchQueue}
                     />

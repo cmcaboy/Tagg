@@ -3,7 +3,7 @@ const session = driver.session();
 
 const QUEUE_PAGE_LENGTH = 5;
 
-export const getQueue = (id) => {
+export const getQueue = async (id) => {
     console.log('id: ',id);
             //console.log('args: ',args);
             // for pagination, I would like to sort by the following algorithm
@@ -12,19 +12,47 @@ export const getQueue = (id) => {
             // I don't have 'time on platform' factored in yet, but I will add it soon.
             // The query is sorted by smallest value first by default.
 
-            return session.run(`MATCH(a:User{id:'${id}'}),(b:User)
-                WITH a,b, size((b)<-[:FOLLOWING]-()) as num_likes,
-                distance(point(a),point(b))*0.000621371 as distanceApart,
-                ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
-                exists((a)-[:FOLLOWING]->(b)) as isFollowing,
-                exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
-                where 
-                NOT b.id=a.id AND
-                NOT b.gender=a.gender AND
-                distanceApart < a.distance
-                RETURN b, distanceApart, num_likes, order, isFollowing, hasDateOpen
-                ORDER BY order
-                LIMIT ${QUEUE_PAGE_LENGTH}`)
+            let followerDisplay;
+
+            try{
+                const followRaw = await session.run(`MATCH(a:User{id:'${id}'}) return a.followerDisplay`)
+                followerDisplay = followRaw.records[0]._fields[0];
+            }
+            catch(e) {
+                console.log('Erroring looking up followerDisplay preference: ',e);
+                console.log('Could not find followerDisplay preference. Defaulting to both.');
+                followerDisplay="Both";
+            }
+
+            let followQuery;
+
+            switch(followerDisplay) {
+                case "Following Only":
+                    followQuery=`AND a.isFollowing`;
+                    return;
+                case "Non-Following Only":
+                    followQuery=`AND NOT a.isFollowing`;
+                    return
+                default:
+                    followQuery=``;
+            }
+
+            let query = `MATCH(a:User{id:'${id}'}),(b:User)
+            WITH a,b, size((b)<-[:FOLLOWING]-()) as num_likes,
+            distance(point(a),point(b))*0.000621371 as distanceApart,
+            ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
+            exists((a)-[:FOLLOWING]->(b)) as isFollowing,
+            exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
+            where 
+            NOT b.id=a.id AND
+            NOT b.gender=a.gender AND
+            distanceApart < a.distance
+            ${followQuery}
+            RETURN b, distanceApart, num_likes, order, isFollowing, hasDateOpen
+            ORDER BY order
+            LIMIT ${QUEUE_PAGE_LENGTH}`;
+
+            return session.run(query)
                 .then(result => result.records)
                 .then(records => {
                     const list = records.map(record => {

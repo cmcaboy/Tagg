@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {Text,View,Slider,Switch,StyleSheet,Dimensions} from 'react-native';
+import {Picker} from 'native-base';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {Card,Button} from './common';
 import { PRIMARY_COLOR } from '../variables';
@@ -10,8 +11,12 @@ import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import {GET_SETTINGS} from '../apollo/queries';
 import {updateQueue,updateDistance} from '../apollo/local/queries/cache';
-import RNPickerSelect from 'react-native-picker-select';
-import {SET_AGE_PREFERENCE,SET_DISTANCE,SET_NOTIFICATIONS} from '../apollo/mutations';
+//import RNPickerSelect from 'react-native-picker-select';
+import {
+  SET_AGE_PREFERENCE,
+  SET_DISTANCE,
+  SET_NOTIFICATIONS,
+  SET_FOLLOWER_DISPLAY} from '../apollo/mutations';
 import { 
   SET_AGE_PREFERENCE_LOCAL, 
   SET_DISTANCE_LOCAL, 
@@ -242,16 +247,16 @@ class EditSettings extends Component {
     }
     <Card>
         <View style={styles.titleSlider}>
-          <Text>Follower Display</Text> 
+          
           <Mutation mutation={SET_FOLLOWER_DISPLAY}>
             {(changeFollowerDisplay, { data }) => {
               return (
-                <RNPickerSelect
-                  placeholder={{value:this.props.followerDisplay}} 
-                  value={this.props.followerDisplay}
-                  items={followerDisplayItems}
+                <Picker
+                  //placeholder={{label: this.props.followerDisplay,value:this.props.followerDisplay}} 
+                  mode='dropdown'
+                  selectedValue={this.state.followerDisplay}
                   onValueChange={(newFollowerDisplay) => {
-                   
+                    console.log('newFollowerDisplay: ',newFollowerDisplay);
                     changeFollowerDisplay({
                       variables: {
                           id, 
@@ -266,6 +271,9 @@ class EditSettings extends Component {
                         }
                       },
                       update: (store, data) => {
+                        console.log('store: ',store);
+                        
+                        console.log('data: ',data);
                         const fragment = gql`
                             fragment updateFollowerDisplay on User {
                                 followerDisplay
@@ -276,6 +284,7 @@ class EditSettings extends Component {
                             fragment: fragment,
                         });
 
+                        console.log('storeData: ',storeData);
                         store.writeFragment({
                             id: data.data.editUser.id,
                             fragment: fragment,
@@ -284,10 +293,16 @@ class EditSettings extends Component {
                                 followerDisplay: data.data.editUser.followerDisplay,
                             }
                         })
+                        console.log('store: ',store);
+                        this.setState({followerDisplay:data.data.editUser.followerDisplay})
                       }
                       })
                   }}
-                />
+                >
+                  <Picker.Item label="Following Only" value="Following Only"/>
+                  <Picker.Item label="Non-Following Only" value="Non-Following Only"/>
+                  <Picker.Item label="Both" value="Both"/>
+                </Picker>
               )}}
           </Mutation>
         </View>
