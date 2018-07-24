@@ -38,10 +38,10 @@ class StaggContainer extends Component {
                         if(error) return <Text>Error! {error.message}</Text>
                         const {followerDisplay} = data.user;
                         console.log('followerDisplay: ',followerDisplay);
-                        const refetchQueue = async () => {
+                        const refetchQueue = () => {
                             console.log('in refetchQueue');
 
-                            await refetch({variables:{id}});
+                            refetch();
                         }
                         const fetchMoreQueue = () => {
                             console.log('in fetchMoreQueue');
@@ -61,6 +61,13 @@ class StaggContainer extends Component {
 
                                     const newQueue = fetchMoreResult.moreQueue.list;
                                     const newCursor = fetchMoreResult.moreQueue.cursor;
+
+                                    console.log('oldList: ',prev.user.queue.list)
+                                    console.log('new addition: ',newQueue);
+
+                                    //const newList = new Set([...prev.user.queue.list,...newQueue]);
+
+                                    // console.log('newList: ',[...newList]);
 
                                     const result = {
                                         user: {

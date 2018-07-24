@@ -49,6 +49,7 @@ class Stagg extends Component {
             loading: false,
             newDateModal: false,
             filterModal: false,
+            queue: this.props.queue,
         };
     };
 
