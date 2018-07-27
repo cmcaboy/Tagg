@@ -109,6 +109,7 @@ const typeDefs = `
         user(id: String!): User
         messages(id: String!): Message
         date(id: String!): DateItem
+        dates(id: String!): DateList
         otherBids(id: String!): DateBidList
         moreMessages(id: String!, cursor: String!): Message
         moreQueue(id: String!, followerDisplay: String, cursor: Float!): Queue

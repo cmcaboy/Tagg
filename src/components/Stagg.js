@@ -24,7 +24,6 @@ import StaggHeader from './StaggHeader';
 import NewDateModal from './NewDateModal';
 import FilterModal from './FilterModal';
 import {Card,Spinner,MyAppText} from './common';
-//import {Location,Notifications} from 'expo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Foundation from 'react-native-vector-icons/Foundation';
 //import registerForNotifications from '../services/push_notifications';
@@ -32,6 +31,7 @@ import gql from 'graphql-tag';
 import Permissions from 'react-native-permissions';
 import BackgroundGeolocation from 'react-native-background-geolocation';
 import {FUNCTION_PATH} from '../variables/functions';
+import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -49,8 +49,33 @@ class Stagg extends Component {
             loading: false,
             newDateModal: false,
             filterModal: false,
-            queue: this.props.queue,
+            //queue: this.props.queue,
+            refreshQueue: false,
+            queue: new DataProvider((r1,r2) => r1 !== r2).cloneWithRows(
+                this.props.queue.map(user => ({
+                    type: !!user.hasDateOpen? 'WITH_FOOTER' : 'NORMAL',
+                    user,
+                }))),
         };
+
+        this._layoutProvider = new LayoutProvider((i) => {
+            return this.state.queue.getDataForIndex(i).type
+        }, (type, dim) => {
+            console.log('type: ',type);
+            switch(type) {
+                case 'NORMAL':
+                    dim.width = SCREEN_WIDTH;
+                    dim.height = SCREEN_WIDTH * 0.4;
+                    break;
+                case 'WITH_FOOTER':
+                    dim.width = SCREEN_WIDTH;
+                    dim.height = SCREEN_WIDTH * 0.5;
+                    break;
+                default:
+                    dim.width = 0;
+                    dim.height = 0;
+            }
+        });
     };
 
     flipNewDateModal = () => this.setState(prev => ({newDateModal:!prev.newDateModal}));
@@ -67,6 +92,17 @@ class Stagg extends Component {
         UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
         // The next time the component changes, add a spring affect to it.
         LayoutAnimation.spring();
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        if(nextProps.queue !== this.props.queue) {
+            this.setState({queue:new DataProvider((r1,r2) => r1 !== r2).cloneWithRows(
+                nextProps.queue.map(user => ({
+                    type: !!user.hasDateOpen? 'WITH_FOOTER' : 'NORMAL',
+                    user,
+                }))),
+            })
+        }
     }
 
     onLocation = (location) => console.log(' - [event] location: ',location)
@@ -173,6 +209,11 @@ class Stagg extends Component {
         )
     }
 
+    rowRenderer = (type,data) => {
+        console.log('rowRenderer data: ',data);
+        return this.renderCard(data.user);
+    }
+
     render() {
         //console.log('this.props.queue: ',this.props.queue);
         //console.log('this.props.queue.length: ',this.props.queue.length);
@@ -194,20 +235,43 @@ class Stagg extends Component {
                 <FilterModal 
                     isVisible={this.state.filterModal} 
                     flipFilterModal={this.flipFilterModal}
-                    refetchQueue={() => this.props.refetchQueue()}
+                    refetchQueue={() => {
+                        this.props.refetchQueue()
+                        this.setState((prev) => ({refreshQueue:!prev.refreshQueue}))
+                    }}
                 />
                 {/*this.noProspects()*/}
 
                 {!!this.props.queue.length? (
-                    <FlatList 
-                        data={this.props.queue}
-                        renderItem={({item}) => this.renderCard(item)}
-                        keyExtractor={(item,index) => item.id}
-                        onEndReached={() => this.props.fetchMoreQueue()} // fetchMore
-                        onEndReachedThreshold={1}
-                        refreshing={false}
-                        onRefresh={() => this.props.refetchQueue()} // refetch
+                    <RecyclerListView 
+                        style={{flex:1}}
+                        onEndReached={() => {
+                            console.log('end reached');
+                            this.props.fetchMoreQueue()}}
+                        onEndReachedThreshold={200}
+                        rowRenderer={this.rowRenderer}
+                        dataProvider={this.state.queue}
+                        layoutProvider={this._layoutProvider}
                     />
+
+                    // <FlatList 
+                    //     style={{flex:1}}
+                    //     removeClippedSubviews={false}
+                    //     data={this.state.queue}
+                    //     extraData={this.state}
+                    //     renderItem={(itemP) => {
+                    //         console.log('itemP: ',itemP);
+                    //         return this.renderCard(itemP.item)
+                    //         //return <Text>{itemP.item.name}</Text>
+                    //     }
+                    //     }
+                    //     keyExtractor={(item,index) => item.id}
+                    //     onEndReached={() => this.props.fetchMoreQueue()} // fetchMore
+                    //     onEndReachedThreshold={1}
+                    //     refreshing={false}
+                    //     onRefresh={() => this.props.refetchQueue()} // refetch
+                    // />
+
                 ) : (
                     this.noProspects()
                 )}

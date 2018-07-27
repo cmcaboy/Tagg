@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderWidth: 1,
         borderRadius: 2,
-        textAlign: 'left',
+        //textAlign: 'left',
     },
     buttonStyle: {
         height: 50,

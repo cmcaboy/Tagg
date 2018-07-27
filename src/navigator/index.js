@@ -8,6 +8,8 @@ import MessengerContainer from '../components/MessengerContainer';
 import EditSettingsContainer from '../components/EditSettingsContainer';
 import EditProfile from '../components/EditProfile';
 import UserProfile from '../components/UserProfile';
+import OpenDateList from '../components/OpenDateList';
+import BidDate from '../components/BidDate';
 // import { FontAwesome, Ionicons, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -78,7 +80,13 @@ const MainNavigator = StackNavigator({
     },
     UserProfile: {
         screen: UserProfile
-    }
+    },
+    OpenDateList: {
+        screen: OpenDateList
+    },
+    BidDate: {
+        screen: BidDate
+    },
 },
 {
     mode: 'card',

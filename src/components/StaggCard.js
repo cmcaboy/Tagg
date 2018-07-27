@@ -147,7 +147,12 @@ class StaggCard extends React.Component  {
                             }}
                         />
                         <View style={{flexDirection: 'row',alignItems: 'center'}}>
-                            <AskButton onPress={() => console.log('ask')} />
+                            <AskButton onPress={() => this.props.navigation.navigate('OpenDateList',{
+                                id,
+                                otherId:this.props.user.id,
+                                otherName:this.props.user.name,
+                                otherPic: this.props.user.profilePic,
+                            })} />
                             <View style={styles.footerContent}><MyAppText style={{}}>{name} is looking for a date on <MyAppText style={{fontWeight: 'bold'}}>Sep 1 @ 7pm</MyAppText></MyAppText></View>
                         </View>
                     </View>
