@@ -1,6 +1,7 @@
 import React from 'react';
 import {View,Image,Text,TouchableOpacity,Dimensions,StyleSheet} from 'react-native';
-import {MyAppText, Button,HeaderCard, MyAppModal} from './common';
+import {MyAppText, HeaderCard, MyAppModal} from './common';
+import {Button} from 'native-base';
 import EditSettingsContainer from './EditSettingsContainer';
 import {PRIMARY_COLOR} from '../variables';
 
@@ -16,13 +17,13 @@ class FilterModal extends React.Component  {
             description: '',
         }
 
-        this.state = this.BlankState;
+        this.state = this.blankState;
     }
 
     resetState = () => {
         console.log('flip state request');
         this.props.flipFilterModal();
-        this.setState(this.BlankState);
+        this.setState(this.blankState);
 
         !!this.props.refetchQueue && this.props.refetchQueue();
     }
@@ -36,8 +37,8 @@ class FilterModal extends React.Component  {
                 <EditSettingsContainer 
                     hideNotifications={true}  
                 />
-                <Button onPress={this.resetState}>
-                    Dismiss
+                <Button block style={{marginTop: 10}} onPress={this.resetState}>
+                    <MyAppText style={{fontWeight: 'bold',color: '#fff',fontSize: 18}}>Done</MyAppText>
                 </Button>
             </MyAppModal>
         )

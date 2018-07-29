@@ -24,7 +24,8 @@ class StaggHeader extends React.Component  {
 
     viewDates  = () => console.log('view dates');
     newDate    = () => this.props.flipNewDateModal();
-    showFilter = () => this.props.flipFilterModal();
+    //showFilter = () => this.props.flipFilterModal();
+    showFilter = () => this.props.navigation.navigate('EditSettingsContainer');
 
     render() {
         const {distance,age,totalBids,totalDates} = this.props;

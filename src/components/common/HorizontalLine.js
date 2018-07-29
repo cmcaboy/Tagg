@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {View, StyleSheet} from 'react-native';
 
-const HorizontalLine = () => {
+const HorizontalLine = ({style}) => {
     return (
         <View
-            style={styles.horizontalLine}
+            style={[styles.horizontalLine,style]}
         />
     )
 }

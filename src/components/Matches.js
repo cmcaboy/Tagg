@@ -42,7 +42,7 @@ class Matches extends Component {
             return (
                 <View style={styles.matchContainer}>
                     <View style={styles.newMatchesContainer}>
-                        <MyAppText style={styles.heading}>New Matches</MyAppText>
+                        <MyAppText style={styles.heading}>My Matched Dates</MyAppText>
                         <ScrollView
                             horizontal={true}
                         >

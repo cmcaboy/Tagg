@@ -1,7 +1,6 @@
 import React from 'react';
 import {View,Image,Text,TouchableOpacity,Dimensions,StyleSheet,TextInput} from 'react-native';
 import {MyAppText,
-    Button,
     HeaderCard,
     HorizontalLine,
     MyTitleText,
@@ -12,6 +11,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DatePicker from 'react-native-datepicker';
 import gql from 'graphql-tag';
 import {Mutation} from 'react-apollo';
+import {Button} from 'native-base';
 
 const NEW_DATE = gql`
 mutation createDate($id: String!, $datetimeOfDate: String, $description: String) {
@@ -41,8 +41,9 @@ class NewDateModal extends React.Component  {
     }
 
     resetState = () => {
+        console.log('resetState');
         this.props.flipNewDateModal();
-        this.setState(this.BlankState);
+        this.setState(this.blankState);
     }
 
     render() {
@@ -51,43 +52,46 @@ class NewDateModal extends React.Component  {
             <MyAppModal isVisible={this.props.isVisible} close={this.resetState}>
                 <MyTitleText>New Date Request</MyTitleText>
                 <HorizontalLine />
-                <DatePicker 
-                    style={styles.dateInput}
-                    mode="datetime"
-                    date={this.state.datetime}
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    onDateChange={(datetime) => {this.setState({datetime})}}
-                    placeholder="When will this date take place?"
-                />
-                <TextInput 
-                    style={styles.textInput}
-                    multiline={true}
-                    placeholder="What kind of date are you looking for?"
-                    onChangeText={(text) => this.setState({description:text})}
-                    value={this.state.description}
-                    maxLength={300}
-                />
-                <View style={styles.buttonView}>
-                    <Mutation mutation={NEW_DATE}>
-                        {(newDate) => (
-                            <Button  onPress={() => {
-                                this.props.flipNewDateModal();
-                                return newDate({variables: {
-                                    id,
-                                    datetimeOfDate:this.state.datetime,
-                                    description:this.state.description,
-                                }})
-                            }}
-                            >
-                                Submit
-                            </Button>
-                        )}
-                    </Mutation>
-                    <Button  onPress={this.resetState}>
-                        Cancel
-                    </Button>
+                <View style={{alignItems:'stretch'}}>
+                    <DatePicker 
+                        style={styles.dateInput}
+                        mode="datetime"
+                        date={this.state.datetime}
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        onDateChange={(datetime) => {this.setState({datetime})}}
+                        placeholder="When will this date take place?"
+                    />
+                    <TextInput 
+                        style={styles.textInput}
+                        multiline={true}
+                        placeholder="What kind of date are you looking for?"
+                        onChangeText={(text) => this.setState({description:text})}
+                        value={this.state.description}
+                        maxLength={300}
+                    />
+                    <View style={styles.buttonView}>
+                        <Mutation mutation={NEW_DATE}>
+                            {(newDate) => (
+                                <Button block onPress={() => {
+                                    this.resetState();
+                                    return newDate({variables: {
+                                        id,
+                                        datetimeOfDate:this.state.datetime,
+                                        description:this.state.description,
+                                    }})
+                                }}
+                                >
+                                    <MyAppText style={{fontWeight: 'bold',color: '#fff',fontSize: 18}}>Submit</MyAppText>
+                                </Button>
+                            )}
+                        </Mutation>
+                        <TouchableOpacity style={styles.cancelButton} onPress={() => this.resetState()}>
+                            <MyAppText style={styles.cancelText}>Cancel</MyAppText>
+                        </TouchableOpacity>
+                    </View>
                 </View>
+                
             </MyAppModal>
         )
     }
@@ -97,25 +101,28 @@ const styles = StyleSheet.create({
     textInput: {
         borderWidth: 1,
         height: 75,
-        width: 250,
+        textAlign: 'center',
         marginBottom: 10,
         borderRadius: 2,
     },
     dateInput: {
-        width: 250,
+        width: '100%',
         marginBottom: 10,
         borderWidth: 1,
         borderRadius: 2,
         //textAlign: 'left',
     },
-    buttonStyle: {
-        height: 50,
-        width: 300,
-    },
     buttonView: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-around',
-    }
+    },
+    cancelText: {
+        textAlign: 'center',
+        fontSize: 16,
+    },
+    cancelButton: {
+        marginVertical: 15,
+    },
 })
 
 export default NewDateModal;

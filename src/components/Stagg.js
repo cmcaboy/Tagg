@@ -32,6 +32,7 @@ import Permissions from 'react-native-permissions';
 import BackgroundGeolocation from 'react-native-background-geolocation';
 import {FUNCTION_PATH} from '../variables/functions';
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview';
+import {CARD_HEIGHT,CARD_FOOTER_HEIGHT,CARD_MARGIN} from '../variables';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -61,15 +62,15 @@ class Stagg extends Component {
         this._layoutProvider = new LayoutProvider((i) => {
             return this.state.queue.getDataForIndex(i).type
         }, (type, dim) => {
-            console.log('type: ',type);
+            //console.log('type: ',type);
             switch(type) {
                 case 'NORMAL':
                     dim.width = SCREEN_WIDTH;
-                    dim.height = SCREEN_WIDTH * 0.4;
+                    dim.height = CARD_HEIGHT + CARD_MARGIN;
                     break;
                 case 'WITH_FOOTER':
                     dim.width = SCREEN_WIDTH;
-                    dim.height = SCREEN_WIDTH * 0.5;
+                    dim.height = CARD_HEIGHT + CARD_FOOTER_HEIGHT + CARD_MARGIN;
                     break;
                 default:
                     dim.width = 0;
@@ -80,7 +81,7 @@ class Stagg extends Component {
 
     flipNewDateModal = () => this.setState(prev => ({newDateModal:!prev.newDateModal}));
     flipFilterModal  = () => {
-        console.log('flip FilterModal status: ',this.state.filterModal);
+        //console.log('flip FilterModal status: ',this.state.filterModal);
         this.setState(prev => ({filterModal:!prev.filterModal}))
     };
 
@@ -210,7 +211,7 @@ class Stagg extends Component {
     }
 
     rowRenderer = (type,data) => {
-        console.log('rowRenderer data: ',data);
+        //console.log('rowRenderer data: ',data);
         return this.renderCard(data.user);
     }
 
@@ -226,6 +227,7 @@ class Stagg extends Component {
                 <StaggHeader 
                     flipNewDateModal={this.flipNewDateModal}
                     flipFilterModal={this.flipFilterModal}
+                    navigation={this.props.navigation}
                 />
                 <NewDateModal 
                     id={this.props.id}
@@ -252,6 +254,16 @@ class Stagg extends Component {
                         rowRenderer={this.rowRenderer}
                         dataProvider={this.state.queue}
                         layoutProvider={this._layoutProvider}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={this.state.loading}
+                                onRefresh={async () => {
+                                    this.setState({loading:true});
+                                    await this.props.refetchQueue();
+                                    this.setState({loading:false,index:0});
+                                }}
+                            />
+                        }
                     />
 
                     // <FlatList 

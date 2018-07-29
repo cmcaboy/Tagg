@@ -1,9 +1,11 @@
 import React from 'react';
 import {View,StyleSheet} from 'react-native';
+import {CARD_HEIGHT,CARD_FOOTER_HEIGHT,CARD_MARGIN} from '../../variables';
 
 const WideCard = (props) =>  {
+    const HEIGHT = !!props.footer ? CARD_HEIGHT + CARD_FOOTER_HEIGHT : CARD_HEIGHT;
     return (
-        <View style={styles.containerStyle}>
+        <View style={[styles.containerStyle,{height:HEIGHT}]}>
             {props.children}
         </View>
     )
@@ -27,8 +29,8 @@ const styles = StyleSheet.create({
         // margin operates just as they do in css
         backgroundColor: '#FFFFFF',
         //alignItems: 'center',
-        minHeight: 130,
-        margin: 5,
+        //minHeight: 130,
+        margin: CARD_MARGIN,
     },  
 });
 

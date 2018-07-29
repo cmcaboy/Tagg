@@ -89,16 +89,22 @@ query user($id: String!) {
                     id
                     name
                     pics
-                    age
-                    description
-                    work
-                    school
                 }
                 lastMessage {
                     text
                     name
                     createdAt
                 }
+            }
+        }
+        dateRequests {
+            cursor
+            list {
+                id
+                num_bids
+                open
+                datetimeOfDate
+                description
             }
         }
     }

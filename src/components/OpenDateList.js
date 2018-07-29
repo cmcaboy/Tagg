@@ -6,6 +6,7 @@ import {GET_QUEUE} from '../apollo/queries';
 import {FOLLOW,UNFOLLOW} from '../apollo/mutations';
 import gql from 'graphql-tag';
 import {List, ListItem,Container,Content} from 'native-base';
+import moment from 'moment';
 
 const GET_DATES = gql`
 query user($id: String!) {
@@ -13,6 +14,7 @@ query user($id: String!) {
         id
         dateRequests {
             list {
+                id
                 creationTime
                 datetimeOfDate
                 description
@@ -60,6 +62,7 @@ class OpenDateList extends React.Component  {
                     <List>
                         <Query query={GET_DATES} variables={{id:this.props.navigation.state.params.otherId }}>
                         {({data, loading, error}) => {
+                            console.log('OpenDateList data: ',data);
                             if(loading) return <Spinner />
                             if(error) return <MyAppText>Error! {error.message}</MyAppText>
                             return data.user.dateRequests.list.map(date => (
@@ -71,8 +74,8 @@ class OpenDateList extends React.Component  {
                                     })}
                                 >
                                     <View style={{flex:1,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center'}}>
-                                        <MyAppText>{date.datetiemOfDate} {date.description}</MyAppText>
-                                        <MyAppText>{date.num_bids}</MyAppText>
+                                        <MyAppText>{moment(date.datetimeOfDate).format('MMM D, h:mm a')} </MyAppText>
+                                        <MyAppText>{date.description.length > 20? `${date.description.slice(0,20)}...`: date.description}</MyAppText>
                                     </View>
                                 </ListItem>
                             ))

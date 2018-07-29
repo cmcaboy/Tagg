@@ -46,7 +46,7 @@ class StaggCard extends React.Component  {
         const {profilePic,school,work,name,distanceApart,age,isFollowing,hasDateOpen} = this.props.user;
         const {id} = this.props;
         return (
-            <WideCard>
+            <WideCard footer={!!hasDateOpen}>
                 <View style={styles.bodyStyle}>
                 <TouchableOpacity onPress={this.onPress}>
                     <Image
@@ -81,9 +81,10 @@ class StaggCard extends React.Component  {
                             <MyAppText style={styles.distance}>{Math.round(distanceApart)} 
                                 {Math.round(distanceApart) === 1 ? " mile away" : " miles away"}
                             </MyAppText>
-                            <Mutation mutation={FOLLOW} ignoreResults={false}>
+                            <Mutation mutation={FOLLOW} ignoreResults={true}>
                                 {(follow,_) => {
                                     const updateFollow = (isFollowing) => {
+                                        console.log('isFollowing: ',isFollowing);
                                         follow({
                                             variables: {
                                                 id,
@@ -99,8 +100,8 @@ class StaggCard extends React.Component  {
                                                 }
                                             },
                                             update: (store,data) => {
-                                                console.log('updateFollow store: ',store);
-                                                // console.log('updateFollow data: ',data);
+                                                //console.log('updateFollow store: ',store);
+                                                console.log('updateFollow data: ',data);
                                                 let storeData = store.readFragment({
                                                     id: this.props.user.id,
                                                     fragment: gql`
@@ -146,15 +147,26 @@ class StaggCard extends React.Component  {
                                 opacity: 0.7,
                             }}
                         />
-                        <View style={{flexDirection: 'row',alignItems: 'center'}}>
-                            <AskButton onPress={() => this.props.navigation.navigate('OpenDateList',{
-                                id,
-                                otherId:this.props.user.id,
-                                otherName:this.props.user.name,
-                                otherPic: this.props.user.profilePic,
-                            })} />
-                            <View style={styles.footerContent}><MyAppText style={{}}>{name} is looking for a date on <MyAppText style={{fontWeight: 'bold'}}>Sep 1 @ 7pm</MyAppText></MyAppText></View>
-                        </View>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('OpenDateList',{
+                            id,
+                            otherId:this.props.user.id,
+                            otherName:this.props.user.name,
+                            otherPic: this.props.user.profilePic,
+                        })} >
+                            <View style={{flexDirection: 'row',alignItems: 'center',justifyContent: 'center'}}>
+                                {/*<AskButton onPress={() => this.props.navigation.navigate('OpenDateList',{
+                                    id,
+                                    otherId:this.props.user.id,
+                                    otherName:this.props.user.name,
+                                    otherPic: this.props.user.profilePic,
+                                })} />
+                            */}
+                                <View style={styles.footerContent}>
+                                    <MyAppText style={{color: '#fff',fontWeight: 'bold'}}>Needs a date on Sep 1 @ 7pm
+                                    </MyAppText>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 )}
             </WideCard>
@@ -220,14 +232,17 @@ const styles = StyleSheet.create({
         opacity: 0.7,
       },
     schoolText: {
-    fontSize: 11,
-    opacity: 0.7,
+        fontSize: 11,
+        opacity: 0.7,
     },
     footer: {
-
+        backgroundColor: '#7CB342',
+        borderBottomLeftRadius: 7,
+        borderBottomRightRadius: 7,
+        //paddingVertical: 5,
     },
     footerContent: {
-        padding: 5,
+        padding: 7,
     },
 });
 

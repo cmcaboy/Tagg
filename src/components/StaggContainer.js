@@ -22,10 +22,10 @@ class StaggContainer extends Component {
                 return (
                     <Query query={GET_QUEUE} variables={{id}}>
                     {({loading, error, data, fetchMore, networkStatus, refetch }) => {
-                        console.log('data stagg: ',data);
-                        // console.log('error stagg: ',error);
-                        // console.log('loading stagg: ',loading);
-                        console.log('networkStatus: ',networkStatus);
+                        //console.log('data stagg: ',data);
+                        //console.log('error stagg: ',error);
+                        //console.log('loading stagg: ',loading);
+                        //console.log('networkStatus: ',networkStatus);
                         switch(networkStatus) {
                             case 1: return <Spinner />
                             case 2: return <Spinner />
@@ -37,7 +37,7 @@ class StaggContainer extends Component {
                         //if(loading) return <Spinner />
                         if(error) return <Text>Error! {error.message}</Text>
                         const {followerDisplay} = data.user;
-                        console.log('followerDisplay: ',followerDisplay);
+                        //console.log('followerDisplay: ',followerDisplay);
                         const refetchQueue = () => {
                             console.log('in refetchQueue');
 
@@ -45,6 +45,10 @@ class StaggContainer extends Component {
                         }
                         const fetchMoreQueue = () => {
                             console.log('in fetchMoreQueue');
+                            if(!data.user.queue) {
+                                console.log('queue empty or returning an error');
+                                return null;
+                            }
                             if(!data.user.queue.cursor) {
                                 // If the cursor is null, don't call refetch because
                                 // you are at the end of the queue.
@@ -105,7 +109,7 @@ class StaggContainer extends Component {
                                         });
                                             return <Stagg 
                                                 id={id}
-                                                queue={data.user.queue.list} 
+                                                queue={!!data.user.queue? data.user.queue.list : []} 
                                                 likeUser={startLikeUser}
                                                 dislikeUser={startDislikeUser}
                                                 startSetCoords={startSetCoords}

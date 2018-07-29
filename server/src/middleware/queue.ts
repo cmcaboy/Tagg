@@ -14,16 +14,6 @@ export const getQueue = ({id,followerDisplay}) => {
 
             // let followerDisplay;
 
-            // try{
-            //     const followRaw = await session.run(`MATCH(a:User{id:'${id}'}) return a.followerDisplay`)
-            //     followerDisplay = followRaw.records[0]._fields[0];
-            // }
-            // catch(e) {
-            //     console.log('Erroring looking up followerDisplay preference: ',e);
-            //     console.log('Could not find followerDisplay preference. Defaulting to both.');
-            //     followerDisplay="Both";
-            // }
-
             let followQuery;
 
             switch(followerDisplay) {
@@ -94,5 +84,12 @@ export const getQueue = ({id,followerDisplay}) => {
                     }
                 }
                 )
-                .catch(e => console.log('queue error: ',e))
+                .catch(e => {
+                    console.log('queue error: ',e);
+                    return {
+                        list: [],
+                        cursor: null,
+                        id: `${id}q`,
+                    }
+                })
 }
