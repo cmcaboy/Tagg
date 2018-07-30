@@ -1,13 +1,13 @@
 import React,{Component} from 'react';
 import {
     View, 
-    Text, 
     TouchableOpacity, 
     StyleSheet, 
     Platform, 
     ScrollView 
 } from 'react-native';
 import {CirclePicture,MyAppText,Spinner} from './common';
+import {List,ListItem,Text,Left,Right,Body} from 'native-base'
 import MatchListItem from './MatchListItem';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { PRIMARY_COLOR } from '../variables';
@@ -15,6 +15,7 @@ import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
 import {GET_MATCHES} from '../apollo/queries';
 import {GET_ID} from '../apollo/local/queries';
+import {formatDescription,formatDate,formatBids} from '../format';
 
 class Matches extends Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class Matches extends Component {
             </View>
         )
     }
-    renderContent({matches,id,name,pic}) {
+    renderContent({matches,dateRequests,id,name,pic}) {
         const {navigation} = this.props;
 
         if (matches.length === 0) {
@@ -46,7 +47,7 @@ class Matches extends Component {
                         <ScrollView
                             horizontal={true}
                         >
-                        {matches.filter(match => !match.lastMessage).map((match) => {
+                        {matches.map((match) => {
                             return (
                                 <TouchableOpacity 
                                     onPress={() => navigation.navigate('MessengerContainer',{
@@ -70,6 +71,25 @@ class Matches extends Component {
                         </ScrollView>
                     </View>
                     <View style={styles.messagesContainer}>
+                        <MyAppText style={styles.heading}>My Open Dates</MyAppText>
+                        <ScrollView>
+                            <List>
+                                {dateRequests.map((date) => (
+                                    <ListItem key={date.id} style={{marginLeft:0}}>
+                                        <Body>
+                                            <Text>{formatDate(date.datetimeOfDate)}</Text>
+                                            <Text note numberOfLines={1}>{formatDescription(date.description)}</Text>
+                                        </Body>
+                                        <Right>
+                                            <Text>{formatBids(date.num_bids)}</Text>
+                                        </Right>
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </ScrollView>
+                    </View>
+                    {/*
+                    <View style={styles.messagesContainer}>
                         <MyAppText style={styles.heading}>Messages</MyAppText>
                         <ScrollView>
                             {matches.filter(match => (!!match.lastMessage && !!match.lastMessage.text)).map((match) => (
@@ -91,6 +111,7 @@ class Matches extends Component {
                         ))}
                         </ScrollView>
                     </View>
+                    */}
                 </View>
             )
     }
@@ -105,7 +126,7 @@ class Matches extends Component {
               if(loading) return <Spinner />
               if(error) {
                 console.log('error: ',error);  
-                return <Text>Local Error! {error.message}</Text>
+                return <MyAppText>Local Error! {error.message}</MyAppText>
               }
               const { id } = data.user;
               return (
@@ -115,9 +136,15 @@ class Matches extends Component {
                     //console.log('error: ',error);
                     //console.log('loading: ',loading);
                     if(loading) return <Spinner />
-                    if(error) return <Text>Error! {error.message}</Text>
+                    if(error) return <MyAppText>Error! {error.message}</MyAppText>
                     console.log('data in matches: ',data);
-                    return this.renderContent({matches:data.user.matchedDates.list,id,name:data.user.name,pic:data.user.profilePic})
+                    return this.renderContent({
+                        matches:data.user.matchedDates.list,
+                        dateRequests:data.user.dateRequests.list,
+                        id,
+                        name:data.user.name,
+                        pic:data.user.profilePic
+                    })
                   }}
                   </Query>
               ) 

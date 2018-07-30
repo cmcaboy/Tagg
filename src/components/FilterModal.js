@@ -20,9 +20,12 @@ class FilterModal extends React.Component  {
         this.state = this.blankState;
     }
 
-    resetState = () => {
+    closeModal = () => {
         console.log('flip state request');
-        this.props.flipFilterModal();
+        console.log('isVisible: ',this.props.isVisible);
+        if(this.props.isVisible) {
+            this.props.flipFilterModal();
+        }
         this.setState(this.blankState);
 
         !!this.props.refetchQueue && this.props.refetchQueue();
@@ -32,12 +35,12 @@ class FilterModal extends React.Component  {
         return (
             <MyAppModal
                 isVisible={this.props.isVisible}
-                close={this.props.resetState}
+                close={this.closeModal}
             >
                 <EditSettingsContainer 
                     hideNotifications={true}  
                 />
-                <Button block style={{marginTop: 10}} onPress={this.resetState}>
+                <Button block style={{marginTop: 10}} onPress={this.closeModal}>
                     <MyAppText style={{fontWeight: 'bold',color: '#fff',fontSize: 18}}>Done</MyAppText>
                 </Button>
             </MyAppModal>

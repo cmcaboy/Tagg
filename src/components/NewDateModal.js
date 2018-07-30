@@ -40,16 +40,19 @@ class NewDateModal extends React.Component  {
         this.state = this.blankState;
     }
 
-    resetState = () => {
+    closeModal = () => {
         console.log('resetState');
-        this.props.flipNewDateModal();
+        console.log('isVisible: ',this.props.isVisible);
+        if(this.props.isVisible) {
+            this.props.flipNewDateModal();
+        }
         this.setState(this.blankState);
     }
 
     render() {
         const {id} = this.props;
         return (
-            <MyAppModal isVisible={this.props.isVisible} close={this.resetState}>
+            <MyAppModal isVisible={this.props.isVisible} close={this.closeModal}>
                 <MyTitleText>New Date Request</MyTitleText>
                 <HorizontalLine />
                 <View style={{alignItems:'stretch'}}>
@@ -86,7 +89,7 @@ class NewDateModal extends React.Component  {
                                 </Button>
                             )}
                         </Mutation>
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => this.resetState()}>
+                        <TouchableOpacity style={styles.cancelButton} onPress={this.closeModal}>
                             <MyAppText style={styles.cancelText}>Cancel</MyAppText>
                         </TouchableOpacity>
                     </View>

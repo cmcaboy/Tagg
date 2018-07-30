@@ -6,7 +6,7 @@ import {GET_QUEUE} from '../apollo/queries';
 import {FOLLOW,UNFOLLOW} from '../apollo/mutations';
 import gql from 'graphql-tag';
 import {List, ListItem,Container,Content} from 'native-base';
-import moment from 'moment';
+import {formatDate,formatDescription} from '../format';
 
 const GET_DATES = gql`
 query user($id: String!) {
@@ -74,8 +74,8 @@ class OpenDateList extends React.Component  {
                                     })}
                                 >
                                     <View style={{flex:1,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center'}}>
-                                        <MyAppText>{moment(date.datetimeOfDate).format('MMM D, h:mm a')} </MyAppText>
-                                        <MyAppText>{date.description.length > 20? `${date.description.slice(0,20)}...`: date.description}</MyAppText>
+                                        <MyAppText>{formatDate(date.datetimeOfDate)} </MyAppText>
+                                        <MyAppText>{formatDescription(date.description)}</MyAppText>
                                     </View>
                                 </ListItem>
                             ))
