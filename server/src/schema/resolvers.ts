@@ -134,6 +134,9 @@ const resolvers = {
                         .then(records => {
                             const list = records.map(record => {
                                 console.log('record: ',record);
+                                console.log('bid: ',record._fields[2]);
+                                console.log('b user: ',record._fields[0]);
+                                console.log('d date: ',record._fields[1]);
                                 return {
                                     id: args.id,
                                     datetimeOfBid: record._fields[2].datetimeOfBid,
