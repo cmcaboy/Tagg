@@ -126,21 +126,27 @@ const resolvers = {
         otherBids: (_, args) => {
             // dateID should be passed in as the id
             // Need to factor in pagination
+            // Should sort by date?
             console.log('otherBids args: ',args);
             return session
                     .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) RETURN b,d,r`)
                         .then(result => result.records)
-                        .then(records => records.map(record => ({
-                            id: args.id,
-                            datetimeOfBid: record._fields[2].datetimeOfBid,
-                            bidDescription: record._fields[2].bidDescription,
-                            bidPlace: record._fields[2].bidPlace,
-                            user: {
-                                ...record._fields[0].properties,
-                                profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
+                        .then(records => {
+                            const list = records.map(record => ({
+                                id: args.id,
+                                datetimeOfBid: record._fields[2].datetimeOfBid,
+                                bidDescription: record._fields[2].bidDescription,
+                                bidPlace: record._fields[2].bidPlace,
+                                user: {
+                                    ...record._fields[0].properties,
+                                    profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
+                                }
+                            }))
+                            return {
+                                list,
+                                cursor: null,
                             }
-                        })
-                        ))
+                        )
                         .catch(e => console.log('bid error: ',e))
         },
         moreMessages: async (_,args) => {
