@@ -141,12 +141,12 @@ const resolvers = {
                                     ...record._fields[0].properties,
                                     profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
                                 }
-                            }))
+                            }));
                             return {
                                 list,
                                 cursor: null,
                             }
-                        )
+                        })
                         .catch(e => console.log('bid error: ',e))
         },
         moreMessages: async (_,args) => {
