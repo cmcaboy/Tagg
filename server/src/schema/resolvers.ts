@@ -139,9 +139,9 @@ const resolvers = {
                                 console.log('d date: ',record._fields[1]);
                                 return {
                                     id: args.id,
-                                    datetimeOfBid: record._fields[2].datetimeOfBid,
-                                    bidDescription: record._fields[2].bidDescription,
-                                    bidPlace: record._fields[2].bidPlace,
+                                    datetimeOfBid: record._fields[2].properties.datetimeOfBid,
+                                    bidDescription: record._fields[2]properties.bidDescription,
+                                    bidPlace: record._fields[2].properties.bidPlace,
                                     user: {
                                         ...record._fields[0].properties,
                                         profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
