@@ -5,7 +5,7 @@ import {Mutation,Query} from 'react-apollo';
 //import {GET_QUEUE} from '../apollo/queries';
 import {FOLLOW,UNFOLLOW} from '../apollo/mutations';
 import gql from 'graphql-tag';
-import {List,ListItem,Container,Content,Right,Left,Body,Text,Button} from 'native-base';
+import {List,ListItem,Container,Content,Right,Left,Body,Text,Button,Thumbnail} from 'native-base';
 import {formatDate,formatDescription} from '../format';
 
 const GET_BIDS = gql`
@@ -27,7 +27,7 @@ query otherBids($id: String!) {
   }
 `;
 
-class OpenDateList extends React.Component  {
+class BidList extends React.Component  {
     
     constructor(props) {
         super(props);
@@ -38,7 +38,7 @@ class OpenDateList extends React.Component  {
         headerTitle: (
             <View style={styles.headerViewStyle}>
                 {console.log('navigation params: ',navigation.state.params)}
-                <MyAppText style={styles.textHeader}>Select a winner for {formatDate(navigation.state.params.datetimeOfDate)}</MyAppText>
+                <MyAppText style={styles.textHeader}>Select a winner</MyAppText>
                 <View style={{width: 100}}></View>
             </View>
         ),
@@ -53,7 +53,7 @@ class OpenDateList extends React.Component  {
     })
 
     render() {
-        console.log('navigation params: 'this.props.navigation.state.params);
+        console.log('navigation paramss: ',this.props.navigation.state.params);
         return (
             <Container>
                 <Content>
@@ -64,19 +64,20 @@ class OpenDateList extends React.Component  {
                             if(loading) return <Spinner />
                             if(error) return <MyAppText>Error! {error.message}</MyAppText>
                             return data.otherBids.list.map(date => (
-                                <ListItem 
-                                    key={date.id} 
+                                <ListItem thumbnail
+                                    key={date.bidUser.id} 
                                     onPress={() =>  this.props.navigation.navigate('UserProfile',{
-                                        id: date.user.id,
-                                        name: date.user.name,
+                                        id: date.bidUser.id,
+                                        name: date.bidUser.name,
                                     })}
                                 >
                                     <Left>
-                                        <Thumbnail square source={{uri: date.user.profilePic}}/>
+                                        <Thumbnail square source={{uri: date.bidUser.profilePic}}/>
                                     </Left>
                                     <Body>
-                                        <Text>{date.user.name}</Text>
-                                        <Text note numberOfLines={1}>{formatDescription(date.description)}</Text>
+                                        <Text>{date.bidUser.name}</Text>
+                                        <Text note numberOfLines={1}>{date.bidPlace}</Text>
+                                        <Text note numberOfLines={1}>{formatDescription(date.bidDescription)}</Text>
                                     </Body>
                                     <Right>
                                         <Button transparent>

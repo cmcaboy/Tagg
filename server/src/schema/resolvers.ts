@@ -133,7 +133,7 @@ const resolvers = {
                         .then(result => result.records)
                         .then(records => {
                             const list = records.map(record => ({
-                                    id: args.id,
+                                    id: record._fields[0].properties.id,
                                     datetimeOfBid: record._fields[1].properties.datetimeOfBid,
                                     bidDescription: record._fields[1].properties.bidDescription,
                                     bidPlace: record._fields[1].properties.bidPlace,

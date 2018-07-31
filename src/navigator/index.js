@@ -10,6 +10,7 @@ import EditProfile from '../components/EditProfile';
 import UserProfile from '../components/UserProfile';
 import OpenDateList from '../components/OpenDateList';
 import BidDate from '../components/BidDate';
+import BidList from '../components/BidList';
 // import { FontAwesome, Ionicons, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -86,6 +87,9 @@ const MainNavigator = StackNavigator({
     },
     BidDate: {
         screen: BidDate
+    },
+    BidList: {
+        screen: BidList
     },
 },
 {

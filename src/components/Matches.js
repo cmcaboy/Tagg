@@ -78,7 +78,7 @@ class Matches extends Component {
                                     <ListItem 
                                         key={date.id} 
                                         style={{marginLeft:0}}
-                                        onPress={() => navigation.navigate('MessengerContainer',{
+                                        onPress={() => navigation.navigate('BidList',{
                                             id: date.id,
                                             datetimeOfDate: date.datetimeOfDate,
                                         }
