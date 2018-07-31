@@ -79,8 +79,9 @@ class Matches extends Component {
                                         key={date.id} 
                                         style={{marginLeft:0}}
                                         onPress={() => navigation.navigate('BidList',{
-                                            id: date.id,
+                                            dateId: date.id,
                                             datetimeOfDate: date.datetimeOfDate,
+                                            id
                                         }
                                         )}
                                     >

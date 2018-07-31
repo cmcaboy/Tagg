@@ -29,6 +29,15 @@ mutation editUser($id: String!, $token: String) {
 }
 `;
 
+export const CHOOSE_WINNER = gql`
+mutation chooseWinner($id: String!, $winnerId: String!,$dateId: String) {
+    chooseWinner(id: $id, winnerId: $winnerId, dateId: $dateId) {
+        id
+        open
+    }
+}
+`
+
 export const LIKE = gql`
 mutation likeUser($id: String!, $likedId: String!) {
     likeUser(id: $id, likedId: $likedId) {

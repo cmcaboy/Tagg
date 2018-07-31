@@ -819,6 +819,7 @@ const resolvers = {
             // In order to create a winner, we need to set winner=true on the bid, set open to FALSE on the date
             // Then we need to create a new document in the Firestore database, which will store messages between the
             // two.
+            console.log('choosewinner args: ',args)
             const {id, winnerId, dateId} = args;
             
             let date;
@@ -839,7 +840,7 @@ const resolvers = {
                 }
 
             } catch(e) {
-                console.error('Error updating winner value on bid: ',e);
+                console.error('Error updating winner value on choosewinner: ',e);
                 return null;
             }
 
@@ -854,7 +855,7 @@ const resolvers = {
                 console.error(`chooseWinner error updating Firestore: ${e}`);
                 return null;
             }
-            //console.log('chooseWinner date: ',date);
+            console.log('chooseWinner date: ',date);
             return date;
         },
     }

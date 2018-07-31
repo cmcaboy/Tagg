@@ -3,7 +3,7 @@ import {View,TouchableOpacity,Dimensions,StyleSheet} from 'react-native';
 import {MyAppText,CirclePicture,Spinner} from './common';
 import {Mutation,Query} from 'react-apollo';
 //import {GET_QUEUE} from '../apollo/queries';
-import {FOLLOW,UNFOLLOW} from '../apollo/mutations';
+import {CHOOSE_WINNER} from '../apollo/mutations';
 import gql from 'graphql-tag';
 import {List,ListItem,Container,Content,Right,Left,Body,Text,Button,Thumbnail} from 'native-base';
 import {formatDate,formatDescription} from '../format';
@@ -26,6 +26,8 @@ query otherBids($id: String!) {
     }
   }
 `;
+
+
 
 class BidList extends React.Component  {
     
@@ -58,7 +60,7 @@ class BidList extends React.Component  {
             <Container>
                 <Content>
                     <List>
-                        <Query query={GET_BIDS} variables={{id:this.props.navigation.state.params.id }}>
+                        <Query query={GET_BIDS} variables={{id:this.props.navigation.state.params.dateId }}>
                         {({data, loading, error}) => {
                             console.log('OpenDateList data: ',data);
                             if(loading) return <Spinner />
@@ -80,9 +82,23 @@ class BidList extends React.Component  {
                                         <Text note numberOfLines={1}>{formatDescription(date.bidDescription)}</Text>
                                     </Body>
                                     <Right>
-                                        <Button transparent>
-                                            <Text>Choose</Text>
-                                        </Button>
+                                        <Mutation mutation={CHOOSE_WINNER}>
+                                            {(chooseWinner) => (
+                                                <Button transparent onPress={() => {
+                                                    chooseWinner({
+                                                        variables: {
+                                                            winnerId: date.bidUser.id,
+                                                            dateId: date.id,
+                                                            id: this.props.navigation.state.params.id,
+                                                        },
+                                                        // Need to put in optimistic response and an update method
+                                                    })
+                                                    return this.props.navigation.goBack();
+                                                }}>
+                                                    <Text>Choose</Text>
+                                                </Button>
+                                            )}
+                                        </Mutation>
                                     </Right>
                                 </ListItem>
                             ))
