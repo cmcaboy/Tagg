@@ -485,14 +485,14 @@ const resolvers = {
                     .then(record => record._fields[0].properties)
                     .catch(e => console.log('winner error: ',e))
         },
-        bidUser: (parentValue, _) => {
-            return session
-                .run(`MATCH(a:User)-[:CREATE]->(d:Date)<-[r:BID{id:'${parentValue.id}'}]-(b:User)
-                    RETURN b`)
-                    .then(result => result.records[0])
-                    .then(record => record._fields[0].properties)
-                    .catch(e => console.log('winner error: ',e))
-        },
+        // bidUser: (parentValue, _) => {
+        //     return session
+        //         .run(`MATCH(a:User)-[:CREATE]->(d:Date)<-[r:BID{id:'${parentValue.id}'}]-(b:User)
+        //             RETURN b`)
+        //             .then(result => result.records[0])
+        //             .then(record => record._fields[0].properties)
+        //             .catch(e => console.log('winner error: ',e))
+        // },
         date: (parentValue, _) => {
             return session
                 .run(`MATCH(a:User)-[:CREATE]->(d:Date)<-[r:BID{id:'${parentValue.id}'}]-(b:User)
