@@ -129,25 +129,20 @@ const resolvers = {
             // Should sort by date?
             console.log('otherBids args: ',args);
             return session
-                    .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) WITH b,r,d RETURN b,d,r`)
+                    .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) WITH b,r,d RETURN b,r`)
                         .then(result => result.records)
                         .then(records => {
-                            const list = records.map(record => {
-                                console.log('record: ',record);
-                                console.log('bid: ',record._fields[2]);
-                                console.log('b user: ',record._fields[0]);
-                                console.log('d date: ',record._fields[1]);
-                                return {
+                            const list = records.map(record => ({
                                     id: args.id,
-                                    datetimeOfBid: record._fields[2].properties.datetimeOfBid,
-                                    bidDescription: record._fields[2].properties.bidDescription,
-                                    bidPlace: record._fields[2].properties.bidPlace,
+                                    datetimeOfBid: record._fields[1].properties.datetimeOfBid,
+                                    bidDescription: record._fields[1].properties.bidDescription,
+                                    bidPlace: record._fields[1].properties.bidPlace,
                                     bidUser: {
                                         ...record._fields[0].properties,
                                         profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
                                     },
-                                }
-                            });
+                                })
+                            );
                             return {
                                 list,
                                 cursor: null,
