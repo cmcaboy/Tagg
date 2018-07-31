@@ -129,7 +129,7 @@ const resolvers = {
             // Should sort by date?
             console.log('otherBids args: ',args);
             return session
-                    .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) RETURN b,d,r`)
+                    .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) RETURN b,d`)
                         .then(result => result.records)
                         .then(records => {
                             const list = records.map(record => {
