@@ -134,8 +134,10 @@ const resolvers = {
                             datetimeOfBid: record._fields[2].datetimeOfBid,
                             bidDescription: record._fields[2].bidDescription,
                             bidPlace: record._fields[2].bidPlace,
-                            user: record._fields[0].properties,
-
+                            user: {
+                                ...record._fields[0].properties,
+                                profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
+                            }
                         })
                         ))
                         .catch(e => console.log('bid error: ',e))

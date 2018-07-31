@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {StyleSheet,View} from 'react-native';
-//import Modal from 'react-native-modal';
 import Modal from 'react-native-modalbox';
 
 const MyAppModal = (props) => {

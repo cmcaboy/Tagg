@@ -75,7 +75,15 @@ class Matches extends Component {
                         <ScrollView>
                             <List>
                                 {dateRequests.map((date) => (
-                                    <ListItem key={date.id} style={{marginLeft:0}}>
+                                    <ListItem 
+                                        key={date.id} 
+                                        style={{marginLeft:0}}
+                                        onPress={() => navigation.navigate('MessengerContainer',{
+                                            id: date.id,
+                                            datetimeOfDate: date.datetimeOfDate,
+                                        }
+                                        )}
+                                    >
                                         <Body>
                                             <Text>{formatDate(date.datetimeOfDate)}</Text>
                                             <Text note numberOfLines={1}>{formatDescription(date.description)}</Text>
