@@ -142,7 +142,7 @@ const resolvers = {
                                     datetimeOfBid: record._fields[2].properties.datetimeOfBid,
                                     bidDescription: record._fields[2].properties.bidDescription,
                                     bidPlace: record._fields[2].properties.bidPlace,
-                                    user: {
+                                    bidUser: {
                                         ...record._fields[0].properties,
                                         profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
                                     },
