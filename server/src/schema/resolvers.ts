@@ -126,6 +126,7 @@ const resolvers = {
         otherBids: (_, args) => {
             // dateID should be passed in as the id
             // Need to factor in pagination
+            console.log('otherBids args: ',args);
             return session
                     .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) RETURN b,d,r`)
                         .then(result => result.records)
