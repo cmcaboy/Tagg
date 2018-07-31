@@ -132,16 +132,19 @@ const resolvers = {
                     .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) RETURN b,d,r`)
                         .then(result => result.records)
                         .then(records => {
-                            const list = records.map(record => ({
-                                id: args.id,
-                                datetimeOfBid: record._fields[2].datetimeOfBid,
-                                bidDescription: record._fields[2].bidDescription,
-                                bidPlace: record._fields[2].bidPlace,
-                                user: {
-                                    ...record._fields[0].properties,
-                                    profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
+                            const list = records.map(record => {
+                                console.log('record: ',record);
+                                return {
+                                    id: args.id,
+                                    datetimeOfBid: record._fields[2].datetimeOfBid,
+                                    bidDescription: record._fields[2].bidDescription,
+                                    bidPlace: record._fields[2].bidPlace,
+                                    user: {
+                                        ...record._fields[0].properties,
+                                        profilePic: !!record._fields[0].properties.pics? record._fields[0].properties.pics[0]: null,
+                                    }
                                 }
-                            }));
+                            });
                             return {
                                 list,
                                 cursor: null,
