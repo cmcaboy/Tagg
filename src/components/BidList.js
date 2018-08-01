@@ -62,7 +62,7 @@ class BidList extends React.Component  {
                     <List>
                         <Query query={GET_BIDS} variables={{id:this.props.navigation.state.params.dateId }}>
                         {({data, loading, error}) => {
-                            console.log('OpenDateList data: ',data);
+                            console.log('BidList data: ',data);
                             if(loading) return <Spinner />
                             if(error) return <MyAppText>Error! {error.message}</MyAppText>
                             return data.otherBids.list.map(date => (
@@ -85,6 +85,9 @@ class BidList extends React.Component  {
                                         <Mutation mutation={CHOOSE_WINNER}>
                                             {(chooseWinner) => (
                                                 <Button transparent onPress={() => {
+                                                    console.log('winnerId: ', date.bidUser.id);
+                                                    console.log('date.id: ', this.props.navigation.state.params.dateId);
+                                                    console.log('id: ', this.props.navigation.state.params.id);
                                                     chooseWinner({
                                                         variables: {
                                                             winnerId: date.bidUser.id,

@@ -30,7 +30,7 @@ mutation editUser($id: String!, $token: String) {
 `;
 
 export const CHOOSE_WINNER = gql`
-mutation chooseWinner($id: String!, $winnerId: String!,$dateId: String) {
+mutation chooseWinner($id: String!, $winnerId: String!,$dateId: String!) {
     chooseWinner(id: $id, winnerId: $winnerId, dateId: $dateId) {
         id
         open

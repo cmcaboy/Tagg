@@ -359,6 +359,7 @@ const resolvers = {
             return session
                 .run(`MATCH(a:User{id:'${parentValue.id}'})-[:CREATE]->(d:Date) 
                     WITH a, d, size((d)<-[:BID]-(:User)) as num_bids
+                    WHERE d.open=TRUE
                     RETURN a,d,num_bids`)
                     .then(result => result.records)
                     .then(records => {
@@ -786,7 +787,7 @@ const resolvers = {
             const creationTime = Date.now();
             const dateId = uuid();
 
-            let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}',open:FALSE,`; 
+            let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}',open:TRUE,`; 
                 !!args.datetimeOfDate && (query = query+ `datetimeOfDate:"${args.datetimeOfDate}",`) +
                 !!args.description && (query = query+ `description:"${args.description}",`);
             
@@ -831,7 +832,8 @@ const resolvers = {
                     SET r.winner=TRUE,
                     d.winner='${winnerId}',
                     d.open=FALSE
-                    return d,a,b`)
+                    return d,a,b`);
+                console.log('data: ',data);
                 date = {
                     ...data.records[0]._fields[0].properties,
                     creator: data.records[0]._fields[1].properties,
