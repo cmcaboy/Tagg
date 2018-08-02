@@ -125,24 +125,21 @@ class BidList extends React.Component  {
                                                             });
                                                             
                                                             const fragmentDateList = gql`
-                                                                fragment DateList on DateList {
-                                                                    list {
-                                                                        type
-                                                                        id
-                                                                        generated
-                                                                        typename
-                                                                    }
+                                                                fragment dateRequests on DateList {
+                                                                    id
+                                                                    list
                                                                 }
-                                                                `
-                                                                console.log(`${id}d`)
+                                                                `;
+                                                            
+                                                            console.log(id);
                                                             storeData = store.readFragment({
                                                                 id: `${id}d`,
-                                                                fragmentDateList,
+                                                                fragment: fragmentDateList,
                                                             });
                                                             console.log(`storeData for ${id}d: ${storeData}`)
                                                             store.writeFragment({
                                                                 id: `${id}d`,
-                                                                fragmentDateList,
+                                                                fragment: fragmentDateList,
                                                                 data: {
                                                                     ...storeData,
                                                                     list: storeData.list.filter(date => date.id !== data.data.chooseWinner.id)

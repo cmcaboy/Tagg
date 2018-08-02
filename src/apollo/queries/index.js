@@ -83,6 +83,7 @@ query user($id: String!) {
         name
         profilePic
         matchedDates {
+            id
             list {
                 matchId
                 user {
@@ -98,6 +99,7 @@ query user($id: String!) {
             }
         }
         dateRequests {
+            id
             cursor
             list {
                 id
