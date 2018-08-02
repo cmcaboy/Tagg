@@ -327,7 +327,7 @@ const resolvers = {
                             }))
                             console.log('following list: ',list);
                             return {
-                                id: id: `${parentValue.id}f`,
+                                id: `${parentValue.id}f`,
                                 list,
                                 cursor: null,
                             }
