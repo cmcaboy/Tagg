@@ -302,7 +302,7 @@ const resolvers = {
                 .then(result => result.records[0])
                 .then(record => record._fields[0].properties)
                 .catch(e => {
-                    console.log('dateRequest error: ',e);
+                    console.log('date error: ',e);
                     return null;
                 })
         },
@@ -347,6 +347,7 @@ const resolvers = {
                             }))
                             console.log('bids list: ',list);
                             return {
+                                id: `${parentValue.id}b`,
                                 list,
                                 cursor: null,
                             }
@@ -373,8 +374,9 @@ const resolvers = {
                             num_bids: record._fields[2],
                             open: record._fields[1].properties.open,
                         }))
-                        console.log('dateRequests list: ',list);
+                        //console.log('dateRequests list: ',list);
                         return {
+                            id: `${parentValue.id}d`,
                             list,
                             cursor: null,
                         }
@@ -411,6 +413,7 @@ const resolvers = {
                             if(list.length === 0) {
                                 // If the list is empty, return a blank list and a null cursor
                                 return {
+                                    id: `${parentValue.id}m`,
                                     list: [],
                                     cursor: null,
                                 }
@@ -421,6 +424,7 @@ const resolvers = {
                             console.log('matchedDates list: ',list);
 
                             return {
+                                id: `${parentValue.id}m`,
                                 list,
                                 cursor: newCursor,
                             }
@@ -428,10 +432,7 @@ const resolvers = {
                         })
                         .catch(e => console.log('matches error: ',e))
         },
-        queue: (parentValue, _) => {
-            console.log('queue');
-            return getQueue(parentValue);
-        },
+        queue: (parentValue, _) => getQueue(parentValue),
     },
     DateItem: {
         bids: (parentValue, _) => {
@@ -443,6 +444,7 @@ const resolvers = {
                             ...record._fields[0].properties,
                     }))
                         return {
+                            id: `${parentValue.id}b`,
                             list,
                             cursor: null,
                         }

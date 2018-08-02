@@ -65,7 +65,7 @@ class OpenDateList extends React.Component  {
                             console.log('OpenDateList data: ',data);
                             if(loading) return <Spinner />
                             if(error) return <MyAppText>Error! {error.message}</MyAppText>
-                            return data.user.dateRequests.list.map(date => (
+                            return data.user.dateRequests.list.filter(date => date.open).map(date => (
                                 <ListItem 
                                     key={date.id} 
                                     onPress={() =>  this.props.navigation.navigate('BidDate',{

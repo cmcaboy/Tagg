@@ -37,7 +37,7 @@ class Matches extends Component {
     renderContent({matches,dateRequests,id,name,pic}) {
         const {navigation} = this.props;
 
-        if (matches.length === 0) {
+        if (matches.length === 0 && dateRequests.length === 0) {
             return this.noMatches();
         } else {
             return (

@@ -33,16 +33,19 @@ const typeDefs = `
     }
 
     type DateList {
+        id: String
         list: [DateItem]
         cursor: Float
     }
 
     type DateBidList {
+        id: String
         list: [DateBid]
         cursor: Float
     }
 
     type Following {
+        id: String
         list: [User]
         cursor: Float
     }
@@ -54,6 +57,7 @@ const typeDefs = `
     }
 
     type MatchList {
+        id: String
         list: [Match]
         cursor: Float
     }

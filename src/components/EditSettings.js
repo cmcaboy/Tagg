@@ -118,7 +118,8 @@ class EditSettings extends Component {
                                 minAgePreference: data.data.editUser.minAgePreference,
                                 maxAgePreference: data.data.editUser.maxAgePreference,
                             }
-                        })
+                        });
+                        
                       }
                     })}
                   }
