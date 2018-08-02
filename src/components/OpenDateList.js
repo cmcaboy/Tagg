@@ -13,6 +13,7 @@ query user($id: String!) {
     user(id: $id) {
         id
         dateRequests {
+            id
             list {
                 id
                 creationTime

@@ -11,6 +11,7 @@ import {formatDate,formatDescription} from '../format';
 const GET_BIDS = gql`
 query otherBids($id: String!) {
     otherBids(id: $id) {
+        id
         cursor
         list {
             id
@@ -133,14 +134,14 @@ class BidList extends React.Component  {
                                                                     }
                                                                 }
                                                                 `
-                                                                console.log(`${id}.dateRequests`)
+                                                                console.log(`${id}d`)
                                                             storeData = store.readFragment({
-                                                                id: `$${id}.dateRequests`,
+                                                                id: `${id}d`,
                                                                 fragmentDateList,
                                                             });
-                                                            console.log(`storeData for $${id}.dateRequests: ${storeData}`)
+                                                            console.log(`storeData for ${id}d: ${storeData}`)
                                                             store.writeFragment({
-                                                                id: `$${id}.dateRequests`,
+                                                                id: `${id}d`,
                                                                 fragmentDateList,
                                                                 data: {
                                                                     ...storeData,

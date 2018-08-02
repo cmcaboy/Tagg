@@ -144,6 +144,7 @@ const resolvers = {
                                 })
                             );
                             return {
+                                id: `${args.id}b`
                                 list,
                                 cursor: null,
                             }
@@ -326,6 +327,7 @@ const resolvers = {
                             }))
                             console.log('following list: ',list);
                             return {
+                                id: id: `${parentValue.id}f`,
                                 list,
                                 cursor: null,
                             }
