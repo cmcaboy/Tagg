@@ -144,7 +144,7 @@ const resolvers = {
                                 })
                             );
                             return {
-                                id: `${args.id}b`
+                                id: `${args.id}b`,
                                 list,
                                 cursor: null,
                             }
