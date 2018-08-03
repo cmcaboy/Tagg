@@ -410,6 +410,7 @@ const resolvers = {
                                 return {
                                     user: record._fields[0].properties,
                                     matchId: record._fields[1], // Call it dateId?
+                                    id: record._fields[1],
                                 }
                             })
                             if(list.length === 0) {

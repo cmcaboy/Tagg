@@ -60,106 +60,151 @@ class BidList extends React.Component  {
         return (
             <Container>
                 <Content>
-                    <List>
-                        <Query query={GET_BIDS} variables={{id:this.props.navigation.state.params.dateId }}>
-                        {({data, loading, error}) => {
+                    <Query query={GET_BIDS} variables={{id:this.props.navigation.state.params.dateId }}>
+                    {({data, loading, error}) => {
                             console.log('BidList data: ',data);
                             if(loading) return <Spinner />
                             if(error) return <MyAppText>Error! {error.message}</MyAppText>
                             return data.otherBids.list.map(date => (
-                                <ListItem thumbnail
-                                    key={date.bidUser.id} 
-                                    onPress={() =>  this.props.navigation.navigate('UserProfile',{
-                                        id: date.bidUser.id,
-                                        name: date.bidUser.name,
-                                    })}
-                                >
-                                    <Left>
-                                        <Thumbnail square source={{uri: date.bidUser.profilePic}}/>
-                                    </Left>
-                                    <Body>
-                                        <Text>{date.bidUser.name}</Text>
-                                        <Text note numberOfLines={1}>{date.bidPlace}</Text>
-                                        <Text note numberOfLines={1}>{formatDescription(date.bidDescription)}</Text>
-                                    </Body>
-                                    <Right>
-                                        <Mutation mutation={CHOOSE_WINNER}>
-                                            {(chooseWinner) => (
-                                                <Button transparent onPress={() => {
-                                                    console.log('winnerId: ', date.bidUser.id);
-                                                    console.log('date.id: ', this.props.navigation.state.params.dateId);
-                                                    console.log('id: ', this.props.navigation.state.params.id);
-                                                    const {id, dateId} = this.props.navigation.state.params;
-                                                    chooseWinner({
-                                                        variables: {
-                                                            winnerId: date.bidUser.id,
-                                                            dateId,
-                                                            id,
-                                                        },
-                                                        optimisticResponse: {
-                                                            chooseWinner: {
-                                                                id: dateId,
-                                                                open: false,
-                                                                __typename: 'DateItem',
+                                <List>
+                                    <ListItem thumbnail
+                                        key={date.bidUser.id} 
+                                        onPress={() =>  this.props.navigation.navigate('UserProfile',{
+                                            id: date.bidUser.id,
+                                            name: date.bidUser.name,
+                                        })}
+                                    >
+                                        <Left>
+                                            <Thumbnail square source={{uri: date.bidUser.profilePic}}/>
+                                        </Left>
+                                        <Body>
+                                            <Text>{date.bidUser.name}</Text>
+                                            <Text note numberOfLines={1}>{date.bidPlace}</Text>
+                                            <Text note numberOfLines={1}>{formatDescription(date.bidDescription)}</Text>
+                                        </Body>
+                                        <Right>
+                                            <Mutation mutation={CHOOSE_WINNER}>
+                                                {(chooseWinner) => (
+                                                    <Button transparent onPress={() => {
+                                                        console.log('winnerId: ', date.bidUser.id);
+                                                        console.log('date.id: ', this.props.navigation.state.params.dateId);
+                                                        console.log('id: ', this.props.navigation.state.params.id);
+                                                        const {id, dateId} = this.props.navigation.state.params;
+                                                        chooseWinner({
+                                                            variables: {
+                                                                winnerId: date.bidUser.id,
+                                                                dateId,
+                                                                id,
                                                             },
-                                                        },
-                                                        update: (store,data) => {
-                                                            console.log('store: ',store);
-                                                            console.log('data: ',data);
-                                                            const fragment = gql`
-                                                                fragment chooseWinner on DateItem {
-                                                                    open
-                                                                }
-                                                            `
-                                                            let storeData = store.readFragment({
-                                                                id: data.data.chooseWinner.id,
-                                                                fragment: fragment,
-                                                            });
-                                                            store.writeFragment({
-                                                                id: data.data.chooseWinner.id,
-                                                                fragment: fragment,
-                                                                data: {
-                                                                    ...storeData,
-                                                                    open: data.data.chooseWinner.open,
+                                                            optimisticResponse: {
+                                                                chooseWinner: {
+                                                                    id: dateId,
+                                                                    open: false,
+                                                                    __typename: 'DateItem',
                                                                 },
-                                                            });
-                                                            
-                                                            const fragmentDateList = gql`
-                                                                fragment dateRequests on DateList {
-                                                                    id
-                                                                    list
+                                                            },
+                                                            update: (store,data) => {
+                                                                console.log('store: ',store);
+                                                                console.log('data: ',data);
+                                                                const fragment = gql`
+                                                                    fragment chooseWinner on DateItem {
+                                                                        open
+                                                                    }
+                                                                `
+                                                                let storeData = store.readFragment({
+                                                                    id: data.data.chooseWinner.id,
+                                                                    fragment: fragment,
+                                                                });
+                                                                store.writeFragment({
+                                                                    id: data.data.chooseWinner.id,
+                                                                    fragment: fragment,
+                                                                    data: {
+                                                                        ...storeData,
+                                                                        open: data.data.chooseWinner.open,
+                                                                    },
+                                                                });
+                                                                
+                                                                const fragmentDateList = gql`
+                                                                    fragment dateRequests on DateList {
+                                                                        id
+                                                                        list {
+                                                                            id
+                                                                        }
+                                                                    }
+                                                                    `;
+                                                                
+                                                                console.log(id);
+                                                                storeData = store.readFragment({
+                                                                    id: `${id}d`,
+                                                                    fragment: fragmentDateList,
+                                                                });
+                                                                console.log(`storeData for ${id}d: `,storeData);
+                                                                //storeData.forEach(datum => console.log('datum: ',datum));
+                                                                
+                                                                store.writeFragment({
+                                                                    id: `${id}d`,
+                                                                    fragment: fragmentDateList,
+                                                                    data: {
+                                                                        ...storeData,
+                                                                        list: storeData.list.filter(date => date.id !== data.data.chooseWinner.id)
+                                                                    }
+                                                                });
+                                                                
+                                                                const fragmentMatchList = gql`
+                                                                    fragment matchedDates on MatchList {
+                                                                        id
+                                                                        list {
+                                                                            id
+                                                                            user {
+                                                                                id
+                                                                                __typename
+                                                                            }
+                                                                            __typename
+                                                                        }
+                                                                    }
+                                                                    `;
+                                                                
+                                                                const newDate = {
+                                                                    id: data.data.chooseWinner.id,
+                                                                    matchId: data.data.chooseWinner.id,
+                                                                    user: {
+                                                                        id: date.bidUser.id,
+                                                                        __typename: 'User',
+                                                                    },
+                                                                    __typename: 'Match'
                                                                 }
-                                                                `;
-                                                            
-                                                            console.log(id);
-                                                            storeData = store.readFragment({
-                                                                id: `${id}d`,
-                                                                fragment: fragmentDateList,
-                                                            });
-                                                            console.log(`storeData for ${id}d: ${storeData}`)
-                                                            store.writeFragment({
-                                                                id: `${id}d`,
-                                                                fragment: fragmentDateList,
-                                                                data: {
-                                                                    ...storeData,
-                                                                    list: storeData.list.filter(date => date.id !== data.data.chooseWinner.id)
-                                                                }
-                                                            });
+                                                                
+                                                                
+                                                                storeData = store.readFragment({
+                                                                    id: `${id}m`,
+                                                                    fragment: fragmentMatchList,
+                                                                });
+                                                                console.log(`storeData for ${id}m: ${storeData}`)
+                                                                store.writeFragment({
+                                                                    id: `${id}m`,
+                                                                    fragment: fragmentMatchList,
+                                                                    data: {
+                                                                        id: `${id}m`,
+                                                                        list: [newDate,...storeData.list],
+                                                                        __typename: 'MatchList'
+                                                                    }
+                                                                });
 
-                                                        },
-                                                    });
-                                                    return this.props.navigation.goBack();
-                                                }}>
-                                                    <Text>Choose</Text>
-                                                </Button>
-                                            )}
-                                        </Mutation>
-                                    </Right>
-                                </ListItem>
+                                                            },
+                                                        });
+                                                        return this.props.navigation.goBack();
+                                                    }}>
+                                                        <Text>Choose</Text>
+                                                    </Button>
+                                                )}
+                                            </Mutation>
+                                        </Right>
+                                    </ListItem>
+                                </List>
                             ))
                         }}
                         </Query>
-                    </List>
+                    
                 </Content>
             </Container>
         )

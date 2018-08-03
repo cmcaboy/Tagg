@@ -68,7 +68,12 @@ export const client = new ApolloClient({
     cache,
     connectToDevTools: true,
     // experimental
-   dataIdFromObject: object => object.id,
+   dataIdFromObject: object => {
+    switch(object.__typename) {
+        case 'Match': return object.matchId;
+        default: return object.id;
+    }
+   }
 });
 
 // enable remote debugging

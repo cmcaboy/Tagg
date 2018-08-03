@@ -100,7 +100,7 @@ class StaggCard extends React.Component  {
                                                 }
                                             },
                                             update: (store,data) => {
-                                                //console.log('updateFollow store: ',store);
+                                                console.log('updateFollow store: ',store);
                                                 console.log('updateFollow data: ',data);
                                                 let storeData = store.readFragment({
                                                     id: this.props.user.id,

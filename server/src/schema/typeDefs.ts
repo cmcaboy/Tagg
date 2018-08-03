@@ -103,6 +103,7 @@ const typeDefs = `
     }
 
     type Match {
+        id: String
         matchId: String
         user: User
         messages: Message

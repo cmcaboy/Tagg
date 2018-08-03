@@ -140,13 +140,13 @@ class Matches extends Component {
               const { id } = data.user;
               return (
                 <Query query={GET_MATCHES} variables={{id}}>
-                  {({loading, error, data}) => {
-                    //console.log('data in matches: ',data);
-                    //console.log('error: ',error);
-                    //console.log('loading: ',loading);
+                  {({loading, error, data, networkStatus}) => {
+                    console.log('data in matches: ',data);
+                    console.log('error: ',error);
+                    console.log('loading: ',loading);
+                    console.log('networkStatus: ',networkStatus);
                     if(loading) return <Spinner />
                     if(error) return <MyAppText>Error! {error.message}</MyAppText>
-                    console.log('data in matches: ',data);
                     return this.renderContent({
                         matches:data.user.matchedDates.list,
                         dateRequests:data.user.dateRequests.list,
