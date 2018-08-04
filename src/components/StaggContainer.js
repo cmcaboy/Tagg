@@ -117,6 +117,7 @@ class StaggContainer extends Component {
                                                 navigation={this.props.navigation}
                                                 fetchMoreQueue={fetchMoreQueue}
                                                 refetchQueue={refetchQueue}
+                                                pushToken={data.user.token}
                                             />
                                     }}
                                     </Mutation>

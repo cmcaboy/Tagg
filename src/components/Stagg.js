@@ -26,7 +26,7 @@ import FilterModal from './FilterModal';
 import {Card,Spinner,MyAppText} from './common';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Foundation from 'react-native-vector-icons/Foundation';
-//import registerForNotifications from '../services/push_notifications';
+//import {uploadToken} from '../services/push_notifications';
 import gql from 'graphql-tag';
 import Permissions from 'react-native-permissions';
 import BackgroundGeolocation from 'react-native-background-geolocation';
@@ -77,6 +77,11 @@ class Stagg extends Component {
                     dim.height = 0;
             }
         });
+
+        // Used for Firebase Cloud Messaging
+        this.onTokenRefreshListener; // Token check
+        this.notificationListener; //  Listen for Notification
+        this.notificationOpenedListener; // Listen for push notification press event if App is in Foreground or Background
     };
 
     flipNewDateModal = () => this.setState(prev => ({newDateModal:!prev.newDateModal}));
@@ -85,9 +90,47 @@ class Stagg extends Component {
         this.setState(prev => ({filterModal:!prev.filterModal}))
     };
 
-    componentDidMount = () => this.trackLocation();
+    pushNotification = async () => {
+        const fcmToken = await firebase.messaging().getToken();
+        if(fcmToken) {
+            console.log('User has a device token: ',fcmToken);
+            if(fcmToken !== this.props.pushToken) {
+                console.log('push token has changed since last login. Uploading to datastore');
+                startSetPushToken(fcmToken);
+            }
+        } else {
+            console.log('user has not received a device token yet.')
+        }
+        this.onTokenRefreshListener = firebase.messaging().onTokenRefresh(newFcmToken => startSetPushToken(newFcmToken));
+        this.notificationListener = firebase.notifications().onNotification((notification) => console.log('notification: ',notification));
+        this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen);
+        const notificationOpen = await firebase.notifications().getInitialNotification();
+
+    }
+
+    componentDidMount = () => {
+        this.trackLocation();
+        // Check to see if App was opened via push notification press event
+        const notificationOpen = await firebase.notifications().getInitialNotification();
+
+        // I could potentially put this in componentWillMount instead because it may navigate the user 
+        // away and I wouldn't want to wait on the page load
+        if(notificationOpen) {
+            const action = notificationOpen.action;
+            const notification = notificationOpen.notification;
+            console.log('notificationOpen: ',notificationOpen);
+        }
+        if(checkPermissions()) {
+            this.pushNotification();
+        }
+    }
     
-    ComponentWillUnmount = () => BackgroundGeolocation.removeListeners();
+    ComponentWillUnmount = () => {
+        !!this.onTokenRefreshListener && this.onTokenRefreshListener();
+        !!this.notificationListener && this.notificationListener();
+        !!this.notificationOpenedListener && this.notificationOpenedListener();
+        BackgroundGeolocation.removeListeners();
+    }
 
     componentWillUpdate() {
         UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);

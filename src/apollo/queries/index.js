@@ -30,6 +30,7 @@ export const GET_QUEUE = gql`
 query user($id: String!) {
     user(id: $id) {
         id
+        token
         queue {
             id
             cursor

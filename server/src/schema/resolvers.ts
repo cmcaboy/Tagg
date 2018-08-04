@@ -1,6 +1,7 @@
 import {driver} from '../db/neo4j';
 import {db} from '../db/firestore';
 import {getQueue} from '../middleware/queue';
+import {createDatePush} from '../middleware/createDatePush';
 const uuid = require('node-uuid');
 import { PubSub, withFilter } from 'graphql-subscriptions';
 
@@ -819,6 +820,11 @@ const resolvers = {
                 console.log('createDate mutation error relationship create: ',e);
                 return null;
             }
+            // Push Notification for new date
+            // -------------------------------
+            // For each user following the creator, send out a push notification 
+            createDatePush(args.id,date);
+
             return date;
         },
         chooseWinner: async (_,args) => {

@@ -1,29 +1,24 @@
-import { Permissions, Notifications } from 'expo';
-import { AsyncStorage } from 'react-native';
-import {db} from '../firebase';
+import {firebase} from '../firebase';
 
-const PUSH_ENDPOINT = '';
-const LOCAL_STORAGE_LOCATION = 'pushtoken_stagg';
-
-export default async (id,startSetPushToken) => {
-  //let previousToken = await AsyncStorage.getItem(LOCAL_STORAGE_LOCATION);
-  // if (previousToken) {
-  //   return;
-  // } else {
-    let {status} = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-
-    console.log('push notification status: ',status);
-
-    if(status !== 'granted') {
-      // user did not get us permissions to send notifications
-      return;
+export const checkPermissions = async () => {
+  const enabled = await firebase.messaging().hasPermissions();
+  if(enabled) {
+    console.log('User has permissions');
+    return enabled;
+  } else {
+    // Ask for permissiosn
+    try {
+      await firebase.messaging().requestPermission();
+      // User has authorised
+      console.log('Push Notification Authorization granted.');
+      return true;
+    } catch (error) {
+        // User has rejected permissions
+        console.log('Push Notification Authorization denied')
+        return false;
     }
-    // generate an authorizing token for this user.
-    let token = await Notifications.getExpoPushTokenAsync();
-
-    //await db.collection(`users`).doc(`${id}`).update({token}); 
-    await startSetPushToken(token);
-    //axios.post(PUSH_ENDPOINT, {token: {token}});
-    //AsyncStorage.setItem(LOCAL_STORAGE_LOCATION,token);
-  //}
+  }
 }
+
+export const onReceiveNotification = () => {}
+
