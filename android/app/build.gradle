@@ -172,6 +172,8 @@ dependencies {
     // We may end up using 15.1.0 instead instead of 16.0.1 for auth
     implementation 'com.google.firebase:firebase-auth:15.1.0'
     implementation "com.google.firebase:firebase-storage:15.0.2"
+    implementation "com.google.firebase:firebase-messaging:17.1.0"
+    implementation 'me.leolin:ShortcutBadger:1.1.21@aar' // <-- Add this line if you wish to use badge on Android
 
     implementation project(':react-native-fetch-blob')
 }

@@ -89,7 +89,7 @@ class BidList extends React.Component  {
                                                         console.log('winnerId: ', date.bidUser.id);
                                                         console.log('date.id: ', this.props.navigation.state.params.dateId);
                                                         console.log('id: ', this.props.navigation.state.params.id);
-                                                        const {id, dateId} = this.props.navigation.state.params;
+                                                        const {id, dateId, refetch} = this.props.navigation.state.params;
                                                         chooseWinner({
                                                             variables: {
                                                                 winnerId: date.bidUser.id,
@@ -101,6 +101,7 @@ class BidList extends React.Component  {
                                                                     id: dateId,
                                                                     open: false,
                                                                     __typename: 'DateItem',
+                                                                    optimistic: true,
                                                                 },
                                                             },
                                                             update: (store,data) => {
@@ -164,31 +165,33 @@ class BidList extends React.Component  {
                                                                     }
                                                                     `;
                                                                 
-                                                                const newDate = {
-                                                                    id: data.data.chooseWinner.id,
-                                                                    matchId: data.data.chooseWinner.id,
-                                                                    user: {
-                                                                        id: date.bidUser.id,
-                                                                        __typename: 'User',
-                                                                    },
-                                                                    __typename: 'Match'
-                                                                }
+                                                                // const newDate = {
+                                                                //     id: data.data.chooseWinner.id,
+                                                                //     matchId: data.data.chooseWinner.id,
+                                                                //     user: {
+                                                                //         id: date.bidUser.id,
+                                                                //         __typename: 'User',
+                                                                //     },
+                                                                //     __typename: 'Match'
+                                                                // }
                                                                 
                                                                 
-                                                                storeData = store.readFragment({
-                                                                    id: `${id}m`,
-                                                                    fragment: fragmentMatchList,
-                                                                });
-                                                                console.log(`storeData for ${id}m: ${storeData}`)
-                                                                store.writeFragment({
-                                                                    id: `${id}m`,
-                                                                    fragment: fragmentMatchList,
-                                                                    data: {
-                                                                        id: `${id}m`,
-                                                                        list: [newDate,...storeData.list],
-                                                                        __typename: 'MatchList'
-                                                                    }
-                                                                });
+                                                                // storeData = store.readFragment({
+                                                                //     id: `${id}m`,
+                                                                //     fragment: fragmentMatchList,
+                                                                // });
+                                                                // console.log(`storeData for ${id}m: ${storeData}`)
+                                                                // store.writeFragment({
+                                                                //     id: `${id}m`,
+                                                                //     fragment: fragmentMatchList,
+                                                                //     data: {
+                                                                //         id: `${id}m`,
+                                                                //         list: [newDate,...storeData.list],
+                                                                //         __typename: 'MatchList'
+                                                                //     }
+                                                                // });
+
+                                                                !data.data.chooseWinner.optimistic && refetch();
 
                                                             },
                                                         });

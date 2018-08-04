@@ -34,7 +34,7 @@ class Matches extends Component {
             </View>
         )
     }
-    renderContent({matches,dateRequests,id,name,pic}) {
+    renderContent({matches,dateRequests,id,name,pic,refetch}) {
         const {navigation} = this.props;
 
         if (matches.length === 0 && dateRequests.length === 0) {
@@ -81,7 +81,8 @@ class Matches extends Component {
                                         onPress={() => navigation.navigate('BidList',{
                                             dateId: date.id,
                                             datetimeOfDate: date.datetimeOfDate,
-                                            id
+                                            id,
+                                            refetch,
                                         }
                                         )}
                                     >
@@ -140,7 +141,7 @@ class Matches extends Component {
               const { id } = data.user;
               return (
                 <Query query={GET_MATCHES} variables={{id}}>
-                  {({loading, error, data, networkStatus}) => {
+                  {({loading, error, data, networkStatus, refetch}) => {
                     console.log('data in matches: ',data);
                     console.log('error: ',error);
                     console.log('loading: ',loading);
@@ -152,7 +153,8 @@ class Matches extends Component {
                         dateRequests:data.user.dateRequests.list,
                         id,
                         name:data.user.name,
-                        pic:data.user.profilePic
+                        pic:data.user.profilePic,
+                        refetch,
                     })
                   }}
                   </Query>

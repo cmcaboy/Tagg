@@ -23,8 +23,7 @@ import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import io.invertase.firebase.storage.RNFirebaseStoragePackage;
-
-
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +56,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFirebaseAuthPackage(), 
             new RNFirebaseFirestorePackage(),
             new RNFirebaseStoragePackage(),
+            new RNFirebaseMessagingPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),
             new FBSDKPackage(mCallbackManager)

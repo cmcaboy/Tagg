@@ -80,6 +80,9 @@ class EditProfile extends Component {
               )}}
             </Mutation>
           </Card>
+          <Text style={styles.hint}>
+            Hint: Press 2 photos to switch the position of the photos. Press and hold a photo to upload a new photo
+          </Text>
           <Card style={{padding:0}}>
           <Mutation mutation={SET_NAME}>
             {(changeName, { data }) => {
@@ -217,7 +220,12 @@ const styles = StyleSheet.create({
     spinner: {
       width: 150,
       height: 150
-    }
+    },
+    hint: {
+      marginBottom: 10,
+      fontStyle: 'italic',
+      fontSize: 11
+    },
 });
 
 export default EditProfile;

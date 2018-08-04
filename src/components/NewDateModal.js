@@ -77,7 +77,7 @@ class NewDateModal extends React.Component  {
                         <Mutation mutation={NEW_DATE}>
                             {(newDate) => (
                                 <Button block onPress={() => {
-                                    this.resetState();
+                                    this.closeModal();
                                     return newDate({variables: {
                                         id,
                                         datetimeOfDate:this.state.datetime,
