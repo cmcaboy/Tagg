@@ -30,7 +30,7 @@ export const createDatePush = async (id,date) => {
     } 
 
     // Loop through each follower
-    list.forEach(record => {
+    return list.forEach(record => {
         let token;
         let followerId;
         try {
@@ -39,7 +39,7 @@ export const createDatePush = async (id,date) => {
         } catch(e) {
             console.log(`Error sending push notification to user: `,e)
             console.log(`record at fault: `,record);
-            continue;
+            return null;
         }
         
         // Create the message for each user
