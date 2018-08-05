@@ -111,12 +111,22 @@ class Stagg extends Component {
         this.notificationListener = firebase.notifications().onNotification((notification) => toastMessage({text:notification._title},
             () => {
                 console.log('notification: ',notification);
-                return this.props.navigation.navigate('OpenDateList',{
+                return this.props.navigation.navigate('BidDate',{
+                    date: {
+                        datetimeOfDate: notification._data.datetimeOfDate,
+                        description: notification._data.description,
+                    },
                     id: this.props.id,
-                    otherId:  notification._data.creator.id,
-                    otherName:notification._data.creator.name,
-                    otherPic: notification._data.creator.profilePic,
-                })
+                    otherId:  notification._data.id,
+                    otherName:notification._data.name,
+                    otherPic: notification._data.profilePic,
+                });
+                // return this.props.navigation.navigate('OpenDateList',{
+                //     id: this.props.id,
+                //     otherId:  notification._data.id,
+                //     otherName:notification._data.name,
+                //     otherPic: notification._data.profilePic,
+                // })
             }));
         // Listen for notification press
         this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen => console.log('onNotificationOpened called: ',notificationOpen));
