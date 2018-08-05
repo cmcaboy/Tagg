@@ -53,12 +53,10 @@ export const createDatePush = async (id,date) => {
             },
             token, // token identifies the user/device to send the mssage to
             data: { // Data payload that can be used to act on the notification
+                id,
+                name,
+                profilePic,
                 description: date.description,
-                creator: {
-                    id,
-                    profilePic,
-                    name,
-                },
                 dateId: date.id,
                 datetimeOfDate: date.datetimeOfDate, 
             }

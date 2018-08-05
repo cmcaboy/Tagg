@@ -108,7 +108,16 @@ class Stagg extends Component {
         this.onTokenRefreshListener = firebase.messaging().onTokenRefresh(newFcmToken => this.props.startSetPushToken(newFcmToken));
         
         // Listen for Notification in the foreground
-        this.notificationListener = firebase.notifications().onNotification((notification) => toastMessage({text:notification._title},() => console.log('notification: ',notification)));
+        this.notificationListener = firebase.notifications().onNotification((notification) => toastMessage({text:notification._title},
+            () => {
+                console.log('notification: ',notification);
+                return this.props.navigation.navigate('OpenDateList',{
+                    id: this.props.id,
+                    otherId:  notification._data.creator.id,
+                    otherName:notification._data.creator.name,
+                    otherPic: notification._data.creator.profilePic,
+                })
+            }));
         // Listen for notification press
         this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen => console.log('onNotificationOpened called: ',notificationOpen));
         //const notificationOpen = await firebase.notifications().getInitialNotification();
