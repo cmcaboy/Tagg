@@ -22,7 +22,7 @@ export const createDatePush = async (id,date) => {
     // Grab each followers token and id. The id is only needed for debugging purposes. Only the
     // token is needed to send the message.
     try {
-        const result = await session.run(`MATCH (a:User)-[:FOLLOWING]->(b:User{id:'${id}'}) return a.token, a.id`)
+        const result = await session.run(`MATCH (a:User)-[:FOLLOWING]->(b:User{id:'${id}'}) return a.token, a.id, a.pics`)
         list = result.records;
     } catch(e) {
         console.log('createDate push notification - Failed to get list of followers: ',e);
@@ -33,9 +33,11 @@ export const createDatePush = async (id,date) => {
     return list.forEach(record => {
         let token;
         let followerId;
+        let profilePic;
         try {
             token = record._fields[0];
             followerId = record._fields[1];
+            profilePic = !!record._fields[2]? record._fields[2][0] : null;
         } catch(e) {
             console.log(`Error sending push notification to user: `,e)
             console.log(`record at fault: `,record);
@@ -51,7 +53,10 @@ export const createDatePush = async (id,date) => {
             token, // token identifies the user/device to send the mssage to
             data: { // Data payload that can be used to act on the notification
                 description: date.description,
-                creator: date.creator,
+                creator: {
+                    id: date.creator,
+                    profilePic,
+                }
                 dateId: date.id,
                 datetimeOfDate: date.datetimeOfDate, 
             }
