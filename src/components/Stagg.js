@@ -26,13 +26,14 @@ import FilterModal from './FilterModal';
 import {Card,Spinner,MyAppText} from './common';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Foundation from 'react-native-vector-icons/Foundation';
-//import {uploadToken} from '../services/push_notifications';
+import {checkPermissions} from '../services/push_notifications';
 import gql from 'graphql-tag';
 import Permissions from 'react-native-permissions';
 import BackgroundGeolocation from 'react-native-background-geolocation';
 import {FUNCTION_PATH} from '../variables/functions';
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview';
 import {CARD_HEIGHT,CARD_FOOTER_HEIGHT,CARD_MARGIN} from '../variables';
+import {firebase} from '../firebase';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -96,19 +97,19 @@ class Stagg extends Component {
             console.log('User has a device token: ',fcmToken);
             if(fcmToken !== this.props.pushToken) {
                 console.log('push token has changed since last login. Uploading to datastore');
-                startSetPushToken(fcmToken);
+                this.props.startSetPushToken(fcmToken);
             }
         } else {
             console.log('user has not received a device token yet.')
         }
-        this.onTokenRefreshListener = firebase.messaging().onTokenRefresh(newFcmToken => startSetPushToken(newFcmToken));
+        this.onTokenRefreshListener = firebase.messaging().onTokenRefresh(newFcmToken => this.props.startSetPushToken(newFcmToken));
         this.notificationListener = firebase.notifications().onNotification((notification) => console.log('notification: ',notification));
-        this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen);
+        this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen => console.log('onNotificationOpened called: ',notificationOpen));
         const notificationOpen = await firebase.notifications().getInitialNotification();
 
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         this.trackLocation();
         // Check to see if App was opened via push notification press event
         const notificationOpen = await firebase.notifications().getInitialNotification();

@@ -22,7 +22,7 @@ export const createDatePush = async (id,date) => {
     // Grab each followers token and id. The id is only needed for debugging purposes. Only the
     // token is needed to send the message.
     try {
-        const result = await session.run(`MATCH (a:User)-[:FOLLOWING]->(b:User{id:'${id}'} return a.token, a.id`)
+        const result = await session.run(`MATCH (a:User)-[:FOLLOWING]->(b:User{id:'${id}'}) return a.token, a.id`)
         list = result.records;
     } catch(e) {
         console.log('createDate push notification - Failed to get list of followers: ',e);
