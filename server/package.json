@@ -18,7 +18,7 @@
     "expo-server-sdk": "^2.3.3",
     "express": "^4.16.2",
     "express-graphql": "^0.6.12",
-    "firebase-admin": "~5.8.1",
+    "firebase-admin": "^5.13.1",
     "firebase-functions": "^1.0.4",
     "forever": "^0.15.3",
     "graphql": "^0.13.2",
