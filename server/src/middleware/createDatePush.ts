@@ -1,4 +1,4 @@
-import {messaging} from '../db/firestore';
+import {admin} from '../db/firestore';
 import {driver} from '../db/neo4j';
 import {createDatePushTitle,createDatePushBody} from '../services/pushMessageFormat';
 
@@ -52,7 +52,7 @@ export const createDatePush = async (id,date) => {
             data: date, // Data payload that can be used to act on the notification
         }
         // Send the message using the Firebase Admin SDK messaging module
-        return messaging().send(message)
+        return admin.messaging().send(message)
             .then((response) => console.log(`Push Notification Sent to ${followerId}: `,response))
             .catch(e => console.log(`Error sending push notification to ${followerId}: `,e))
     })
