@@ -51,15 +51,11 @@ export const createDatePush = async (id,date) => {
             token, // token identifies the user/device to send the mssage to
             //data: date, // Data payload that can be used to act on the notification
         }
-        // Send the message using the Firebase Admin SDK messaging module
-        try {
-            await messaging.send(message)
-        } catch(e) {
-            console.log(`Error sending push notification to ${followerId}: `,e);
-        }
-        console.log(`Push Notification Sent to ${followerId}: `,response);
 
-            // .then((response) => console.log(`Push Notification Sent to ${followerId}: `,response))
-            // .catch(e => console.log(`Error sending push notification to ${followerId}: `,e))
+        console.log('message: ',message);
+        // Send the message using the Firebase Admin SDK messaging module
+        messaging.send(message)
+            .then((response) => console.log(`Push Notification Sent to ${followerId}: `,response))
+            .catch(e => console.log(`Error sending push notification to ${followerId}: `,e))
     })
 }
