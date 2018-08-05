@@ -27,6 +27,7 @@ import {Card,Spinner,MyAppText} from './common';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Foundation from 'react-native-vector-icons/Foundation';
 import {checkPermissions} from '../services/push_notifications';
+import toastMessage from '../services/toastMessage';
 import gql from 'graphql-tag';
 import Permissions from 'react-native-permissions';
 import BackgroundGeolocation from 'react-native-background-geolocation';
@@ -92,6 +93,7 @@ class Stagg extends Component {
     };
 
     pushNotification = async () => {
+        // Get Token
         const fcmToken = await firebase.messaging().getToken();
         if(fcmToken) {
             console.log('User has a device token: ',fcmToken);
@@ -102,10 +104,14 @@ class Stagg extends Component {
         } else {
             console.log('user has not received a device token yet.')
         }
+        // Listen for token refresh
         this.onTokenRefreshListener = firebase.messaging().onTokenRefresh(newFcmToken => this.props.startSetPushToken(newFcmToken));
-        this.notificationListener = firebase.notifications().onNotification((notification) => console.log('notification: ',notification));
+        
+        // Listen for Notification in the foreground
+        this.notificationListener = firebase.notifications().onNotification((notification) => toastMessage({text:notification._title},() => console.log('notification: ',notification)));
+        // Listen for notification press
         this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen => console.log('onNotificationOpened called: ',notificationOpen));
-        const notificationOpen = await firebase.notifications().getInitialNotification();
+        //const notificationOpen = await firebase.notifications().getInitialNotification();
 
     }
 

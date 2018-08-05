@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import {Header, Button, Spinner, CardSection} from './common';
+import {Root} from 'native-base';
 import LoginForm from './LoginForm';
 import Settings from './Settings';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
@@ -48,7 +49,11 @@ class Authentication extends React.Component {
     console.log('loggedIn: ',this.state.loggedIn);
     switch(this.state.loggedIn) {
       case true:
-          return <MainNavigator />
+          return (
+            <Root>
+              <MainNavigator />
+            </Root>
+          )
           // <LoginForm />
           //return <Settings />
             //<CardSection><Button onPress={() => firebase.auth().signOut()}>Log Out</Button></CardSection>

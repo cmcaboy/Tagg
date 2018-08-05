@@ -49,7 +49,7 @@ export const createDatePush = async (id,date) => {
                 body: createDatePushBody(name,date),
             },
             token, // token identifies the user/device to send the mssage to
-            //data: date, // Data payload that can be used to act on the notification
+            data: date, // Data payload that can be used to act on the notification
         }
 
         console.log('message: ',message);
