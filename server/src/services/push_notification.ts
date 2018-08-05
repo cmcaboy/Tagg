@@ -1,4 +1,4 @@
-import {messaging} from '../db/firestore';
+//import {messaging} from '../db/firestore';
 
 export const sendMessage = (token) => {
 
