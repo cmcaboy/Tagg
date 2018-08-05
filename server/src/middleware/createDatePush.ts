@@ -56,7 +56,7 @@ export const createDatePush = async (id,date) => {
                 creator: {
                     id: date.creator,
                     profilePic,
-                }
+                },
                 dateId: date.id,
                 datetimeOfDate: date.datetimeOfDate, 
             }
