@@ -15,7 +15,7 @@ export const createDatePush = async (id,date) => {
     try {
         const result = await session.run(`MATCH (a:User{id:'${id}'}) return a.name, a.pics`)
         name = result.records[0]._fields[0];
-        profilePic = !!records[0]._fields[1]? records[0]._fields[1][0] : null;
+        profilePic = !!result.records[0]._fields[1]? result.records[0]._fields[1][0] : null;
     } catch(e) {
         console.log('createDate push notification - Failed to fetch token and name: ',e);
         return null;
