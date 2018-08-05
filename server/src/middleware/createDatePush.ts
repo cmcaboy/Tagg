@@ -9,11 +9,13 @@ export const createDatePush = async (id,date) => {
     
     let name;
     let list;
+    let profilePic;
 
     // Grab the name of the date creator.
     try {
-        const result = await session.run(`MATCH (a:User{id:'${id}'}) return a.name`)
+        const result = await session.run(`MATCH (a:User{id:'${id}'}) return a.name, a.pics`)
         name = result.records[0]._fields[0];
+        profilePic = !!record._fields[1]? record._fields[1][0] : null;
     } catch(e) {
         console.log('createDate push notification - Failed to fetch token and name: ',e);
         return null;
@@ -22,7 +24,7 @@ export const createDatePush = async (id,date) => {
     // Grab each followers token and id. The id is only needed for debugging purposes. Only the
     // token is needed to send the message.
     try {
-        const result = await session.run(`MATCH (a:User)-[:FOLLOWING]->(b:User{id:'${id}'}) return a.token, a.id, a.pics`)
+        const result = await session.run(`MATCH (a:User)-[:FOLLOWING]->(b:User{id:'${id}'}) return a.token, a.id`)
         list = result.records;
     } catch(e) {
         console.log('createDate push notification - Failed to get list of followers: ',e);
@@ -33,11 +35,10 @@ export const createDatePush = async (id,date) => {
     return list.forEach(record => {
         let token;
         let followerId;
-        let profilePic;
         try {
             token = record._fields[0];
             followerId = record._fields[1];
-            profilePic = !!record._fields[2]? record._fields[2][0] : null;
+            
         } catch(e) {
             console.log(`Error sending push notification to user: `,e)
             console.log(`record at fault: `,record);
@@ -54,8 +55,9 @@ export const createDatePush = async (id,date) => {
             data: { // Data payload that can be used to act on the notification
                 description: date.description,
                 creator: {
-                    id: date.creator,
+                    id,
                     profilePic,
+                    name,
                 },
                 dateId: date.id,
                 datetimeOfDate: date.datetimeOfDate, 
