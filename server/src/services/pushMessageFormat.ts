@@ -1,4 +1,5 @@
-import moment from 'moment';
+//const moment = require('moment');
+import {moment} from 'moment';
 
 export const createDatePushTitle = (name) => `${name} is looking for a date!`
 export const createDatePushBody = (name, date) => `${name} is looking for a date at ${formatDate(date.datetimeOfDate)}. Hurry and bid on this date!`;
