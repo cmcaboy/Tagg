@@ -52,7 +52,7 @@ export const createDatePush = async (id,date) => {
             data: date, // Data payload that can be used to act on the notification
         }
         // Send the message using the Firebase Admin SDK messaging module
-        return messaging.send(message)
+        return messaging().send(message)
             .then((response) => console.log(`Push Notification Sent to ${followerId}: `,response))
             .catch(e => console.log(`Error sending push notification to ${followerId}: `,e))
     })
