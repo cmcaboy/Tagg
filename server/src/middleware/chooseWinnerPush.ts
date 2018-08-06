@@ -13,20 +13,20 @@ import {
 
 const session = driver.session();
 
-export const chooseWinnerPushWinner = async ({id,creator,winner}) => {
+export const chooseWinnerPushWinner = async ({id,datetimeOfDate,creator,winner}) => {
     // This function sends a push notification to all of the date creator's followers
     
     // Create the message for the winner
     const message = {
         notification: { // notification content
             title: chooseWinnerPushWinnerTitle(creator.name),
-            body: chooseWinnerPushWinnerBody(creator.name,date.datetimeOfDate),
+            body: chooseWinnerPushWinnerBody(creator.name,datetimeOfDate),
         },
         token: winner.token, // token identifies the user/device to send the mssage to
         data: { // Data payload that can be used to act on the notification
             // Let's make a payload that navigates the user to Messenger screen for the creator
             type: `CHOOSE_WINNER_WINNER`,
-            matchId: date.id,
+            matchId: id,
             id: winner.id,
             name: winner.name,
             pic: !!winner.pics? winner.pics[0] : '',
@@ -43,7 +43,7 @@ export const chooseWinnerPushWinner = async ({id,creator,winner}) => {
         .catch(e => console.log(`Error sending push notification to ${winner.id}: `,e))
 }
 
-export const chooseWinnerPushLoser = async ({id,creator}) => {
+export const chooseWinnerPushLoser = async ({id,creator,datetimeOfDate}) => {
 
     // Get list of losers
     let list;    
@@ -70,7 +70,7 @@ export const chooseWinnerPushLoser = async ({id,creator}) => {
         const message = {
             notification: { // notification content
                 title: chooseWinnerPushLoserTitle(creator.name),
-                body: chooseWinnerPushLoserTitle(creator.name,creator.datetimeOfDate),
+                body: chooseWinnerPushLoserTitle(creator.name,datetimeOfDate),
             },
             token, // token identifies the user/device to send the mssage to
             data: { // Data payload that can be used to act on the notification
