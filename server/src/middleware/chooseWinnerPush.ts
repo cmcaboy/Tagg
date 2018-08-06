@@ -13,7 +13,7 @@ import {
 
 const session = driver.session();
 
-export const chooseWinnerPush = async ({id,creator,winner}) => {
+export const chooseWinnerPushWinner = async ({id,creator,winner}) => {
     // This function sends a push notification to all of the date creator's followers
     
     // Create the message for the winner
