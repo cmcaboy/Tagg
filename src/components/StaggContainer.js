@@ -9,7 +9,13 @@ import Stagg from './Stagg';
 import gql from 'graphql-tag';
 
 class StaggContainer extends Component {
+
+    componentDidMount = () => {
+        console.log('staggContainer didMount')
+    }
+
     render() {
+        console.log('stag container');
         return (
             <Query query={GET_ID}>
                 {({loading, error, data }) => {
@@ -25,7 +31,7 @@ class StaggContainer extends Component {
                         //console.log('data stagg: ',data);
                         //console.log('error stagg: ',error);
                         //console.log('loading stagg: ',loading);
-                        //console.log('networkStatus: ',networkStatus);
+                        console.log('networkStatus: ',networkStatus);
                         switch(networkStatus) {
                             case 1: return <Spinner />
                             case 2: return <Spinner />
@@ -89,10 +95,6 @@ class StaggContainer extends Component {
                                 }
                             })
                         }
-                        return <Mutation mutation={LIKE}>
-                        {(likeUser) => {
-                            return <Mutation mutation={DISLIKE}>
-                            {(dislikeUser) => {
                                 return <Mutation mutation={SET_COORDS}>
                                 {(setCoords) => {
                                     return <Mutation mutation={SET_PUSH_TOKEN}>
@@ -107,6 +109,7 @@ class StaggContainer extends Component {
                                             // check for a match
                                             update: (store,data) => console.log('likeUser response data: ',data),
                                         });
+                                        console.log('above stagg');
                                             return <Stagg 
                                                 id={id}
                                                 queue={!!data.user.queue? data.user.queue.list : []} 
@@ -123,10 +126,6 @@ class StaggContainer extends Component {
                                     </Mutation>
                                 }}
                                 </Mutation> 
-                            }}
-                            </Mutation>
-                        }}
-                        </Mutation>
                     }}
                     </Query>
                 ) 

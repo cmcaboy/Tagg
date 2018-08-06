@@ -21,34 +21,35 @@ function UdaciStatusBar ({backgroundColor, ...props}) {
 class Authentication extends React.Component {
 
   state = { 
-    loggedIn: false
+    loggedIn: true
   }
   
-  componentWillMount() {
-    // Firebase authentication details gathered from my firebase account.
-    firebase.auth().onAuthStateChanged((user) => {
-      // console.log('user: ',user);
-      // console.log('firebase auth: ',firebase.auth());
-      // console.log('firebase uid: ',firebase.auth().currentUser);
-      if(user) {
-        //this.props.login(user.uid);
+  // componentWillMount() {
+  //   // Firebase authentication details gathered from my firebase account.
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     // console.log('user: ',user);
+  //     // console.log('firebase auth: ',firebase.auth());
+  //     // console.log('firebase uid: ',firebase.auth().currentUser);
+  //     if(user) {
+  //       //this.props.login(user.uid);
 
-        this.setState({loggedIn: true});
+  //       this.setState({loggedIn: true});
 
-        // We can use the firebase.auth().currentUSer.uid for our unique identifier.
-      } else {
-        this.setState({loggedIn: false});
+  //       // We can use the firebase.auth().currentUSer.uid for our unique identifier.
+  //     } else {
+  //       this.setState({loggedIn: false});
         
-        //this.setState({loggedIn: false});
-      }
-    })
-  }
+  //       //this.setState({loggedIn: false});
+  //     }
+  //   })
+  // }
 
   renderContent() {
     // use a switch statement to render a login screen, logout screen, or a spinner
     console.log('loggedIn: ',this.state.loggedIn);
     switch(this.state.loggedIn) {
       case true:
+          console.log('logged in');
           return (
             <Root>
               <MainNavigator />

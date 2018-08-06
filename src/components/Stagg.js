@@ -17,14 +17,13 @@ import {
     Alert,
     Button,
     RefreshControl,
-    FlatList,
 } from 'react-native';
 import StaggCard from './StaggCard';
 import StaggHeader from './StaggHeader';
 import NewDateModal from './NewDateModal';
 import FilterModal from './FilterModal';
+import EmptyList from './EmptyList';
 import {Card,Spinner,MyAppText} from './common';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Foundation from 'react-native-vector-icons/Foundation';
 import {checkPermissions} from '../services/push_notifications';
 import toastMessage from '../services/toastMessage';
@@ -92,6 +91,18 @@ class Stagg extends Component {
         this.setState(prev => ({filterModal:!prev.filterModal}))
     };
 
+    navigateToBidDate = (notification) => this.props.navigation.navigate('BidDate',{
+        date: {
+            datetimeOfDate: notification._data.datetimeOfDate,
+            description: notification._data.description,
+            id: notification._data.dateId,
+        },
+        id: this.props.id,
+        otherId:  notification._data.id,
+        otherName:notification._data.name,
+        otherPic: notification._data.profilePic,
+    });
+
     pushNotification = async () => {
         // Get Token
         const fcmToken = await firebase.messaging().getToken();
@@ -109,42 +120,28 @@ class Stagg extends Component {
         
         // Listen for Notification in the foreground
         this.notificationListener = firebase.notifications().onNotification((notification) => toastMessage({text:notification._title},
-            () => {
-                console.log('notification: ',notification);
-                return this.props.navigation.navigate('BidDate',{
-                    date: {
-                        datetimeOfDate: notification._data.datetimeOfDate,
-                        description: notification._data.description,
-                    },
-                    id: this.props.id,
-                    otherId:  notification._data.id,
-                    otherName:notification._data.name,
-                    otherPic: notification._data.profilePic,
-                });
-                // return this.props.navigation.navigate('OpenDateList',{
-                //     id: this.props.id,
-                //     otherId:  notification._data.id,
-                //     otherName:notification._data.name,
-                //     otherPic: notification._data.profilePic,
-                // })
-            }));
-        // Listen for notification press
-        this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen => console.log('onNotificationOpened called: ',notificationOpen));
+            () => this.navigateToBidDate(notification)));
+        // Listen for notification press while app is in the background
+        !!this.notificationOpenedListener && this.notificationOpenedListener();
+        this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen => {console.log('onNotificationOpen');return this.navigateToBidDate(notificationOpen.notification)});
         //const notificationOpen = await firebase.notifications().getInitialNotification();
 
     }
 
     componentDidMount = async () => {
+        console.log('componentDidMount');
         this.trackLocation();
         // Check to see if App was opened via push notification press event
+        // This is used if a notification was pressed when the app was closed.
         const notificationOpen = await firebase.notifications().getInitialNotification();
 
         // I could potentially put this in componentWillMount instead because it may navigate the user 
         // away and I wouldn't want to wait on the page load
         if(notificationOpen) {
+            console.log('notificationOpen')
             const action = notificationOpen.action;
             const notification = notificationOpen.notification;
-            console.log('notificationOpen: ',notificationOpen);
+            this.navigateToBidDate(notification);
         }
         if(checkPermissions()) {
             this.pushNotification();
@@ -241,44 +238,6 @@ class Stagg extends Component {
         )
     }
 
-    noProspects() {
-        return (
-            <ScrollView
-                contentContainerStyle={styles.noProspects}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={this.state.loading}
-                        onRefresh={async () => {
-                            this.setState({loading:true});
-                            await this.props.refetchQueue();
-                            this.setState({loading:false,index:0});
-                        }}
-                    />
-                }
-            >
-                <View style={styles.noProspects}>
-                    <Ionicons 
-                        name="md-sad"
-                        size={100}
-                        color="black"
-                    />
-                    <Text>There is no one new in your area.</Text>
-                    <Text>Try again later.</Text>
-
-                    <TouchableOpacity 
-                        onPress={() => this.props.refetchQueue()} 
-                        style={styles.noProspectsButton}
-                    >
-                        <Text style={styles.noProspectsText}>
-                            Search Again
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
-            
-        )
-    }
-
     rowRenderer = (type,data) => {
         //console.log('rowRenderer data: ',data);
         return this.renderCard(data.user);
@@ -287,9 +246,6 @@ class Stagg extends Component {
     render() {
         //console.log('this.props.queue: ',this.props.queue);
         //console.log('this.props.queue.length: ',this.props.queue.length);
-        // if (!this.props.queue.length) {
-        //     return this.noProspects();
-        // }
         return (
             // I'll need to change this to a FlatList eventually
             <View style={styles.staggContainer}>
@@ -311,7 +267,6 @@ class Stagg extends Component {
                         this.setState((prev) => ({refreshQueue:!prev.refreshQueue}))
                     }}
                 />
-                {/*this.noProspects()*/}
 
                 {!!this.props.queue.length? (
                     <RecyclerListView 
@@ -319,7 +274,7 @@ class Stagg extends Component {
                         onEndReached={() => {
                             console.log('end reached');
                             this.props.fetchMoreQueue()}}
-                        onEndReachedThreshold={200}
+                        onEndReachedThreshold={400}
                         rowRenderer={this.rowRenderer}
                         dataProvider={this.state.queue}
                         layoutProvider={this._layoutProvider}
@@ -334,27 +289,8 @@ class Stagg extends Component {
                             />
                         }
                     />
-
-                    // <FlatList 
-                    //     style={{flex:1}}
-                    //     removeClippedSubviews={false}
-                    //     data={this.state.queue}
-                    //     extraData={this.state}
-                    //     renderItem={(itemP) => {
-                    //         console.log('itemP: ',itemP);
-                    //         return this.renderCard(itemP.item)
-                    //         //return <Text>{itemP.item.name}</Text>
-                    //     }
-                    //     }
-                    //     keyExtractor={(item,index) => item.id}
-                    //     onEndReached={() => this.props.fetchMoreQueue()} // fetchMore
-                    //     onEndReachedThreshold={1}
-                    //     refreshing={false}
-                    //     onRefresh={() => this.props.refetchQueue()} // refetch
-                    // />
-
                 ) : (
-                    this.noProspects()
+                    <EmptyList refetch={this.props.refetchQueue} text={`There is no one new in your area.`} subText={`Try again later.`} />
                 )}
             </View>
         )
@@ -399,30 +335,6 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: 20
-    },
-    noProspects: {
-        flex:1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    noProspectsButton: {
-        width: SCREEN_WIDTH * 0.7,
-        //height: 20,
-        backgroundColor: '#fff',
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: '#007aff',
-        marginLeft: 5,
-        marginRight: 5,
-        marginTop: 10
-    },
-    noProspectsText: {
-        alignSelf: 'center',
-        color: '#007aff',
-        fontSize: 16,
-        fontWeight: '600',
-        paddingTop: 10,
-        paddingBottom: 10
     },
     prospectText: {
         color: '#fff',

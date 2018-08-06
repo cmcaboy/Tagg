@@ -1,9 +1,10 @@
 import React from 'react';
 import {TabNavigator, StackNavigator} from 'react-navigation';
+
 import Settings from '../components/Settings';
-import Leaderboard from '../components/Leaderboard';
 import StaggContainer from '../components/StaggContainer';
 import Matches from '../components/Matches';
+
 import MessengerContainer from '../components/MessengerContainer';
 import EditSettingsContainer from '../components/EditSettingsContainer';
 import EditProfile from '../components/EditProfile';

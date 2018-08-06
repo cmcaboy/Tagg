@@ -8,6 +8,7 @@ YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTIm
 
 export default class App extends React.Component {
   render() {
+    console.log('App Root level');
     return (
       <ApolloProvider client={client}>
           <Authentication />

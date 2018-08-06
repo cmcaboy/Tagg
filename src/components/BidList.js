@@ -1,5 +1,6 @@
 import React from 'react';
 import {View,TouchableOpacity,Dimensions,StyleSheet} from 'react-native';
+import EmptyList from './EmptyList';
 import {MyAppText,CirclePicture,Spinner} from './common';
 import {Mutation,Query} from 'react-apollo';
 //import {GET_QUEUE} from '../apollo/queries';
@@ -61,10 +62,11 @@ class BidList extends React.Component  {
             <Container>
                 <Content>
                     <Query query={GET_BIDS} variables={{id:this.props.navigation.state.params.dateId }}>
-                    {({data, loading, error}) => {
+                    {({data, loading, error, refetch}) => {
                             console.log('BidList data: ',data);
                             if(loading) return <Spinner />
                             if(error) return <MyAppText>Error! {error.message}</MyAppText>
+                            if(!data.otherBids.list.length) return <EmptyList refetch={refetch} text={`No one has bid on your date yet`} subText={`Be patient!`} />
                             return data.otherBids.list.map(date => (
                                 <List>
                                     <ListItem thumbnail
@@ -227,7 +229,7 @@ const styles = StyleSheet.create({
     headerViewStyle: {
         flexDirection: 'row',
         paddingVertical: 5
-    }
+    },
 });
 
 export default BidList;

@@ -2,6 +2,7 @@ import {driver} from '../db/neo4j';
 import {db} from '../db/firestore';
 import {getQueue} from '../middleware/queue';
 import {createDatePush} from '../middleware/createDatePush';
+import {chooseWinnerPushWinner,chooseWinnerPushLoser} from '../middleware/chooseWinnerPush';
 const uuid = require('node-uuid');
 import { PubSub, withFilter } from 'graphql-subscriptions';
 
@@ -868,6 +869,9 @@ const resolvers = {
                 console.error(`chooseWinner error updating Firestore: ${e}`);
                 return null;
             }
+
+            chooseWinnerPushWinner(date)
+            chooseWinnerPushLoser(date)
             console.log('chooseWinner date: ',date);
             return date;
         },

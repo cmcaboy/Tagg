@@ -12,6 +12,8 @@ import DatePicker from 'react-native-datepicker';
 import gql from 'graphql-tag';
 import {Mutation} from 'react-apollo';
 import {Button} from 'native-base';
+import {DATE_FORMAT} from '../format';
+import toastMessage from '../services/toastMessage';
 
 const NEW_DATE = gql`
 mutation createDate($id: String!, $datetimeOfDate: String, $description: String) {
@@ -60,6 +62,7 @@ class NewDateModal extends React.Component  {
                         style={styles.dateInput}
                         mode="datetime"
                         date={this.state.datetime}
+                        format={DATE_FORMAT}
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         onDateChange={(datetime) => {this.setState({datetime})}}
@@ -82,7 +85,13 @@ class NewDateModal extends React.Component  {
                                         id,
                                         datetimeOfDate:this.state.datetime,
                                         description:this.state.description,
-                                    }})
+                                    },
+                                    update: (store,data) => {
+                                        console.log('data from newDate mutation: ',data);
+                                        console.log('store: ',store);
+                                        toastMessage({text: `Your date request has been created!`})
+                                    }
+                                })
                                 }}
                                 >
                                     <MyAppText style={{fontWeight: 'bold',color: '#fff',fontSize: 18}}>Submit</MyAppText>

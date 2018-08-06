@@ -7,6 +7,7 @@ import {FOLLOW,UNFOLLOW} from '../apollo/mutations';
 import gql from 'graphql-tag';
 import moment from 'moment';
 import {Container,Content,Form,Input,Label,Item,Button,Card,CardItem,Body} from 'native-base';
+import toastMessage from '../services/toastMessage';
 
 const GET_DATE = gql`
 query date($id: String!) {
@@ -18,11 +19,32 @@ query date($id: String!) {
   }
 `;
 
+const BID =  gql`
+mutation bid($id: String!, $dateId: String!, $bidPlace: String, $bidDescription: String) {
+    bid(id: $id, dateId: $dateId, bidPlace: $bidPlace, bidDescription: $bidDescription) {
+        id
+        datetimeOfBid
+        bidDescription
+        bidPlace
+        date {
+            id
+            num_bids
+        }
+    }
+}
+`;
+
 class BidDate extends React.Component  {
     
     constructor(props) {
         super(props);
+        
+        this.state = {
+            location: '',
+            description: '',
+        }
     }
+
 
     static navigationOptions = ({navigation}) => ({
         title: `${navigation.state.params.otherName}`,
@@ -47,6 +69,26 @@ class BidDate extends React.Component  {
             }
     })
 
+    bid = (bid) => {
+        bid({
+            variables: {
+                id: this.props.navigation.state.params.id,
+                dateId: this.props.navigation.state.params.date.id,
+                bidPlace: this.state.location,
+                bidDescription: this.state.description,
+            },
+            update: (store, data) => {
+                console.log('data: ',data);
+                console.log('store: ',store);
+                const {otherName} = this.props.navigation.state.params;
+                toastMessage({text: `Thank you for bidding on ${otherName}'s date!`})
+            }
+        })
+        this.props.navigation.goBack();
+
+
+    }
+
     render() {
         console.log('navigation props: ',this.props.navigation.state.params);
         //const { datetimeOfDate, description, otherName} = this.props.navigation.state.params;
@@ -64,15 +106,21 @@ class BidDate extends React.Component  {
                                 <Form>
                                     <Item floatingLabel style={{marginLeft: 0}}>
                                         <Label>Date Location</Label>
-                                        <Input autoFocus={true} />
+                                        <Input autoFocus={true} onChangeText={(location) => this.setState({location})} />
                                     </Item>
                                     <Item floatingLabel style={{marginLeft: 0}}>
                                         <Label>Date Description</Label>
-                                        <Input f/>
+                                        <Input onChangeText={(description) => this.setState({description})}/>
                                     </Item>
-                                    <Button block style={{marginTop: 10}}>
-                                        <MyAppText style={{fontWeight: 'bold',color: '#fff',fontSize: 18}}>Submit</MyAppText>
-                                    </Button>
+                                    <Mutation mutation={BID}>
+                                        {(bid) => {
+                                            return (
+                                                <Button block style={{marginTop: 10}} onPress={() => this.bid(bid)}>
+                                                    <MyAppText style={{fontWeight: 'bold',color: '#fff',fontSize: 18}}>Submit</MyAppText>
+                                                </Button>
+                                            )
+                                        }}
+                                    </Mutation>
                                 </Form>
                             </KeyboardAvoidingView>
                         </Content>
