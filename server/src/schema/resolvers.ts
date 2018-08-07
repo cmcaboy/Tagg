@@ -2,6 +2,7 @@ import {driver} from '../db/neo4j';
 import {db} from '../db/firestore';
 import {getQueue} from '../middleware/queue';
 import {createDatePush} from '../middleware/createDatePush';
+import {newMessagePush} from '../middleware/newMessagePush';
 import {chooseWinnerPushWinner,chooseWinnerPushLoser} from '../middleware/chooseWinnerPush';
 const uuid = require('node-uuid');
 import { PubSub, withFilter } from 'graphql-subscriptions';
@@ -712,7 +713,7 @@ const resolvers = {
                 console.log('message: ',message);
                 console.log('sub tag: ',NEW_MESSAGE);
                 pubsub.publish(NEW_MESSAGE, { newMessageSub: {message, matchId: args.matchId}});
-                newMessagePush({matchId, otherId: args.uid, otherName: args.name, otherPic: args.avatar, text: args.text,id: args.receiver.id})
+                newMessagePush({matchId: args.matchId, otherId: args.uid, otherName: args.name, otherPic: args.avatar, text: args.text,id: args.receiver.id})
             }
             asyncFunc();
 
