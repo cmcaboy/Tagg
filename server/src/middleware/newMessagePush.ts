@@ -14,7 +14,7 @@ const session = driver.session();
 export const newMessagePush = async ({matchId,otherId,otherName,otherPic,text,id}) => {
     // This function sends a push notification to all of the date creator's followers
     let name;
-    let profilePic;
+    let pics;
     let token;
     // Grab the receiver's token, name, and avatar (pic)
     try {
