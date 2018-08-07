@@ -187,6 +187,7 @@ const typeDefs = `
             order: Float
             uid: String
             _id: String
+            receiverId: String
         ): MessageItem
         follow (id: String!, followId: String!, isFollowing: Boolean): User
         unFollow (id: String!, unFollowId: String!): User
@@ -194,7 +195,6 @@ const typeDefs = `
         createDate(id: String!, datetimeOfDate: String, description: String): DateItem
         chooseWinner(id: String!, winnerId: String!, dateId: String!): DateItem
     }
-
     schema {
         query: Query
         mutation: Mutation

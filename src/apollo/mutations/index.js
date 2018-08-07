@@ -84,8 +84,8 @@ mutation unFollow($id: String!, $unFollowId: String!) {
 
 
 export const SEND_MESSAGE = gql`
-mutation($matchId: String!, $name: String, $text: String, $createdAt: String, $avatar: String, $order: Float, $uid: String, $_id: String) {
-    newMessage(matchId: $matchId, name: $name, text: $text, createdAt: $createdAt, avatar: $avatar, order: $order, uid: $uid, _id: $_id) {
+mutation($matchId: String!, $name: String, $text: String, $createdAt: String, $avatar: String, $order: Float, $uid: String, $_id: String, $receiverId: String) {
+    newMessage(matchId: $matchId, name: $name, text: $text, createdAt: $createdAt, avatar: $avatar, order: $order, uid: $uid, _id: $_id, receiverId: $receiverId) {
         name
         text
         createdAt

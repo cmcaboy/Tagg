@@ -8,5 +8,5 @@ export const chooseWinnerPushWinnerTitle = (name) => `Congrats! ${name} has acce
 export const chooseWinnerPushWinnerBody = (name,date) => `Congrats! ${name} has accepted your date proposal! Your date is scheduled for ${formatDate(date)}. You can go ahead and send ${name} a message!`
 export const chooseWinnerPushLoserTitle = (name) => `Unfortunately, ${name} did not select you for her date.`
 export const chooseWinnerPushLoserBody = (name,date) => `Unfortunately, ${name} did not select you for her date on ${formatDate(date)}. Don't give up! There are still plenty of dates out there you can win!`
-
-
+export const newMessagePushTitle = (name) => `new message from ${name}`;
+export const newMessagePushBody = (text) => `${text}`

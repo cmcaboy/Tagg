@@ -43,6 +43,7 @@ class Messenger extends Component {
                     text: message.text,
                     _id: message._id,
                     order: -1 * now,
+                    receiverId: navigation.state.params.otherId,
                 },
                 // OptimisticResponse is processed by update as soon as a message is sent by the newMessage
                 // above. When the mutation's response comes back, update is re-ran with the real response. 

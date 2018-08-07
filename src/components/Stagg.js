@@ -25,7 +25,7 @@ import FilterModal from './FilterModal';
 import EmptyList from './EmptyList';
 import {Card,Spinner,MyAppText} from './common';
 import Foundation from 'react-native-vector-icons/Foundation';
-import {checkPermissions} from '../services/push_notifications';
+import {checkPermissions,pushNotificationHandler} from '../services/push_notifications';
 import toastMessage from '../services/toastMessage';
 import gql from 'graphql-tag';
 import Permissions from 'react-native-permissions';
@@ -91,18 +91,6 @@ class Stagg extends Component {
         this.setState(prev => ({filterModal:!prev.filterModal}))
     };
 
-    navigateToBidDate = (notification) => this.props.navigation.navigate('BidDate',{
-        date: {
-            datetimeOfDate: notification._data.datetimeOfDate,
-            description: notification._data.description,
-            id: notification._data.dateId,
-        },
-        id: this.props.id,
-        otherId:  notification._data.id,
-        otherName:notification._data.name,
-        otherPic: notification._data.profilePic,
-    });
-
     pushNotification = async () => {
         // Get Token
         const fcmToken = await firebase.messaging().getToken();
@@ -120,10 +108,9 @@ class Stagg extends Component {
         
         // Listen for Notification in the foreground
         this.notificationListener = firebase.notifications().onNotification((notification) => toastMessage({text:notification._title},
-            () => this.navigateToBidDate(notification)));
+            () => pushNotificationHandler(this.props.id,notification._data,this.props.navigation)));
         // Listen for notification press while app is in the background
-        !!this.notificationOpenedListener && this.notificationOpenedListener();
-        this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen => {console.log('onNotificationOpen');return this.navigateToBidDate(notificationOpen.notification)});
+        this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen => pushNotificationHandler(this.props.id,notificationOpen.notification_data,this.props.navigation));
         //const notificationOpen = await firebase.notifications().getInitialNotification();
 
     }
@@ -141,7 +128,7 @@ class Stagg extends Component {
             console.log('notificationOpen')
             const action = notificationOpen.action;
             const notification = notificationOpen.notification;
-            this.navigateToBidDate(notification);
+            pushNotificationHandler(this.props.id,notification._data,this.props.navigation);
         }
         if(checkPermissions()) {
             this.pushNotification();
