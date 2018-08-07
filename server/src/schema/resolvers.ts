@@ -711,7 +711,7 @@ const resolvers = {
                 console.log('args.matchId: ',args.matchId);
                 console.log('message: ',message);
                 console.log('sub tag: ',NEW_MESSAGE);
-                pubsub.publish(NEW_MESSAGE, { newMessageSub: {message, matchId: args.matchId}}
+                pubsub.publish(NEW_MESSAGE, { newMessageSub: {message, matchId: args.matchId}});
                 newMessagePush({matchId, otherId: args.uid, otherName: args.name, otherPic: args.avatar, text: args.text,id: args.receiver.id})
             }
             asyncFunc();
