@@ -109,7 +109,7 @@ export const resolvers = {
   export const defaults = {
       user: {
         __typename: 'user',
-        id: 22,
+        id: 2,
       }
   };
   
