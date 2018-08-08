@@ -21,6 +21,9 @@ query user($id: String!) {
       school
       pics
       description
+      isFollowing
+      hasDateOpen
+      distanceApart
   }
 }
 `

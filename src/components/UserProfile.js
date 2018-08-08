@@ -53,7 +53,7 @@ class UserProfile extends Component {
   render() {
     const {userProfileContainer,userPics,userInfo,iconText,userPhoto,touchablePics,
       nameText,subHeading,schoolText,userDescription,leftClicker,rightClicker,
-      picIndicator} = styles; 
+      picIndicator,userInfoLeft,userInfoRight} = styles; 
 
       // console.log('id: ',this.props.navigation.state.params.id);
 
@@ -65,7 +65,7 @@ class UserProfile extends Component {
         // console.log('data: ',data);
         if(loading) return <Spinner />
         if(error) return <MyAppText>Error! {error.message}</MyAppText>
-        const {name, school, work, description,pics} = data.user;  
+        const {name, school, work, description,pics,hasDateOpen,isFollowing,distanceApart} = data.user;  
         
         return (
           <View style={userProfileContainer}>
@@ -75,21 +75,27 @@ class UserProfile extends Component {
             />
             <ScrollView>
               <View style={userInfo}>
-                <MyAppText style={nameText}>{name}</MyAppText>
-                {!!school && (
-                  <View style={subHeading}>
-                    <Ionicons name="md-school" size={14} color="black" style={iconText}/>
-                    <MyAppText style={schoolText}>{school}</MyAppText>
+                <View style={userInfoLeft}>
+                  <MyAppText style={nameText}>{name}</MyAppText>
+                  {!!school && (
+                    <View style={subHeading}>
+                      <Ionicons name="md-school" size={14} color="black" style={iconText}/>
+                      <MyAppText style={schoolText}>{school}</MyAppText>
+                    </View>
+                  )}
+                  {!!work && (
+                    <View style={subHeading}>
+                      <MaterialIcons name="work" size={14} color="black" style={iconText}/>
+                      <MyAppText style={[schoolText,{paddingLeft:4}]}>{work}</MyAppText>
+                    </View>
+                  )}  
                   </View>
-                )}
-                {!!work && (
-                  <View style={subHeading}>
-                    <MaterialIcons name="work" size={14} color="black" style={iconText}/>
-                    <MyAppText style={[schoolText,{paddingLeft:4}]}>{work}</MyAppText>
+                  <View style={userInfoRight}>
+                    <MyAppText>{distanceApart}</MyAppText>
+                    {/*follow button*/}
                   </View>
-                )}  
                 </View>
-                <View style={styles.horizontalLine}/>
+              <View style={styles.horizontalLine}/>
               <View style={userDescription}>
                 {!!description && <MyAppText>{description}</MyAppText>}
               </View>
@@ -112,7 +118,15 @@ const styles = StyleSheet.create({
   userInfo: {
     paddingLeft: 10,
     marginTop: 10,
-    
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  userInfoRight: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  userInfoLeft: {
+    flexDirection: 'column',
   },
   schoolText: {
     fontSize: 14,

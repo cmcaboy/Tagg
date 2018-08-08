@@ -333,6 +333,22 @@ const resolvers = {
                         })
                         .catch(e => console.log('following error: ',e))
         },
+        hasDateOpen: (parentvalue, _) => {
+            console.log('following parentValue: ',parentValue);
+            return session
+                    .run(`MATCH(a:User{id:'${parentValue.id}'}) 
+                        WITH a, 
+                        exists((a)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
+                        RETURN hasDateOpen`)
+                        .then(result => result.records)
+                        .then(records => {
+                            const hasDateOpen = records[0]._fields[0]
+                            console.log('hasDateOpen: ',hasDateOpen);
+                            return hasDateopen
+                        })
+                        .catch(e => console.log('hasDateOpen error: ',e))
+        },
+        distanceApart: (parentValue, _) => {},
         bids: (parentValue, _) => {
             console.log('bids parentValue: ',parentValue);
             // Need to factor in pagination
