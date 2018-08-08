@@ -344,7 +344,7 @@ const resolvers = {
                         .then(records => {
                             const hasDateOpen = records[0]._fields[0]
                             console.log('hasDateOpen: ',hasDateOpen);
-                            return hasDateopen
+                            return hasDateOpen
                         })
                         .catch(e => console.log('hasDateOpen error: ',e))
         },
