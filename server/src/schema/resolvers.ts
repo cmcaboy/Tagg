@@ -333,7 +333,7 @@ const resolvers = {
                         })
                         .catch(e => console.log('following error: ',e))
         },
-        hasDateOpen: (parentvalue, _) => {
+        hasDateOpen: (parentValue, _) => {
             console.log('following parentValue: ',parentValue);
             return session
                     .run(`MATCH(a:User{id:'${parentValue.id}'}) 
