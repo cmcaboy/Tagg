@@ -111,7 +111,7 @@ const typeDefs = `
     }
 
     type Query {
-        user(id: String!): User
+        user(id: String!, hostId: String): User
         messages(id: String!): Message
         date(id: String!): DateItem
         dates(id: String!): DateList
