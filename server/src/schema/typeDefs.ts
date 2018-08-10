@@ -18,13 +18,13 @@ const typeDefs = `
         maxAgePreference: Int
         followerDisplay: String
         match: Boolean
-        distanceApart: Float
+        distanceApart(hostId: String): Float
         order: Float
         registerDateTime: String
         pics: [String]
         profilePic: String
         hasDateOpen: Boolean
-        isFollowing: Boolean
+        isFollowing(hostId: String): Boolean
         following: Following
         bids: DateBidList
         dateRequests: DateList

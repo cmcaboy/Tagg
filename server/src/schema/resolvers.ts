@@ -348,7 +348,18 @@ const resolvers = {
                         })
                         .catch(e => console.log('hasDateOpen error: ',e))
         },
-        distanceApart: (parentValue, _) => {},
+        distanceApart: (parentValue, args) => {
+            // Could pass in host user has an optional argument
+            console.log('parentValue: ',parentValue);
+            console.log('args: ',args);
+            return 'test';
+        },
+        isFollowing: (parentValue, args) => {
+            // Could pass in host user has an optional argument
+            console.log('parentValue: ',parentValue);
+            console.log('args: ',args);
+            return 'test';
+        },
         bids: (parentValue, _) => {
             console.log('bids parentValue: ',parentValue);
             // Need to factor in pagination
