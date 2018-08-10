@@ -34,7 +34,7 @@ const resolvers = {
     },
     Query: {
         user: (_, args) => {
-            console.log('args: ',args);
+            console.log('user args: ',args);
             if(args.id) {
                 console.log('args: ',args);
                 return session.run(`Match (n:User {id: '${args.id}'}) RETURN n`)
@@ -47,7 +47,8 @@ const resolvers = {
                     const properties =  records[0]._fields[0].properties;
                     return {
                       ...properties,
-                      profilePic: !!properties.pics? properties.pics[0]: null
+                      profilePic: !!properties.pics? properties.pics[0]: null,
+                      hostId: !!args.hostId? args.hostId : null,
                     }
                   })
                   .catch(e => console.log('id lookup error: ',e))
@@ -63,7 +64,8 @@ const resolvers = {
                       const properties =  records[0]._fields[0].properties;
                       return {
                         ...properties,
-                        profilePic: !!properties.pics? properties.pics[0]: null
+                        profilePic: !!properties.pics? properties.pics[0]: null,
+                        hostId: !!args.hostId? args.hostId : null,
                       }
                     })
                     .catch(e => console.log('token lookup error: ',e))
