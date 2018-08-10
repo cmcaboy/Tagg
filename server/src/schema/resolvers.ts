@@ -357,11 +357,11 @@ const resolvers = {
 
             if(!parentValue.hostId) return parentValue.distanceApart;
             
-            session.run(`MATCH(a:User{id:'${parentValue.hostId}'}),(b:User{id:'${parentValue.id}'})
+            return session.run(`MATCH(a:User{id:'${parentValue.hostId}'}),(b:User{id:'${parentValue.id}'})
                 WITH  distance(point(a),point(b))*0.000621371 as distanceApart
                 RETURN distanceApart`)
                 .then(result => result.records[0])
-                .then(record => {console.log('record: ',record);return record._fields[0]})
+                .then(record => record._fields[0])
                 .catch(e => console.log('distanceApart error: ',e))
             
         },
