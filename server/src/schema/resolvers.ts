@@ -357,7 +357,13 @@ const resolvers = {
 
             if(!parentValue.hostId) return parentValue.distanceApart;
             
-            return 0.00;
+            session.run(`MATCH(a:User{id:'${parentValue.hostId}'}),(b:User{id:'${parentValue.id}'}
+                WITH  distance(point(a),point(b))*0.000621371 as distanceApart
+                RETURN distanceApart`)
+                .then(result => result.records[0])
+                .then(record => record._fields[0])
+                .catch(e => console.log('distanceApart error: ',e))
+            
         },
         isFollowing: (parentValue, args) => {
             // Could pass in host user has an optional argument
@@ -366,7 +372,14 @@ const resolvers = {
 
             if(!parentValue.hostId) return parentValue.isFollowing;
 
-            return false;
+            return session.run(`MATCH(a:User{id:'${parentValue.hostId}'}),(b:User{id:'${parentValue.id}'}
+                WITH exists((a)-[:FOLLOWING]->(b)) as isFollowing
+                RETURN isFollowing`)
+                .then(result => result.records[0])
+                .then(record => record._fields[0])
+                .catch(e => console.log('isFollowing error: ',e))
+
+    
         },
         bids: (parentValue, _) => {
             console.log('bids parentValue: ',parentValue);
