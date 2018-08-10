@@ -356,7 +356,7 @@ const resolvers = {
 
             if(!parentValue.hostId) return parentValue.distanceApart;
             
-            session.run(`MATCH(a:User{id:'${parentValue.hostId}'}),(b:User{id:'${parentValue.id}'}
+            session.run(`MATCH(a:User{id:'${parentValue.hostId}'}),(b:User{id:'${parentValue.id}'})
                 WITH  distance(point(a),point(b))*0.000621371 as distanceApart
                 RETURN distanceApart`)
                 .then(result => result.records[0])
@@ -370,7 +370,7 @@ const resolvers = {
 
             if(!parentValue.hostId) return parentValue.isFollowing;
 
-            return session.run(`MATCH(a:User{id:'${parentValue.hostId}'}),(b:User{id:'${parentValue.id}'}
+            return session.run(`MATCH(a:User{id:'${parentValue.hostId}'}),(b:User{id:'${parentValue.id}'})
                 WITH exists((a)-[:FOLLOWING]->(b)) as isFollowing
                 RETURN isFollowing`)
                 .then(result => result.records[0])
