@@ -352,13 +352,13 @@ const resolvers = {
             // Could pass in host user has an optional argument
             console.log('parentValue: ',parentValue);
             console.log('args: ',args);
-            return 'test';
+            return 0.00;
         },
         isFollowing: (parentValue, args) => {
             // Could pass in host user has an optional argument
             console.log('parentValue: ',parentValue);
             console.log('args: ',args);
-            return 'test';
+            return false;
         },
         bids: (parentValue, _) => {
             console.log('bids parentValue: ',parentValue);
