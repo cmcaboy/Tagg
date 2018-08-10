@@ -352,8 +352,7 @@ const resolvers = {
         },
         distanceApart: (parentValue, args) => {
             // Could pass in host user has an optional argument
-            console.log('parentValue: ',parentValue);
-            console.log('args: ',args);
+            console.log('parentValue.distanceApart: ',parentValue.distanceApart);
 
             if(!parentValue.hostId) return parentValue.distanceApart;
             
@@ -367,8 +366,7 @@ const resolvers = {
         },
         isFollowing: (parentValue, args) => {
             // Could pass in host user has an optional argument
-            console.log('parentValue: ',parentValue);
-            console.log('args: ',args);
+            console.log('parentValue.isFollowing: ',parentValue.isFollowing);
 
             if(!parentValue.hostId) return parentValue.isFollowing;
 
