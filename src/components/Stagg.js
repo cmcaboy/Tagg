@@ -218,7 +218,7 @@ class Stagg extends Component {
             <StaggCard 
                 key={prospect.id}
                 user={prospect}
-                id={this.props.id}
+                hostId={this.props.id}
                 navigation={this.props.navigation}
             />
         )

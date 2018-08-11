@@ -10,7 +10,7 @@ query user($id: String!) {
         pics
     }
 }
-`
+`;
 
 export const GET_USER_PROFILE = gql`
 query user($id: String!, $hostId: String) {
@@ -26,7 +26,7 @@ query user($id: String!, $hostId: String) {
       distanceApart
   }
 }
-`
+`;
 
 // I may expand this later to include date requests for queue users
 export const GET_QUEUE = gql`
@@ -54,7 +54,7 @@ query user($id: String!) {
         }
     }
   }
-`
+`;
 
 // Should I return an id here?
 export const MORE_QUEUE = gql`
