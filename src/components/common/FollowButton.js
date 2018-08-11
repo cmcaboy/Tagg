@@ -25,7 +25,7 @@ class FollowButton extends Component {
 		console.log('props: ', this.props);
 		const {
 			id,
-			followerId,
+			followId,
 			isFollowing,
 			name,
 		} = this.props;
@@ -37,13 +37,13 @@ class FollowButton extends Component {
 						follow({
 							variables: {
 								id,
-								followId: followerId,
+								followId,
 								isFollowing: isFollowingParam,
 							},
 							optimisticResponse: {
 								follow: {
-									id: followerId,
-									name,
+									id: followId,
+									//name,
 									isFollowing,
 									__typename: 'User',
 								},
@@ -52,7 +52,7 @@ class FollowButton extends Component {
 								console.log('updateFollow store: ', store);
 								console.log('updateFollow data: ', data);
 								const storeData = store.readFragment({
-									id: followerId,
+									id: followId,
 									fragment: gql`
 									fragment User on User {
 										isFollowing
@@ -63,7 +63,7 @@ class FollowButton extends Component {
 								// console.log('storeData: ',storeData);
 
 								store.writeFragment({
-									id: followerId,
+									id: followId,
 									fragment: gql`
 										fragment User on User {
 											isFollowing

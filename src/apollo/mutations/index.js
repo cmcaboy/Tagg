@@ -65,7 +65,6 @@ export const FOLLOW = gql`
 mutation follow($id: String!, $followId: String!, $isFollowing: Boolean) {
     follow(id: $id, followId: $followId, isFollowing: $isFollowing) {
         id
-        name
         isFollowing
     }
 }
