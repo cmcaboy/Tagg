@@ -74,6 +74,7 @@ class BidList extends React.Component  {
                                         onPress={() =>  this.props.navigation.navigate('UserProfile',{
                                             id: date.bidUser.id,
                                             name: date.bidUser.name,
+                                            hostId: this.props.navigation.state.params.id, 
                                         })}
                                     >
                                         <Left>

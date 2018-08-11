@@ -13,8 +13,8 @@ query user($id: String!) {
 `
 
 export const GET_USER_PROFILE = gql`
-query user($id: String!) {
-  user(id: $id) {
+query user($id: String!, $hostId: String) {
+  user(id: $id, hostId: $hostId) {
       id
       name
       work

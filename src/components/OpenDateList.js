@@ -39,7 +39,11 @@ class OpenDateList extends React.Component  {
             <View style={styles.headerViewStyle}>
                 {console.log('navigation params: ',navigation.state.params)}
                 <TouchableOpacity onPress={() => navigation.navigate('UserProfile',
-                    {id:navigation.state.params.otherId,name:navigation.state.params.otherName})}>
+                    {
+                        id:navigation.state.params.otherId,
+                        name:navigation.state.params.otherName,
+                        hostId: navigation.state.params.id,
+                    })}>
                     <CirclePicture imageURL={navigation.state.params.otherPic} picSize="mini" />
                 </TouchableOpacity>
                 <MyAppText style={styles.textHeader}>{navigation.state.params.otherName}'s open dates</MyAppText>

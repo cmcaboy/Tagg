@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import {
     View, 
     Text, 
@@ -220,8 +220,6 @@ class Stagg extends Component {
                 user={prospect}
                 id={this.props.id}
                 navigation={this.props.navigation}
-                onFollow={() => {}}
-                onUnfollow={() => {}}
             />
         )
     }

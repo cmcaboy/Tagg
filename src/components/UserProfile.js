@@ -15,6 +15,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import UserProfilePhotos from './UserProfilePhotos';
 import { MyAppText,Spinner } from './common';
 import { PRIMARY_COLOR } from '../variables';
+import { formatDistanceApart } from '../format';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
 import {GET_USER_PROFILE} from '../apollo/queries';
@@ -58,7 +59,7 @@ class UserProfile extends Component {
       // console.log('id: ',this.props.navigation.state.params.id);
 
     return (
-      <Query query={GET_USER_PROFILE} variables={{id: this.props.navigation.state.params.id}}>
+      <Query query={GET_USER_PROFILE} variables={{id: this.props.navigation.state.params.id, hostId: this.props.navigation.state.params.hostId}}>
       {({loading, error, data}) => {
         // console.log('loading: ',loading);
         // console.log('error: ',error);
@@ -66,7 +67,8 @@ class UserProfile extends Component {
         if(loading) return <Spinner />
         if(error) return <MyAppText>Error! {error.message}</MyAppText>
         const {name, school, work, description,pics,hasDateOpen,isFollowing,distanceApart} = data.user;  
-        
+        console.log('distanceApart: ',distanceApart);
+        console.log('isFollowing: ',isFollowing);
         return (
           <View style={userProfileContainer}>
             <UserProfilePhotos 
@@ -91,7 +93,7 @@ class UserProfile extends Component {
                   )}  
                   </View>
                   <View style={userInfoRight}>
-                    <MyAppText>{distanceApart}</MyAppText>
+                    <MyAppText>{formatDistanceApart(distanceApart)}</MyAppText>
                     {/*follow button*/}
                   </View>
                 </View>

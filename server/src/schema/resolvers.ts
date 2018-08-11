@@ -350,11 +350,9 @@ const resolvers = {
                         })
                         .catch(e => console.log('hasDateOpen error: ',e))
         },
-        distanceApart: (parentValue, args) => {
-            // Could pass in host user has an optional argument
-            console.log('parentValue.distanceApart: ',parentValue.distanceApart);
-            console.log('parentValue.hostId: ',parentValue.hostId);
+        distanceApart: (parentValue, _) => {
 
+            // hostId is only used for UserProfile
             if(!parentValue.hostId) return parentValue.distanceApart;
             
             return session.run(`MATCH(a:User{id:'${parentValue.hostId}'}),(b:User{id:'${parentValue.id}'})
@@ -362,13 +360,12 @@ const resolvers = {
                 RETURN distanceApart`)
                 .then(result => result.records[0])
                 .then(record => record._fields[0])
-                .catch(e => console.log('distanceApart error: ',e))
-            
+                .catch(e => console.log('distanceApart error: ',e)) 
         },
         isFollowing: (parentValue, args) => {
             // Could pass in host user has an optional argument
-            console.log('parentValue.isFollowing: ',parentValue.isFollowing);
 
+            // hostId is only used for UserProfile
             if(!parentValue.hostId) return parentValue.isFollowing;
 
             return session.run(`MATCH(a:User{id:'${parentValue.hostId}'}),(b:User{id:'${parentValue.id}'})
@@ -377,8 +374,6 @@ const resolvers = {
                 .then(result => result.records[0])
                 .then(record => record._fields[0])
                 .catch(e => console.log('isFollowing error: ',e))
-
-    
         },
         bids: (parentValue, _) => {
             console.log('bids parentValue: ',parentValue);

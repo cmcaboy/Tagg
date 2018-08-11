@@ -42,7 +42,7 @@ class UserProfilePhotos extends Component {
         } 
       }
   })
-  console.log('this.props: ',this.props);
+  //console.log('this.props: ',this.props);
   this.state = {
     loaded: false,
     currentImage: 0,

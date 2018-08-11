@@ -100,7 +100,7 @@ class Messenger extends Component {
                 onSend={(message) => this.sendNewMessage(message)}
                 user={{_id:`${this.props.id}`,name: this.props.name, avatar: this.props.pic}}
                 showUserAvatar={false}
-                onPressAvatar={(user) => this.props.navigation.navigate('UserProfile',{id:user._id,name:user.name})}
+                onPressAvatar={(user) => this.props.navigation.navigate('UserProfile',{id:user._id,name:user.name,hostId: this.props.id})}
                 // The following 3 variables relate to pagination.
                 loadEarlier={!!this.props.cursor}
                 onLoadEarlier={() => this.props.fetchMoreMessages()}

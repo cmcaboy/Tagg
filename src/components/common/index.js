@@ -1,5 +1,6 @@
 export * from './Button';
 export * from './SmallButton';
+export * from './FollowButton';
 export * from './AskButton';
 export * from './Card';
 export * from './WideCard';
