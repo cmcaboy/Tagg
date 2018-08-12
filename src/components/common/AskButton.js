@@ -1,10 +1,12 @@
 import React from 'react';
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
-import {MyAppText} from './index';
+import { TouchableOpacity, StyleSheet } from 'react-native';
+import { MyAppText } from './index';
 
-const AskButton = (props) => (
-    <TouchableOpacity onPress={props.onPress} style={styles.buttonStyle}>
-        <MyAppText style={styles.textStyle}>Ask!</MyAppText>
+const AskButton = ({ onPress }) => (
+    <TouchableOpacity onPress={onPress} style={styles.buttonStyle}>
+        <MyAppText style={styles.textStyle}>
+          { 'Ask!' }
+        </MyAppText>
     </TouchableOpacity>
 );
 
@@ -27,4 +29,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export {AskButton};
+export { AskButton };

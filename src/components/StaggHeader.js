@@ -30,7 +30,7 @@ class StaggHeader extends React.Component  {
     render() {
         const {distance,age,totalBids,totalDates} = this.props;
         return (
-            <HeaderCard styles={styles.overRide}>
+            <HeaderCard style={styles.overRide}>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={this.newDate} style={{flex: 1}}>
                         <View style={[styles.headerItem]}>

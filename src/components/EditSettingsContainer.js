@@ -1,67 +1,72 @@
-import React,{Component} from 'react';
-import {Spinner} from './common';
-import {Text,View} from 'react-native';
+import React, { Component } from 'react';
+import { View } from 'react-native';
 import { Query } from 'react-apollo';
+import { Spinner, ErrorMessage } from './common';
 import EditSettings from './EditSettings';
-import {GET_SETTINGS} from '../apollo/queries';
+import { GET_SETTINGS } from '../apollo/queries';
 import { GET_ID } from '../apollo/local/queries';
-import {PRIMARY_COLOR} from '../variables';
+import { PRIMARY_COLOR } from '../variables';
 
 class EditSettingsContainer extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-    static navigationOptions = ({navigation}) => ({
-        title: `Settings`,
-        headerRight: (<View></View>),
-        headerTitleStyle: 
-            {
-                alignSelf: 'center',
-                textAlign: 'center',
-                fontWeight:'normal',
-                fontSize: 22,
-                color: PRIMARY_COLOR
-            }
-    })
+  static navigationOptions = () => ({
+      title: 'Settings',
+      headerRight: (<View />),
+      headerTitleStyle: {
+        alignSelf: 'center',
+        textAlign: 'center',
+        fontWeight: 'normal',
+        fontSize: 22,
+        color: PRIMARY_COLOR,
+      },
+  })
 
   render() {
+
+    const { hideNotifications, refetchQueue } = this.props;
+
     return (
       <Query query={GET_ID}>
-        {({ loading, error, data}) => {
+        {({ loading, error, data }) => {
           // console.log('local data: ',data);
           // console.log('local error: ',error);
           // console.log('local loading: ',loading);
-          if(loading) return <Spinner />
-          if(error) return <Text>Error! {error.message}</Text>
-          const id = data.user.id;
+          if (loading) return <Spinner />;
+          if (error) return <ErrorMessage error={error.message} />;
+          const { id } = data.user;
 
           return (
-            <Query query={GET_SETTINGS} variables={{id}}>
-                {({loading, error, data}) => {
+            <Query query={GET_SETTINGS} variables={{ id }}>
+                {({ loading, error, data }) => {
                 // console.log('loading: ',loading);
                 // console.log('error: ',error);
                 // console.log('data: ',data);
-                if(loading) return <Spinner />
-                if(error) return <Text>Error! {error.message}</Text>
-                const { minAgePreference, maxAgePreference, distance, sendNotifications, followerDisplay } = data.user;
-                    return <EditSettings 
-                        id={id} 
+                if (loading) return <Spinner />;
+                if (error) return <ErrorMessage error={error.message} />;
+                const {
+                  minAgePreference,
+                  maxAgePreference,
+                  distance,
+                  sendNotifications,
+                  followerDisplay,
+                } = data.user;
+                    return (
+                      <EditSettings
+                        id={id}
                         minAgePreference={minAgePreference}
                         maxAgePreference={maxAgePreference}
                         distance={distance}
                         sendNotifications={sendNotifications}
                         followerDisplay={followerDisplay}
-                        hideNotifications={this.props.hideNotifications}
-                        refetchQueue={this.props.refetchQueue}
-                    />
+                        hideNotifications={hideNotifications}
+                        refetchQueue={refetchQueue}
+                      />
+                    );
                 }}
             </Query>
-            )
-
-        }} 
+            );
+        }}
       </Query>
-    )
+    );
   }
 }
 

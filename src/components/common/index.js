@@ -18,3 +18,4 @@ export * from './MyAppText';
 export * from './MyAppModal';
 export * from './MyTitleText';
 export * from './HorizontalLine';
+export * from './ErrorMessage';

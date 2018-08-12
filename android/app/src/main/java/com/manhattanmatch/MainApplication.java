@@ -6,11 +6,10 @@ import com.facebook.FacebookSdk;
 import com.facebook.CallbackManager;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.react.ReactApplication;
-import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
 import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
+import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
-//import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -19,12 +18,15 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
+import com.dylanvann.fastimage.FastImageViewPackage;
+
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import io.invertase.firebase.storage.RNFirebaseStoragePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage; 
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,8 +52,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
-            new RNBackgroundFetchPackage(),
             new RNBackgroundGeolocation(),
+            new RNBackgroundFetchPackage(),
             new RNFetchBlobPackage(),
             new RNFirebasePackage(),
             new RNFirebaseAuthPackage(), 
@@ -61,7 +63,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFirebaseNotificationsPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),
-            new FBSDKPackage(mCallbackManager)
+            new FBSDKPackage(mCallbackManager),
+            new FastImageViewPackage()
       );
     }
 

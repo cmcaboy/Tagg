@@ -1,37 +1,41 @@
 import React, { Component } from 'react';
-import {  
-  View, 
-  Text, 
-  StyleSheet, 
-  TouchableOpacity, 
-  ScrollView, 
-  TextInput
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
 } from 'react-native';
-import {CardSection,Button,ActionIcon} from './index';
+import { CardSection, Button, ActionIcon } from './index';
 
 class CondInput extends Component {
   constructor(props) {
     super(props);
+    const { value } = this.props;
     this.state = {
-      isEdit:false,
-      value: this.props.value
-    }
+      isEdit: false,
+      value,
+    };
   }
 
   confirmUpdate = () => {
-    this.props.updateValue(this.state.value)
-    this.setState({isEdit:false})
+    const { updateValue } = this.props;
+    const { value } = this.state;
+    updateValue(value);
+    this.setState({ isEdit: false });
   }
 
   render() {
-    const {isEdit,value}   = this.state;
-    const {field,updateValue, multiline = false} = this.props;
+    const { isEdit, value } = this.state;
+    const { field, multiline = false } = this.props;
     return (
       <View style={styles.container}>
-        {!isEdit? (
-          <TouchableOpacity onPress={() => this.setState({isEdit:true})}>
+        {!isEdit ? (
+          <TouchableOpacity onPress={() => this.setState({ isEdit: true })}>
             <CardSection style={styles.cardSection}>
-              <Text style={value? styles.field : styles.blankField}>{value? value : field}</Text>
+              <Text style={value ? styles.field : styles.blankField}>
+                { value || field }
+              </Text>
             </CardSection>
           </TouchableOpacity>
           ) : (
@@ -39,14 +43,14 @@ class CondInput extends Component {
             <View style={styles.editView}>
               <TextInput
                 selectTextOnFocus
-                autoFocus={true}
+                autoFocus
                 style={styles.textInputStyle}
-                onChangeText={(value) => this.setState({value})}
+                onChangeText={v => this.setState({ value: v })}
                 value={`${value}`}
                 multiline={multiline}
                 onEndEditing={() => this.confirmUpdate()}
               />
-              <ActionIcon 
+              <ActionIcon
                 onPress={() => this.confirmUpdate()}
                 name="done"
                 size={32}
@@ -54,15 +58,13 @@ class CondInput extends Component {
                 style={styles.checkMarker}
               />
               {/*
-                <Button 
+                <Button
                 onPress={() => this.confirmUpdate()}
                 >Save</Button>
               */}
-              
             </View>
           </CardSection>
       )}
-      
       </View>
     );
   }
@@ -70,13 +72,13 @@ class CondInput extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   blankField: {
-    opacity: 0.6
+    opacity: 0.6,
   },
   field: {
-    opacity:1.0
+    opacity: 1.0,
   },
   editView: {
     flex: 1,
@@ -87,10 +89,10 @@ const styles = StyleSheet.create({
     height: 40,
     flex: 6,
     borderColor: 'gray',
-    borderWidth: 0
+    borderWidth: 0,
   },
   checkMarker: {
-    flex: 1
+    flex: 1,
   },
   cardSection: {
     minHeight: 40,
@@ -98,4 +100,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export {CondInput};
+export { CondInput };

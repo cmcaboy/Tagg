@@ -1,12 +1,10 @@
 import React from 'react';
-import {View,Image,Text,TouchableOpacity,Dimensions,StyleSheet} from 'react-native';
-import {MyAppText, HeaderCard, MyAppModal} from './common';
-import {Button} from 'native-base';
+import { StyleSheet } from 'react-native';
+import { Button } from 'native-base';
+import { MyAppText, MyAppModal } from './common';
 import EditSettingsContainer from './EditSettingsContainer';
-import {PRIMARY_COLOR} from '../variables';
 
-class FilterModal extends React.Component  {
-
+class FilterModal extends React.Component {
     constructor(props) {
         super(props);
 
@@ -15,44 +13,52 @@ class FilterModal extends React.Component  {
             date: '',
             location: '',
             description: '',
-        }
+        };
 
         this.state = this.blankState;
     }
 
     closeModal = () => {
-        console.log('flip state request');
-        console.log('isVisible: ',this.props.isVisible);
-        if(this.props.isVisible) {
-            this.props.flipFilterModal();
-        }
-        this.setState(this.blankState);
+      const { isVisible, flipFilterModal, refetchQueue } = this.props;
 
-        !!this.props.refetchQueue && this.props.refetchQueue();
+      if (isVisible) {
+          flipFilterModal();
+      }
+      this.setState(this.blankState);
+      if (refetchQueue) {
+        refetchQueue();
+      }
     }
 
     render() {
-        return (
-            <MyAppModal
-                isVisible={this.props.isVisible}
-                close={this.closeModal}
-            >
-                <EditSettingsContainer 
-                    hideNotifications={true}  
-                />
-                <Button block style={{marginTop: 10}} onPress={this.closeModal}>
-                    <MyAppText style={{fontWeight: 'bold',color: '#fff',fontSize: 18}}>Done</MyAppText>
-                </Button>
-            </MyAppModal>
-        )
+      const { isVisible } = this.props;
+      return (
+          <MyAppModal
+              isVisible={isVisible}
+              close={this.closeModal}
+          >
+              <EditSettingsContainer
+                  hideNotifications
+              />
+              <Button block style={styles.buttonStyle} onPress={this.closeModal}>
+                  <MyAppText style={styles.textStyle}>
+                    {'Done'}
+                  </MyAppText>
+              </Button>
+          </MyAppModal>
+      )
     }
 }
 
 const styles = StyleSheet.create({
     buttonStyle: {
-        height: 100,
-        width: 200,
-    }
-})
+        marginTop: 10,
+    },
+    textStyle: {
+      fontWeight: 'bold',
+      color: '#fff',
+      fontSize: 18,
+    },
+});
 
 export default FilterModal;

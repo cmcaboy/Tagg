@@ -1,11 +1,11 @@
-import {firebase} from '../firebase';
+import { firebase } from '../firebase';
 
 export const checkPermissions = async () => {
   const enabled = await firebase.messaging().hasPermission();
-  if(enabled) {
+  if (enabled) {
     console.log('User has permissions');
     return enabled;
-  } else {
+  }
     // Ask for permissiosn
     try {
       await firebase.messaging().requestPermission();
@@ -17,19 +17,18 @@ export const checkPermissions = async () => {
         console.log('Push Notification Authorization denied')
         return false;
     }
-  }
-}
+};
 
 export const onReceiveNotification = () => {};
 
-export const pushNotificationHandler = (id,data,navigation) => {
+export const pushNotificationHandler = (id, data, navigation) => {
   // Reads in a notification and optionally acts on it.
-  console.log('pushNotificationHandler data: ',data);
-  switch(data.type) {
-    case `CHOOSE_WINNER_WINNER`:
+  console.log('pushNotificationHandler data: ', data);
+  switch (data.type) {
+    case 'CHOOSE_WINNER_WINNER':
       console.log('CHOOSE_WINNER_WINNER handler');
       // Navigate to MessengerContainer
-      navigation.navigate('MessengerContainer',{
+      navigation.navigate('MessengerContainer', {
         id: data.id,
         matchId: data.matchId,
         otherId: data.otherId,
@@ -39,11 +38,11 @@ export const pushNotificationHandler = (id,data,navigation) => {
         otherPic: data.otherPic,
       });
       break;
-    case `CHOOSE_WINNER_LOSER`:
+    case 'CHOOSE_WINNER_LOSER':
       console.log('CHOOSE_WINNER_LOSER handler');
       // Do not navigate anywhere
       break;
-    case `NEW_MESSAGE`:
+    case 'NEW_MESSAGE':
       console.log('NEW_MESSAGE handler');
       // Navigate to MessengerContainer
       navigation.navigate('MessengerContainer',{
@@ -56,7 +55,7 @@ export const pushNotificationHandler = (id,data,navigation) => {
         otherPic: data.otherPic,
       });
       break;
-    case `CREATE_DATE`:
+    case 'CREATE_DATE':
       console.log('CREATE_DATE handler');
       navigation.navigate('BidDate',{
         date: {
@@ -65,8 +64,8 @@ export const pushNotificationHandler = (id,data,navigation) => {
             id: data.dateId,
         },
         id: this.props.id,
-        otherId:  data.id,
-        otherName:data.name,
+        otherId: data.id,
+        otherName: data.name,
         otherPic: data.profilePic,
       });
       break;

@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
-import {Text, StyleSheet} from 'react-native';
+import React from 'react';
+import {Text, StyleSheet } from 'react-native';
 import { Fonts } from '../../utils/Fonts';
-//import { Font } from 'expo';
 
-const MyAppText = (props) => {
-  return (
-    <Text style={[styles.textStyle,props.style]}>{props.children}</Text>
-  )
-}
+const MyAppText = ({ style, children }) => (
+  <Text style={[styles.textStyle, style]}>
+    {children}
+  </Text>
+)
+
 
 const styles = StyleSheet.create({
   textStyle: {
-    fontFamily: Fonts.Oxygen
-  }
+    fontFamily: Fonts.Oxygen,
+  },
 });
 
-export {MyAppText};
+export { MyAppText };

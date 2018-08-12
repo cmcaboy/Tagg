@@ -177,6 +177,7 @@ dependencies {
     implementation 'me.leolin:ShortcutBadger:1.1.21@aar' // <-- Add this line if you wish to use badge on Android
 
     implementation project(':react-native-fetch-blob')
+    implementation project(':react-native-fast-image')
 }
 
 // Run this once to be able to run the application with BUCK

@@ -1,13 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 
-const ProspectCard = (props) => {
-    return (
-        <View style={[styles.containerStyle,props.style]}>
-            {props.children}
-        </View>
-    );
-};
+const ProspectCard = ({ style, children }) => (
+    <View style={[styles.containerStyle, style]}>
+        {children}
+    </View>
+);
 
 const styles = {
     containerStyle: {
@@ -16,8 +14,8 @@ const styles = {
         backgroundColor: 'white',
         flex: 1,
         borderColor: '#ddd',
-        boxShadow: 5
+        boxShadow: 5,
     }
 };
 
-export {ProspectCard};
+export { ProspectCard };

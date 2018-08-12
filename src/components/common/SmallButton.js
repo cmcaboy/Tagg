@@ -1,19 +1,10 @@
 import React from 'react';
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
-import {Button} from './index';
+import { Button } from './index';
 
-const SmallButton = (props) => (
+const SmallButton = ({ props, props: { children } }) => (
     <Button props={props}>
-        {props.children}
+        {children}
     </Button>
 );
 
-
-const styles = StyleSheet.create({
-    buttonStyle: {
-        borderRadius: 10,
-        //padding: 4,
-    },
-});
-
-export {SmallButton};
+export { SmallButton };

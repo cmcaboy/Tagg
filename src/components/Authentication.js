@@ -1,29 +1,28 @@
 import React from 'react';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
-import {Header, Button, Spinner, CardSection} from './common';
-import {Root} from 'native-base';
-import LoginForm from './LoginForm';
-import Settings from './Settings';
+import { StyleSheet, View, StatusBar } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { Root } from 'native-base';
+import { Spinner } from './common';
+import LoginForm from './LoginForm';
 import MainNavigator from '../navigator';
 import { firebase } from '../firebase';
 import { standard_font } from '../styles';
 import { STATUS_BAR_COLOR } from '../variables';
 
-function UdaciStatusBar ({backgroundColor, ...props}) {
-  return (
-    <View style={{ backgroundColor, height: getStatusBarHeight() }}>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-    </View>
-  )
-}
+// function UdaciStatusBar({ backgroundColor, ...props }) {
+//   return (
+//     <View style={{ backgroundColor, height: getStatusBarHeight() }}>
+//       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+//     </View>
+//   )
+// }
 
 class Authentication extends React.Component {
 
-  state = { 
-    loggedIn: true
+  state = {
+    loggedIn: true,
   }
-  
+
   // componentWillMount() {
   //   // Firebase authentication details gathered from my firebase account.
   //   firebase.auth().onAuthStateChanged((user) => {
@@ -46,28 +45,36 @@ class Authentication extends React.Component {
 
   renderContent() {
     // use a switch statement to render a login screen, logout screen, or a spinner
-    console.log('loggedIn: ',this.state.loggedIn);
-    switch(this.state.loggedIn) {
+    const { loggedIn } = this.state;
+
+    console.log('loggedIn: ', loggedIn);
+
+    switch (loggedIn) {
       case true:
           console.log('logged in');
           return (
             <Root>
               <MainNavigator />
             </Root>
-          )
+          );
           // <LoginForm />
-          //return <Settings />
-            //<CardSection><Button onPress={() => firebase.auth().signOut()}>Log Out</Button></CardSection>
+          // return <Settings />
+            // <CardSection><Button onPress={() => firebase.auth().signOut()}>Log Out</Button></CardSection>
       case false:
-        return <LoginForm />
+        return <LoginForm />;
       default:
-        return <View style={styles.spinnerStyle}><Spinner size="large"/></View>
+        return (
+          <View style={styles.spinnerStyle}>
+            <Spinner size="large" />
+          </View>
+        );
     }
   }
+
   render() {
     return (
       <View style={styles.container}>
-        {/*<UdaciStatusBar backgroundColor={STATUS_BAR_COLOR} barStyle="light-content" />*/}
+        {/* <UdaciStatusBar backgroundColor={STATUS_BAR_COLOR} barStyle="light-content" /> */}
         {this.renderContent()}
       </View>
     );
@@ -77,12 +84,12 @@ class Authentication extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   spinnerStyle: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   }
 });
 

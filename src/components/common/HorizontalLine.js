@@ -1,13 +1,7 @@
-import React, {Component} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 
-const HorizontalLine = ({style}) => {
-    return (
-        <View
-            style={[styles.horizontalLine,style]}
-        />
-    )
-}
+const HorizontalLine = ({ style }) => <View style={[styles.horizontalLine, style]} />;
 
 const styles = StyleSheet.create({
     horizontalLine: {
@@ -19,4 +13,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export {HorizontalLine};
+export { HorizontalLine };
