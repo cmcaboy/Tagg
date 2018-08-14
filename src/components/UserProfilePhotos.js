@@ -15,7 +15,7 @@ import { PHOTO_ADD_URL } from '../variables';
 // Add child props that get passed into background image
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
-const SCREEN_HEIGHT = Dimensions.get('window').height;
+// const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SWIPE_THRESHOLD = (0.05 * SCREEN_WIDTH);
 
 class UserProfilePhotos extends Component {
@@ -24,7 +24,7 @@ class UserProfilePhotos extends Component {
 
     const panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
-      onPanResponderMove: (event, gesture) => {},
+      // onPanResponderMove: (event, gesture) => {},
       onMoveShouldSetPanResponder: (evt, gestureState) => {
           // return true if user is swiping, return false if it's a single click
           // console.log('gestureState: ',{...gestureState});
@@ -101,43 +101,43 @@ class UserProfilePhotos extends Component {
     // console.log('pic: ',this.state.pics[this.state.currentImage]);
 
     return (
-        <Animated.View style={userPics} {...panHandlers}>
-          {pics.map((pic, i) => (
-              <FastImage
-                key={pic}
-                source={{ uri: pic }}
-                style={[
-                  userPhoto,
-                  { display: i === currentImage ? 'flex' : 'none' },
-                  { height: picHeight },
-                  { width: picWidth },
-                  customPicStyle,
-                  { borderRadius },
-                ]}
-                imageStyle={{ borderRadius }}
-              >
+      <Animated.View style={userPics} {...panHandlers}>
+        {pics.map((pic, i) => (
+            <FastImage
+              key={pic}
+              source={{ uri: pic }}
+              style={[
+                userPhoto,
+                { display: i === currentImage ? 'flex' : 'none' },
+                { height: picHeight },
+                { width: picWidth },
+                customPicStyle,
+                { borderRadius },
+              ]}
+              imageStyle={{ borderRadius }}
+            >
 
-                <View style={picIndicator}>
-                  {pics.map((uri, i2) => (i2 === currentImage ? (
-                      <FontAwesome key={uri} name="circle" size={12} color="white" style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }} />
-                    ) : (
-                      <FontAwesome key={uri} name="circle-o" size={12} color="white" style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }} />
-                    )
-                  ))}
-                </View>
+              <View style={picIndicator}>
+                {pics.map((uri, i2) => (i2 === currentImage ? (
+                    <FontAwesome key={uri} name="circle" size={12} color="white" style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }} />
+                  ) : (
+                    <FontAwesome key={uri} name="circle-o" size={12} color="white" style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }} />
+                  )
+                ))}
+              </View>
 
-                <View style={touchablePics}>
-                  <TouchableWithoutFeedback onPress={this.clickLeftSide}>
-                    <View style={[leftClicker, { height: picHeight }]} />
-                  </TouchableWithoutFeedback>
-                  <TouchableWithoutFeedback onPress={this.clickRightSide}>
-                    <View style={[rightClicker, { height: picHeight }]} />
-                  </TouchableWithoutFeedback>
-                </View>
-              </FastImage>
-              ))}
-              {children}
-        </Animated.View>
+              <View style={touchablePics}>
+                <TouchableWithoutFeedback onPress={this.clickLeftSide}>
+                  <View style={[leftClicker, { height: picHeight }]} />
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={this.clickRightSide}>
+                  <View style={[rightClicker, { height: picHeight }]} />
+                </TouchableWithoutFeedback>
+              </View>
+            </FastImage>
+            ))}
+            {children}
+      </Animated.View>
     )
   }
 

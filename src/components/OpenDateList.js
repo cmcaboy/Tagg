@@ -1,96 +1,117 @@
 import React from 'react';
-import {View,Text,TouchableOpacity,Dimensions,StyleSheet} from 'react-native';
-import {MyAppText,CirclePicture,Spinner} from './common';
-import {Mutation,Query} from 'react-apollo';
-import {GET_QUEUE} from '../apollo/queries';
-import {FOLLOW,UNFOLLOW} from '../apollo/mutations';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  List,
+  ListItem,
+  Container,
+  Content,
+} from 'native-base';
+import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import {List, ListItem,Container,Content} from 'native-base';
-import {formatDate,formatDescription} from '../format';
+import { formatDate, formatDescription } from '../format';
+import {
+  MyAppText,
+  CirclePicture,
+  Spinner,
+  ErrorMessage,
+} from './common';
 
 const GET_DATES = gql`
 query user($id: String!) {
-    user(id: $id) {
+  user(id: $id) {
+    id
+    dateRequests {
+      id
+      list {
         id
-        dateRequests {
-            id
-            list {
-                id
-                creationTime
-                datetimeOfDate
-                description
-                num_bids
-                open
-            }
-        }
+        creationTime
+        datetimeOfDate
+        description
+        num_bids
+        open
+      }
     }
+  }
   }
 `;
 
 class OpenDateList extends React.Component  {
-    
-    constructor(props) {
-        super(props);
-    }
-
-    static navigationOptions = ({navigation}) => ({
-        title: `${navigation.state.params.otherName}`,
-        headerTitle: (
-            <View style={styles.headerViewStyle}>
-                {console.log('navigation params: ',navigation.state.params)}
-                <TouchableOpacity onPress={() => navigation.navigate('UserProfile',
-                    {
-                        id:navigation.state.params.otherId,
-                        name:navigation.state.params.otherName,
-                        hostId: navigation.state.params.id,
-                    })}>
-                    <CirclePicture imageURL={navigation.state.params.otherPic} picSize="mini" />
-                </TouchableOpacity>
-                <MyAppText style={styles.textHeader}>{navigation.state.params.otherName}'s open dates</MyAppText>
-                <View style={{width: 100}}></View>
-            </View>
-        ),
-        headerTitleStyle: 
+  static navigationOptions = ({
+    navigation: {
+      navigate, navigate: {
+        state: {
+          params: {
+            otherId,
+            otherName,
+            id,
+            otherPic,
+        },
+      },
+    },
+  },
+}) => ({
+    title: `${otherName}`,
+    headerTitle: (
+      <View style={styles.headerViewStyle}>
+          <TouchableOpacity onPress={() => navigate('UserProfile',
             {
-                alignSelf: 'center',
-                textAlign: 'center',
-                fontWeight:'normal',
-                fontSize: 22,
-                color: 'black'
-            }
-    })
+              id: otherId,
+              name: otherName,
+              hostId: id,
+            })}
+          >
+              <CirclePicture imageURL={otherPic} picSize="mini" />
+          </TouchableOpacity>
+          <MyAppText style={styles.textHeader}>
+            {`${otherName}'s open dates`}
+          </MyAppText>
+          <View style={{ width: 100 }} />
+      </View>
+    ),
+    headerTitleStyle: {
+      alignSelf: 'center',
+      textAlign: 'center',
+      fontWeight: 'normal',
+      fontSize: 22,
+      color: 'black',
+    },
+  })
 
-    render() {
-        return (
-            <Container>
-                <Content>
-                    <List>
-                        <Query query={GET_DATES} variables={{id:this.props.navigation.state.params.otherId }}>
-                        {({data, loading, error}) => {
-                            console.log('OpenDateList data: ',data);
-                            if(loading) return <Spinner />
-                            if(error) return <MyAppText>Error! {error.message}</MyAppText>
-                            return data.user.dateRequests.list.filter(date => date.open).map(date => (
-                                <ListItem 
-                                    key={date.id} 
-                                    onPress={() =>  this.props.navigation.navigate('BidDate',{
-                                        date,
-                                        ...this.props.navigation.state.params,
-                                    })}
-                                >
-                                    <View style={{flex:1,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center'}}>
-                                        <MyAppText>{formatDate(date.datetimeOfDate)} </MyAppText>
-                                        <MyAppText>{formatDescription(date.description)}</MyAppText>
-                                    </View>
-                                </ListItem>
-                            ))
-                        }}
-                        </Query>
-                    </List>
-                </Content>
-            </Container>
-        )
-    }
+  render() {
+    const { navigation: navigate, navigate: { state: { params, params: { otherId } } } } = this.props;
+    return (
+      <Container>
+        <Content>
+          <List>
+            <Query query={GET_DATES} variables={{ id: otherId }}>
+            {({ data, loading, error }) => {
+              if (loading) return <Spinner />;
+              if (error) return <ErrorMessage error={error.message} />;
+              return data.user.dateRequests.list.filter(date => date.open).map(date => (
+                <ListItem
+                  key={date.id}
+                  onPress={() => navigate('BidDate', {
+                    date,
+                    ...params,
+                  })}
+                >
+                  <View style={styles.listItemText}>
+                    <MyAppText>
+                      {formatDate(date.datetimeOfDate)}
+                    </MyAppText>
+                    <MyAppText>
+                      {formatDescription(date.description)}
+                    </MyAppText>
+                  </View>
+                </ListItem>
+              ));
+            }}
+            </Query>
+          </List>
+        </Content>
+      </Container>
+    );
+  }
 }
 
 // We put the styles in the component
@@ -98,14 +119,20 @@ const styles = StyleSheet.create({
     textHeader: {
         alignSelf: 'center',
         textAlign: 'center',
-        fontWeight:'bold',
+        fontWeight: 'bold',
         fontSize: 18,
         color: '#000',
-        paddingLeft: 8
+        paddingLeft: 8,
     },
     headerViewStyle: {
         flexDirection: 'row',
-        paddingVertical: 5
+        paddingVertical: 5,
+    },
+    listItemText: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     }
 });
 

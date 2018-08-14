@@ -1,45 +1,26 @@
 import React, { Component } from 'react';
 import {
-    View, 
-    Text, 
-    TouchableOpacity, 
-    StyleSheet, 
-    Platform, 
-    Image,
+    View,
+    StyleSheet,
     Dimensions,
-    ScrollView,
-    Animated,
-    PanResponder,
     LayoutAnimation,
     UIManager,
-    ActivityIndicator,
-    ImageBackground,
-    Alert,
-    Button,
     RefreshControl,
 } from 'react-native';
+import BackgroundGeolocation from 'react-native-background-geolocation';
+import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview';
 import StaggCard from './StaggCard';
 import StaggHeader from './StaggHeader';
 import NewDateModal from './NewDateModal';
 import FilterModal from './FilterModal';
 import EmptyList from './EmptyList';
-import {Card,Spinner,MyAppText} from './common';
-import Foundation from 'react-native-vector-icons/Foundation';
-import {checkPermissions,pushNotificationHandler} from '../services/push_notifications';
+import { checkPermissions, pushNotificationHandler } from '../services/push_notifications';
 import toastMessage from '../services/toastMessage';
-import gql from 'graphql-tag';
-import Permissions from 'react-native-permissions';
-import BackgroundGeolocation from 'react-native-background-geolocation';
-import {FUNCTION_PATH} from '../variables/functions';
-import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview';
-import {CARD_HEIGHT,CARD_FOOTER_HEIGHT,CARD_MARGIN} from '../variables';
-import {firebase} from '../firebase';
+import { CARD_HEIGHT, CARD_FOOTER_HEIGHT, CARD_MARGIN } from '../variables';
+import { firebase } from '../firebase';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SWIPE_THRESHOLD = (0.25 * SCREEN_WIDTH);
-const SWIPE_OUT_DURATION = 20;
-const MIN_QUEUE_LENGTH = 2;
 
 class Stagg extends Component {
     constructor(props) {
@@ -143,21 +124,23 @@ class Stagg extends Component {
         BackgroundGeolocation.removeListeners();
     }
 
-    componentWillUpdate() {
-        UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-        // The next time the component changes, add a spring affect to it.
-        LayoutAnimation.spring();
+    
+    componentWillReceiveProps = (nextProps) => {
+      if (nextProps.queue !== this.props.queue) {
+        this.setState({queue:new DataProvider((r1,r2) => r1 !== r2).cloneWithRows(
+          nextProps.queue.map(user => ({
+            type: !!user.hasDateOpen? 'WITH_FOOTER' : 'NORMAL',
+            user,
+          }))),
+        })
+      }
     }
 
-    componentWillReceiveProps = (nextProps) => {
-        if(nextProps.queue !== this.props.queue) {
-            this.setState({queue:new DataProvider((r1,r2) => r1 !== r2).cloneWithRows(
-                nextProps.queue.map(user => ({
-                    type: !!user.hasDateOpen? 'WITH_FOOTER' : 'NORMAL',
-                    user,
-                }))),
-            })
-        }
+    componentWillUpdate() {
+        UIManager.setLayoutAnimationEnabledExperimental && UIManager
+          .setLayoutAnimationEnabledExperimental(true);
+        // The next time the component changes, add a spring affect to it.
+        LayoutAnimation.spring();
     }
 
     onLocation = (location) => console.log(' - [event] location: ',location)
@@ -211,7 +194,7 @@ class Stagg extends Component {
 
     renderCard = (prospect) => {
         // Instead of rendering a card, I could render an ImageBackground
-        //console.log('stagg ancillary: ',prospect.ancillaryPics);
+        // console.log('stagg ancillary: ',prospect.ancillaryPics);
 
         // I could wrap each card with a mutation component right here
         return (
@@ -224,10 +207,7 @@ class Stagg extends Component {
         )
     }
 
-    rowRenderer = (type,data) => {
-        //console.log('rowRenderer data: ',data);
-        return this.renderCard(data.user);
-    }
+    rowRenderer = (type, data) => this.renderCard(data.user);
 
     render() {
         //console.log('this.props.queue: ',this.props.queue);
@@ -286,8 +266,8 @@ class Stagg extends Component {
 const styles = StyleSheet.create({
     staggContainer: {
         flex: 1,
-        //justifyContent: 'flex-start',
-        //alignItems: 'center',
+        // justifyContent: 'flex-start',
+        // alignItems: 'center',
         marginTop: 5,
         marginBottom: 5,
     },
@@ -298,7 +278,7 @@ const styles = StyleSheet.create({
         width: SCREEN_WIDTH,
         // absolute position does not seem to work as a child of ScrollView
         position: 'absolute',
-        elevation:4
+        elevation: 4,
     },
     undeterminedContainer: {
         flex: 1,
@@ -309,41 +289,41 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 30,
-        marginRight:30
+        marginRight: 30,
     },
     button: {
         padding: 10,
         backgroundColor: 'purple',
         alignSelf: 'center',
         borderRadius: 5,
-        margin: 20
+        margin: 20,
     },
     buttonText: {
         color: 'white',
-        fontSize: 20
+        fontSize: 20,
     },
     prospectText: {
         color: '#fff',
         fontSize: 32,
         marginLeft: 20,
         marginBottom: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     prospectView: {
         justifyContent: 'center',
-        alignItems:'center'
+        alignItems: 'center',
     },
     prospectImage: {
-        height:(SCREEN_HEIGHT*.83),
+        height: (SCREEN_HEIGHT * 0.83),
         justifyContent: 'flex-end',
-        alignItems:'flex-start',
+        alignItems: 'flex-start',
         backgroundColor: 'transparent',
         borderRadius: 7,
         borderWidth: 1,
         borderColor: '#ddd',
         borderBottomWidth: 0,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.5,
         // just like border radius, but with shadows
         shadowRadius: 2,

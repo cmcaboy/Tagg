@@ -1,15 +1,14 @@
 export const ENV = 'PROD'; 
 
-export const PHOTO_ADD_URL = (ENV === 'PROD')?
-'https://firebasestorage.googleapis.com/v0/b/stagg-cc356.appspot.com/o/icons%2Fadd_pic.png?alt=media&token=8150e06c-5dce-408a-b2a5-bda2edd35131'
-:
-'https://firebasestorage.googleapis.com/v0/b/stagg-test.appspot.com/o/add_pic.png?alt=media&token=5328312a-bd1a-4328-b355-2c80210b96ed'
-
-
+export const PHOTO_ADD_URL = (ENV === 'PROD') ? (
+  'https://firebasestorage.googleapis.com/v0/b/stagg-cc356.appspot.com/o/icons%2Fadd_pic.png?alt=media&token=8150e06c-5dce-408a-b2a5-bda2edd35131'
+) : (
+  'https://firebasestorage.googleapis.com/v0/b/stagg-test.appspot.com/o/add_pic.png?alt=media&token=5328312a-bd1a-4328-b355-2c80210b96ed'
+);
 
 export const NUM_PHOTOS = 6;
 export const TAB_BAR_HEIGHT = 56;
-export const PLACEHOLDER_PHOTO = "https://firebasestorage.googleapis.com/v0/b/stagg-cc356.appspot.com/o/icons%2Fstagg_512.png?alt=media&token=fab7e588-a23d-4a7d-8183-6f33c653ac18"
+export const PLACEHOLDER_PHOTO = 'https://firebasestorage.googleapis.com/v0/b/stagg-cc356.appspot.com/o/icons%2Fstagg_512.png?alt=media&token=fab7e588-a23d-4a7d-8183-6f33c653ac18';
 export const GOOGLE_MAPS_API_KEY = 'AIzaSyAlVUE0QmItEkmjVUBLhkb3ShhebQMJUdA';
 
 export const PRIMARY_COLOR = '#F56705';
