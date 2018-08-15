@@ -28,15 +28,15 @@ const StaggCard = (
       <View style={styles.bodyStyle}>
         <TouchableOpacity onPress={onPress}>
           <Image
-            source={{uri: profilePic }}
-            style={{height: 115, width: 115, borderRadius: 5}}
+            source={{ uri: profilePic }}
+            style={{ height: 115, width: 115, borderRadius: 5 }}
           />
         </TouchableOpacity>
         <View style={styles.userInfo}>
-          <View style={{justifyContent: 'space-between'}}> 
+          <View style={{ justifyContent: 'space-between' }}>
             <View style={styles.description}>
               <TouchableOpacity onPress={onPress}>
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <MyAppText style={styles.nameText}>
                     {name}
                   </MyAppText>

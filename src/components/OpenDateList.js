@@ -35,21 +35,19 @@ query user($id: String!) {
   }
 `;
 
-class OpenDateList extends React.Component  {
+class OpenDateList extends React.Component {
   static navigationOptions = ({
     navigation: {
-      navigate, navigate: {
-        state: {
-          params: {
-            otherId,
-            otherName,
-            id,
-            otherPic,
+      navigate, state: {
+        params: {
+          otherId,
+          otherName,
+          id,
+          otherPic,
         },
       },
     },
-  },
-}) => ({
+  }) => ({
     title: `${otherName}`,
     headerTitle: (
       <View style={styles.headerViewStyle}>
@@ -78,7 +76,8 @@ class OpenDateList extends React.Component  {
   })
 
   render() {
-    const { navigation: navigate, navigate: { state: { params, params: { otherId } } } } = this.props;
+    console.log('OpenDateList props: ', this.props);
+    const { navigation: { navigate, state: { params, params: { otherId } } } } = this.props;
     return (
       <Container>
         <Content>

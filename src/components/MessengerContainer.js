@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Query, Mutation } from 'react-apollo';
-import { CirclePicture, MyAppText, Spinner } from './common';
+import { CirclePicture, MyAppText, Spinner, ErrorMessage } from './common';
 import Messenger from './Messenger';
 import { GET_NEW_MESSAGES } from '../apollo/subscriptions';
 import { SEND_MESSAGE } from '../apollo/mutations';
@@ -61,13 +61,7 @@ class MessengerContainer extends Component {
         >
           {({ loading, error, data, subscribeToMore, fetchMore }) => {
               if (loading) return <Spinner />;
-              if (error) {
-                return (
-                  <Text>
-                    { `Error! ${error.message}` }
-                  </Text>
-                );
-              }
+              if (error) return <ErrorMessage error={error.message} />;
               console.log('messages container data: ', data);
 
               // We have to change the format of our messages in order to satisfy RN Gifted Chat

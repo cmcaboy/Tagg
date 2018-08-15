@@ -11,8 +11,6 @@ import uploadImage from '../firebase/uploadImage';
 import { Spinner } from './common';
 import { PLACEHOLDER_PHOTO } from '../variables';
 
-const placeholderURL = PLACEHOLDER_PHOTO;
-
 class PhotoSelector extends React.Component {
   constructor(props) {
     super(props);
@@ -144,7 +142,7 @@ class PhotoSelector extends React.Component {
           ) : (
             <TouchableOpacity
               key={item}
-              onPress={item !== placeholderURL ? (
+              onPress={item !== PLACEHOLDER_PHOTO ? (
                 () => this.selectImage(index)
               ) : (
                 () => this.pickImage(index)
@@ -153,7 +151,7 @@ class PhotoSelector extends React.Component {
             >
               <Image
                 style={[styles.photo, isSelected[index] ? styles.highlighted : styles.notHightlighted]}
-                source={{ uri: item && placeholderURL }}
+                source={{ uri: item || PLACEHOLDER_PHOTO }}
               />
             </TouchableOpacity>
           )

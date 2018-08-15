@@ -11,7 +11,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Query } from 'react-apollo';
 import UserProfilePhotos from './UserProfilePhotos';
 import DateOpenButton from './DateOpenButton';
-import { MyAppText, Spinner, FollowButton } from './common';
+import { MyAppText, Spinner, FollowButton, ErrorMessage } from './common';
 import { PRIMARY_COLOR } from '../variables';
 import { formatDistanceApart } from '../format';
 import { GET_USER_PROFILE } from '../apollo/queries';
@@ -50,7 +50,7 @@ class UserProfile extends Component {
         // console.log('error: ',error);
         // console.log('data: ',data);
         if (loading) return <Spinner />;
-        if (error) return <MyAppText>Error! {error.message}</MyAppText>;
+        if (error) return <ErrorMessage error={error.message} />;
         const {
           name, school, work, description, pics, isFollowing, distanceApart, hasDateOpen,
         } = data.user;

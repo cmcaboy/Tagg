@@ -224,6 +224,8 @@ class Stagg extends Component {
   render() {
     const { navigation, id, refetchQueue, fetchMoreQueue  } = this.props;
     const { queue, newDateModal, filterModal, loading } = this.state;
+    console.log('queue: ', queue);
+    console.log('queue.length: ', queue._data.length);
     return (
       // I'll need to change this to a FlatList eventually
       <View style={styles.staggContainer}>
@@ -246,7 +248,7 @@ class Stagg extends Component {
           }}
         />
 
-        {queue.length ? (
+        {queue._data.length ? (
           <RecyclerListView
             style={{ flex: 1 }}
             onEndReached={() => {

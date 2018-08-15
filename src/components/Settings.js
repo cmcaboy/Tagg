@@ -53,7 +53,7 @@ class Settings extends React.Component {
 
     renderContent({ work, school, name, pics }) {
       const { navigation: { navigate } } = this.props;
-      const profilePic = pics[0] && PLACEHOLDER_PHOTO;
+      const profilePic = pics[0] || PLACEHOLDER_PHOTO;
       return (
         <View style={styles.settingsContainer}>
             <View style={styles.miniProfile}> 
