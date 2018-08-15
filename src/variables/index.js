@@ -1,4 +1,4 @@
-export const ENV = 'PROD'; 
+export const ENV = 'PROD';
 
 export const PHOTO_ADD_URL = (ENV === 'PROD') ? (
   'https://firebasestorage.googleapis.com/v0/b/stagg-cc356.appspot.com/o/icons%2Fadd_pic.png?alt=media&token=8150e06c-5dce-408a-b2a5-bda2edd35131'

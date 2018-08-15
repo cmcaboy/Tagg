@@ -1,19 +1,13 @@
 import React from 'react';
-import { ApolloProvider} from 'react-apollo';
-import Authentication from './src/components/Authentication';
+import { ApolloProvider } from 'react-apollo';
 import { YellowBox } from 'react-native';
-import {client} from './src/apollo';
+import Authentication from './src/components/Authentication';
+import { client } from './src/apollo';
 
-YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader','Warning']);
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader', 'Warning']);
 
-export default class App extends React.Component {
-  render() {
-    console.log('App Root level');
-    return (
-      <ApolloProvider client={client}>
-          <Authentication />
-      </ApolloProvider>
-    );
-  }
-}
-
+export default () => (
+  <ApolloProvider client={client}>
+    <Authentication />
+  </ApolloProvider>
+);

@@ -13,9 +13,9 @@ export const checkPermissions = async () => {
       console.log('Push Notification Authorization granted.');
       return true;
     } catch (error) {
-        // User has rejected permissions
-        console.log('Push Notification Authorization denied')
-        return false;
+      // User has rejected permissions
+      console.log('Push Notification Authorization denied');
+      return false;
     }
 };
 
@@ -45,7 +45,7 @@ export const pushNotificationHandler = (id, data, navigation) => {
     case 'NEW_MESSAGE':
       console.log('NEW_MESSAGE handler');
       // Navigate to MessengerContainer
-      navigation.navigate('MessengerContainer',{
+      navigation.navigate('MessengerContainer', {
         id: data.id,
         matchId: data.matchId,
         otherId: data.otherId,
@@ -57,20 +57,19 @@ export const pushNotificationHandler = (id, data, navigation) => {
       break;
     case 'CREATE_DATE':
       console.log('CREATE_DATE handler');
-      navigation.navigate('BidDate',{
+      navigation.navigate('BidDate', {
         date: {
             datetimeOfDate: data.datetimeOfDate,
             description: data.description,
             id: data.dateId,
         },
-        id: this.props.id,
+        id, // was id: this.props.id
         otherId: data.id,
         otherName: data.name,
         otherPic: data.profilePic,
       });
       break;
     default:
-      console.log('Type not handled: ',data.type);
+      console.log('Type not handled: ', data.type);
   }
-}
-
+};

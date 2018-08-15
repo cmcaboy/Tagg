@@ -23,244 +23,257 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 class Stagg extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.locationTracker;
+    this.locationTracker = null;
 
-        this.state = {
-            loading: false,
-            newDateModal: false,
-            filterModal: false,
-            //queue: this.props.queue,
-            refreshQueue: false,
-            queue: new DataProvider((r1,r2) => r1 !== r2).cloneWithRows(
-                this.props.queue.map(user => ({
-                    type: !!user.hasDateOpen? 'WITH_FOOTER' : 'NORMAL',
-                    user,
-                }))),
-        };
+    const { queue } = this.props;
 
-        this._layoutProvider = new LayoutProvider((i) => {
-            return this.state.queue.getDataForIndex(i).type
-        }, (type, dim) => {
-            //console.log('type: ',type);
-            switch(type) {
-                case 'NORMAL':
-                    dim.width = SCREEN_WIDTH;
-                    dim.height = CARD_HEIGHT + CARD_MARGIN;
-                    break;
-                case 'WITH_FOOTER':
-                    dim.width = SCREEN_WIDTH;
-                    dim.height = CARD_HEIGHT + CARD_FOOTER_HEIGHT + CARD_MARGIN;
-                    break;
-                default:
-                    dim.width = 0;
-                    dim.height = 0;
-            }
-        });
-
-        // Used for Firebase Cloud Messaging
-        this.onTokenRefreshListener; // Token check
-        this.notificationListener; //  Listen for Notification
-        this.notificationOpenedListener; // Listen for push notification press event if App is in Foreground or Background
+    this.state = {
+      loading: false,
+      newDateModal: false,
+      filterModal: false,
+      queue: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(
+        queue.map(user => ({
+          type: user.hasDateOpen ? 'WITH_FOOTER' : 'NORMAL',
+          user,
+        })),
+      ),
     };
 
-    flipNewDateModal = () => this.setState(prev => ({newDateModal:!prev.newDateModal}));
-    flipFilterModal  = () => {
-        //console.log('flip FilterModal status: ',this.state.filterModal);
-        this.setState(prev => ({filterModal:!prev.filterModal}))
-    };
-
-    pushNotification = async () => {
-        // Get Token
-        const fcmToken = await firebase.messaging().getToken();
-        if(fcmToken) {
-            console.log('User has a device token: ',fcmToken);
-            if(fcmToken !== this.props.pushToken) {
-                console.log('push token has changed since last login. Uploading to datastore');
-                this.props.startSetPushToken(fcmToken);
-            }
-        } else {
-            console.log('user has not received a device token yet.')
+    this._layoutProvider = new LayoutProvider((i) => {
+      const { queue } = this.state;
+        return queue.getDataForIndex(i).type;
+    }, (type, dim) => {
+        // console.log('type: ',type);
+        switch (type) {
+            case 'NORMAL':
+                dim.width = SCREEN_WIDTH;
+                dim.height = CARD_HEIGHT + CARD_MARGIN;
+                break;
+            case 'WITH_FOOTER':
+                dim.width = SCREEN_WIDTH;
+                dim.height = CARD_HEIGHT + CARD_FOOTER_HEIGHT + CARD_MARGIN;
+                break;
+            default:
+                dim.width = 0;
+                dim.height = 0;
         }
-        // Listen for token refresh
-        this.onTokenRefreshListener = firebase.messaging().onTokenRefresh(newFcmToken => this.props.startSetPushToken(newFcmToken));
-        
-        // Listen for Notification in the foreground
-        this.notificationListener = firebase.notifications().onNotification((notification) => toastMessage({text:notification._title},
-            () => pushNotificationHandler(this.props.id,notification._data,this.props.navigation)));
+    });
 
-        // Listen for notification press while app is in the background
-        this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen => pushNotificationHandler(this.props.id,notificationOpen.notification._data,this.props.navigation));
-        //const notificationOpen = await firebase.notifications().getInitialNotification();
+    // Used for Firebase Cloud Messaging
+    // ----------------------------------
+    // Token check
+    this.onTokenRefreshListener = null;
+    //  Listen for Notification
+    this.notificationListener = null;
+    // Listen for push notification press event if App is in Foreground or Background
+    this.notificationOpenedListener = null;
+    // ----------------------------------
+  }
 
+  componentDidMount = async () => {
+    const { id, navigation } = this.props;
+
+    // Track location via react-native-background-geolcation
+    this.trackLocation();
+
+    // Check to see if App was opened via push notification press event
+    // This is used if a notification was pressed when the app was closed.
+    const notificationOpen = await firebase.notifications().getInitialNotification();
+
+    // I could potentially put this in componentWillMount instead because it may navigate the user 
+    // away and I wouldn't want to wait on the page load. However, this should work for now.
+    if (notificationOpen) {
+        console.log('notificationOpen');
+        // action prop also available from notificationOpen
+        const { notification } = notificationOpen;
+        pushNotificationHandler(id, notification._data, navigation);
     }
-
-    componentDidMount = async () => {
-        console.log('componentDidMount');
-        this.trackLocation();
-        // Check to see if App was opened via push notification press event
-        // This is used if a notification was pressed when the app was closed.
-        const notificationOpen = await firebase.notifications().getInitialNotification();
-
-        // I could potentially put this in componentWillMount instead because it may navigate the user 
-        // away and I wouldn't want to wait on the page load
-        if(notificationOpen) {
-            console.log('notificationOpen')
-            const action = notificationOpen.action;
-            const notification = notificationOpen.notification;
-            pushNotificationHandler(this.props.id,notification._data,this.props.navigation);
-        }
-        if(checkPermissions()) {
-            this.pushNotification();
-        }
+    if (checkPermissions()) {
+        this.pushNotification();
     }
-    
-    ComponentWillUnmount = () => {
-        !!this.onTokenRefreshListener && this.onTokenRefreshListener();
-        !!this.notificationListener && this.notificationListener();
-        !!this.notificationOpenedListener && this.notificationOpenedListener();
-        BackgroundGeolocation.removeListeners();
-    }
+  }
 
-    
-    componentWillReceiveProps = (nextProps) => {
-      if (nextProps.queue !== this.props.queue) {
-        this.setState({queue:new DataProvider((r1,r2) => r1 !== r2).cloneWithRows(
+  componentWillReceiveProps = (nextProps) => {
+    const { queue } = this.state;
+    if (nextProps.queue !== queue) {
+      this.setState({
+        queue: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(
           nextProps.queue.map(user => ({
-            type: !!user.hasDateOpen? 'WITH_FOOTER' : 'NORMAL',
+            type: user.hasDateOpen ? 'WITH_FOOTER' : 'NORMAL',
             user,
-          }))),
-        })
+          })),
+        ),
+      });
+    }
+  }
+
+  componentWillUpdate() {
+      UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+      // The next time the component changes, add a spring affect to it.
+      LayoutAnimation.spring();
+  }
+
+  onLocation = location => console.log(' - [event] location: ', location);
+
+  onError = e => console.log(' - [error] location: ', e);
+
+  ComponentWillUnmount = () => {
+    !!this.onTokenRefreshListener && this.onTokenRefreshListener();
+    !!this.notificationListener && this.notificationListener();
+    !!this.notificationOpenedListener && this.notificationOpenedListener();
+    BackgroundGeolocation.removeListeners();
+  }
+
+  pushNotification = async () => {
+    const { pushToken, startSetPushToken, id, navigation } = this.props;
+    // Get Token
+    const fcmToken = await firebase.messaging().getToken();
+    if (fcmToken) {
+      console.log('User has a device token: ', fcmToken);
+      if (fcmToken !== pushToken) {
+        console.log('push token has changed since last login. Uploading to datastore');
+        startSetPushToken(fcmToken);
       }
+    } else {
+      console.log('user has not received a device token yet.')
     }
+    // Listen for token refresh
+    this.onTokenRefreshListener = firebase.messaging().onTokenRefresh(newFcmToken => startSetPushToken(newFcmToken));
 
-    componentWillUpdate() {
-        UIManager.setLayoutAnimationEnabledExperimental && UIManager
-          .setLayoutAnimationEnabledExperimental(true);
-        // The next time the component changes, add a spring affect to it.
-        LayoutAnimation.spring();
-    }
+    // Listen for Notification in the foreground
+    this.notificationListener = firebase.notifications().onNotification(notification => toastMessage({ text: notification._title },
+        () => pushNotificationHandler(id, notification._data, navigation)));
 
-    onLocation = (location) => console.log(' - [event] location: ',location)
-    onError = (e) => console.log(' - [error] location: ',e);
+    // Listen for notification press while app is in the background
+    this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen => pushNotificationHandler(id, notificationOpen.notification._data, navigation));
+    // const notificationOpen = await firebase.notifications().getInitialNotification();
+}
 
-    trackLocation = () => {
+  flipNewDateModal = () => this.setState(prev => ({ newDateModal: !prev.newDateModal }));
 
-        //console.log('function path: ',FUNCTION_PATH + '/coords');
+  flipFilterModal = () => {
+    // console.log('flip FilterModal status: ',this.state.filterModal);
+    this.setState(prev => ({ filterModal: !prev.filterModal }));
+  };
 
-        BackgroundGeolocation.on('location', this.onLocation, this.onError);
+  trackLocation = () => {
+      const { id } = this.props;
 
-        BackgroundGeolocation.ready({
-            // Geolocation Config
-            reset: false,
-            desiredAccuracy: 100,
-            distanceFilter: 100,
-            // Activity Recognition
-            stopTimeout: 5,
-            // Application config
-            debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
-            logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
-            stopOnTerminate: false,   // <-- [Default: true] Allow the background-service to continue tracking when user closes the app.
-            startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
-            // HTTP / SQLite config
-            //url: FUNCTION_PATH + '/coords',
-            url: 'https://us-central1-manhattanmatch-9f9fe.cloudfunctions.net/coords',
-            batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
-            autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
-            // headers: {              // <-- Optional HTTP headers
-            //   "X-FOO": "bar"
-            // },
-            extras: {
-                "id": this.props.id
-            },
-            params: {               // <-- Optional HTTP params
-              "id": this.props.id
-            }
-          }, (state) => {
-      
-            // If we are not currently tracking, start tracking.
-            if (!state.enabled) {
-              ////
-              // 3. Start tracking!
-              //
-              BackgroundGeolocation.start(function() {
-                console.log("- Start success");
-              });
-            }
-          });
-    }
+      BackgroundGeolocation.on('location', this.onLocation, this.onError);
 
-    renderCard = (prospect) => {
-        // Instead of rendering a card, I could render an ImageBackground
-        // console.log('stagg ancillary: ',prospect.ancillaryPics);
+      BackgroundGeolocation.ready({
+          // Geolocation Config
+          reset: false,
+          desiredAccuracy: 100,
+          distanceFilter: 100,
+          // Activity Recognition
+          stopTimeout: 5,
+          // Application config
+          debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
+          logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+          stopOnTerminate: false,   // <-- [Default: true] Allow the background-service to continue tracking when user closes the app.
+          startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
+          // HTTP / SQLite config
+          // url: FUNCTION_PATH + '/coords',
+          url: 'https://us-central1-manhattanmatch-9f9fe.cloudfunctions.net/coords',
+          batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
+          autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
+          // headers: {              // <-- Optional HTTP headers
+          //   "X-FOO": "bar"
+          // },
+          extras: {
+            id,
+          },
+          params: { // <-- Optional HTTP params
+            id,
+          },
+        }, (state) => {
+          // If we are not currently tracking, start tracking.
+          if (!state.enabled) {
+            //
+            // 3. Start tracking!
+            //
+            BackgroundGeolocation.start(() => {
+              console.log(' - Start success');
+            });
+          }
+        });
+  }
 
-        // I could wrap each card with a mutation component right here
-        return (
-            <StaggCard 
-                key={prospect.id}
-                user={prospect}
-                hostId={this.props.id}
-                navigation={this.props.navigation}
-            />
-        )
-    }
+  rowRenderer = (type, data) => this.renderCard(data.user);
 
-    rowRenderer = (type, data) => this.renderCard(data.user);
+  renderCard = (prospect) => {
+    // Instead of rendering a card, I could render an ImageBackground
+    // console.log('stagg ancillary: ',prospect.ancillaryPics);
 
-    render() {
-        //console.log('this.props.queue: ',this.props.queue);
-        //console.log('this.props.queue.length: ',this.props.queue.length);
-        return (
-            // I'll need to change this to a FlatList eventually
-            <View style={styles.staggContainer}>
-                <StaggHeader 
-                    flipNewDateModal={this.flipNewDateModal}
-                    flipFilterModal={this.flipFilterModal}
-                    navigation={this.props.navigation}
-                />
-                <NewDateModal 
-                    id={this.props.id}
-                    isVisible={this.state.newDateModal} 
-                    flipNewDateModal={this.flipNewDateModal}
-                />
-                <FilterModal 
-                    isVisible={this.state.filterModal} 
-                    flipFilterModal={this.flipFilterModal}
-                    refetchQueue={() => {
-                        this.props.refetchQueue()
-                        this.setState((prev) => ({refreshQueue:!prev.refreshQueue}))
-                    }}
-                />
+    const { id, navigation } = this.props;
 
-                {!!this.props.queue.length? (
-                    <RecyclerListView 
-                        style={{flex:1}}
-                        onEndReached={() => {
-                            console.log('end reached');
-                            this.props.fetchMoreQueue()}}
-                        onEndReachedThreshold={400}
-                        rowRenderer={this.rowRenderer}
-                        dataProvider={this.state.queue}
-                        layoutProvider={this._layoutProvider}
-                        refreshControl={
-                            <RefreshControl
-                                refreshing={this.state.loading}
-                                onRefresh={async () => {
-                                    this.setState({loading:true});
-                                    await this.props.refetchQueue();
-                                    this.setState({loading:false,index:0});
-                                }}
-                            />
-                        }
-                    />
-                ) : (
-                    <EmptyList refetch={this.props.refetchQueue} text={`There is no one new in your area.`} subText={`Try again later.`} />
-                )}
-            </View>
-        )
-    }
+    return (
+      <StaggCard
+        key={prospect.id}
+        user={prospect}
+        hostId={id}
+        navigation={navigation}
+      />
+    );
+  }
+
+  render() {
+    const { navigation, id, refetchQueue, fetchMoreQueue  } = this.props;
+    const { queue, newDateModal, filterModal, loading } = this.state;
+    return (
+      // I'll need to change this to a FlatList eventually
+      <View style={styles.staggContainer}>
+        <StaggHeader
+          flipNewDateModal={this.flipNewDateModal}
+          flipFilterModal={this.flipFilterModal}
+          navigation={navigation}
+        />
+        <NewDateModal
+          id={id}
+          isVisible={newDateModal}
+          flipNewDateModal={this.flipNewDateModal}
+        />
+        <FilterModal
+          isVisible={filterModal}
+          flipFilterModal={this.flipFilterModal}
+          refetchQueue={() => {
+            refetchQueue();
+            this.setState(prev => ({ refreshQueue: !prev.refreshQueue }));
+          }}
+        />
+
+        {queue.length ? (
+          <RecyclerListView
+            style={{ flex: 1 }}
+            onEndReached={() => {
+              console.log('end reached');
+              fetchMoreQueue();
+            }}
+            onEndReachedThreshold={400}
+            rowRenderer={this.rowRenderer}
+            dataProvider={queue}
+            layoutProvider={this._layoutProvider}
+            refreshControl={(
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={async () => {
+                  this.setState({ loading: true });
+                  await refetchQueue();
+                  this.setState({ loading: false });
+                }}
+              />
+            )}
+          />
+        ) : (
+          <EmptyList refetch={refetchQueue} text="There is no one new in your area." subText="Try again later." />
+        )}
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -329,7 +342,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         // elevation makes items appear to jump out
         elevation: 1,
-    }
+    },
 });
 
 export default Stagg;

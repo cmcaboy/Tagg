@@ -1,8 +1,8 @@
-import gql from 'graphql-tag'
+import gql from 'graphql-tag';
 
-export  gql`
+export const GET_ID = gql`
 query {
     user @client {
         id
     }
-}`
+}`;
