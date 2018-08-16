@@ -1,11 +1,12 @@
-import {driver} from '../db/neo4j';
-import {db} from '../db/firestore';
-import {getQueue} from '../middleware/queue';
-import {createDatePush} from '../middleware/createDatePush';
-import {newMessagePush} from '../middleware/newMessagePush';
-import {chooseWinnerPushWinner,chooseWinnerPushLoser} from '../middleware/chooseWinnerPush';
-const uuid = require('node-uuid');
 import { PubSub, withFilter } from 'graphql-subscriptions';
+const uuid = require('node-uuid');
+import { driver } from '../db/neo4j';
+import { db } from '../db/firestore';
+import { getQueue } from '../middleware/queue';
+import { createDatePush } from '../middleware/createDatePush';
+import { newMessagePush } from '../middleware/newMessagePush';
+import { chooseWinnerPushWinner, chooseWinnerPushLoser } from '../middleware/chooseWinnerPush';
+import { getCurrentDateFirestore, getCurrentDateNeo } from '../middleware/format';
 
 const pubsub = new PubSub();
 const session = driver.session();
@@ -733,7 +734,7 @@ const resolvers = {
                 name: args.name,
                 text: args.text,
                 avatar: args.avatar,
-                createdAt: new Date(),
+                createdAt: getCurrentDateFirestore(),
                 order: args.order,
                 uid: args.uid,
                 //createdAt: moment().format('MMMM Do YYYY, h:mm:ss a')
@@ -766,7 +767,7 @@ const resolvers = {
         },
         bid: (_,args) => {
             // Need to make sure client cannot input doublequote ("). It will break the query.
-            const datetimeOfBid = Date.now();
+            const datetimeOfBid = getCurrentDateNeo();
             const bidId = uuid();
 
             let query = `MATCH (a:User {id:'${args.id}'}), (d:Date {id:'${args.dateId}'}) 
@@ -831,7 +832,7 @@ const resolvers = {
         createDate: async (_,args) => {
             // Currently, I am only creating the node field, but I also need to create the :CREATE relationship
 
-            const creationTime = Date.now();
+            const creationTime = getCurrentDateNeo();
             const dateId = uuid();
 
             let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}',open:TRUE,`; 
@@ -903,7 +904,7 @@ const resolvers = {
                 await db.collection(`matches`).doc(dateId).set({
                     user1: id,
                     user2: winnerId,
-                    matchTime: Date.now(),
+                    matchTime: getCurrentDateFirestore(),
                 })
             } catch(e) {
                 console.error(`chooseWinner error updating Firestore: ${e}`);
