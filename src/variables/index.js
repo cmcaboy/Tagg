@@ -23,3 +23,6 @@ export const CARD_FOOTER_HEIGHT = 35;
 export const CARD_MARGIN = 7;
 
 export const PHOTO_HINT = 'Hint: Press 2 photos to switch the position of the photos. Press and hold a photo to upload a new photo';
+
+export const DEFAULT_LATITUDE = 40.000;
+export const DEFAULT_LONGITUDE = -75.000;

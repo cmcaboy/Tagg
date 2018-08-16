@@ -4,6 +4,7 @@ import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import gql from 'graphql-tag';
 import { firebase } from '../firebase';
 import uploadImage from '../firebase/uploadImage';
+import { DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from '../variables';
 
 const GET_EMAIL_BY_TOKEN = gql`
 query user($id: String!) {
@@ -36,19 +37,19 @@ const FBLoginButton = ({ startNewUser, startSetId, client: { query } }) => (
             // const provider = firebase.auth.FacebookAuthProvider;
             // const credential = provider.credential(token);
             const credential = firebase.auth.FacebookAuthProvider.credential(tokenRaw.accessToken);
-            
-            // console.log('credential: ',credential);
+
+            const responseEmailRaw = await fetch(`https://graph.facebook.com/me/?fields=email&access_token=${token}`);
+            const responseEmail = await responseEmailRaw.json();
+            let { email } = responseEmail;
+            let isRegistered;
+
             console.log('Before firebase auth');
             const result = await firebase.auth().signInAndRetrieveDataWithCredential(credential);
             console.log('after firebase auth');
-            let email;
-            let isRegistered;
+
             try {
               // Login via Firebase Auth
-              email = result.additionalUserInfo.profile.email;
-
-              // const responseEmailRaw = await fetch(`https://graph.facebook.com/me/?fields=email&access_token=${token}`)
-              // const responseEmail = await responseEmailRaw.json();
+              // email = result.additionalUserInfo.profile.email;
 
               console.log('email: ', email);
 
@@ -95,6 +96,8 @@ const FBLoginButton = ({ startNewUser, startSetId, client: { query } }) => (
                 gender: response.gender ? response.gender : 'male',
                 email: response.email,
                 id: response.email,
+                latitude: DEFAULT_LATITUDE,
+                longitude: DEFAULT_LONGITUDE,
                 // coords: coords.coords,
                 sendNotifications: true, // default
                 distance: 15, // default

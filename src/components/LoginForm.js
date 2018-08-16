@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { ApolloConsumer, Mutation } from 'react-apollo';
 import { CardSection, MyAppText } from './common';
-import { PRIMARY_COLOR, BACKGROUND_COLOR } from '../variables';
+import { PRIMARY_COLOR, BACKGROUND_COLOR, DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from '../variables';
 import { getCurrentTime } from '../format';
 import FBLoginButton from '../services/FBLoginButton';
 import { NEW_USER } from '../apollo/mutations';
@@ -48,8 +48,8 @@ class LoginForm extends Component {
                           sendNotifications: user.sendNotifications,
                           distance: user.distance,
                           token: user.token,
-                          latitude: user.latitude ? user.latitude : 40.000,
-                          longitude: user.longitude ? user.longitude : -75.000,
+                          latitude: user.latitude || DEFAULT_LATITUDE,
+                          longitude: user.longitude || DEFAULT_LONGITUDE,
                           minAgePreference: user.minAgePreference,
                           maxAgePreference: user.maxAgePreference,
                           pics: user.pics,
@@ -62,7 +62,7 @@ class LoginForm extends Component {
                               const startSetId = id => setId({ variables: { id } });
                               return (
                                 <ApolloConsumer>
-                                  {client => <FBLoginButton client={client} startNewUser={startNewUser} startSetId={startSetId}/>}
+                                  {client => <FBLoginButton client={client} startNewUser={startNewUser} startSetId={startSetId} />}
                                 </ApolloConsumer>
                               );
                             }}

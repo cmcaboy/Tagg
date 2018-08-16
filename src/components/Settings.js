@@ -10,7 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Query } from 'react-apollo';
 import { firebase } from '../firebase';
-import { 
+import {
   CirclePicture,
   MyAppText,
   Spinner,
@@ -24,7 +24,6 @@ const ICON_OPACITY = 0.75;
 const ICON_SIZE = Dimensions.get('window').height * 0.05;
 
 class Settings extends React.Component {
-
     startLogout = () => firebase.auth().signOut();
 
     renderSubheading = (work, school) => {
