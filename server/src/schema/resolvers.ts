@@ -453,8 +453,8 @@ const resolvers = {
                                     user: record._fields[0].properties,
                                     matchId: record._fields[1], // Call it dateId?
                                     id: record._fields[1],
-                                    datetimeOfDate: record._fields[2],
-                                    description: record._fields[3], 
+                                    description: record._fields[2], 
+                                    datetimeOfDate: record._fields[3],
                                 }
                             })
                             if(list.length === 0) {

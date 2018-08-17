@@ -70,6 +70,9 @@ class Matches extends Component {
                   <MyAppText>
                     {match.user.name}
                   </MyAppText>
+                  <MyAppText>
+                    {match.datetimeOfDate}
+                  </MyAppText>
                 </View>
               </TouchableOpacity>
             ))}
