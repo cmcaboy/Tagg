@@ -437,7 +437,7 @@ const resolvers = {
             const query = `MATCH(a:User{id:'${parentValue.id}'}),(b:User),(d:Date)
                 WHERE (a)-[:CREATE]->(d)<-[:BID{winner:TRUE}]-(b) OR
                 (a)-[:BID{winner:TRUE}]->(d)<-[:CREATE]-(b)
-                RETURN b, d.id, d.description, d.datetimeofDate`;               
+                RETURN b, d.id, d.description, d.datetimeOfDate`;               
             
             console.log('query: ',query);
                 return session

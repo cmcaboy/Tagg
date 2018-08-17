@@ -43,6 +43,7 @@ class Matches extends Component {
       if (matches.length === 0 && dateRequests.length === 0) {
           return this.noMatches();
       }
+      console.log('matches: ', matches);
       return (
         <View style={styles.matchContainer}>
           <View style={styles.newMatchesContainer}>
