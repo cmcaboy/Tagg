@@ -1,14 +1,14 @@
 import gql from 'graphql-tag';
 
 export const NEW_USER = gql`
-mutation newUser($id: String!, $name: String!, $active: Boolean!, $email: String!, $gender: String!, $description: String, $school: String, $work: String, $sendNotifications: Boolean, $distance: Int, $token: String, $minAgePreference: Int, $maxAgePreference: Int, $pics: [String]) {
-    newUser(id: $id, name: $name, active: $active, email: $email, gender: $gender, description: $description, school: $school, work: $work, sendNotifications: $sendNotifications, distance: $distance, token: $token, minAgePreference: $minAgePreference, maxAgePreference: $maxAgePreference, pics: $pics) {
+mutation newUser($id: String!, $name: String!, $active: Boolean!, $email: String!, $gender: String!, $description: String, $school: String, $work: String, $sendNotifications: Boolean, $distance: Int, $token: String, $minAgePreference: Int, $maxAgePreference: Int, $latitude: Float, $longitude: Float, $pics: [String]) {
+    newUser(id: $id, name: $name, active: $active, email: $email, gender: $gender, description: $description, school: $school, work: $work, sendNotifications: $sendNotifications, distance: $distance, token: $token, minAgePreference: $minAgePreference, maxAgePreference: $maxAgePreference, latitude: $latitude, longitude: $longitude, pics: $pics) {
         id
         name
         email
     }
   }
-`
+`;
 
 export const SET_COORDS = gql`
 mutation editUser($id: String!, $latitude: Float, $longtitude: Float) {

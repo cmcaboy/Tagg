@@ -38,105 +38,80 @@ class Matches extends Component {
     );
 
     renderContent({ matches, dateRequests, id, name, pic, refetch }) {
-        const { navigation: { navigate } } = this.props;
+      const { navigation: { navigate } } = this.props;
 
-        if (matches.length === 0 && dateRequests.length === 0) {
-            return this.noMatches();
-        }
-        return (
-            <View style={styles.matchContainer}>
-                <View style={styles.newMatchesContainer}>
-                    <MyAppText style={styles.heading}>
-                      {'My Matched Dates'}
-                    </MyAppText>
-                    <ScrollView
-                      horizontal
-                    >
-                    {matches.map(match => (
-                      <TouchableOpacity
-                          onPress={() => navigate('MessengerContainer', {
-                              matchId: match.matchId,
-                              id,
-                              otherId: match.user.id,
-                              name,
-                              otherName: match.user.name,
-                              pic,
-                              otherPic: match.user.pics[0],
-                          })}
-                          key={match.user.id}
-                      >
-                          <View style={styles.newMatch}>
-                              <CirclePicture imageURL={match.user.pics[0]} picSize="small" />
-                              <MyAppText>
-                                {match.user.name}
-                              </MyAppText>
-                          </View>
-                      </TouchableOpacity>
-                    )
-                  )}
-                    </ScrollView>
-                </View>
-                <View style={styles.messagesContainer}>
-                  <MyAppText style={styles.heading}>
-                    {'My Open Dates'}
+      if (matches.length === 0 && dateRequests.length === 0) {
+          return this.noMatches();
+      }
+      return (
+        <View style={styles.matchContainer}>
+          <View style={styles.newMatchesContainer}>
+            <MyAppText style={styles.heading}>
+              {'My Matched Dates'}
+            </MyAppText>
+            <ScrollView
+              horizontal
+            >
+            {matches.map(match => (
+              <TouchableOpacity
+                  onPress={() => navigate('MessengerContainer', {
+                      matchId: match.matchId,
+                      id,
+                      otherId: match.user.id,
+                      name,
+                      otherName: match.user.name,
+                      pic,
+                      otherPic: match.user.pics[0],
+                  })}
+                  key={match.user.id}
+              >
+                <View style={styles.newMatch}>
+                  <CirclePicture imageURL={match.user.pics[0]} picSize="small" />
+                  <MyAppText>
+                    {match.user.name}
                   </MyAppText>
-                  <ScrollView>
-                    <List>
-                      {dateRequests.map(date => (
-                        <ListItem
-                          key={date.id}
-                          style={{ marginLeft: 0 }}
-                          onPress={() => navigate('BidList', {
-                            dateId: date.id,
-                            datetimeOfDate: date.datetimeOfDate,
-                            id,
-                            refetch,
-                          })}
-                        >
-                          <Body>
-                            <Text>
-                              {formatDate(date.datetimeOfDate)}
-                            </Text>
-                            <Text note numberOfLines={1}>
-                              {formatDescription(date.description)}
-                            </Text>
-                          </Body>
-                          <Right>
-                            <Text>
-                              {formatBids(date.num_bids)}
-                            </Text>
-                          </Right>
-                        </ListItem>
-                      ))}
-                    </List>
-                  </ScrollView>
                 </View>
-                {/*
-                <View style={styles.messagesContainer}>
-                    <MyAppText style={styles.heading}>Messages</MyAppText>
-                    <ScrollView>
-                        {matches.filter(match => (!!match.lastMessage && !!match.lastMessage.text)).map((match) => (
-                        <MatchListItem
-                            key={match.matchId}
-                            name={match.user.name}
-                            picture={match.user.pics[0]}
-                            lastMessage={match.lastMessage.text}
-                            onPress={() => navigation.navigate('MessengerContainer',{
-                                matchId:match.matchId,
-                                id,
-                                otherId: match.user.id,
-                                name: name,
-                                otherName: match.user.name,
-                                pic:pic,
-                                otherPic: match.user.pics[0],
-                            })}
-                        />
-                    ))}
-                    </ScrollView>
-                </View>
-                */}
-            </View>
-        );
+              </TouchableOpacity>
+            ))}
+            </ScrollView>
+          </View>
+          <View style={styles.messagesContainer}>
+            <MyAppText style={styles.heading}>
+              {'My Open Dates'}
+            </MyAppText>
+            <ScrollView>
+              <List>
+                {dateRequests.map(date => (
+                  <ListItem
+                    key={date.id}
+                    style={{ marginLeft: 0 }}
+                    onPress={() => navigate('BidList', {
+                      dateId: date.id,
+                      datetimeOfDate: date.datetimeOfDate,
+                      id,
+                      refetch,
+                    })}
+                  >
+                    <Body>
+                      <Text>
+                        {formatDate(date.datetimeOfDate)}
+                      </Text>
+                      <Text note numberOfLines={1}>
+                        {formatDescription(date.description)}
+                      </Text>
+                    </Body>
+                    <Right>
+                      <Text>
+                        {formatBids(date.num_bids)}
+                      </Text>
+                    </Right>
+                  </ListItem>
+                ))}
+              </List>
+            </ScrollView>
+          </View>
+        </View>
+      );
     }
 
     render() {
@@ -160,12 +135,12 @@ class Matches extends Component {
                     if (loading) return <Spinner />;
                     if (error) return <ErrorMessage error={error.message} />;
                     return this.renderContent({
-                        matches: data.user.matchedDates.list,
-                        dateRequests: data.user.dateRequests.list,
-                        id,
-                        name: data.user.name,
-                        pic: data.user.profilePic,
-                        refetch,
+                      matches: data.user.matchedDates.list,
+                      dateRequests: data.user.dateRequests.list,
+                      id,
+                      name: data.user.name,
+                      pic: data.user.profilePic,
+                      refetch,
                     });
                   }}
                 </Query>

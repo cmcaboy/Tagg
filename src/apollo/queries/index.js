@@ -91,6 +91,7 @@ query user($id: String!) {
             list {
                 id
                 matchId
+                datetimeOfDate
                 user {
                     id
                     name

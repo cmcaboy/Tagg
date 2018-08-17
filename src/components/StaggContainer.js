@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Query, Mutation } from 'react-apollo';
 import Composer from 'react-composer';
+import { LoginButton, AccessToken } from 'react-native-fbsdk';
+import { firebase } from '../firebase';
 import { Spinner, ErrorMessage } from './common';
 import { GET_QUEUE, MORE_QUEUE } from '../apollo/queries';
 import { GET_ID } from '../apollo/local/queries';
@@ -18,12 +20,14 @@ class StaggContainer extends Component {
     return (
       <Query query={GET_ID}>
         {({ loading, error, data }) => {
-        // console.log('local data stagg: ',data);
+        console.log('local data stagg: ', data);
         // console.log('local error stagg: ',error);
         // console.log('local loading stagg: ',loading);
         if (loading) return <Spinner />;
         if (error) return <ErrorMessage error={error.message} />;
         const { id } = data.user;
+        if (id === 0) return <Spinner />;
+        // if (id === 0) return <LoginButton onLogoutFinished={async () => firebase.auth().signOut()} />;
         return (
           <Query query={GET_QUEUE} variables={{ id }}>
             {({ loading, error, data, fetchMore, networkStatus, refetch }) => {

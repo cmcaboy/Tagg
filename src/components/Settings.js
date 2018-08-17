@@ -9,6 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Query } from 'react-apollo';
+import { LoginManager } from 'react-native-fbsdk';
 import { firebase } from '../firebase';
 import {
   CirclePicture,
@@ -24,7 +25,10 @@ const ICON_OPACITY = 0.75;
 const ICON_SIZE = Dimensions.get('window').height * 0.05;
 
 class Settings extends React.Component {
-    startLogout = () => firebase.auth().signOut();
+    startLogout = () => {
+      firebase.auth().signOut();
+      LoginManager.logOut();
+    }
 
     renderSubheading = (work, school) => {
         if (work || school) {

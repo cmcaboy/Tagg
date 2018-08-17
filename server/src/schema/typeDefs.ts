@@ -106,6 +106,8 @@ const typeDefs = `
         id: String
         matchId: String
         user: User
+        description: String
+        datetimeOfDate: String
         messages: Message
         lastMessage: MessageItem
     }

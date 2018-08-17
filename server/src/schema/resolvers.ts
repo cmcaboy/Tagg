@@ -437,7 +437,7 @@ const resolvers = {
             const query = `MATCH(a:User{id:'${parentValue.id}'}),(b:User),(d:Date)
                 WHERE (a)-[:CREATE]->(d)<-[:BID{winner:TRUE}]-(b) OR
                 (a)-[:BID{winner:TRUE}]->(d)<-[:CREATE]-(b)
-                RETURN b,d.id`;               
+                RETURN b, d.id, d.description, d.datetimeofDate`;               
             
             console.log('query: ',query);
                 return session
@@ -453,6 +453,8 @@ const resolvers = {
                                     user: record._fields[0].properties,
                                     matchId: record._fields[1], // Call it dateId?
                                     id: record._fields[1],
+                                    datetimeOfDate: record._fields[2],
+                                    description: record._fields[3], 
                                 }
                             })
                             if(list.length === 0) {
@@ -621,7 +623,7 @@ const resolvers = {
                 console.log('error fetching last message: ',e);
                 return null
             }
-        }
+        },
     },
     Mutation: {
         editUser: (_, args) => {
@@ -905,6 +907,8 @@ const resolvers = {
                     user1: id,
                     user2: winnerId,
                     matchTime: getCurrentDateFirestore(),
+                    datetimeOfDate: date.datetimeOfDate,
+                    description: date.description,
                 })
             } catch(e) {
                 console.error(`chooseWinner error updating Firestore: ${e}`);
