@@ -407,7 +407,7 @@ const resolvers = {
             console.log('dateRequests parentValue: ',parentValue);
             return session
                 .run(`MATCH(a:User{id:'${parentValue.id}'})-[:CREATE]->(d:Date) 
-                    WITH a, d, size((d)<-[:BID]-(:User)) as num_bids, d.datetimeOfDate as order,
+                    WITH a, d, size((d)<-[:BID]-(:User)) as num_bids, d.datetimeOfDate as order
                     WHERE d.open=TRUE
                     RETURN a,d,num_bids
                     ORDER BY order
