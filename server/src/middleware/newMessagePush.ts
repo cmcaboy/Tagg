@@ -16,15 +16,23 @@ export const newMessagePush = async ({matchId,otherId,otherName,otherPic,text,id
     let name;
     let pics;
     let token;
+    let sendNotifications;
     // Grab the receiver's token, name, and avatar (pic)
     try {
-        const result = await session.run(`MATCH (a:User{id: '${id}'}) RETURN a.name, a.pics, a.token`)
+        const result = await session.run(`MATCH (a:User{id: '${id}'}) RETURN a.name, a.pics, a.token, a.sendNotifications`)
         name = result.records[0]._fields[0];
         pics = result.records[0]._fields[1];
         token = result.records[0]._fields[2];
+        sendNotifications = result.records[0]._fields[3];
     } catch(e) {
         console.log(`Error building newMessage push notification to ${id} from ${otherId}: ${e}`);
         return null;
+    }
+
+    // Check to see if follower has notifications turned off.
+    if(!sendNotifications) {
+      console.log(`User ${id} does not currently have notifications turned on.`);
+      return null;
     }
 
     // Create the message for the winner

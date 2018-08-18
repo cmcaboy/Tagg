@@ -24,7 +24,7 @@ export const createDatePush = async (id,date) => {
     // Grab each followers token and id. The id is only needed for debugging purposes. Only the
     // token is needed to send the message.
     try {
-        const result = await session.run(`MATCH (a:User)-[:FOLLOWING]->(b:User{id:'${id}'}) return a.token, a.id`)
+        const result = await session.run(`MATCH (a:User)-[:FOLLOWING]->(b:User{id:'${id}'}) return a.token, a.id, a.sendNotifications`)
         list = result.records;
     } catch(e) {
         console.log('createDate push notification - Failed to get list of followers: ',e);
@@ -35,14 +35,22 @@ export const createDatePush = async (id,date) => {
     return list.forEach(record => {
         let token;
         let followerId;
+        let sendNotifications;
         try {
             token = record._fields[0];
             followerId = record._fields[1];
+            sendNotifications = record._fields[2];
             
         } catch(e) {
             console.log(`Error sending push notification to user: `,e)
             console.log(`record at fault: `,record);
             return null;
+        }
+
+        // Check to see if follower has notifications turned off.
+        if(!sendNotifications) {
+          console.log(`User ${followerId} does not currently have notifications turned on.`);
+          return null;
         }
         
         // Create the message for each user
