@@ -133,7 +133,11 @@ const resolvers = {
             // Should sort by date?
             console.log('otherBids args: ',args);
             return session
-                    .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) WITH b,r,d RETURN b,r`)
+                    .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) 
+                      WITH b,r,d, r.datetimeOfBid as order
+                      RETURN b,r
+                      ORDER BY order 
+                    `)
                         .then(result => result.records)
                         .then(records => {
                             const list = records.map(record => ({
@@ -403,9 +407,11 @@ const resolvers = {
             console.log('dateRequests parentValue: ',parentValue);
             return session
                 .run(`MATCH(a:User{id:'${parentValue.id}'})-[:CREATE]->(d:Date) 
-                    WITH a, d, size((d)<-[:BID]-(:User)) as num_bids
+                    WITH a, d, size((d)<-[:BID]-(:User)) as num_bids, d.datetimeOfDate as order,
                     WHERE d.open=TRUE
-                    RETURN a,d,num_bids`)
+                    RETURN a,d,num_bids
+                    ORDER BY order
+                  `)
                     .then(result => result.records)
                     .then(records => {
                         console.log('dateRequests records: ',records);
@@ -437,7 +443,8 @@ const resolvers = {
             const query = `MATCH(a:User{id:'${parentValue.id}'}),(b:User),(d:Date)
                 WHERE (a)-[:CREATE]->(d)<-[:BID{winner:TRUE}]-(b) OR
                 (a)-[:BID{winner:TRUE}]->(d)<-[:CREATE]-(b)
-                RETURN b, d.id, d.description, d.datetimeOfDate`;               
+                RETURN b, d.id, d.description, d.datetimeOfDate
+                ORDER BY d.datetimeOfDate`;               
             
             console.log('query: ',query);
                 return session

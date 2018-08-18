@@ -43,6 +43,7 @@
     "apollo-link-ws": "^1.0.8",
     "apollo-utilities": "^1.0.16",
     "axios": "^0.18.0",
+    "faker": "^4.1.0",
     "firebase": "^4.9.0",
     "firebase-admin": "^5.9.0",
     "fs": "^0.0.1-security",

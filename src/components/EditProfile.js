@@ -28,6 +28,7 @@ import {
   SET_DESCRIPTION,
   SET_PICS,
 } from '../apollo/mutations';
+import FakeButton from './FakeButton';
 
 class EditProfile extends Component {
   static navigationOptions = () => ({
@@ -142,6 +143,9 @@ class EditProfile extends Component {
                 );
               }}
               </Mutation>
+            </Card>
+            <Card>
+              <FakeButton />
             </Card>
             {/*
               <Card>

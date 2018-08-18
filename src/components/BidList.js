@@ -17,27 +17,8 @@ import gql from 'graphql-tag';
 import EmptyList from './EmptyList';
 import { MyAppText, Spinner, ErrorMessage } from './common';
 import { CHOOSE_WINNER } from '../apollo/mutations';
+import { GET_BIDS } from '../apollo/queries';
 import { formatDate, formatDescription } from '../format';
-
-const GET_BIDS = gql`
-query otherBids($id: String!) {
-    otherBids(id: $id) {
-        id
-        cursor
-        list {
-            id
-            datetimeOfBid
-            bidDescription
-            bidPlace
-            bidUser {
-                id
-                name
-                profilePic
-            }
-        }
-    }
-  }
-`;
 
 class BidList extends React.Component {
   static navigationOptions = ({ navigation: { state: { params: { datetimeOfDate } } } }) => ({

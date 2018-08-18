@@ -8,7 +8,6 @@ import {
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import DatePicker from 'react-native-datepicker';
-import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { Button } from 'native-base';
 import {
@@ -17,19 +16,9 @@ import {
   MyTitleText,
   MyAppModal,
 } from './common';
-import { DATE_FORMAT } from '../format';
+import { DATE_FORMAT, convertDateToEpoch } from '../format';
 import toastMessage from '../services/toastMessage';
-
-const NEW_DATE = gql`
-mutation createDate($id: String!, $datetimeOfDate: String, $description: String) {
-  createDate(id: $id, datetimeOfDate: $datetimeOfDate, description: $description) {
-    id
-    creationTime
-    datetimeOfDate
-    description
-  }
-}
-`;
+import { NEW_DATE } from '../apollo/mutations';
 
 class NewDateModal extends React.Component {
   constructor(props) {
@@ -78,7 +67,7 @@ class NewDateModal extends React.Component {
             style={styles.textInput}
             multiline
             placeholder="What kind of date are you looking for?"
-            onChangeText={text => this.setState({description: text })}
+            onChangeText={text => this.setState({ description: text })}
             value={description}
             maxLength={300}
           />
@@ -89,17 +78,18 @@ class NewDateModal extends React.Component {
                   block
                   onPress={() => {
                     this.closeModal();
-                    return newDate({variables: {
-                      id,
-                      datetimeOfDate: datetime,
-                      description,
-                    },
-                    update: (store, data) => {
-                      console.log('data from newDate mutation: ',data);
-                      console.log('store: ',store);
-                      toastMessage({ text: 'Your date request has been created!' });
-                    },
-                });
+                    return newDate({
+                      variables: {
+                        id,
+                        datetimeOfDate: convertDateToEpoch(datetime),
+                        description,
+                      },
+                      update: (store, data) => {
+                        console.log('data from newDate mutation: ', data);
+                        console.log('store: ', store);
+                        toastMessage({ text: 'Your date request has been created!' });
+                      },
+                    });
                 }}
                 >
                   <MyAppText style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>

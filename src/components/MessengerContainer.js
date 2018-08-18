@@ -23,7 +23,7 @@ class MessengerContainer extends Component {
             <CirclePicture imageURL={navigation.state.params.otherPic} picSize="mini" />
           </TouchableOpacity>
           <MyAppText style={styles.textHeader}>
-            {navigation.state.params.otherName}
+            {`${navigation.state.params.otherName}`}
           </MyAppText>
           <View style={{ width: 100 }} />
         </View>

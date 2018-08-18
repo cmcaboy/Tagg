@@ -1,5 +1,44 @@
 import gql from 'graphql-tag';
 
+export const GET_DATES = gql`
+query user($id: String!) {
+  user(id: $id) {
+    id
+    dateRequests {
+      id
+      list {
+        id
+        creationTime
+        datetimeOfDate
+        description
+        num_bids
+        open
+      }
+    }
+  }
+  }
+`;
+
+export const GET_BIDS = gql`
+query otherBids($id: String!) {
+    otherBids(id: $id) {
+        id
+        cursor
+        list {
+            id
+            datetimeOfBid
+            bidDescription
+            bidPlace
+            bidUser {
+                id
+                name
+                profilePic
+            }
+        }
+    }
+  }
+`;
+
 export const GET_PROFILE = gql`
 query user($id: String!) {
     user(id: $id) {

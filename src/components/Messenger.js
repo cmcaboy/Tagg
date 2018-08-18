@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { GET_MESSAGES } from '../apollo/queries';
 import { getCurrentTime } from '../format';
+import { MyAppText } from './common';
 
 class Messenger extends Component {
   // While in the chat window, listen for chat updates
@@ -102,6 +103,7 @@ class Messenger extends Component {
         loadEarlier={!!cursor}
         onLoadEarlier={() => fetchMoreMessages()}
         isLoadEarlier
+        renderChatFooter={() => <MyAppText>Test</MyAppText>}
       />
     </View>
     );

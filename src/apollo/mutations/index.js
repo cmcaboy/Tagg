@@ -1,5 +1,31 @@
 import gql from 'graphql-tag';
 
+export const NEW_DATE = gql`
+mutation createDate($id: String!, $datetimeOfDate: String, $description: String) {
+  createDate(id: $id, datetimeOfDate: $datetimeOfDate, description: $description) {
+    id
+    creationTime
+    datetimeOfDate
+    description
+  }
+}
+`;
+
+export const BID = gql`
+mutation bid($id: String!, $dateId: String!, $bidPlace: String, $bidDescription: String) {
+    bid(id: $id, dateId: $dateId, bidPlace: $bidPlace, bidDescription: $bidDescription) {
+        id
+        datetimeOfBid
+        bidDescription
+        bidPlace
+        date {
+            id
+            num_bids
+        }
+    }
+}
+`;
+
 export const NEW_USER = gql`
 mutation newUser($id: String!, $name: String!, $active: Boolean!, $email: String!, $gender: String!, $description: String, $school: String, $work: String, $sendNotifications: Boolean, $distance: Int, $token: String, $minAgePreference: Int, $maxAgePreference: Int, $latitude: Float, $longitude: Float, $pics: [String]) {
     newUser(id: $id, name: $name, active: $active, email: $email, gender: $gender, description: $description, school: $school, work: $work, sendNotifications: $sendNotifications, distance: $distance, token: $token, minAgePreference: $minAgePreference, maxAgePreference: $maxAgePreference, latitude: $latitude, longitude: $longitude, pics: $pics) {
@@ -36,7 +62,7 @@ mutation chooseWinner($id: String!, $winnerId: String!,$dateId: String!) {
         open
     }
 }
-`
+`;
 
 export const LIKE = gql`
 mutation likeUser($id: String!, $likedId: String!) {
@@ -79,8 +105,6 @@ mutation unFollow($id: String!, $unFollowId: String!) {
     }
 }
 `;
-
-
 
 export const SEND_MESSAGE = gql`
 mutation($matchId: String!, $name: String, $text: String, $createdAt: String, $avatar: String, $order: Float, $uid: String, $_id: String, $receiverId: String) {
@@ -134,7 +158,6 @@ mutation editUser($id: String!, $followerDisplay: String ) {
 }
 `;
 
-
 export const SET_NAME = gql`
 mutation editUser($id: String!, $name: String ) {
   editUser(id: $id, name: $name) {
@@ -142,7 +165,8 @@ mutation editUser($id: String!, $name: String ) {
         name
   }
 }
-`
+`;
+
 export const SET_AGE = gql`
 mutation editUser($id: String!, $age: Int ) {
   editUser(id: $id, age: $age) {
@@ -150,7 +174,8 @@ mutation editUser($id: String!, $age: Int ) {
         age
   }
 }
-`
+`;
+
 export const SET_WORK = gql`
 mutation editUser($id: String!, $work: String ) {
   editUser(id: $id, work: $work) {
@@ -158,7 +183,8 @@ mutation editUser($id: String!, $work: String ) {
       work
   }
 }
-`
+`;
+
 export const SET_SCHOOL = gql`
 mutation editUser($id: String!, $school: String ) {
   editUser(id: $id, school: $school) {
@@ -166,7 +192,8 @@ mutation editUser($id: String!, $school: String ) {
       school
   }
 }
-`
+`;
+
 export const SET_DESCRIPTION = gql`
 mutation editUser($id: String!, $description: String ) {
   editUser(id: $id, description: $description) {
@@ -174,7 +201,8 @@ mutation editUser($id: String!, $description: String ) {
       description
   }
 }
-`
+`;
+
 export const SET_PICS = gql`
 mutation editUser($id: String!, $pics: [String] ) {
   editUser(id: $id, pics: $pics) {
@@ -182,4 +210,4 @@ mutation editUser($id: String!, $pics: [String] ) {
       pics
   }
 }
-`
+`;

@@ -19,6 +19,7 @@ import {
 import { MyAppText, CirclePicture } from './common';
 import toastMessage from '../services/toastMessage';
 import { formatDate } from '../format';
+import { BID } from '../apollo/mutations';
 
 // const GET_DATE = gql`
 // query date($id: String!) {
@@ -29,21 +30,6 @@ import { formatDate } from '../format';
 //     }
 //   }
 // `;
-
-const BID = gql`
-mutation bid($id: String!, $dateId: String!, $bidPlace: String, $bidDescription: String) {
-    bid(id: $id, dateId: $dateId, bidPlace: $bidPlace, bidDescription: $bidDescription) {
-        id
-        datetimeOfBid
-        bidDescription
-        bidPlace
-        date {
-            id
-            num_bids
-        }
-    }
-}
-`;
 
 class BidDate extends React.Component {
   static navigationOptions = ({

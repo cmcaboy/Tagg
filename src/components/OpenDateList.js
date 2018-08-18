@@ -15,25 +15,7 @@ import {
   Spinner,
   ErrorMessage,
 } from './common';
-
-const GET_DATES = gql`
-query user($id: String!) {
-  user(id: $id) {
-    id
-    dateRequests {
-      id
-      list {
-        id
-        creationTime
-        datetimeOfDate
-        description
-        num_bids
-        open
-      }
-    }
-  }
-  }
-`;
+import { GET_DATES } from '../apollo/queries';
 
 class OpenDateList extends React.Component {
   static navigationOptions = ({

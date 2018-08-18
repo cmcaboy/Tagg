@@ -18,7 +18,13 @@ import { PRIMARY_COLOR } from '../variables';
 import { CirclePicture, MyAppText, Spinner, ErrorMessage } from './common';
 import { GET_MATCHES } from '../apollo/queries';
 import { GET_ID } from '../apollo/local/queries';
-import { formatDescription, formatDate, formatBids } from '../format';
+import {
+  formatDescription,
+  formatDate,
+  formatBids,
+  formatDay,
+  formatName,
+} from '../format';
 
 class Matches extends Component {
     noMatches = () => (
@@ -69,10 +75,10 @@ class Matches extends Component {
                 <View style={styles.newMatch}>
                   <CirclePicture imageURL={match.user.pics[0]} picSize="small" />
                   <MyAppText>
-                    {match.user.name}
+                    {formatName(match.user.name)}
                   </MyAppText>
                   <MyAppText>
-                    {match.datetimeOfDate}
+                    {formatDay(match.datetimeOfDate)}
                   </MyAppText>
                 </View>
               </TouchableOpacity>
