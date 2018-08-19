@@ -9,12 +9,7 @@ import {
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { formatDate, formatDescription } from '../format';
-import {
-  MyAppText,
-  CirclePicture,
-  Spinner,
-  ErrorMessage,
-} from './common';
+import { MyAppText, CirclePicture, Spinner, ErrorMessage } from './common';
 import { GET_DATES } from '../apollo/queries';
 
 class OpenDateList extends React.Component {
@@ -68,6 +63,7 @@ class OpenDateList extends React.Component {
             {({ data, loading, error }) => {
               if (loading) return <Spinner />;
               if (error) return <ErrorMessage error={error.message} />;
+              console.log('data.user.dateRequests.list: ', data.user.dateRequests.list);
               return data.user.dateRequests.list.filter(date => date.open).map(date => (
                 <ListItem
                   key={date.id}

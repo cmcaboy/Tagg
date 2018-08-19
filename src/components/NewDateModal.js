@@ -1,35 +1,25 @@
-import React from 'react';
-import {
-  View,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-} from 'react-native';
+import React from "react";
+import { View, TouchableOpacity, StyleSheet, TextInput } from "react-native";
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import DatePicker from 'react-native-datepicker';
-import { Mutation } from 'react-apollo';
-import { Button } from 'native-base';
-import {
-  MyAppText,
-  HorizontalLine,
-  MyTitleText,
-  MyAppModal,
-} from './common';
-import { DATE_FORMAT, convertDateToEpoch } from '../format';
-import toastMessage from '../services/toastMessage';
-import { NEW_DATE } from '../apollo/mutations';
+import DatePicker from "react-native-datepicker";
+import { Mutation } from "react-apollo";
+import { Button } from "native-base";
+import { MyAppText, HorizontalLine, MyTitleText, MyAppModal } from "./common";
+import { DATE_FORMAT, convertDateToEpoch } from "../format";
+import toastMessage from "../services/toastMessage";
+import { NEW_DATE } from "../apollo/mutations";
 
 class NewDateModal extends React.Component {
   constructor(props) {
     super(props);
 
     this.blankState = {
-      time: '',
-      date: '',
-      location: '',
-      description: '',
-      datetime: '',
+      time: "",
+      date: "",
+      location: "",
+      description: "",
+      datetime: ""
     };
 
     this.state = this.blankState;
@@ -41,18 +31,16 @@ class NewDateModal extends React.Component {
       flipNewDateModal();
     }
     this.setState(this.blankState);
-  }
+  };
 
   render() {
     const { id, isVisible } = this.props;
     const { datetime, description } = this.state;
     return (
       <MyAppModal isVisible={isVisible} close={this.closeModal}>
-        <MyTitleText>
-          {'New Date Request'}
-        </MyTitleText>
+        <MyTitleText>{"New Date Request"}</MyTitleText>
         <HorizontalLine />
-        <View style={{alignItems: 'stretch' }}>
+        <View style={{ alignItems: "stretch" }}>
           <DatePicker
             style={styles.dateInput}
             mode="datetime"
@@ -78,30 +66,39 @@ class NewDateModal extends React.Component {
                   block
                   onPress={() => {
                     this.closeModal();
+                    console.log(
+                      "datetimeOfDate Epoch: ",
+                      convertDateToEpoch(datetime)
+                    );
                     return newDate({
                       variables: {
                         id,
                         datetimeOfDate: convertDateToEpoch(datetime),
-                        description,
+                        description
                       },
                       update: (store, data) => {
-                        console.log('data from newDate mutation: ', data);
-                        console.log('store: ', store);
-                        toastMessage({ text: 'Your date request has been created!' });
-                      },
+                        console.log("data from newDate mutation: ", data);
+                        console.log("store: ", store);
+                        toastMessage({
+                          text: "Your date request has been created!"
+                        });
+                      }
                     });
-                }}
+                  }}
                 >
-                  <MyAppText style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>
-                    {'Submit'}
+                  <MyAppText
+                    style={{ fontWeight: "bold", color: "#fff", fontSize: 18 }}
+                  >
+                    {"Submit"}
                   </MyAppText>
                 </Button>
               )}
             </Mutation>
-            <TouchableOpacity style={styles.cancelButton} onPress={this.closeModal}>
-              <MyAppText style={styles.cancelText}>
-                {'Cancel'}
-              </MyAppText>
+            <TouchableOpacity
+              style={styles.cancelButton}
+              onPress={this.closeModal}
+            >
+              <MyAppText style={styles.cancelText}>{"Cancel"}</MyAppText>
             </TouchableOpacity>
           </View>
         </View>
@@ -111,31 +108,31 @@ class NewDateModal extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    textInput: {
-        borderWidth: 1,
-        height: 75,
-        textAlign: 'center',
-        marginBottom: 10,
-        borderRadius: 2,
-    },
-    dateInput: {
-        width: '100%',
-        marginBottom: 10,
-        borderWidth: 1,
-        borderRadius: 2,
-        // textAlign: 'left',
-    },
-    buttonView: {
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-    },
-    cancelText: {
-        textAlign: 'center',
-        fontSize: 16,
-    },
-    cancelButton: {
-        marginVertical: 15,
-    },
-})
+  textInput: {
+    borderWidth: 1,
+    height: 75,
+    textAlign: "center",
+    marginBottom: 10,
+    borderRadius: 2
+  },
+  dateInput: {
+    width: "100%",
+    marginBottom: 10,
+    borderWidth: 1,
+    borderRadius: 2
+    // textAlign: 'left',
+  },
+  buttonView: {
+    flexDirection: "column",
+    justifyContent: "space-around"
+  },
+  cancelText: {
+    textAlign: "center",
+    fontSize: 16
+  },
+  cancelButton: {
+    marginVertical: 15
+  }
+});
 
 export default NewDateModal;

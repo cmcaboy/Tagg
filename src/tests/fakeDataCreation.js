@@ -1,5 +1,5 @@
 import faker from 'faker';
-import { getCurrentTime, formatDate } from '../format';
+import { getCurrentTime, convertDateToEpoch } from '../format';
 
 const TEST_CASE_SIZE = 100;
 
@@ -11,32 +11,32 @@ export default async ({ newUser, follow, bid, createDate, chooseWinner }) => {
   const users = [];
   for (let i = 0; i < TEST_CASE_SIZE; i += 1) {
     const user = {
-        id: faker.internet.email(),
-        name: faker.name.findName(),
-        active: 1,
-        email: faker.internet.email(),
-        gender: Math.round((Math.random() * 2)) % 2 === 0 ? 'male' : 'female',
-        description: faker.random.words(10),
-        school: faker.company.companyName(),
-        work: faker.company.companyName(),
-        sendNotifications: faker.random.boolean(),
-        distance: Math.round((Math.random() * 50)) + 1,
-        token: faker.random.alphaNumeric(),
-        latitude: Math.random() * 2 + 39.00,
-        longitude: Math.random() * -2 + -74.00,
-        minAgePreference: Math.round((Math.random() * 6)) + 18,
-        maxAgePreference: Math.round((Math.random() * 6)) + 25,
-        pics: [
-          faker.image.avatar(),
-          faker.image.avatar(),
-          faker.image.avatar(),
-          faker.image.avatar(),
-          faker.image.avatar(),
-          faker.image.avatar(),
-        ],
-        registerDateTime: getCurrentTime(),
-      };
-      users.push(user);
+      id: faker.internet.email(),
+      name: faker.name.findName(),
+      active: 1,
+      email: faker.internet.email(),
+      gender: Math.round((Math.random() * 2)) % 2 === 0 ? 'male' : 'female',
+      description: faker.random.words(10),
+      school: faker.company.companyName(),
+      work: faker.company.companyName(),
+      sendNotifications: faker.random.boolean(),
+      distance: Math.round((Math.random() * 50)) + 1,
+      token: faker.random.alphaNumeric(),
+      latitude: Math.random() * 2 + 39.00,
+      longitude: Math.random() * -2 + -74.00,
+      minAgePreference: Math.round((Math.random() * 6)) + 18,
+      maxAgePreference: Math.round((Math.random() * 6)) + 25,
+      pics: [
+        faker.image.avatar(),
+        faker.image.avatar(),
+        faker.image.avatar(),
+        faker.image.avatar(),
+        faker.image.avatar(),
+        faker.image.avatar(),
+      ],
+      registerDateTime: getCurrentTime(),
+    };
+    users.push(user);
   }
   const dates = [];
   const bids = [];
@@ -67,12 +67,13 @@ export default async ({ newUser, follow, bid, createDate, chooseWinner }) => {
   await sleep(10000);
 
   // Create fake dates
-  users.forEach((u) => {
+  users.forEach(async (u) => {
     for (let k = 0; k < Math.round((Math.random() * 5)); k += 1) {
+      await sleep(1);
       createDate({
         variables: {
           id: u.id,
-          datetimeOfDate: formatDate(faker.date.future(14)),
+          datetimeOfDate: convertDateToEpoch(faker.date.future(14)),
           description: faker.random.words(5),
         },
         update: (store, data) => {
@@ -88,8 +89,9 @@ export default async ({ newUser, follow, bid, createDate, chooseWinner }) => {
   await sleep(10000);
 
   // Create fake bids
-  dates.forEach((d) => {
+  dates.forEach(async (d) => {
     for (let k = rand(10); k < TEST_CASE_SIZE; k += rand(10)) {
+      await sleep(1);
       bid({
         variables: {
           id: users[k].id,

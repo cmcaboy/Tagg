@@ -138,7 +138,7 @@ class Matches extends Component {
               return (
                 <Query query={GET_MATCHES} variables={{ id }}>
                   {({ loading, error, data, networkStatus, refetch }) => {
-                    // console.log('data in matches: ',data);
+                    console.log('data in matches: ', data);
                     // console.log('error: ',error);
                     // console.log('loading: ',loading);
                     // console.log('networkStatus: ',networkStatus);

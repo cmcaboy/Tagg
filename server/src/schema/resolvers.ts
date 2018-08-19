@@ -136,7 +136,7 @@ const resolvers = {
                     .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) 
                       WITH b,r,d, r.datetimeOfBid as order
                       RETURN b,r
-                      ORDER BY order 
+                      ORDER BY order DESC
                     `)
                         .then(result => result.records)
                         .then(records => {

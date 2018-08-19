@@ -5,8 +5,8 @@ export const resolvers = {
     updateAgePreferenceLocal: (_, { minAgePreference, maxAgePreference }, { cache }) => {
       const query = gql`
         query getAgePreferenceLocal {
-          user @client {
-              id
+          id
+            user @client {
               __typename
               minAgePreference
               maxAgePreference
@@ -105,7 +105,7 @@ export const resolvers = {
 export const defaults = {
   user: {
     __typename: 'user',
-    id: 'cory.mcaboy@gmail.com',
+    id: 'Sandy.Streich@gmail.com',
   },
 };
 

@@ -6,7 +6,6 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 import {
   Container,
   Content,
@@ -47,55 +46,55 @@ class BidDate extends React.Component {
   }) => ({
     title: `${otherName}`,
     headerTitle: (
-        <View style={styles.headerViewStyle}>
-          <TouchableOpacity onPress={() => navigate('UserProfile',
-              {
-                  id: otherId,
-                  name: otherName,
-                  hostId: id,
-              })}
-          >
-              <CirclePicture imageURL={otherPic} picSize="mini" />
-          </TouchableOpacity>
-          <MyAppText style={styles.textHeader}>
-            { `Ask ${otherName} out!` }
-          </MyAppText>
-          <View style={{ width: 100 }} />
-        </View>
+      <View style={styles.headerViewStyle}>
+        <TouchableOpacity onPress={() => navigate('UserProfile',
+          {
+            id: otherId,
+            name: otherName,
+            hostId: id,
+          })}
+        >
+          <CirclePicture imageURL={otherPic} picSize="mini" />
+        </TouchableOpacity>
+        <MyAppText style={styles.textHeader}>
+          { `Ask ${otherName} out!` }
+        </MyAppText>
+        <View style={{ width: 100 }} />
+      </View>
     ),
     headerTitleStyle:
-        {
-            alignSelf: 'center',
-            textAlign: 'center',
-            fontWeight: 'normal',
-            fontSize: 22,
-            color: 'black',
-        },
-})
+      {
+        alignSelf: 'center',
+        textAlign: 'center',
+        fontWeight: 'normal',
+        fontSize: 22,
+        color: 'black',
+      },
+  })
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            location: '',
-            description: '',
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: '',
+      description: '',
+    };
+  }
 
     bid = (bid) => {
       const { navigation: { goBack, state: { params: { id, date, otherName } } } } = this.props;
       const { location, description } = this.state;
       bid({
-          variables: {
-              id,
-              dateId: date.id,
-              bidPlace: location,
-              bidDescription: description,
-          },
-          update: (store, data) => {
-              console.log('data: ', data);
-              console.log('store: ', store);
-              toastMessage({ text: `Thank you for bidding on ${otherName}'s date!` });
-          },
+        variables: {
+          id,
+          dateId: date.id,
+          bidPlace: location,
+          bidDescription: description,
+        },
+        update: (store, data) => {
+          console.log('data: ', data);
+          console.log('store: ', store);
+          toastMessage({ text: `Thank you for bidding on ${otherName}'s date!` });
+        },
       });
       goBack();
     };
@@ -131,18 +130,18 @@ class BidDate extends React.Component {
                 {description}
               </MyAppText>
               <Form>
-                  <Item floatingLabel style={{ marginLeft: 0 }}>
-                    <Label>
-                      {'Date Location'}
-                    </Label>
-                    <Input autoFocus onChangeText={location => this.setState({ location })} />
-                  </Item>
-                  <Item floatingLabel style={{ marginLeft: 0 }}>
-                    <Label>
-                      {'Date Description'}
-                    </Label>
-                    <Input onChangeText={desc => this.setState({ description: desc })} />
-                  </Item>
+                <Item floatingLabel style={{ marginLeft: 0 }}>
+                  <Label>
+                    {'Date Location'}
+                  </Label>
+                  <Input autoFocus onChangeText={location => this.setState({ location })} />
+                </Item>
+                <Item floatingLabel style={{ marginLeft: 0 }}>
+                  <Label>
+                    {'Date Description'}
+                  </Label>
+                  <Input onChangeText={desc => this.setState({ description: desc })} />
+                </Item>
                 <Mutation mutation={BID}>
                   {bid => (
                     <Button block style={{ marginTop: 10 }} onPress={() => this.bid(bid)}>
@@ -150,8 +149,7 @@ class BidDate extends React.Component {
                         { 'Submit' }
                       </MyAppText>
                     </Button>
-                    )
-                  }
+                  )}
                 </Mutation>
               </Form>
             </KeyboardAvoidingView>
@@ -163,31 +161,31 @@ class BidDate extends React.Component {
 
 // We put the styles in the component
 const styles = StyleSheet.create({
-    textHeader: {
-        alignSelf: 'center',
-        textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 18,
-        color: '#000',
-        paddingLeft: 8,
-    },
-    headerViewStyle: {
-        flexDirection: 'row',
-        paddingVertical: 5,
-    },
-    container: {
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-    },
-    title: {
-        fontWeight: 'bold',
-        fontSize: 18,
-        marginTop: 5,
-    },
-    description: {
-        fontSize: 14,
-        opacity: 0.75,
-    }
+  textHeader: {
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#000',
+    paddingLeft: 8,
+  },
+  headerViewStyle: {
+    flexDirection: 'row',
+    paddingVertical: 5,
+  },
+  container: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginTop: 5,
+  },
+  description: {
+    fontSize: 14,
+    opacity: 0.75,
+  },
 });
 
 export default BidDate;
