@@ -21,22 +21,22 @@ query user($id: String!) {
 
 export const GET_BIDS = gql`
 query otherBids($id: String!) {
-    otherBids(id: $id) {
+  otherBids(id: $id) {
+    id
+    cursor
+    list {
+      id
+      datetimeOfBid
+      bidDescription
+      bidPlace
+      bidUser {
         id
-        cursor
-        list {
-            id
-            datetimeOfBid
-            bidDescription
-            bidPlace
-            bidUser {
-                id
-                name
-                profilePic
-            }
-        }
+        name
+        profilePic
+      }
     }
   }
+}
 `;
 
 export const GET_PROFILE = gql`

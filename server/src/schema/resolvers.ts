@@ -410,7 +410,7 @@ const resolvers = {
                     WITH a, d, size((d)<-[:BID]-(:User)) as num_bids, d.datetimeOfDate as order
                     WHERE d.open=TRUE
                     RETURN a,d,num_bids
-                    ORDER BY order
+                    ORDER BY order DESC
                   `)
                     .then(result => result.records)
                     .then(records => {
