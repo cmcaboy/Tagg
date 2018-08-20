@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import DateOpenButton from './DateOpenButton';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { formatDistanceApart } from '../format';
+import { formatDistanceApart, formatName } from '../format';
 import { WideCard, MyAppText, FollowButton } from './common';
 
 const StaggCard = (
@@ -38,7 +38,7 @@ const StaggCard = (
               <TouchableOpacity onPress={onPress}>
                 <View style={{ flexDirection: 'row' }}>
                   <MyAppText style={styles.nameText}>
-                    {name}
+                    {formatName(name)}
                   </MyAppText>
                   <MyAppText style={styles.ageText}>
                     {age ? `, ${age}` : null}

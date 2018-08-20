@@ -9,12 +9,26 @@ import {
 import ImagePicker from 'react-native-image-picker';
 import uploadImage from '../firebase/uploadImage';
 import { Spinner } from './common';
-import { PLACEHOLDER_PHOTO } from '../variables';
+import { PLACEHOLDER_PHOTO, NUM_PHOTOS, PHOTO_ADD_URL } from '../variables';
+
+const fillBlanks = (u) => {
+  const ul = [];
+  for (let i = 0; i < NUM_PHOTOS; i += 1) {
+    if (u[i]) {
+      ul.push(u[i]);
+    } else {
+      ul.push(PHOTO_ADD_URL);
+    }
+  }
+  return ul;
+}
 
 class PhotoSelector extends React.Component {
   constructor(props) {
     super(props);
-    const { urlList } = this.props;
+
+    const urlList = fillBlanks(this.props.urlList);
+
     this.state = {
       isLoading: urlList.map(item => false),
       isSelected: urlList.map(item => false),
@@ -24,9 +38,10 @@ class PhotoSelector extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     // console.log('willReceiveProps: ',nextProps);
-    if (nextProps.urlList) {
-      this.setState({ urlList: nextProps.urlList });
-      this.setState({ isSelected: nextProps.urlList.map(item => false) });
+    const urlList = fillBlanks(nextProps.urlList);
+    if (urlList) {
+      this.setState({ urlList });
+      this.setState({ isSelected: urlList.map(item => false) });
     }
   }
 
@@ -50,8 +65,8 @@ class PhotoSelector extends React.Component {
     this.setState(prevState => ({
       isLoading: prevState.isLoading.map((item, index) => (
         index === i ? true : item
-    )),
-  }));
+      )),
+    }));
 
     const options = {
       title: 'Select Avatar',
@@ -71,8 +86,10 @@ class PhotoSelector extends React.Component {
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
+        this.resetLoading();
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
+        this.resetLoading();
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
@@ -105,22 +122,30 @@ class PhotoSelector extends React.Component {
     const { urlList } = this.state;
     this.setState({ isSelected: urlList.map(item => false) });
   }
+  resetLoading = () => {
+    const { urlList } = this.state;
+    this.setState({ isLoading: urlList.map(item => false) });
+  }
 
   async selectImage(index) {
     const { isSelected } = this.state;
     await this.setState(prevState => ({ 
       isSelected: prevState.isSelected.map((k, i) => (i === index ? !k : k)),
     }));
-    // console.log('select: ',this.state.isSelected);
-    if (isSelected.filter(item => item === true).length === 2) {
+    console.log('select: ',this.state.isSelected);
+    console.log('num selected: ', this.state.isSelected.filter(item => item === true))
+    if (this.state.isSelected.filter(item => item === true).length > 1) {
+      console.log('both selected');
       const a = [];
-      isSelected.forEach((item, ind) => {
+      this.state.isSelected.forEach((item, ind) => {
         if (item === true) {
           a.push(ind);
-        }
+          this.setState((prev) => ({ isLoading: prev.isLoading.map((s, i) => i === ind ? true : s) }));
+        };
       });
       await this.switchPicPosition(a[0], a[1]);
       this.resetSelected();
+      this.resetLoading();
     }
   }
 
@@ -133,16 +158,17 @@ class PhotoSelector extends React.Component {
     // console.log('isSelected: ',this.state.isSelected);
     // console.log('isLoading: ',this.state.isLoading);
     const { urlList, isLoading, isSelected } = this.state;
+    console.log('urlList: ', urlList);
     return (
       <View style={styles.container}>
         {urlList.map((item, index) => {
-          // console.log('item: ',item);
+          console.log('item: ', item);
           return isLoading[index] ? (
-            <Spinner key={item} size="small" style={styles.photo} />
+            <Spinner key={index} size="small" style={styles.photo} />
           ) : (
             <TouchableOpacity
-              key={item}
-              onPress={item !== PLACEHOLDER_PHOTO ? (
+              key={index}
+              onPress={item !== PHOTO_ADD_URL ? (
                 () => this.selectImage(index)
               ) : (
                 () => this.pickImage(index)
@@ -151,7 +177,7 @@ class PhotoSelector extends React.Component {
             >
               <Image
                 style={[styles.photo, isSelected[index] ? styles.highlighted : styles.notHightlighted]}
-                source={{ uri: item || PLACEHOLDER_PHOTO }}
+                source={{ uri: item || PHOTO_ADD_URL }}
               />
             </TouchableOpacity>
           )

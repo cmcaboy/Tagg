@@ -1,20 +1,15 @@
 {
+  "env": {
+      "node": true,
+      "browser": true,
+      "es6": true,
+      "jest": true
+  },
   "parser": "babel-eslint",
   "extends": "airbnb",
-  "plugins": ["react", "jsx-a11y", "import"],
   "rules": {
-    "react/jsx-filename-extension": ["off"],
-    "linebreak-style": ["off"],
-    "no-undef": ["error"],
-    "react/sort-comp": ["off"],
-    "react/prefer-stateless-function": ["off"],
+    "linebreak-style": 0,
     "react/prop-types": 0,
-    "no-use-before-define": 0
-  },
-  "globals": {
-    "it": 0,
-    "expect": 0,
-    "describe": 0,
-    "navigator": 0
+    "react/jsx-filename-extension": 0
   }
 }

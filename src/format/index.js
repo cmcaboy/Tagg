@@ -8,7 +8,7 @@ export const DAY_FORMAT = 'MMM D';
 // export const getCurrentTime = () => new Date().getTime();
 
 export const formatDescription = desc => (desc.length > 20 ? `${desc.slice(0, 20)}...` : desc);
-export const formatName = name => (name.length > 20 ? `${name.slice(0, 20)}...` : name);
+export const formatName = name => (name.length > 15 ? `${name.slice(0, 15)}...` : name);
 export const formatBids = numBids => (numBids === 1 ? `${numBids} bid` : `${numBids} bids`);
 export const formatDistanceApart = d => `${Math.round(d)} ${Math.round(d) === 1 ? ' mile away' : ' miles away'}`;
 

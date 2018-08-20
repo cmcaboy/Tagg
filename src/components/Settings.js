@@ -10,7 +10,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Query } from 'react-apollo';
 import { LoginManager } from 'react-native-fbsdk';
-import { firebase } from '../firebase';
+import { firebase, crashlytics } from '../firebase';
 import {
   CirclePicture,
   MyAppText,

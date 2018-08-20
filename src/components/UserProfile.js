@@ -13,7 +13,7 @@ import UserProfilePhotos from './UserProfilePhotos';
 import DateOpenButton from './DateOpenButton';
 import { MyAppText, Spinner, FollowButton, ErrorMessage } from './common';
 import { PRIMARY_COLOR } from '../variables';
-import { formatDistanceApart } from '../format';
+import { formatDistanceApart, formatName } from '../format';
 import { GET_USER_PROFILE } from '../apollo/queries';
 
 class UserProfile extends Component {
@@ -65,7 +65,7 @@ class UserProfile extends Component {
               <View style={userInfo}>
                 <View style={userInfoLeft}>
                   <MyAppText style={nameText}>
-                    {name}
+                    {formatName(name)}
                   </MyAppText>
                   {!!school && (
                     <View style={subHeading}>
