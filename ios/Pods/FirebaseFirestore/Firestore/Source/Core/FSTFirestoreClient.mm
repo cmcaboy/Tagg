@@ -31,12 +31,10 @@
 #import "Firestore/Source/Core/FSTSyncEngine.h"
 #import "Firestore/Source/Core/FSTTransaction.h"
 #import "Firestore/Source/Core/FSTView.h"
-#import "Firestore/Source/Local/FSTEagerGarbageCollector.h"
 #import "Firestore/Source/Local/FSTLevelDB.h"
 #import "Firestore/Source/Local/FSTLocalSerializer.h"
 #import "Firestore/Source/Local/FSTLocalStore.h"
 #import "Firestore/Source/Local/FSTMemoryPersistence.h"
-#import "Firestore/Source/Local/FSTNoOpGarbageCollector.h"
 #import "Firestore/Source/Model/FSTDocument.h"
 #import "Firestore/Source/Model/FSTDocumentSet.h"
 #import "Firestore/Source/Remote/FSTDatastore.h"
@@ -165,12 +163,7 @@ NS_ASSUME_NONNULL_BEGIN
   // Note: The initialization work must all be synchronous (we can't dispatch more work) since
   // external write/listen operations could get queued to run before that subsequent work
   // completes.
-  id<FSTGarbageCollector> garbageCollector;
   if (usePersistence) {
-    // TODO(http://b/33384523): For now we just disable garbage collection when persistence is
-    // enabled.
-    garbageCollector = [[FSTNoOpGarbageCollector alloc] init];
-
     NSString *dir = [FSTLevelDB storageDirectoryForDatabaseInfo:*self.databaseInfo
                                              documentsDirectory:[FSTLevelDB documentsDirectory]];
 
@@ -181,8 +174,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     _persistence = [[FSTLevelDB alloc] initWithDirectory:dir serializer:serializer];
   } else {
-    garbageCollector = [[FSTEagerGarbageCollector alloc] init];
-    _persistence = [FSTMemoryPersistence persistence];
+    _persistence = [FSTMemoryPersistence persistenceWithEagerGC];
   }
 
   NSError *error;
@@ -194,9 +186,7 @@ NS_ASSUME_NONNULL_BEGIN
     [NSException raise:NSInternalInconsistencyException format:@"Failed to open DB: %@", error];
   }
 
-  _localStore = [[FSTLocalStore alloc] initWithPersistence:_persistence
-                                          garbageCollector:garbageCollector
-                                               initialUser:user];
+  _localStore = [[FSTLocalStore alloc] initWithPersistence:_persistence initialUser:user];
 
   FSTDatastore *datastore = [FSTDatastore datastoreWithDatabase:self.databaseInfo
                                             workerDispatchQueue:self.workerDispatchQueue
@@ -290,23 +280,29 @@ NS_ASSUME_NONNULL_BEGIN
                                             NSError *_Nullable error))completion {
   [self.workerDispatchQueue dispatchAsync:^{
     FSTMaybeDocument *maybeDoc = [self.localStore readDocument:doc.key];
+    FIRDocumentSnapshot *_Nullable result = nil;
+    NSError *_Nullable error = nil;
     if (maybeDoc) {
-      completion([FIRDocumentSnapshot snapshotWithFirestore:doc.firestore
-                                                documentKey:doc.key
-                                                   document:(FSTDocument *)maybeDoc
-                                                  fromCache:YES],
-                 nil);
+      FSTDocument *_Nullable document =
+          ([maybeDoc isKindOfClass:[FSTDocument class]]) ? (FSTDocument *)maybeDoc : nil;
+      result = [FIRDocumentSnapshot snapshotWithFirestore:doc.firestore
+                                              documentKey:doc.key
+                                                 document:document
+                                                fromCache:YES];
     } else {
-      completion(nil,
-                 [NSError errorWithDomain:FIRFirestoreErrorDomain
-                                     code:FIRFirestoreErrorCodeUnavailable
-                                 userInfo:@{
-                                   NSLocalizedDescriptionKey :
-                                       @"Failed to get document from cache. (However, this "
-                                       @"document may exist on the server. Run again without "
-                                       @"setting source to FIRFirestoreSourceCache to attempt to "
-                                       @"retrieve the document from the server.)",
-                                 }]);
+      error = [NSError errorWithDomain:FIRFirestoreErrorDomain
+                                  code:FIRFirestoreErrorCodeUnavailable
+                              userInfo:@{
+                                NSLocalizedDescriptionKey :
+                                    @"Failed to get document from cache. (However, this document "
+                                    @"may exist on the server. Run again without setting source to "
+                                    @"FIRFirestoreSourceCache to attempt to retrieve the document "
+                                    @"from the server.)",
+                              }];
+    }
+
+    if (completion) {
+      self->_userExecutor->Execute([=] { completion(result, error); });
     }
   }];
 }
@@ -328,11 +324,14 @@ NS_ASSUME_NONNULL_BEGIN
         [FIRSnapshotMetadata snapshotMetadataWithPendingWrites:snapshot.hasPendingWrites
                                                      fromCache:snapshot.fromCache];
 
-    completion([FIRQuerySnapshot snapshotWithFirestore:query.firestore
-                                         originalQuery:query.query
-                                              snapshot:snapshot
-                                              metadata:metadata],
-               nil);
+    FIRQuerySnapshot *result = [FIRQuerySnapshot snapshotWithFirestore:query.firestore
+                                                         originalQuery:query.query
+                                                              snapshot:snapshot
+                                                              metadata:metadata];
+
+    if (completion) {
+      self->_userExecutor->Execute([=] { completion(result, nil); });
+    }
   }];
 }
 

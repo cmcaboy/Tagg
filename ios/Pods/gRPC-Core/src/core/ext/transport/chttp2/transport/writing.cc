@@ -139,22 +139,27 @@ static bool update_list(grpc_chttp2_transport* t, grpc_chttp2_stream* s,
 
 static void report_stall(grpc_chttp2_transport* t, grpc_chttp2_stream* s,
                          const char* staller) {
-  gpr_log(
-      GPR_DEBUG,
-      "%s:%p stream %d stalled by %s [fc:pending=%" PRIdPTR
-      ":pending-compressed=%" PRIdPTR ":flowed=%" PRId64
-      ":peer_initwin=%d:t_win=%" PRId64 ":s_win=%d:s_delta=%" PRId64 "]",
-      t->peer_string, t, s->id, staller, s->flow_controlled_buffer.length,
-      s->compressed_data_buffer.length, s->flow_controlled_bytes_flowed,
-      t->settings[GRPC_ACKED_SETTINGS]
-                 [GRPC_CHTTP2_SETTINGS_INITIAL_WINDOW_SIZE],
-      t->flow_control->remote_window(),
-      static_cast<uint32_t> GPR_MAX(
-          0,
-          s->flow_control->remote_window_delta() +
-              (int64_t)t->settings[GRPC_PEER_SETTINGS]
-                                  [GRPC_CHTTP2_SETTINGS_INITIAL_WINDOW_SIZE]),
-      s->flow_control->remote_window_delta());
+  if (grpc_flowctl_trace.enabled()) {
+    gpr_log(
+        GPR_DEBUG,
+        "%s:%p stream %d moved to stalled list by %s. This is FULLY expected "
+        "to happen in a healthy program that is not seeing flow control stalls."
+        " However, if you know that there are unwanted stalls, here is some "
+        "helpful data: [fc:pending=%" PRIdPTR ":pending-compressed=%" PRIdPTR
+        ":flowed=%" PRId64 ":peer_initwin=%d:t_win=%" PRId64
+        ":s_win=%d:s_delta=%" PRId64 "]",
+        t->peer_string, t, s->id, staller, s->flow_controlled_buffer.length,
+        s->compressed_data_buffer.length, s->flow_controlled_bytes_flowed,
+        t->settings[GRPC_ACKED_SETTINGS]
+                   [GRPC_CHTTP2_SETTINGS_INITIAL_WINDOW_SIZE],
+        t->flow_control->remote_window(),
+        static_cast<uint32_t> GPR_MAX(
+            0,
+            s->flow_control->remote_window_delta() +
+                (int64_t)t->settings[GRPC_PEER_SETTINGS]
+                                    [GRPC_CHTTP2_SETTINGS_INITIAL_WINDOW_SIZE]),
+        s->flow_control->remote_window_delta());
+  }
 }
 
 static bool stream_ref_if_not_destroyed(gpr_refcount* r) {
@@ -337,10 +342,10 @@ class DataSendContext {
          s_->fetching_send_message == nullptr);
     if (is_last_data_frame && s_->send_trailing_metadata != nullptr &&
         s_->stream_compression_ctx != nullptr) {
-      if (!grpc_stream_compress(
+      if (GPR_UNLIKELY(!grpc_stream_compress(
               s_->stream_compression_ctx, &s_->flow_controlled_buffer,
               &s_->compressed_data_buffer, nullptr, MAX_SIZE_T,
-              GRPC_STREAM_COMPRESSION_FLUSH_FINISH)) {
+              GRPC_STREAM_COMPRESSION_FLUSH_FINISH))) {
         gpr_log(GPR_ERROR, "Stream compression failed.");
       }
       grpc_stream_compression_context_destroy(s_->stream_compression_ctx);
@@ -368,10 +373,10 @@ class DataSendContext {
           grpc_stream_compression_context_create(s_->stream_compression_method);
     }
     s_->uncompressed_data_size = s_->flow_controlled_buffer.length;
-    if (!grpc_stream_compress(s_->stream_compression_ctx,
-                              &s_->flow_controlled_buffer,
-                              &s_->compressed_data_buffer, nullptr, MAX_SIZE_T,
-                              GRPC_STREAM_COMPRESSION_FLUSH_SYNC)) {
+    if (GPR_UNLIKELY(!grpc_stream_compress(
+            s_->stream_compression_ctx, &s_->flow_controlled_buffer,
+            &s_->compressed_data_buffer, nullptr, MAX_SIZE_T,
+            GRPC_STREAM_COMPRESSION_FLUSH_SYNC))) {
       gpr_log(GPR_ERROR, "Stream compression failed.");
     }
   }

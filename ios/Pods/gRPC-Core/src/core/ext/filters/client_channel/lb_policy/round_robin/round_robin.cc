@@ -69,6 +69,9 @@ class RoundRobin : public LoadBalancingPolicy {
   void HandOffPendingPicksLocked(LoadBalancingPolicy* new_policy) override;
   void PingOneLocked(grpc_closure* on_initiate, grpc_closure* on_ack) override;
   void ExitIdleLocked() override;
+  // TODO(ncteisen): implement this in a follow up PR
+  void FillChildRefsForChannelz(ChildRefsList* child_subchannels,
+                                ChildRefsList* child_channels) override {}
 
  private:
   ~RoundRobin();
@@ -354,11 +357,11 @@ bool RoundRobin::PickLocked(PickState* pick) {
     if (DoPickLocked(pick)) return true;
   }
   /* no pick currently available. Save for later in list of pending picks */
+  pick->next = pending_picks_;
+  pending_picks_ = pick;
   if (!started_picking_) {
     StartPickingLocked();
   }
-  pick->next = pending_picks_;
-  pending_picks_ = pick;
   return false;
 }
 
@@ -608,7 +611,7 @@ void RoundRobin::PingOneLocked(grpc_closure* on_initiate,
 
 void RoundRobin::UpdateLocked(const grpc_channel_args& args) {
   const grpc_arg* arg = grpc_channel_args_find(&args, GRPC_ARG_LB_ADDRESSES);
-  if (arg == nullptr || arg->type != GRPC_ARG_POINTER) {
+  if (GPR_UNLIKELY(arg == nullptr || arg->type != GRPC_ARG_POINTER)) {
     gpr_log(GPR_ERROR, "[RR %p] update provided no addresses; ignoring", this);
     // If we don't have a current subchannel list, go into TRANSIENT_FAILURE.
     // Otherwise, keep using the current subchannel list (ignore this update).
