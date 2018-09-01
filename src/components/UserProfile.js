@@ -18,8 +18,16 @@ import { GET_USER_PROFILE } from '../apollo/queries';
 
 class UserProfile extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: `${navigation.state.params.name}`,
+    // title: `${navigation.state.params.name}`,
     headerRight: (<View />),
+    headerTitle: (
+      <View style={styles.headerViewStyle}>
+        <MyAppText style={styles.textHeader}>
+          { `${navigation.state.params.name}` }
+        </MyAppText>
+        <View style={{ width: 30 }} />
+      </View>
+    ),
     headerTitleStyle:
       {
         alignSelf: 'center',
@@ -122,6 +130,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     backgroundColor: '#FFF',
+  },
+  headerViewStyle: {
+    flexDirection: 'row',
+    paddingVertical: 5,
+  },
+  textHeader: {
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#000',
+    paddingLeft: 8,
   },
   userInfo: {
     paddingHorizontal: 10,

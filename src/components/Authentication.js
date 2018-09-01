@@ -9,13 +9,13 @@ import { firebase } from '../firebase';
 import { standard_font } from '../styles';
 import { STATUS_BAR_COLOR } from '../variables';
 
-// function UdaciStatusBar({ backgroundColor, ...props }) {
-//   return (
-//     <View style={{ backgroundColor, height: getStatusBarHeight() }}>
-//       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-//     </View>
-//   )
-// }
+function UdaciStatusBar({ backgroundColor, ...props }) {
+  return (
+    <View style={{ backgroundColor, height: getStatusBarHeight() }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
 
 class Authentication extends React.Component {
 
@@ -73,7 +73,7 @@ class Authentication extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <UdaciStatusBar backgroundColor={STATUS_BAR_COLOR} barStyle="light-content" /> */}
+        <UdaciStatusBar backgroundColor={STATUS_BAR_COLOR} barStyle="light-content" />
         {this.renderContent()}
       </View>
     );

@@ -9,7 +9,7 @@ import { GET_MESSAGES, MORE_MESSAGES } from '../apollo/queries';
 
 class MessengerContainer extends Component {
   static navigationOptions = ({ navigation }) => ({
-      title: `${navigation.state.params.otherName}`,
+      // title: `${navigation.state.params.otherName}`,
       headerTitle: (
         <View style={styles.headerViewStyle}>
           {console.log('navigation params: ', navigation.state.params)}
@@ -25,7 +25,7 @@ class MessengerContainer extends Component {
           <MyAppText style={styles.textHeader}>
             {`${navigation.state.params.otherName}`}
           </MyAppText>
-          <View style={{ width: 100 }} />
+          <View style={{ width: 30 }} />
         </View>
       ),
       headerTitleStyle: {

@@ -62,6 +62,9 @@ class BidDate extends React.Component {
         <View style={{ width: 30 }} />
       </View>
     ),
+    headerStyle: {
+      height: 40,
+    },
     headerTitleStyle:
       {
         alignSelf: 'center',
@@ -171,11 +174,11 @@ const styles = StyleSheet.create({
   },
   headerViewStyle: {
     flexDirection: 'row',
-    paddingVertical: 5,
+    // paddingVertical: 5,
   },
   container: {
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingVertical: 0,
   },
   title: {
     fontWeight: 'bold',

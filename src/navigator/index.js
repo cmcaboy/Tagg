@@ -95,7 +95,8 @@ const MainNavigator = StackNavigator({
 {
   mode: 'card',
   headerMode: 'screen',
-  headerTitleStyle: { height: TAB_BAR_HEIGHT },
+  // headerTitleStyle: { height: Platform.OS === 'ios' ? 0 : TAB_BAR_HEIGHT },
+  headerStyle: { height: 40 },
 });
 
 export default MainNavigator;

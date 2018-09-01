@@ -11,9 +11,9 @@ export const TAB_BAR_HEIGHT = 56;
 export const PLACEHOLDER_PHOTO = 'https://firebasestorage.googleapis.com/v0/b/stagg-cc356.appspot.com/o/icons%2Fstagg_512.png?alt=media&token=fab7e588-a23d-4a7d-8183-6f33c653ac18';
 export const GOOGLE_MAPS_API_KEY = 'AIzaSyAlVUE0QmItEkmjVUBLhkb3ShhebQMJUdA';
 
-export const PRIMARY_COLOR = '#F56705';
+export const PRIMARY_COLOR = '#03A9F4';
 export const SECONDARY_COLOR = '#02FCED';
-export const STATUS_BAR_COLOR = '#000';
+export const STATUS_BAR_COLOR = '#81D4FA';
 export const BACKGROUND_COLOR = '#000';
 
 export const GRAPHQL_SERVER = 'http://35.199.37.151:4000';
