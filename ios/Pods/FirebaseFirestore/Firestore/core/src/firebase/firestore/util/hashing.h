@@ -17,7 +17,6 @@
 #ifndef FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_UTIL_HASHING_H_
 #define FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_UTIL_HASHING_H_
 
-#include <functional>
 #include <iterator>
 #include <string>
 #include <type_traits>
@@ -83,8 +82,7 @@ struct has_std_hash {
  * `decltype(std::hash<T>{}(std::declval<T>()))`.
  */
 template <typename T>
-using std_hash_type =
-    typename std::enable_if<has_std_hash<T>::value, size_t>::type;
+using std_hash_type = typename std::enable_if<has_std_hash<T>{}, size_t>::type;
 
 /**
  * Combines a hash_value with whatever accumulated state there is so far.
@@ -153,11 +151,9 @@ auto RankedInvokeHash(const Range& range, HashChoice<2>)
   size_t size = 0;
   for (auto&& element : range) {
     ++size;
-    size_t piece = InvokeHash(element);
-    result = Combine(result, piece);
+    result = Combine(result, InvokeHash(element));
   }
-  size_t size_hash = InvokeHash(size);
-  result = Combine(result, size_hash);
+  result = Combine(result, size);
   return result;
 }
 

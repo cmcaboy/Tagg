@@ -21,15 +21,6 @@
 
 #include "Firestore/core/src/firebase/firestore/model/resource_path.h"
 
-// Using forward declaration to avoid circular dependency (`document_key.h` includes this header).`
-namespace firebase {
-namespace firestore {
-namespace model {
-class DocumentKey;
-}
-}
-}
-
 NS_ASSUME_NONNULL_BEGIN
 
 /** FSTDocumentKey represents the location of a document in the Firestore database. */
@@ -42,8 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
  * @return A new instance of FSTDocumentKey.
  */
 + (instancetype)keyWithPath:(firebase::firestore::model::ResourcePath)path;
-
-+ (instancetype)keyWithDocumentKey:(const firebase::firestore::model::DocumentKey &)documentKey;
 /**
  * Creates and returns a new document key with a path with the given segments.
  *

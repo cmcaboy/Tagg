@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "799E8583CBF84434302A90D09A7161AC"
+               BlueprintIdentifier = "A427BE5DBBFB52DD0E2E9A0B92B0EB71"
                BlueprintName = "RNBackgroundFetch"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "libRNBackgroundFetch.a">

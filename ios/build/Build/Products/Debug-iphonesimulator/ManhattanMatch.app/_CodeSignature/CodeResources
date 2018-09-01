@@ -6,7 +6,7 @@
 	<dict>
 		<key>Base.lproj/LaunchScreen.nib</key>
 		<data>
-		HYL7SzQQ9sllMuwzRYQ2OovK1rw=
+		WCxTPXyBVrfRluAZgDoxGLCFkA0=
 		</data>
 		<key>Entypo.ttf</key>
 		<data>
@@ -71,11 +71,11 @@
 		</data>
 		<key>GoogleService-Info.plist</key>
 		<data>
-		mMLFwWFwdqNWKttio13oelUdWUo=
+		VTEj4upEPG9cjiaxlWfrZ3G+cns=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		8etAjS9k0BltLLAj+IVH8dRDxfM=
+		BQzKwEcQhxMwZgqNQd4G47ZAiQM=
 		</data>
 		<key>Ionicons.ttf</key>
 		<data>
@@ -115,7 +115,7 @@
 		</data>
 		<key>PlugIns/ManhattanMatchTests.xctest.dSYM/Contents/Resources/DWARF/ManhattanMatchTests</key>
 		<data>
-		kMdmYJI+Z4zsdNEhRLiQ0AfqgtE=
+		LymsTKu5b8lbQMWDIofr1ASFCWU=
 		</data>
 		<key>PlugIns/ManhattanMatchTests.xctest/Info.plist</key>
 		<data>
@@ -123,7 +123,7 @@
 		</data>
 		<key>PlugIns/ManhattanMatchTests.xctest/ManhattanMatchTests</key>
 		<data>
-		+EqTEEYMTvu2+t82d0NOmqUT1y4=
+		hOp6XMRnndYxreqRz7oej93IjN4=
 		</data>
 		<key>PlugIns/ManhattanMatchTests.xctest/_CodeSignature/CodeResources</key>
 		<data>
@@ -139,7 +139,7 @@
 		</data>
 		<key>gRPCCertificates.bundle/Info.plist</key>
 		<data>
-		uL5+dGAmik8hgNclzf4mKDMZ2ps=
+		xnLYuuDJXL5na50izekYdt4uaec=
 		</data>
 		<key>gRPCCertificates.bundle/roots.pem</key>
 		<data>
@@ -152,11 +152,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			HYL7SzQQ9sllMuwzRYQ2OovK1rw=
+			WCxTPXyBVrfRluAZgDoxGLCFkA0=
 			</data>
 			<key>hash2</key>
 			<data>
-			MTOkxF2xKKxeg8ZzOcmBnV5ibIAiXmCZ8teupmhnv5k=
+			8g/+ypnb8w7qTWkYss9DbKtL96dPgtwj9cdJz6KFjYM=
 			</data>
 		</dict>
 		<key>Entypo.ttf</key>
@@ -319,11 +319,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			mMLFwWFwdqNWKttio13oelUdWUo=
+			VTEj4upEPG9cjiaxlWfrZ3G+cns=
 			</data>
 			<key>hash2</key>
 			<data>
-			9J25OtvnEieAz3BbGgy3M6+xzR9Ff/dTGxjTA7TOLrc=
+			C3V9A+YWpGOTgV/ZOvvYC1A7xABMP4xmhYZ0B9ndBx0=
 			</data>
 		</dict>
 		<key>Ionicons.ttf</key>
@@ -418,11 +418,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			kMdmYJI+Z4zsdNEhRLiQ0AfqgtE=
+			LymsTKu5b8lbQMWDIofr1ASFCWU=
 			</data>
 			<key>hash2</key>
 			<data>
-			FLI5dXzonNfo91OG843LlieP8iESdp7K2ukB3C97IHA=
+			qrnvgcqF7tJu0OWxcqmf/LbApOmIVlCJrx/OFb7mKm8=
 			</data>
 		</dict>
 		<key>PlugIns/ManhattanMatchTests.xctest/Info.plist</key>
@@ -440,11 +440,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+EqTEEYMTvu2+t82d0NOmqUT1y4=
+			hOp6XMRnndYxreqRz7oej93IjN4=
 			</data>
 			<key>hash2</key>
 			<data>
-			RHn1eAlUhiNnIPGBawDXJYHbzPzceOD827UyHUce2gk=
+			XyvaGXPH7+Wy+xH8FK+0StzQxBxzPYvrDFgj9+wfqk8=
 			</data>
 		</dict>
 		<key>PlugIns/ManhattanMatchTests.xctest/_CodeSignature/CodeResources</key>
@@ -484,11 +484,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			uL5+dGAmik8hgNclzf4mKDMZ2ps=
+			xnLYuuDJXL5na50izekYdt4uaec=
 			</data>
 			<key>hash2</key>
 			<data>
-			eScOIOFJoi7VW6BKRzgbl/VlgMWQTA2j67YMbhxynYM=
+			CkgRT/gO7GQetDEPB9xTtWd++NtLtpz4f4Ub/wNnHPA=
 			</data>
 		</dict>
 		<key>gRPCCertificates.bundle/roots.pem</key>

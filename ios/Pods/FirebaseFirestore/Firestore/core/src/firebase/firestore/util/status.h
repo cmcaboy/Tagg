@@ -17,10 +17,6 @@
 #ifndef FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_UTIL_STATUS_H_
 #define FIRESTORE_CORE_SRC_FIREBASE_FIRESTORE_UTIL_STATUS_H_
 
-#if defined(_WIN32)
-#include <windows.h>
-#endif
-
 #include <functional>
 #include <iosfwd>
 #include <memory>
@@ -55,11 +51,7 @@ class ABSL_MUST_USE_RESULT Status {
   }
 
   /// Creates a status object from the given errno error code and message.
-  static Status FromErrno(int errno_code, absl::string_view message);
-
-#if defined(_WIN32)
-  static Status FromLastError(DWORD error, absl::string_view message);
-#endif  // defined(_WIN32)
+  static Status FromErrno(int errno_code, absl::string_view msg);
 
 #if defined(__OBJC__)
   static Status FromNSError(NSError* error);

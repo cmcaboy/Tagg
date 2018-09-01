@@ -21,7 +21,8 @@ functions/lib
 #Variables
 src/variables/sensitive.js
 
-#ios/build
+ios/build
+ios/pods
 android/app/build
 functions/lib
 

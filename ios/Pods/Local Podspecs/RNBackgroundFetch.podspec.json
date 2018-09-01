@@ -5,7 +5,10 @@
   "description": "iOS BackgroundFetch API Implementation",
   "homepage": "https://transistorsoft.github.io/react-native-background-fetch",
   "license": "MIT",
-  "authors": "Chris Scott, Transistor Software <chris@transistorsoft.com>",
+  "authors": {
+    "name": "Chris Scott, Transistor Software",
+    "email": "chris@transistorsoft.com"
+  },
   "source": {
     "git": "https://github.com/transistorsoft/react-native-background-fetch.git",
     "tag": "2.4.3"

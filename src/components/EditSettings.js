@@ -231,58 +231,58 @@ class EditSettings extends Component {
         <View style={styles.titleSlider}>
           <Mutation mutation={SET_FOLLOWER_DISPLAY}>
             {changeFollowerDisplay => (
-                <Picker
-                  // placeholder={{label: this.props.followerDisplay,value:this.props.followerDisplay}} 
-                  mode="dropdown"
-                  selectedValue={followerDisplay}
-                  onValueChange={(newFollowerDisplay) => {
-                    console.log('newFollowerDisplay: ', newFollowerDisplay);
-                    changeFollowerDisplay({
-                      variables: {
-                          id,
-                          followerDisplay: newFollowerDisplay,
-                      },
-                      optimisticResponse: {
-                        __typename: 'Mutation',
-                        editUser: {
-                          id,
-                          followerDisplay: newFollowerDisplay,
-                          __typename: 'User',
-                        }
-                      },
-                      update: (store, data) => {
-                        console.log('store: ', store);
-                        
-                        console.log('data: ', data);
-                        const fragment = gql`
-                            fragment updateFollowerDisplay on User {
-                                followerDisplay
-                        }
-                        `;
-                        const storeData = store.readFragment({
-                            id: data.data.editUser.id,
-                            fragment,
-                        });
+              <Picker
+                // placeholder={{ label: this.props.followerDisplay, value: this.props.followerDisplay }} 
+                mode="dropdown"
+                selectedValue={followerDisplay}
+                onValueChange={(newFollowerDisplay) => {
+                  console.log('newFollowerDisplay: ', newFollowerDisplay);
+                  changeFollowerDisplay({
+                    variables: {
+                        id,
+                        followerDisplay: newFollowerDisplay,
+                    },
+                    optimisticResponse: {
+                      __typename: 'Mutation',
+                      editUser: {
+                        id,
+                        followerDisplay: newFollowerDisplay,
+                        __typename: 'User',
+                      }
+                    },
+                    update: (store, data) => {
+                      console.log('store: ', store);
+                      
+                      console.log('data: ', data);
+                      const fragment = gql`
+                          fragment updateFollowerDisplay on User {
+                              followerDisplay
+                      }
+                      `;
+                      const storeData = store.readFragment({
+                          id: data.data.editUser.id,
+                          fragment,
+                      });
 
-                        console.log('storeData: ', storeData);
-                        store.writeFragment({
-                            id: data.data.editUser.id,
-                            fragment,
-                            data: {
-                                ...storeData,
-                                followerDisplay: data.data.editUser.followerDisplay,
-                            }
-                        })
-                        console.log('store: ', store);
-                        this.setState({followerDisplay: data.data.editUser.followerDisplay });
-                      },
-                    });
-                  }}
-                >
-                  <Picker.Item label="Following Only" value="Following Only" />
-                  <Picker.Item label="Non-Following Only" value="Non-Following Only" />
-                  <Picker.Item label="Both" value="Both" />
-                </Picker>
+                      console.log('storeData: ', storeData);
+                      store.writeFragment({
+                          id: data.data.editUser.id,
+                          fragment,
+                          data: {
+                              ...storeData,
+                              followerDisplay: data.data.editUser.followerDisplay,
+                          }
+                      })
+                      console.log('store: ', store);
+                      this.setState({followerDisplay: data.data.editUser.followerDisplay });
+                    },
+                  });
+                }}
+              >
+                <Picker.Item label="Following Only" value="Following Only" />
+                <Picker.Item label="Non-Following Only" value="Non-Following Only" />
+                <Picker.Item label="Both" value="Both" />
+              </Picker>
               )
             }
           </Mutation>
@@ -315,6 +315,6 @@ const styles = StyleSheet.create({
     width: 12,
     borderRadius: 12,
   }
-})
+});
 
 export default EditSettings;

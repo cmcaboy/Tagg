@@ -54,6 +54,7 @@ class LoginForm extends Component {
                           maxAgePreference: user.maxAgePreference,
                           pics: user.pics,
                           registerDateTime: getCurrentTime(),
+                          followerDisplay: 'Both', // default
                         },
                       });
                         return (

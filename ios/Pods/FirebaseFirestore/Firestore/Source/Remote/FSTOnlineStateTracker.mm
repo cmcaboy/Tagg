@@ -84,10 +84,11 @@ static const NSTimeInterval kOnlineStateTimeout = 10;
                        HARD_ASSERT(
                            self.state == FSTOnlineStateUnknown,
                            "Timer should be canceled if we transitioned to a different state.");
-                       [self logClientOfflineWarningIfNecessaryWithReason:
-                                 [NSString
-                                     stringWithFormat:@"Backend didn't respond within %f seconds.",
-                                                      kOnlineStateTimeout]];
+                       LOG_DEBUG(
+                           "Watch stream didn't reach Online or Offline within %s seconds. "
+                           "Considering client offline.",
+                           kOnlineStateTimeout);
+                       [self logClientOfflineWarningIfNecessary];
                        [self setAndBroadcastState:FSTOnlineStateOffline];
 
                        // NOTE: handleWatchStreamFailure will continue to increment
@@ -97,7 +98,7 @@ static const NSTimeInterval kOnlineStateTimeout = 10;
   }
 }
 
-- (void)handleWatchStreamFailure:(NSError *)error {
+- (void)handleWatchStreamFailure {
   if (self.state == FSTOnlineStateOnline) {
     [self setAndBroadcastState:FSTOnlineStateUnknown];
 
@@ -109,9 +110,7 @@ static const NSTimeInterval kOnlineStateTimeout = 10;
     self.watchStreamFailures++;
     if (self.watchStreamFailures >= kMaxWatchStreamFailures) {
       [self clearOnlineStateTimer];
-      [self logClientOfflineWarningIfNecessaryWithReason:
-                [NSString stringWithFormat:@"Connection failed %d times. Most recent error: %@",
-                                           kMaxWatchStreamFailures, error]];
+      [self logClientOfflineWarningIfNecessary];
       [self setAndBroadcastState:FSTOnlineStateOffline];
     }
   }
@@ -137,18 +136,10 @@ static const NSTimeInterval kOnlineStateTimeout = 10;
   }
 }
 
-- (void)logClientOfflineWarningIfNecessaryWithReason:(NSString *)reason {
-  NSString *message = [NSString
-      stringWithFormat:
-          @"Could not reach Cloud Firestore backend. %@\n This typically indicates that your "
-          @"device does not have a healthy Internet connection at the moment. The client will "
-          @"operate in offline mode until it is able to successfully connect to the backend.",
-          reason];
+- (void)logClientOfflineWarningIfNecessary {
   if (self.shouldWarnClientIsOffline) {
-    LOG_WARN("%s", message);
+    LOG_WARN("Could not reach Firestore backend.");
     self.shouldWarnClientIsOffline = NO;
-  } else {
-    LOG_DEBUG("%s", message);
   }
 }
 

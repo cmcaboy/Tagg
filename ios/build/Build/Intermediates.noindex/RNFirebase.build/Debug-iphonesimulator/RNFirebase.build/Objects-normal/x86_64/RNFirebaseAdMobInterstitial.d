@@ -1,16 +1,16 @@
 dependencies: \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-firebase/ios/RNFirebase/admob/RNFirebaseAdMobInterstitial.m \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-firebase/ios/RNFirebase/admob/RNFirebaseAdMobInterstitial.h \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-firebase/ios/RNFirebase/RNFirebaseEvents.h \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/node_modules/react-native-firebase/ios/RNFirebase/RNFirebaseUtil.h \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTEventEmitter.h \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridge.h \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeDelegate.h \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTJavaScriptLoader.h \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFrameUpdate.h \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/node_modules/react-native-firebase/ios/RNFirebase/admob/RNFirebaseAdMobInterstitial.m \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/node_modules/react-native-firebase/ios/RNFirebase/admob/RNFirebaseAdMobInterstitial.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeModule.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/node_modules/react-native-firebase/ios/RNFirebase/RNFirebaseEvents.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/node_modules/react-native-firebase/ios/RNFirebase/RNFirebaseUtil.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTEventEmitter.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridge.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBridgeDelegate.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTJavaScriptLoader.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTFrameUpdate.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTInvalidating.h \
   ../../../ios/Pods/Headers/Public/Firebase/Firebase.h \
   ../../../ios/Pods/Headers/Public/FirebaseCore/FirebaseCore.h \
   ../../../ios/Pods/Headers/Public/FirebaseCore/FIRAnalyticsConfiguration.h \
@@ -69,6 +69,13 @@ dependencies: \
   ../../../ios/Pods/Headers/Public/FirebaseFirestore/FIRWriteBatch.h \
   ../../../ios/Pods/Headers/Public/FirebaseInstanceID/FirebaseInstanceID/FirebaseInstanceID.h \
   ../../../ios/Pods/Headers/Public/FirebaseInstanceID/FirebaseInstanceID/FIRInstanceID.h \
+  ../../../ios/Pods/Headers/Public/FirebaseMessaging/FirebaseMessaging.h \
+  ../../../ios/Pods/Headers/Public/FirebaseMessaging/FIRMessaging.h \
+  ../../../ios/Pods/Headers/Public/FirebasePerformance/FirebasePerformance/FirebasePerformance.h \
+  ../../../ios/Pods/Headers/Public/FirebasePerformance/FirebasePerformance/FIRHTTPMetric.h \
+  ../../../ios/Pods/Headers/Public/FirebasePerformance/FirebasePerformance/FIRPerformanceAttributable.h \
+  ../../../ios/Pods/Headers/Public/FirebasePerformance/FirebasePerformance/FIRPerformance.h \
+  ../../../ios/Pods/Headers/Public/FirebasePerformance/FirebasePerformance/FIRTrace.h \
   ../../../ios/Pods/Headers/Public/FirebaseStorage/FirebaseStorage.h \
   ../../../ios/Pods/Headers/Public/FirebaseStorage/FIRStorage.h \
   ../../../ios/Pods/Headers/Public/FirebaseStorage/FIRStorageConstants.h \
@@ -78,4 +85,13 @@ dependencies: \
   ../../../ios/Pods/Headers/Public/FirebaseStorage/FIRStorageMetadata.h \
   ../../../ios/Pods/Headers/Public/FirebaseStorage/FIRStorageReference.h \
   ../../../ios/Pods/Headers/Public/FirebaseStorage/FIRStorageUploadTask.h \
-  ../../../ios/Pods/Headers/Public/FirebaseStorage/FIRStorageTaskSnapshot.h
+  ../../../ios/Pods/Headers/Public/FirebaseStorage/FIRStorageTaskSnapshot.h \
+  ../../../ios/Pods/Headers/Public/Fabric/Fabric/Fabric.h \
+  ../../../ios/Pods/Headers/Public/Fabric/Fabric/FABAttributes.h \
+  ../../../ios/Pods/Headers/Public/Crashlytics/Crashlytics/Crashlytics.h \
+  ../../../ios/Pods/Headers/Public/Crashlytics/Crashlytics/CLSAttributes.h \
+  ../../../ios/Pods/Headers/Public/Crashlytics/Crashlytics/CLSLogging.h \
+  ../../../ios/Pods/Headers/Public/Crashlytics/Crashlytics/CLSReport.h \
+  ../../../ios/Pods/Headers/Public/Crashlytics/Crashlytics/CLSStackFrame.h \
+  ../../../ios/Pods/Headers/Public/Crashlytics/Crashlytics/Answers.h \
+  ../../../ios/Pods/Headers/Public/Crashlytics/Crashlytics/ANSCompatibility.h

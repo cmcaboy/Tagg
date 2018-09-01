@@ -103,7 +103,6 @@ class Messenger extends Component {
         loadEarlier={!!cursor}
         onLoadEarlier={() => fetchMoreMessages()}
         isLoadEarlier
-        renderChatFooter={() => <MyAppText>Test</MyAppText>}
       />
     </View>
     );

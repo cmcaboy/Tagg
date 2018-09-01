@@ -56,9 +56,7 @@ class LevelDbTransaction {
     /**
      * Returns true if this iterator points to an entry
      */
-    bool Valid() {
-      return is_valid_;
-    }
+    bool Valid();
 
     /**
      * Seeks this iterator to the first key equal to or greater than the given
@@ -146,10 +144,6 @@ class LevelDbTransaction {
    */
   static const leveldb::WriteOptions& DefaultWriteOptions();
 
-  size_t changed_keys() const {
-    return mutations_.size() + deletions_.size();
-  }
-
   /**
    * Remove the database entry (if any) for "key".  It is not an error if "key"
    * did not exist in the database.
@@ -206,13 +200,6 @@ class LevelDbTransaction {
   int32_t version_;
   std::string label_;
 };
-
-/**
- * Returns a description of the current key if the iterator is Valid, otherwise
- * the string "the end of the table."
- */
-std::string DescribeKey(
-    const std::unique_ptr<LevelDbTransaction::Iterator>& iterator);
 
 }  // namespace local
 }  // namespace firestore

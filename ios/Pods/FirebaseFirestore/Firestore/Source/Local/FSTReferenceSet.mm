@@ -108,6 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeReference:(FSTDocumentReference *)reference {
   self.referencesByKey = [self.referencesByKey setByRemovingObject:reference];
   self.referencesByID = [self.referencesByID setByRemovingObject:reference];
+  [self.garbageCollector addPotentialGarbageKey:reference.key];
 }
 
 - (DocumentKeySet)referencedKeysForID:(int)ID {

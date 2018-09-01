@@ -77,7 +77,7 @@ const FSTBatchID kFSTBatchIDUnknown = -1;
 - (FSTMaybeDocument *_Nullable)applyTo:(FSTMaybeDocument *_Nullable)maybeDoc
                            documentKey:(const DocumentKey &)documentKey
                    mutationBatchResult:(FSTMutationBatchResult *_Nullable)mutationBatchResult {
-  HARD_ASSERT(!maybeDoc || maybeDoc.key == documentKey,
+  HARD_ASSERT(!maybeDoc || [maybeDoc.key isEqualToKey:documentKey],
               "applyTo: key %s doesn't match maybeDoc key %s", documentKey.ToString(),
               maybeDoc.key.ToString());
   FSTMaybeDocument *baseDoc = maybeDoc;
@@ -90,7 +90,7 @@ const FSTBatchID kFSTBatchIDUnknown = -1;
   for (NSUInteger i = 0; i < self.mutations.count; i++) {
     FSTMutation *mutation = self.mutations[i];
     FSTMutationResult *_Nullable mutationResult = mutationBatchResult.mutationResults[i];
-    if (mutation.key == documentKey) {
+    if ([mutation.key isEqualToKey:documentKey]) {
       maybeDoc = [mutation applyTo:maybeDoc
                       baseDocument:baseDoc
                     localWriteTime:self.localWriteTime

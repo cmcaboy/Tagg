@@ -27,8 +27,8 @@ mutation bid($id: String!, $dateId: String!, $bidPlace: String, $bidDescription:
 `;
 
 export const NEW_USER = gql`
-mutation newUser($id: String!, $name: String!, $active: Boolean!, $email: String!, $gender: String!, $description: String, $school: String, $work: String, $sendNotifications: Boolean, $distance: Int, $token: String, $minAgePreference: Int, $maxAgePreference: Int, $latitude: Float, $longitude: Float, $pics: [String]) {
-    newUser(id: $id, name: $name, active: $active, email: $email, gender: $gender, description: $description, school: $school, work: $work, sendNotifications: $sendNotifications, distance: $distance, token: $token, minAgePreference: $minAgePreference, maxAgePreference: $maxAgePreference, latitude: $latitude, longitude: $longitude, pics: $pics) {
+mutation newUser($id: String!, $name: String!, $active: Boolean!, $email: String!, $gender: String!, $description: String, $school: String, $work: String, $sendNotifications: Boolean, $distance: Int, $token: String, $minAgePreference: Int, $maxAgePreference: Int, $latitude: Float, $longitude: Float, $followerDisplay: String, $pics: [String]) {
+    newUser(id: $id, name: $name, active: $active, email: $email, gender: $gender, description: $description, school: $school, work: $work, sendNotifications: $sendNotifications, distance: $distance, token: $token, minAgePreference: $minAgePreference, maxAgePreference: $maxAgePreference, latitude: $latitude, longitude: $longitude, followerDisplay: $followerDisplay, pics: $pics) {
         id
         name
         email

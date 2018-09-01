@@ -20,19 +20,12 @@
 namespace firebase {
 namespace firestore {
 
-class FieldValueInternal;
-
 /**
  * Sentinel values that can be used when writing document fields with setData()
  * or updateData().
  */
 // TODO(zxu123): add more methods to complete the class and make it useful.
-class FieldValue {
- private:
-  friend class QueryInternal;
-
-  FieldValueInternal* internal_ = nullptr;
-};
+class FieldValue {};
 
 }  // namespace firestore
 }  // namespace firebase

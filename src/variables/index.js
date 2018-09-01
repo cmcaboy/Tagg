@@ -18,9 +18,10 @@ export const BACKGROUND_COLOR = '#000';
 
 export const GRAPHQL_SERVER = 'http://35.199.37.151:4000';
 
-export const CARD_HEIGHT = 135;
+export const CARD_HEIGHT = 120;
 export const CARD_FOOTER_HEIGHT = 35;
 export const CARD_MARGIN = 7;
+export const PICTURE_WIDTH = 100;
 
 export const PHOTO_HINT = 'Hint: Press 2 photos to switch the position of the photos. Press and hold a photo to upload a new photo';
 

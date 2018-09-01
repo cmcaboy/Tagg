@@ -118,6 +118,7 @@ class FBLoginButton extends Component {
                     distance: 15, // default
                     minAgePreference: 18, // default
                     maxAgePreference: 28, // default
+                    // followerDisplay: 'Both', // setting this in LoginForm Compononent
                   };
       
                   email = response.email;

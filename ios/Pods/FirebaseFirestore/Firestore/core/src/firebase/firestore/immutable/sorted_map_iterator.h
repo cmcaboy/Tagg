@@ -119,9 +119,7 @@ class SortedMapIterator {
   pointer get() const {
     switch (tag_) {
       case Tag::Array:
-        // std::array::iterator is not guaranteed to be a bare pointer but will
-        // be a RandomAccessIterator which does have operator*().
-        return &*array_iter_;
+        return array_iter_;
       case Tag::Tree:
         return tree_iter_.get();
     }

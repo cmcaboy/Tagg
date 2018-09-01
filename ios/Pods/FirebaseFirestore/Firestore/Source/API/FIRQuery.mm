@@ -487,13 +487,26 @@ addSnapshotListenerInternalWithOptions:(FSTListenOptions *)internalOptions
     fieldValue = [self.firestore.dataConverter parsedQueryValue:value];
   }
 
-  FSTFilter *filter =
-      [FSTFilter filterWithField:fieldPath filterOperator:filterOperator value:fieldValue];
-
-  if ([filter isKindOfClass:[FSTRelationFilter class]]) {
-    [self validateNewRelationFilter:(FSTRelationFilter *)filter];
+  id<FSTFilter> filter;
+  if ([fieldValue isEqual:[FSTNullValue nullValue]]) {
+    if (filterOperator != FSTRelationFilterOperatorEqual) {
+      FSTThrowInvalidUsage(@"InvalidQueryException",
+                           @"Invalid Query. You can only perform equality comparisons on nil / "
+                            "NSNull.");
+    }
+    filter = [[FSTNullFilter alloc] initWithField:fieldPath];
+  } else if ([fieldValue isEqual:[FSTDoubleValue nanValue]]) {
+    if (filterOperator != FSTRelationFilterOperatorEqual) {
+      FSTThrowInvalidUsage(@"InvalidQueryException",
+                           @"Invalid Query. You can only perform equality comparisons on NaN.");
+    }
+    filter = [[FSTNanFilter alloc] initWithField:fieldPath];
+  } else {
+    filter = [FSTRelationFilter filterWithField:fieldPath
+                                 filterOperator:filterOperator
+                                          value:fieldValue];
+    [self validateNewRelationFilter:filter];
   }
-
   return [FIRQuery referenceWithQuery:[self.query queryByAddingFilter:filter]
                             firestore:self.firestore];
 }

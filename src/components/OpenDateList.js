@@ -25,7 +25,7 @@ class OpenDateList extends React.Component {
       },
     },
   }) => ({
-    title: `${otherName}`,
+    //title: `${otherName}`,
     headerTitle: (
       <View style={styles.headerViewStyle}>
           <TouchableOpacity onPress={() => navigate('UserProfile',
@@ -40,7 +40,7 @@ class OpenDateList extends React.Component {
           <MyAppText style={styles.textHeader}>
             {`${otherName}'s open dates`}
           </MyAppText>
-          <View style={{ width: 100 }} />
+          <View style={{ width: 30 }} />
       </View>
     ),
     headerTitleStyle: {

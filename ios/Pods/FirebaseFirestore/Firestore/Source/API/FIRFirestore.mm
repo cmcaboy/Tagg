@@ -18,7 +18,6 @@
 
 #import <FirebaseCore/FIRApp.h>
 #import <FirebaseCore/FIRAppInternal.h>
-#import <FirebaseCore/FIRComponentContainer.h>
 #import <FirebaseCore/FIRLogger.h>
 #import <FirebaseCore/FIROptions.h>
 
@@ -31,7 +30,6 @@
 #import "Firestore/Source/API/FIRFirestore+Internal.h"
 #import "Firestore/Source/API/FIRTransaction+Internal.h"
 #import "Firestore/Source/API/FIRWriteBatch+Internal.h"
-#import "Firestore/Source/API/FSTFirestoreComponent.h"
 #import "Firestore/Source/API/FSTUserDataConverter.h"
 #import "Firestore/Source/Core/FSTFirestoreClient.h"
 #import "Firestore/Source/Util/FSTDispatchQueue.h"
@@ -61,8 +59,6 @@ using util::internal::ExecutorLibdispatch;
 NS_ASSUME_NONNULL_BEGIN
 
 extern "C" NSString *const FIRFirestoreErrorDomain = @"FIRFirestoreErrorDomain";
-
-#pragma mark - FIRFirestore
 
 @interface FIRFirestore () {
   /** The actual owned DatabaseId instance is allocated in FIRFirestore. */
@@ -153,9 +149,36 @@ extern "C" NSString *const FIRFirestoreErrorDomain = @"FIRFirestoreErrorDomain";
         DatabaseId::kDefault);
   }
 
-  id<FSTFirestoreMultiDBProvider> provider =
-      FIR_COMPONENT(FSTFirestoreMultiDBProvider, app.container);
-  return [provider firestoreForDatabase:database];
+  // Note: If the key format changes, please change the code that detects FIRApps being deleted
+  // contained in +initialize. It checks for the app's name followed by a | character.
+  NSString *key = [NSString stringWithFormat:@"%@|%@", app.name, database];
+
+  NSMutableDictionary<NSString *, FIRFirestore *> *instances = self.instances;
+  @synchronized(instances) {
+    FIRFirestore *firestore = instances[key];
+    if (!firestore) {
+      NSString *projectID = app.options.projectID;
+      HARD_ASSERT(projectID, "FirebaseOptions.projectID cannot be nil.");
+
+      FSTDispatchQueue *workerDispatchQueue = [FSTDispatchQueue
+          queueWith:dispatch_queue_create("com.google.firebase.firestore", DISPATCH_QUEUE_SERIAL)];
+
+      std::unique_ptr<CredentialsProvider> credentials_provider =
+          absl::make_unique<FirebaseCredentialsProvider>(app);
+
+      NSString *persistenceKey = app.name;
+
+      firestore = [[FIRFirestore alloc] initWithProjectID:util::MakeStringView(projectID)
+                                                 database:util::MakeStringView(database)
+                                           persistenceKey:persistenceKey
+                                      credentialsProvider:std::move(credentials_provider)
+                                      workerDispatchQueue:workerDispatchQueue
+                                              firebaseApp:app];
+      instances[key] = firestore;
+    }
+
+    return firestore;
+  }
 }
 
 - (instancetype)initWithProjectID:(const absl::string_view)projectID

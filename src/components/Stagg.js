@@ -91,6 +91,7 @@ class Stagg extends Component {
         const { notification } = notificationOpen;
         pushNotificationHandler(id, notification._data, navigation);
     }
+    console.log('CheckPermissions: ', checkPermissions());
     if (checkPermissions()) {
         this.pushNotification();
     }
@@ -173,7 +174,7 @@ class Stagg extends Component {
           stopTimeout: 5,
           // Application config
           debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
-          logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE,
+          logLevel: BackgroundGeolocation.LOG_LEVEL_ERROR,
           stopOnTerminate: false,   // <-- [Default: true] Allow the background-service to continue tracking when user closes the app.
           startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
           // HTTP / SQLite config

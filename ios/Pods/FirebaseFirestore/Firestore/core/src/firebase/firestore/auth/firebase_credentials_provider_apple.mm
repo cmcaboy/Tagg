@@ -16,10 +16,8 @@
 
 #include "Firestore/core/src/firebase/firestore/auth/firebase_credentials_provider_apple.h"
 
-#import <FirebaseAuthInterop/FIRAuthInterop.h>
 #import <FirebaseCore/FIRApp.h>
 #import <FirebaseCore/FIRAppInternal.h>
-#import <FirebaseCore/FIRComponentContainer.h>
 #import <FirebaseCore/FIROptionsInternal.h>
 
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
@@ -33,10 +31,8 @@ namespace firebase {
 namespace firestore {
 namespace auth {
 
-FirebaseCredentialsProvider::FirebaseCredentialsProvider(
-    FIRApp* app, id<FIRAuthInterop> auth) {
-  contents_ =
-      std::make_shared<Contents>(app, auth, User::FromUid([auth getUserID]));
+FirebaseCredentialsProvider::FirebaseCredentialsProvider(FIRApp* app)
+    : contents_(std::make_shared<Contents>(app, User::FromUid([app getUID]))) {
   std::weak_ptr<Contents> weak_contents = contents_;
 
   auth_listener_handle_ = [[NSNotificationCenter defaultCenter]
@@ -124,15 +120,8 @@ void FirebaseCredentialsProvider::GetToken(TokenListener completion) {
         }
       };
 
-  // TODO(wilhuff): Need a better abstraction over a missing auth provider.
-  if (contents_->auth) {
-    [contents_->auth getTokenForcingRefresh:contents_->force_refresh
-                               withCallback:get_token_callback];
-  } else {
-    // If there's no Auth provider, call back immediately with a nil
-    // (unauthenticated) token.
-    get_token_callback(nil, nil);
-  }
+  [contents_->app getTokenForcingRefresh:contents_->force_refresh
+                            withCallback:get_token_callback];
   contents_->force_refresh = false;
 }
 

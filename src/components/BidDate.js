@@ -44,7 +44,7 @@ class BidDate extends React.Component {
       },
     },
   }) => ({
-    title: `${otherName}`,
+    //title: `${otherName}`,
     headerTitle: (
       <View style={styles.headerViewStyle}>
         <TouchableOpacity onPress={() => navigate('UserProfile',
@@ -59,7 +59,7 @@ class BidDate extends React.Component {
         <MyAppText style={styles.textHeader}>
           { `Ask ${otherName} out!` }
         </MyAppText>
-        <View style={{ width: 100 }} />
+        <View style={{ width: 30 }} />
       </View>
     ),
     headerTitleStyle:

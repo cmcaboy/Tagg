@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -60,7 +59,6 @@
 		A7E6D6A953864B7B95CEE664 /* Oxygen-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28FC88109BD04E4B8D5631E1 /* Oxygen-Regular.ttf */; };
 		A9F1C8F2C96340CDB717D7C4 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A006882C49E49369AAF4C34 /* EvilIcons.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		B0495469BC0042CDB9374DEC /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B3B7CF69E5746E3B935D6C8 /* libRNFetchBlob.a */; };
 		B7B1C19720CAFE7200E7D02F /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7B1C18C20CAFE7100E7D02F /* Octicons.ttf */; };
 		B7B1C19820CAFE7200E7D02F /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7B1C18D20CAFE7100E7D02F /* Feather.ttf */; };
 		B7B1C19920CAFE7200E7D02F /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7B1C18E20CAFE7100E7D02F /* Entypo.ttf */; };
@@ -394,13 +392,6 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNFirebase;
 		};
-		B7B1C24120D6F40900E7D02F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 16912C640BE3486BA28EF084 /* RNFetchBlob.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A15C300E1CD25C330074CB35;
-			remoteInfo = RNFetchBlob;
-		};
 		B7B85B6220CAF0450033B54B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -441,7 +432,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ManhattanMatch/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ManhattanMatch/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		16912C640BE3486BA28EF084 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		1B2299B97FCE403BBA8ACB85 /* Oxygen-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Oxygen-Bold.ttf"; path = "../assets/fonts/Oxygen-Bold.ttf"; sourceTree = "<group>"; };
 		1BC37640EA0749D68F3C7B90 /* libRNFirebase.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFirebase.a; sourceTree = "<group>"; };
 		1D30AED2227A4B89A57A9CCC /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
@@ -455,7 +445,6 @@
 		39666D05E46E486EAD826527 /* libReactNativePermissions.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePermissions.a; sourceTree = "<group>"; };
 		39DD48590E604E5B83DB4999 /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ios/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		3A006882C49E49369AAF4C34 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		3B3B7CF69E5746E3B935D6C8 /* libRNFetchBlob.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFetchBlob.a; sourceTree = "<group>"; };
 		3EE1B2D713094D92A338A0C1 /* RNBackgroundGeolocation.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundGeolocation.xcodeproj; path = "../node_modules/react-native-background-geolocation/ios/RNBackgroundGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		452B7757324844D19A0A4D8D /* Pods-ManhattanMatchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManhattanMatchTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ManhattanMatchTests/Pods-ManhattanMatchTests.release.xcconfig"; sourceTree = "<group>"; };
 		46C59E5C0FBF48FEBCF02751 /* Pods-ManhattanMatch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManhattanMatch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ManhattanMatch/Pods-ManhattanMatch.debug.xcconfig"; sourceTree = "<group>"; };
@@ -488,6 +477,7 @@
 		B7B1C19420CAFE7100E7D02F /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		B7B1C19520CAFE7100E7D02F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		B7B1C19620CAFE7100E7D02F /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		B7E0D5DB21357B140001F23C /* ManhattanMatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ManhattanMatch.entitlements; path = ManhattanMatch/ManhattanMatch.entitlements; sourceTree = "<group>"; };
 		B7E58627A6B549E58BCC4BF9 /* libRNBackgroundGeolocation.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBackgroundGeolocation.a; sourceTree = "<group>"; };
 		B7EA0B7820ED105A00DA583A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B8A26E5230FF2D64BFBCD3AB /* libPods-ManhattanMatch-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ManhattanMatch-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -546,7 +536,6 @@
 				4F92A58C50BA4388A4C375D8 /* libRNFirebase.a in Frameworks */,
 				21C233A3D56B4CC498E8D71D /* TSLocationManager.framework in Frameworks */,
 				690353C85A5D442EBA3BE8D5 /* libReactNativePermissions.a in Frameworks */,
-				B0495469BC0042CDB9374DEC /* libRNFetchBlob.a in Frameworks */,
 				CFF4DE65AC7D11A0BB62E474 /* libPods-ManhattanMatch.a in Frameworks */,
 				3E03C3D9C7E14930AB6D27B5 /* TSBackgroundFetch.framework in Frameworks */,
 				E1C36A045A2C4737891FE011 /* libCocoaLumberjack.a in Frameworks */,
@@ -683,6 +672,7 @@
 		13B07FAE1A68108700A75B9A /* ManhattanMatch */ = {
 			isa = PBXGroup;
 			children = (
+				B7E0D5DB21357B140001F23C /* ManhattanMatch.entitlements */,
 				B7B1C18B20CAFE7100E7D02F /* Fonts */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -758,7 +748,6 @@
 				3EE1B2D713094D92A338A0C1 /* RNBackgroundGeolocation.xcodeproj */,
 				859AB8EF92864D3A873DE178 /* RNFirebase.xcodeproj */,
 				39DD48590E604E5B83DB4999 /* ReactNativePermissions.xcodeproj */,
-				16912C640BE3486BA28EF084 /* RNFetchBlob.xcodeproj */,
 				61CBC73B4A244BDBA410145D /* Lumberjack.xcodeproj */,
 			);
 			name = Libraries;
@@ -919,14 +908,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B7B1C23E20D6F40900E7D02F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B7B1C24220D6F40900E7D02F /* libRNFetchBlob.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		EA37D622E9BC4B2CA3D078B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1036,9 +1017,16 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 96WSSA5AM3;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = true;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
 							};
 						};
 					};
@@ -1128,10 +1116,6 @@
 				{
 					ProductGroup = B7B1C23420D6F40600E7D02F /* Products */;
 					ProjectRef = 3EE1B2D713094D92A338A0C1 /* RNBackgroundGeolocation.xcodeproj */;
-				},
-				{
-					ProductGroup = B7B1C23E20D6F40900E7D02F /* Products */;
-					ProjectRef = 16912C640BE3486BA28EF084 /* RNFetchBlob.xcodeproj */;
 				},
 				{
 					ProductGroup = B7B1C23920D6F40700E7D02F /* Products */;
@@ -1451,13 +1435,6 @@
 			remoteRef = B7B1C23C20D6F40700E7D02F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B7B1C24220D6F40900E7D02F /* libRNFetchBlob.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNFetchBlob.a;
-			remoteRef = B7B1C24120D6F40900E7D02F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		B7B85B6320CAF0450033B54B /* libjsinspector.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1749,14 +1726,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1794,14 +1763,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1817,8 +1778,11 @@
 			baseConfigurationReference = 46C59E5C0FBF48FEBCF02751 /* Pods-ManhattanMatch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ManhattanMatch/ManhattanMatch.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 96WSSA5AM3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks/",
@@ -1828,13 +1792,22 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
-					"$(SRCROOT)..\node_modules\neact-native-vector-iconsRNVectorIconsManager",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-vector-iconsRNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
-					"$(SRCROOT)..\node_modules\neact-native-background-geolocationiosRNBackgroundGeolocation/**",
-					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-background-geolocationiosRNBackgroundGeolocation/**",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
-					"$(SRCROOT)..\node_modules\neact-native-fetch-blobios/**",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-fetch-blobios/**",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = ManhattanMatch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1853,7 +1826,10 @@
 			baseConfigurationReference = 7191B8C7F93C88611B8DAD4A /* Pods-ManhattanMatch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ManhattanMatch/ManhattanMatch.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 96WSSA5AM3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks/",
@@ -1863,13 +1839,22 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
-					"$(SRCROOT)..\node_modules\neact-native-vector-iconsRNVectorIconsManager",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-vector-iconsRNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
-					"$(SRCROOT)..\node_modules\neact-native-background-geolocationiosRNBackgroundGeolocation/**",
-					"$(SRCROOT)..\node_modules\neact-native-firebaseiosRNFirebase/**",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-background-geolocationiosRNBackgroundGeolocation/**",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-firebaseiosRNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
-					"$(SRCROOT)..\node_modules\neact-native-fetch-blobios/**",
+					"$(SRCROOT)..",
+					ode_modules,
+					"eact-native-fetch-blobios/**",
 					"$(SRCROOT)/../node_modules/cocoa-lumberjack/CocoaLumberjack/**",
+					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 				);
 				INFOPLIST_FILE = ManhattanMatch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1916,14 +1901,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1970,14 +1947,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2008,14 +1977,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.ManhattanMatch-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2042,14 +2003,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.ManhattanMatch-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";

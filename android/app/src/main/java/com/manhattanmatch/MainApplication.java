@@ -6,10 +6,12 @@ import com.facebook.FacebookSdk;
 import com.facebook.CallbackManager;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
+import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
+import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
 import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
 import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
 import io.invertase.firebase.RNFirebasePackage;
-import com.RNFetchBlob.RNFetchBlobPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -56,7 +58,6 @@ public class MainApplication extends Application implements ReactApplication {
             new MainReactPackage(),
             new RNBackgroundGeolocation(),
             new RNBackgroundFetchPackage(),
-            new RNFetchBlobPackage(),
             new RNFirebasePackage(),
             new RNFirebaseAuthPackage(), 
             new RNFirebaseFirestorePackage(),

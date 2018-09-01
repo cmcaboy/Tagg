@@ -323,15 +323,11 @@ static const int kMaxPendingWrites = 10;
               "enabled");
 
   [self cleanUpWatchStreamState];
+  [self.onlineStateTracker handleWatchStreamFailure];
 
   // If the watch stream closed due to an error, retry the connection if there are any active
   // watch targets.
   if ([self shouldStartWatchStream]) {
-    if (error) {
-      // There should generally be an error if the watch stream was closed when it's still needed,
-      // but it's not quite worth asserting.
-      [self.onlineStateTracker handleWatchStreamFailure:error];
-    }
     [self startWatchStream];
   } else {
     // We don't need to restart the watch stream because there are no active targets. The online
@@ -409,10 +405,8 @@ static const int kMaxPendingWrites = 10;
   // Ignore targets that have been removed already.
   for (FSTBoxedTargetID *targetID in change.targetIDs) {
     if (self.listenTargets[targetID]) {
-      int unboxedTargetId = targetID.intValue;
       [self.listenTargets removeObjectForKey:targetID];
-      [self.watchChangeAggregator removeTarget:unboxedTargetId];
-      [self.syncEngine rejectListenWithTargetID:unboxedTargetId error:change.cause];
+      [self.syncEngine rejectListenWithTargetID:[targetID intValue] error:change.cause];
     }
   }
 }

@@ -673,7 +673,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (FSTMutationResult *)decodedMutationResult:(GCFSWriteResult *)mutation {
   // NOTE: Deletes don't have an updateTime.
   absl::optional<SnapshotVersion> version;
-  if (mutation.hasUpdateTime) {
+  if (mutation.updateTime) {
     version = [self decodedVersion:mutation.updateTime];
   }
   NSMutableArray *_Nullable transformResults = nil;
@@ -802,7 +802,7 @@ NS_ASSUME_NONNULL_BEGIN
     path = path.Append(util::MakeString(from.collectionId));
   }
 
-  NSArray<FSTFilter *> *filterBy;
+  NSArray<id<FSTFilter>> *filterBy;
   if (query.hasWhere) {
     filterBy = [self decodedFilters:query.where];
   } else {
@@ -841,14 +841,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Filters
 
-- (GCFSStructuredQuery_Filter *_Nullable)encodedFilters:(NSArray<FSTFilter *> *)filters {
+- (GCFSStructuredQuery_Filter *_Nullable)encodedFilters:(NSArray<id<FSTFilter>> *)filters {
   if (filters.count == 0) {
     return nil;
   }
   NSMutableArray<GCFSStructuredQuery_Filter *> *protos = [NSMutableArray array];
-  for (FSTFilter *filter in filters) {
+  for (id<FSTFilter> filter in filters) {
     if ([filter isKindOfClass:[FSTRelationFilter class]]) {
-      [protos addObject:[self encodedRelationFilter:(FSTRelationFilter *)filter]];
+      [protos addObject:[self encodedRelationFilter:filter]];
     } else {
       [protos addObject:[self encodedUnaryFilter:filter]];
     }
@@ -864,8 +864,8 @@ NS_ASSUME_NONNULL_BEGIN
   return composite;
 }
 
-- (NSArray<FSTFilter *> *)decodedFilters:(GCFSStructuredQuery_Filter *)proto {
-  NSMutableArray<FSTFilter *> *result = [NSMutableArray array];
+- (NSArray<id<FSTFilter>> *)decodedFilters:(GCFSStructuredQuery_Filter *)proto {
+  NSMutableArray<id<FSTFilter>> *result = [NSMutableArray array];
 
   NSArray<GCFSStructuredQuery_Filter *> *filters;
   if (proto.filterTypeOneOfCase ==
@@ -913,7 +913,7 @@ NS_ASSUME_NONNULL_BEGIN
   return [FSTRelationFilter filterWithField:fieldPath filterOperator:filterOperator value:value];
 }
 
-- (GCFSStructuredQuery_Filter *)encodedUnaryFilter:(FSTFilter *)filter {
+- (GCFSStructuredQuery_Filter *)encodedUnaryFilter:(id<FSTFilter>)filter {
   GCFSStructuredQuery_Filter *proto = [GCFSStructuredQuery_Filter message];
   proto.unaryFilter.field = [self encodedFieldPath:filter.field];
   if ([filter isKindOfClass:[FSTNanFilter class]]) {
@@ -926,7 +926,7 @@ NS_ASSUME_NONNULL_BEGIN
   return proto;
 }
 
-- (FSTFilter *)decodedUnaryFilter:(GCFSStructuredQuery_UnaryFilter *)proto {
+- (id<FSTFilter>)decodedUnaryFilter:(GCFSStructuredQuery_UnaryFilter *)proto {
   FieldPath field = FieldPath::FromServerFormat(util::MakeString(proto.field.fieldPath));
   switch (proto.op) {
     case GCFSStructuredQuery_UnaryFilter_Operator_IsNan:

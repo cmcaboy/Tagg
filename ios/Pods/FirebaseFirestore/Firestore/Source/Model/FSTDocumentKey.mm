@@ -21,32 +21,26 @@
 
 #import "Firestore/Source/Core/FSTFirestoreClient.h"
 
-#include "Firestore/core/src/firebase/firestore/model/document_key.h"
+#include "Firestore/core/src/firebase/firestore/model/resource_path.h"
 #include "Firestore/core/src/firebase/firestore/util/hard_assert.h"
 #include "Firestore/core/src/firebase/firestore/util/hashing.h"
 #include "Firestore/core/src/firebase/firestore/util/string_apple.h"
 
 namespace util = firebase::firestore::util;
 using firebase::firestore::model::ResourcePath;
-using firebase::firestore::model::DocumentKey;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FSTDocumentKey () {
-  // Forward most of the logic to the C++ implementation until FSTDocumentKey usages are completely
-  // migrated.
-  DocumentKey _delegate;
+  /** The path to the document. */
+  ResourcePath _path;
 }
 @end
 
 @implementation FSTDocumentKey
 
 + (instancetype)keyWithPath:(ResourcePath)path {
-  return [[FSTDocumentKey alloc] initWithDocumentKey:DocumentKey{path}];
-}
-
-+ (instancetype)keyWithDocumentKey:(const firebase::firestore::model::DocumentKey &)documentKey {
-  return [[FSTDocumentKey alloc] initWithDocumentKey:documentKey];
+  return [[FSTDocumentKey alloc] initWithPath:std::move(path)];
 }
 
 + (instancetype)keyWithSegments:(std::initializer_list<std::string>)segments {
@@ -58,9 +52,12 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 /** Designated initializer. */
-- (instancetype)initWithDocumentKey:(const DocumentKey &)key {
+- (instancetype)initWithPath:(ResourcePath)path {
+  HARD_ASSERT([FSTDocumentKey isDocumentKey:path], "invalid document key path: %s",
+              path.CanonicalString());
+
   if (self = [super init]) {
-    _delegate = key;
+    _path = path;
   }
   return self;
 }
@@ -76,11 +73,11 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSUInteger)hash {
-  return _delegate.Hash();
+  return util::Hash(_path);
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"<FSTDocumentKey: %s>", _delegate.ToString().c_str()];
+  return [NSString stringWithFormat:@"<FSTDocumentKey: %s>", _path.CanonicalString().c_str()];
 }
 
 /** Implements NSCopying without actually copying because FSTDocumentKeys are immutable. */
@@ -103,11 +100,11 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (BOOL)isDocumentKey:(const ResourcePath &)path {
-  return DocumentKey::IsDocumentKey(path);
+  return path.size() % 2 == 0;
 }
 
 - (const ResourcePath &)path {
-  return _delegate.path();
+  return _path;
 }
 
 @end

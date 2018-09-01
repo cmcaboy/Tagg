@@ -1,2 +1,2 @@
 dependencies: \
-  /Users/jonathanmcaboy/Desktop/Dev/ManhattanMatch/ios/Pods/FirebaseAuth/Firebase/Auth/Source/FIRAuthProvider.m
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/FIRAuthProvider.m

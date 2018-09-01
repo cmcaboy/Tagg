@@ -33,6 +33,7 @@
 @class FSTQueryData;
 @class FSTRemoteEvent;
 @protocol FSTPersistence;
+@protocol FSTGarbageCollector;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -66,7 +67,12 @@ NS_ASSUME_NONNULL_BEGIN
  * that has already been applied to the LocalDocument (typically done by replaying all remaining
  * LocalMutations to the RemoteDocument to re-apply).
  *
- * It also maintains the persistence of mapping queries to resume tokens and target ids.
+ * The LocalStore is responsible for the garbage collection of the documents it contains. For now,
+ * it every doc referenced by a view, the mutation queue, or the RemoteStore.
+ *
+ * It also maintains the persistence of mapping queries to resume tokens and target ids. It needs
+ * to know this data about queries to properly know what docs it would be allowed to garbage
+ * collect.
  *
  * The LocalStore must be able to efficiently execute queries against its local cache of the
  * documents, to provide the initial set of results before any remote changes have been received.
@@ -75,6 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** Creates a new instance of the FSTLocalStore with its required dependencies as parameters. */
 - (instancetype)initWithPersistence:(id<FSTPersistence>)persistence
+                   garbageCollector:(id<FSTGarbageCollector>)garbageCollector
                         initialUser:(const firebase::firestore::auth::User &)initialUser
     NS_DESIGNATED_INITIALIZER;
 
@@ -150,6 +157,14 @@ NS_ASSUME_NONNULL_BEGIN
  * table.
  */
 - (firebase::firestore::model::DocumentKeySet)remoteDocumentKeysForTarget:(FSTTargetID)targetID;
+
+/**
+ * Collects garbage if necessary.
+ *
+ * Should be called periodically by Sync Engine to recover resources. The implementation must
+ * guarantee that GC won't happen in other places than this method call.
+ */
+- (void)collectGarbage;
 
 /**
  * Assigns @a query an internal ID so that its results can be pinned so they don't get GC'd.

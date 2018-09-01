@@ -25,7 +25,6 @@
 #include "Firestore/core/src/firebase/firestore/immutable/sorted_map_iterator.h"
 #include "Firestore/core/src/firebase/firestore/immutable/tree_sorted_map.h"
 #include "Firestore/core/src/firebase/firestore/util/comparison.h"
-#include "absl/base/attributes.h"
 
 namespace firebase {
 namespace firestore {
@@ -167,7 +166,7 @@ class SortedMap : public impl::SortedMapBase {
    * @param value The value to associate with the key.
    * @return A new dictionary with the added/updated value.
    */
-  ABSL_MUST_USE_RESULT SortedMap insert(const K& key, const V& value) const {
+  SortedMap insert(const K& key, const V& value) const {
     switch (tag_) {
       case Tag::Array:
         if (array_.size() >= kFixedSize) {
@@ -194,7 +193,7 @@ class SortedMap : public impl::SortedMapBase {
    * @param key The key to remove.
    * @return A new map without that value.
    */
-  ABSL_MUST_USE_RESULT SortedMap erase(const K& key) const {
+  SortedMap erase(const K& key) const {
     switch (tag_) {
       case Tag::Array:
         return SortedMap{array_.erase(key)};

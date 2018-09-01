@@ -146,6 +146,11 @@ android {
 }
 
 dependencies {
+    compile(project(':react-native-firebase')) {
+        transitive = false
+    }
+    compile project(':react-native-background-geolocation')
+    compile project(':react-native-background-fetch')
     implementation project(':react-native-background-fetch')
     implementation project(':react-native-background-geolocation')
     implementation (project(':react-native-firebase')) {
@@ -182,7 +187,6 @@ dependencies {
     }
     implementation "com.google.firebase:firebase-perf:16.0.0"
 
-    implementation project(':react-native-fetch-blob')
     implementation project(':react-native-fast-image')
 }
 

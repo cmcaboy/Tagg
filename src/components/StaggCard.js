@@ -3,8 +3,9 @@ import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import DateOpenButton from './DateOpenButton';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { formatDistanceApart, formatName } from '../format';
+import { formatDistanceApart, formatName, formatSchool, formatWork } from '../format';
 import { WideCard, MyAppText, FollowButton } from './common';
+import { PICTURE_WIDTH } from '../variables';
 
 const StaggCard = (
   {
@@ -29,7 +30,7 @@ const StaggCard = (
         <TouchableOpacity onPress={onPress}>
           <Image
             source={{ uri: profilePic }}
-            style={{ height: 115, width: 115, borderRadius: 5 }}
+            style={{ height: PICTURE_WIDTH, width: PICTURE_WIDTH, borderRadius: 5 }}
           />
         </TouchableOpacity>
         <View style={styles.userInfo}>
@@ -49,7 +50,7 @@ const StaggCard = (
                 <View style={styles.subHeading}>
                   {/* <Ionicons name="md-school" size={14} color="black" style={styles.iconText}/> */}
                   <MyAppText style={styles.schoolText}>
-                    {school}
+                    {formatSchool(school)}
                   </MyAppText>
                 </View>
               )}
@@ -57,7 +58,7 @@ const StaggCard = (
                 <View style={styles.subHeading}>
                   {/* <MaterialIcons name="work" size={14} color="black" style={styles.iconText}/> */}
                   <MyAppText style={[styles.schoolText]}>
-                    {work}
+                    {formatWork(work)}
                   </MyAppText>
                 </View>
               )}
@@ -110,12 +111,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   nameText: {
-    fontSize: 22,
+    fontSize: 18,
     color: '#000',
     fontWeight: '400',
   },
   ageText: {
-    fontSize: 22,
+    fontSize: 18,
     // color: '#000',
     fontWeight: '100',
     opacity: 0.85,

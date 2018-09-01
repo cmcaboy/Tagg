@@ -33,7 +33,6 @@
 #include "absl/strings/string_view.h"
 
 @class FIRApp;
-@protocol FIRAuthInterop;
 
 namespace firebase {
 namespace firestore {
@@ -60,11 +59,9 @@ class FirebaseCredentialsProvider : public CredentialsProvider {
   /**
    * Initializes a new FirebaseCredentialsProvider.
    *
-   * @param app The Firebase app instance associated with the credentials
-   *            received.
-   * @param auth The auth instance from which to get credentials.
+   * @param app The Firebase app from which to get credentials.
    */
-  explicit FirebaseCredentialsProvider(FIRApp* app, id<FIRAuthInterop> auth);
+  explicit FirebaseCredentialsProvider(FIRApp* app);
 
   ~FirebaseCredentialsProvider() override;
 
@@ -82,13 +79,11 @@ class FirebaseCredentialsProvider : public CredentialsProvider {
    * avoid races between notifications arriving and C++ object destruction.
    */
   struct Contents {
-    Contents(FIRApp* app, id<FIRAuthInterop> auth, User&& user)
-        : app(app), auth(auth), current_user(std::move(user)) {
+    Contents(FIRApp* app, User&& user)
+        : app(app), current_user(std::move(user)) {
     }
 
     const FIRApp* app;
-
-    const id<FIRAuthInterop> auth;
 
     /**
      * The current user as reported to us via our AuthStateDidChangeListener.
