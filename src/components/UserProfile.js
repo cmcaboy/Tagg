@@ -92,12 +92,12 @@ class UserProfile extends Component {
                     </View>
                   )}
                 </View>
-                  <View style={userInfoRight}>
-                    <MyAppText>
-                      {formatDistanceApart(distanceApart)}
-                    </MyAppText>
-                    <FollowButton id={hostId} followId={id} isFollowing={isFollowing} />
-                  </View>
+                <View style={userInfoRight}>
+                  <MyAppText style={styles.distance}>
+                    {formatDistanceApart(distanceApart)}
+                  </MyAppText>
+                  <FollowButton id={hostId} followId={id} isFollowing={isFollowing} />
+                </View>
               </View>
               <DateOpenButton
                 hostId={hostId}
@@ -147,11 +147,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginTop: 10,
     justifyContent: 'space-between',
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   userInfoRight: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 5,
+    marginTop: 20,
   },
   userInfoLeft: {
     flexDirection: 'column',
@@ -165,10 +168,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     opacity: 0.7,
   },
-
+  distance: {
+    opacity: 0.6,
+    fontSize: 11,
+    fontStyle: 'italic',
+  },
   nameText: {
     fontSize: 28,
-    color: PRIMARY_COLOR,
+    // color: PRIMARY_COLOR,
   },
   userDescription: {
     flex: 1,
@@ -180,8 +187,9 @@ const styles = StyleSheet.create({
   horizontalLine: {
     borderBottomColor: 'black',
     borderBottomWidth: 1,
-    paddingVertical: 10,
+    //paddingVertical: 10,
     marginBottom: 10,
+    marginTop: 0,
     opacity: 0.3,
   },
 });

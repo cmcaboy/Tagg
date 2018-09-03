@@ -40,6 +40,7 @@ export const newMessagePush = async ({matchId,otherId,otherName,otherPic,text,id
         notification: { // notification content
             title: newMessagePushTitle(name),
             body: newMessagePushBody(text),
+            content_available: true,
         },
         token, // token identifies the user/device to send the mssage to
         data: { // Data payload that can be used to act on the notification

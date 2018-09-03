@@ -22,7 +22,7 @@ import { formatDate, formatDescription } from '../format';
 
 class BidList extends React.Component {
   static navigationOptions = ({ navigation: { state: { params: { datetimeOfDate } } } }) => ({
-    title: `${formatDate(datetimeOfDate)}`,
+    // title: `${formatDate(datetimeOfDate)}`,
     headerTitle: (
       <View style={styles.headerViewStyle}>
         <MyAppText style={styles.textHeader}>

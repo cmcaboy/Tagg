@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { MyAppText } from './common';
 import { PRIMARY_COLOR } from '../variables';
+import { formatName } from '../format';
 
 const DateOpenButton = ({ hasDateOpen = false, id, navigation, hostId, name, profilePic }) => {
   if (!hasDateOpen) {
@@ -26,7 +27,7 @@ const DateOpenButton = ({ hasDateOpen = false, id, navigation, hostId, name, pro
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
           <View style={styles.footerContent}>
             <MyAppText style={{ color: PRIMARY_COLOR, fontWeight: 'bold' }}>
-              { 'Needs a date on Sep 1 @ 7pm' }
+              { `${formatName(name)} is looking for a date!` }
             </MyAppText>
           </View>
         </View>

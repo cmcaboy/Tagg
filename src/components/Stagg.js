@@ -130,6 +130,7 @@ class Stagg extends Component {
 
   pushNotification = async () => {
     const { pushToken, startSetPushToken, id, navigation } = this.props;
+    console.log('firebase messaging: ', firebase.messaging());
     // Get Token
     const fcmToken = await firebase.messaging().getToken();
     if (fcmToken) {
@@ -167,14 +168,14 @@ class Stagg extends Component {
 
       BackgroundGeolocation.ready({
           // Geolocation Config
-          reset: false,
+          reset: true,
           desiredAccuracy: 100,
           distanceFilter: 100,
           // Activity Recognition
           stopTimeout: 5,
           // Application config
           debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
-          logLevel: BackgroundGeolocation.LOG_LEVEL_ERROR,
+          logLevel: BackgroundGeolocation.LOG_LEVEL_NONE,
           stopOnTerminate: false,   // <-- [Default: true] Allow the background-service to continue tracking when user closes the app.
           startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
           // HTTP / SQLite config

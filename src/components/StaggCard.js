@@ -93,16 +93,16 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   rightCard: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-end', 
+    alignItems: 'center', 
   },
   description: {
     justifyContent: 'flex-start',
   },
   userInfo: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     // alignItems: 'center',
     marginLeft: 8,

@@ -93,10 +93,16 @@ const MainNavigator = StackNavigator({
     },
 },
 {
-  mode: 'card',
-  headerMode: 'screen',
-  // headerTitleStyle: { height: Platform.OS === 'ios' ? 0 : TAB_BAR_HEIGHT },
-  headerStyle: { height: 40 },
-});
+    mode: 'card',
+    headerMode: 'screen',
+    navigationOptions: {
+        headerForceInset: {top: 'never'},
+      },
+      
+    // headerTitleStyle: { height: Platform.OS === 'ios' ? 0 : TAB_BAR_HEIGHT },
+    //   headerStyle: { 
+    //       height: 40,
+    //     },
+});       
 
 export default MainNavigator;

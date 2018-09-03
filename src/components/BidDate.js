@@ -62,9 +62,12 @@ class BidDate extends React.Component {
         <View style={{ width: 30 }} />
       </View>
     ),
-    headerStyle: {
-      height: 40,
-    },
+    // header: {
+    //   style: {
+    //     paddingTop: 0,
+    //     height: 40,
+    //   },
+    // },
     headerTitleStyle:
       {
         alignSelf: 'center',

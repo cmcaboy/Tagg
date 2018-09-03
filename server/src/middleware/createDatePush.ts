@@ -58,6 +58,7 @@ export const createDatePush = async (id,date) => {
             notification: { // notification content
                 title: createDatePushTitle(name),
                 body: createDatePushBody(name,date),
+                content_available: true,
             },
             token, // token identifies the user/device to send the mssage to
             data: { // Data payload that can be used to act on the notification

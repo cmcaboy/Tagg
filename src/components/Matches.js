@@ -169,10 +169,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   newMatchesContainer: {
-    flex: 2,
+    //flex: 2,
   },
   messagesContainer: {
-    flex: 5,
+    //flex: 5,
   },
   newMatch: {
     margin: 5,
