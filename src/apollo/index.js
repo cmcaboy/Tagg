@@ -6,8 +6,8 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { ApolloLink, split } from 'apollo-link';
 import { persistCache } from 'apollo-cache-persist';
-import { GRAPHQL_SERVER } from '../variables';
-import {resolvers, defaults } from './localState';
+import { GRAPHQL_SERVER, GRAPHQL_SERVER_WS } from '../variables';
+import { resolvers, defaults } from './localState';
 
 // This file is the setup file for Apollo client
 
@@ -29,25 +29,25 @@ const stateLink = withClientState({
   cache,
   defaults,
   resolvers,
-//  typeDefs
+// typeDefs
 });
 
 // We put both the state link and http link in httpLink to let the application
 // query the application state when applicable
 const httpLink = ApolloLink.from([
-    stateLink,
-    new HttpLink({ uri: `${GRAPHQL_SERVER}/graphql` }),
+  stateLink,
+  new HttpLink({ uri: `${GRAPHQL_SERVER}/graphql` }),
 ]);
 
 // Websockets are used for subscriptions.
 const wsLink = new WebSocketLink({
-    uri: 'ws://35.199.37.151:4000/subscriptions',
-    options: {
-        reconnect: true,
-    },
+  uri: `${GRAPHQL_SERVER_WS}/subscriptions`,
+  options: {
+    reconnect: true,
+  },
 });
 
-// The split function operates like a fi statement. If returned true, it hooks up to 
+// The split function operates like a fi statement. If returned true, it hooks up to
 // the web sockets link. If false, it uses the http link.
 const link = split(
   ({ query }) => {
@@ -58,7 +58,7 @@ const link = split(
   httpLink,
 );
 
-// At this point, the link encapsulates logic to determine if the application is trying 
+// At this point, the link encapsulates logic to determine if the application is trying
 // to access a subscription, graphql server, or state management.
 export const client = new ApolloClient({
   link,

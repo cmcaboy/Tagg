@@ -2,6 +2,9 @@ apply plugin: "com.android.application"
 apply plugin: "io.fabric"
 apply plugin: "com.google.firebase.firebase-perf"
 
+// For react-native-config
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 import com.android.build.OutputFile
 
 /**dfdfd
@@ -146,6 +149,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-config')
     compile(project(':react-native-firebase')) {
         transitive = false
     }

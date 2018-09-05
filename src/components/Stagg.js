@@ -147,7 +147,10 @@ class Stagg extends Component {
 
     // Listen for Notification in the foreground
     this.notificationListener = firebase.notifications().onNotification(notification => toastMessage({ text: notification._title },
-        () => pushNotificationHandler(id, notification._data, navigation)));
+      () => {
+        console.log('notification: ', notification);
+        return pushNotificationHandler(id, notification._data, navigation);
+      }));
 
     // Listen for notification press while app is in the background
     this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen => pushNotificationHandler(id, notificationOpen.notification._data, navigation));

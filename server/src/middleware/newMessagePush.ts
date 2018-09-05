@@ -43,6 +43,14 @@ export const newMessagePush = async ({matchId,otherId,otherName,otherPic,text,id
             content_available: true,
         },
         token, // token identifies the user/device to send the mssage to
+        apns: {
+            payload: {
+              aps: {
+                "content-available": 1,
+                "badge": 1,
+              },
+            },
+          },
         data: { // Data payload that can be used to act on the notification
             // Let's make a payload that navigates the user to Messenger screen for the creator
             type: `NEW_MESSAGE`,

@@ -27,7 +27,14 @@ export const chooseWinnerPushWinner = async ({ id, datetimeOfDate, creator, winn
         notification: { // notification content
           title: chooseWinnerPushWinnerTitle(creator.name),
           body: chooseWinnerPushWinnerBody(creator.name,datetimeOfDate),
-          content_available: true,
+        },
+        apns: {
+          payload: {
+            aps: {
+              "content-available": 1,
+              "badge": 1,
+            },
+          },
         },
         token: winner.token, // token identifies the user/device to send the mssage to
         data: { // Data payload that can be used to act on the notification

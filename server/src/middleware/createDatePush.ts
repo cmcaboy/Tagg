@@ -60,6 +60,14 @@ export const createDatePush = async (id,date) => {
                 body: createDatePushBody(name,date),
                 content_available: true,
             },
+            apns: {
+                payload: {
+                  aps: {
+                    "content-available": 1,
+                    "badge": 1,
+                  },
+                },
+              },
             token, // token identifies the user/device to send the mssage to
             data: { // Data payload that can be used to act on the notification
                 id,

@@ -33,6 +33,8 @@ target 'ManhattanMatch' do
   #pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
   pod 'react-native-fast-image', :path => '../node_modules/react-native-fast-image'
 
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
   target 'ManhattanMatchTests' do
     inherit! :search_paths
     # Pods for testing

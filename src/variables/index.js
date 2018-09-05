@@ -1,3 +1,5 @@
+import Config from 'react-native-config';
+
 export const ENV = 'PROD';
 
 export const PHOTO_ADD_URL = (ENV === 'PROD') ? (
@@ -16,7 +18,8 @@ export const SECONDARY_COLOR = '#02FCED';
 export const STATUS_BAR_COLOR = '#81D4FA';
 export const BACKGROUND_COLOR = '#000';
 
-export const GRAPHQL_SERVER = 'http://35.199.37.151:4000';
+export const GRAPHQL_SERVER = Config.GRAPHQL_SERVER;
+export const GRAPHQL_SERVER_WS = Config.GRAPHQL_SERVER_WS;
 
 export const CARD_HEIGHT = 120;
 export const CARD_FOOTER_HEIGHT = 35;
