@@ -21,6 +21,13 @@
     "react-test-renderer": "16.0.0"
   },
   "scripts": {
+    "build-android-prod": "export ENVFILE=.env.prod && cd android && ./gradlew assembleRelease && cd ..",
+    "android-dev": "ENVFILE=.env.mock react-native run-android",
+    "android-stage": "ENVFILE=.env.stage react-native run-android",
+    "android-prod": "ENVFILE=.env.prod react-native run-android",
+    "ios-dev": "ENVFILE=.env.mock react-native run-ios",
+    "ios-stage": "ENVFILE=.env.stage react-native run-ios",
+    "ios-prod": "ENVFILE=.env.prod react-native run-ios",
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
