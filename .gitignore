@@ -32,3 +32,7 @@ android/local.properties
 server/etc
 
 sensitive
+
+.env.mock
+.env.prod
+.env.stage
