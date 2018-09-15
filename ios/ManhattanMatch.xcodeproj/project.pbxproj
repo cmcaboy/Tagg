@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -60,6 +59,7 @@
 		A7E6D6A953864B7B95CEE664 /* Oxygen-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28FC88109BD04E4B8D5631E1 /* Oxygen-Regular.ttf */; };
 		A9F1C8F2C96340CDB717D7C4 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A006882C49E49369AAF4C34 /* EvilIcons.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
+		B700D5562142976000F7433A /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B700D5502142971C00F7433A /* libReactNativeConfig.a */; };
 		B7113EC9213C8B5200BCAB68 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7113EA8213C8B0C00BCAB68 /* libRCTPushNotification.a */; };
 		B7B1C19720CAFE7200E7D02F /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7B1C18C20CAFE7100E7D02F /* Octicons.ttf */; };
 		B7B1C19820CAFE7200E7D02F /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7B1C18D20CAFE7100E7D02F /* Feather.ttf */; };
@@ -282,6 +282,13 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		B700D54F2142971C00F7433A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B700D5222142971C00F7433A /* ReactNativeConfig.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EB2648DF1C7BE17A00B8F155;
+			remoteInfo = ReactNativeConfig;
+		};
 		B703292620C36E4800F5A56E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
@@ -482,6 +489,7 @@
 		A7769520EC51457A9B578E63 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libCocoaLumberjack.a; sourceTree = "<group>"; };
 		AADED608DE82E02EE1DC1844 /* Pods-ManhattanMatch-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManhattanMatch-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ManhattanMatch-tvOSTests/Pods-ManhattanMatch-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		B700D5222142971C00F7433A /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
 		B7113E94213C8B0C00BCAB68 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		B7B1C18C20CAFE7100E7D02F /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		B7B1C18D20CAFE7100E7D02F /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -528,6 +536,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B700D5562142976000F7433A /* libReactNativeConfig.a in Frameworks */,
 				B7113EC9213C8B5200BCAB68 /* libRCTPushNotification.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -749,6 +758,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				B700D5222142971C00F7433A /* ReactNativeConfig.xcodeproj */,
 				B7113E94213C8B0C00BCAB68 /* RCTPushNotification.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -830,6 +840,14 @@
 			children = (
 				ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */,
 				B703292720C36E4800F5A56E /* libRCTBlob-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B700D5232142971C00F7433A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B700D5502142971C00F7433A /* libReactNativeConfig.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1141,6 +1159,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = B700D5232142971C00F7433A /* Products */;
+					ProjectRef = B700D5222142971C00F7433A /* ReactNativeConfig.xcodeproj */;
+				},
+				{
 					ProductGroup = B7B1C20720D6F40400E7D02F /* Products */;
 					ProjectRef = 39DD48590E604E5B83DB4999 /* ReactNativePermissions.xcodeproj */;
 				},
@@ -1352,6 +1374,13 @@
 			fileType = archive.ar;
 			path = libRCTBlob.a;
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B700D5502142971C00F7433A /* libReactNativeConfig.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeConfig.a;
+			remoteRef = B700D54F2142971C00F7433A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		B703292720C36E4800F5A56E /* libRCTBlob-tvOS.a */ = {

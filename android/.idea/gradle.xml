@@ -11,8 +11,9 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-background-fetch/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-background-geolocation/android" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-config/android" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-fast-image/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-fbsdk/android" />
-            <option value="$PROJECT_DIR$/../node_modules/react-native-fetch-blob/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-firebase/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-image-picker/android" />
             <option value="$PROJECT_DIR$/../node_modules/react-native-vector-icons/android" />

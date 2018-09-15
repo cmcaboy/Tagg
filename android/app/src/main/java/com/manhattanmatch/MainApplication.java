@@ -6,16 +6,12 @@ import com.facebook.FacebookSdk;
 import com.facebook.CallbackManager;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.react.ReactApplication;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import io.invertase.firebase.RNFirebasePackage;
 import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
 import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
-import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
-import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
-import io.invertase.firebase.RNFirebasePackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -57,6 +53,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            //new FBSDKPackage(),
             new ReactNativeConfigPackage(),
             new RNBackgroundGeolocation(),
             new RNBackgroundFetchPackage(),
@@ -87,10 +84,10 @@ public class MainApplication extends Application implements ReactApplication {
     return mReactNativeHost;
   }
 
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    AppEventsLogger.activateApp(this);
-    SoLoader.init(this, /* native exopackage */ false);
-  }
+  // @Override
+  // public void onCreate() {
+  //   super.onCreate();
+  //   AppEventsLogger.activateApp(this);
+  //   SoLoader.init(this, /* native exopackage */ false);
+  // }
 }

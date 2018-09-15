@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: org.webkit:android-jsc-r174650">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../node_modules/react-native-fbsdk/android/build/intermediates/exploded-aar/org.webkit/android-jsc/r174650/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../node_modules/react-native-fbsdk/android/build/intermediates/exploded-aar/org.webkit/android-jsc/r174650/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/android-jsc-r174650.aar/e3bb3ee71c1cef6807083266931b61fa/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/android-jsc-r174650.aar/e3bb3ee71c1cef6807083266931b61fa/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -32,6 +32,9 @@ const stateLink = withClientState({
 // typeDefs
 });
 
+console.log('GRAPHQL_SERVER: ', GRAPHQL_SERVER);
+console.log('GRAPHQL_SERVER_WS: ', GRAPHQL_SERVER_WS);
+
 // We put both the state link and http link in httpLink to let the application
 // query the application state when applicable
 const httpLink = ApolloLink.from([
