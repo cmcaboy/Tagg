@@ -22,13 +22,50 @@ app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 // GraphiQL, a visual editor for queries
 app.use('/graphiql', graphiqlExpress({ 
   endpointURL: '/graphql/graphql',
-  subscriptionsEndpoint: 'ws://35.199.37.151:4000/subscriptions', 
+  subscriptionsEndpoint: process.env.GRAPHQL_WS_URL, 
 }));
 
 app.use("/schema", (req, res) => {
   res.set("Content-Type", "text/plain")
   res.send(printSchema(schema))
 });
+
+app.use("/coords", (req, res) => {
+  console.log('coords req.body: ', req.body);
+  const session = driver.session();
+
+  // Ensure the request is valid
+  if(!req.body) {
+    console.log('invalid request body: ',req.body);
+    res.status(500);
+    return res.send('failed to updated coords. Invalided request body: ',req.body);
+  } else if(!req.body.location) {
+    console.log('invalid request body: ',req.body);
+    res.status(500);
+    return res.send('failed to updated coords. Invalided request body: ',req.body);
+  } else if (!req.body.location.coords) {
+    console.log('invalid request body: ',req.body);
+    res.status(500);
+    return res.send('failed to updated coords. Invalided request body: ',req.body);
+  }
+
+  const id = req.body.id
+  const latitude = req.body.location.coords.latitude;
+  const longitude = req.body.location.coords.longitude;
+
+  return session.run(`MATCH(n:User {id:'${id}'}) SET n.latitude=${latitude}, n.longitude=${longitude}`)
+    .then(() => {
+      console.log(`coords (${latitude},${longitude}) successfully updated for id ${id}`)
+      res.status(200);
+      return res.send(`coords (${latitude},${longitude}) successfully updated for id ${id}`)
+    })
+    .catch((e) => {
+      console.log(`error updating coords (${latitude},${longitude}) for id ${id}: ${e}`)
+      res.status(500);
+      return res.send(`coords (${latitude},${longitude}) successfully updated for id ${id}`)
+    })
+    .finally(() => session.close())
+})
 
 const server = createServer(app);
 

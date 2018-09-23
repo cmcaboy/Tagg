@@ -38,12 +38,12 @@ android {
     compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.manhattanmatch"
+        applicationId "io.mcaboydigital.tagg.fastlane"
         minSdkVersion 16
         targetSdkVersion rootProject.targetSdkVersion
         multiDexEnabled true
         versionCode 1
-        versionName "1.0"
+        versionName "0.1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }

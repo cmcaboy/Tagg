@@ -11,20 +11,20 @@ export default async (uri, name = uuid()) => {
     type: 'image/jpg',
   });
 
-    try {
-      const res = await fetch(`${FUNCTION_PATH}/api/picture`, {
-        method: 'POST',
-        body,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('Message uploaded response: ', res);
-    } catch (e) {
-      console.log('Error uploading photo: ', e);
-    }
-    // console.log('name: ',name);
-    const url = await firebase.storage().ref(name).getDownloadURL();
-    return url;
+  try {
+    const res = await fetch(`${FUNCTION_PATH}/api/picture`, {
+      method: 'POST',
+      body,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log('Message uploaded response: ', res);
+  } catch (e) {
+    console.log('Error uploading photo: ', e);
+  }
+  // console.log('name: ',name);
+  const url = await firebase.storage().ref(name).getDownloadURL();
+  return url;
 };

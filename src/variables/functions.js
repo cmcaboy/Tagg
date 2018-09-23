@@ -1,7 +1,3 @@
-import ENV from './index';
+import Config from 'react-native-config';
 
-export const FUNCTION_PATH = (ENV === 'PROD') ? (
-    'https://us-central1-manhattanmatch-9f9fe.cloudfunctions.net'
-    ) : (
-    'https://us-central1-manhattanmatch-9f9fe.cloudfunctions.net'
-);
+export const { FUNCTION_PATH } = Config;

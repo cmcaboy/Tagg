@@ -28,7 +28,7 @@ import {
   SET_DESCRIPTION,
   SET_PICS,
 } from '../apollo/mutations';
-import FakeButton from './FakeButton';
+// import FakeButton from './FakeButton';
 
 class EditProfile extends Component {
   static navigationOptions = () => ({
@@ -144,14 +144,16 @@ class EditProfile extends Component {
               }}
               </Mutation>
             </Card>
+          {/*
             <Card>
               <FakeButton />
             </Card>
-            {/*
-              <Card>
-                <Button onPress={this.removeAccount}>Remove Account</Button>
-              </Card>
-            */}
+          */}
+          {/*
+            <Card>
+              <Button onPress={this.removeAccount}>Remove Account</Button>
+            </Card>
+          */}
         </KeyboardAvoidingView>
       </ScrollView>
     );
@@ -188,44 +190,44 @@ class EditProfile extends Component {
 }
 
 const styles = StyleSheet.create({
-    settingsContainer: {
-        // justifyContent: 'space-between',
-        // alignItems: 'center',
-        padding: 10,
-    },
-    textInputStyle: {
-      height: 40,
-      width: 100,
-      borderColor: 'gray',
-      borderWidth: 1,
-    },
-    cardContainer: {
-      width: 300,
-      height: 400,
-    },
-    cardSection: {
-      height: 40,
-    },
-    editView: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-    img: {
-      width: 150,
-      height: 150,
-      resizeMode: 'contain',
-      backgroundColor: 'black',
-    },
-    spinner: {
-      width: 150,
-      height: 150,
-    },
-    hint: {
-      marginBottom: 10,
-      fontStyle: 'italic',
-      fontSize: 11,
-    },
+  settingsContainer: {
+    // justifyContent: 'space-between',
+    // alignItems: 'center',
+    padding: 10,
+  },
+  textInputStyle: {
+    height: 40,
+    width: 100,
+    borderColor: 'gray',
+    borderWidth: 1,
+  },
+  cardContainer: {
+    width: 300,
+    height: 400,
+  },
+  cardSection: {
+    height: 40,
+  },
+  editView: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  img: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    backgroundColor: 'black',
+  },
+  spinner: {
+    width: 150,
+    height: 150,
+  },
+  hint: {
+    marginBottom: 10,
+    fontStyle: 'italic',
+    fontSize: 11,
+  },
 });
 
 export default EditProfile;

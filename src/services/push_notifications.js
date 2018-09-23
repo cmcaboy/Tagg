@@ -6,17 +6,17 @@ export const checkPermissions = async () => {
     console.log('User has permissions');
     return enabled;
   }
-    // Ask for permissiosn
-    try {
-      await firebase.messaging().requestPermission();
-      // User has authorised
-      console.log('Push Notification Authorization granted.');
-      return true;
-    } catch (error) {
-      // User has rejected permissions
-      console.log('Push Notification Authorization denied');
-      return false;
-    }
+  // Ask for permissiosn
+  try {
+    await firebase.messaging().requestPermission();
+    // User has authorised
+    console.log('Push Notification Authorization granted.');
+    return true;
+  } catch (error) {
+    // User has rejected permissions
+    console.log('Push Notification Authorization denied');
+    return false;
+  }
 };
 
 export const onReceiveNotification = () => {};
@@ -59,9 +59,9 @@ export const pushNotificationHandler = (id, data, navigation) => {
       console.log('CREATE_DATE handler');
       navigation.navigate('BidDate', {
         date: {
-            datetimeOfDate: data.datetimeOfDate,
-            description: data.description,
-            id: data.dateId,
+          datetimeOfDate: data.datetimeOfDate,
+          description: data.description,
+          id: data.dateId,
         },
         id, // was id: this.props.id
         otherId: data.id,

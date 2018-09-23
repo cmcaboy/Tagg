@@ -11,6 +11,9 @@ import { resolvers, defaults } from './localState';
 
 // This file is the setup file for Apollo client
 
+console.log('GRAPHQL_SERVER: ', GRAPHQL_SERVER);
+console.log('GRAPHQL_SERVER_WS: ', GRAPHQL_SERVER_WS);
+
 // Initiate the cache
 const cache = new InMemoryCache({ dataIdFromObject: object => object.id });
 // dataIdFromObject is used for cache fragments. It tells apollo how to uniquely
@@ -31,9 +34,6 @@ const stateLink = withClientState({
   resolvers,
 // typeDefs
 });
-
-console.log('GRAPHQL_SERVER: ', GRAPHQL_SERVER);
-console.log('GRAPHQL_SERVER_WS: ', GRAPHQL_SERVER_WS);
 
 // We put both the state link and http link in httpLink to let the application
 // query the application state when applicable

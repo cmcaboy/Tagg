@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
-    View,
-    StyleSheet,
-    Dimensions,
-    LayoutAnimation,
-    UIManager,
-    RefreshControl,
+  View,
+  StyleSheet,
+  Dimensions,
+  LayoutAnimation,
+  UIManager,
+  RefreshControl,
 } from 'react-native';
 import BackgroundGeolocation from 'react-native-background-geolocation';
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview';
@@ -16,7 +16,7 @@ import FilterModal from './FilterModal';
 import EmptyList from './EmptyList';
 import { checkPermissions, pushNotificationHandler } from '../services/push_notifications';
 import toastMessage from '../services/toastMessage';
-import { CARD_HEIGHT, CARD_FOOTER_HEIGHT, CARD_MARGIN } from '../variables';
+import { CARD_HEIGHT, CARD_FOOTER_HEIGHT, CARD_MARGIN, GEO_LOCATION_URL } from '../variables';
 import { firebase } from '../firebase';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -44,22 +44,22 @@ class Stagg extends Component {
 
     this._layoutProvider = new LayoutProvider((i) => {
       const { queue } = this.state;
-        return queue.getDataForIndex(i).type;
+      return queue.getDataForIndex(i).type;
     }, (type, dim) => {
-        // console.log('type: ',type);
-        switch (type) {
-            case 'NORMAL':
-                dim.width = SCREEN_WIDTH;
-                dim.height = CARD_HEIGHT + CARD_MARGIN;
-                break;
-            case 'WITH_FOOTER':
-                dim.width = SCREEN_WIDTH;
-                dim.height = CARD_HEIGHT + CARD_FOOTER_HEIGHT + CARD_MARGIN;
-                break;
-            default:
-                dim.width = 0;
-                dim.height = 0;
-        }
+      // console.log('type: ',type);
+      switch (type) {
+        case 'NORMAL':
+          dim.width = SCREEN_WIDTH;
+          dim.height = CARD_HEIGHT + CARD_MARGIN;
+          break;
+        case 'WITH_FOOTER':
+          dim.width = SCREEN_WIDTH;
+          dim.height = CARD_HEIGHT + CARD_FOOTER_HEIGHT + CARD_MARGIN;
+          break;
+        default:
+          dim.width = 0;
+          dim.height = 0;
+      }
     });
 
     // Used for Firebase Cloud Messaging
@@ -86,14 +86,14 @@ class Stagg extends Component {
     // I could potentially put this in componentWillMount instead because it may navigate the user 
     // away and I wouldn't want to wait on the page load. However, this should work for now.
     if (notificationOpen) {
-        console.log('notificationOpen');
-        // action prop also available from notificationOpen
-        const { notification } = notificationOpen;
-        pushNotificationHandler(id, notification._data, navigation);
+      console.log('notificationOpen');
+      // action prop also available from notificationOpen
+      const { notification } = notificationOpen;
+      pushNotificationHandler(id, notification._data, navigation);
     }
     console.log('CheckPermissions: ', checkPermissions());
     if (checkPermissions()) {
-        this.pushNotification();
+      this.pushNotification();
     }
   }
 
@@ -112,9 +112,9 @@ class Stagg extends Component {
   }
 
   componentWillUpdate() {
-      UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-      // The next time the component changes, add a spring affect to it.
-      LayoutAnimation.spring();
+    UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+    // The next time the component changes, add a spring affect to it.
+    LayoutAnimation.spring();
   }
 
   onLocation = location => console.log(' - [event] location: ', location);
@@ -165,47 +165,47 @@ class Stagg extends Component {
   };
 
   trackLocation = () => {
-      const { id } = this.props;
+    const { id } = this.props;
 
-      BackgroundGeolocation.on('location', this.onLocation, this.onError);
+    BackgroundGeolocation.on('location', this.onLocation, this.onError);
 
-      BackgroundGeolocation.ready({
-          // Geolocation Config
-          reset: true,
-          desiredAccuracy: 100,
-          distanceFilter: 100,
-          // Activity Recognition
-          stopTimeout: 5,
-          // Application config
-          debug: true, // <-- enable this hear sounds for background-geolocation life-cycle.
-          logLevel: BackgroundGeolocation.LOG_LEVEL_NONE,
-          stopOnTerminate: false,   // <-- [Default: true] Allow the background-service to continue tracking when user closes the app.
-          startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
-          // HTTP / SQLite config
-          // url: FUNCTION_PATH + '/coords',
-          url: 'https://us-central1-manhattanmatch-9f9fe.cloudfunctions.net/coords',
-          batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
-          autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
-          // headers: {              // <-- Optional HTTP headers
-          //   "X-FOO": "bar"
-          // },
-          extras: {
-            id,
-          },
-          params: { // <-- Optional HTTP params
-            id,
-          },
-        }, (state) => {
-          // If we are not currently tracking, start tracking.
-          if (!state.enabled) {
-            //
-            // 3. Start tracking!
-            //
-            BackgroundGeolocation.start(() => {
-              console.log(' - Start success');
-            });
-          }
+    BackgroundGeolocation.ready({
+      // Geolocation Config
+      reset: true,
+      desiredAccuracy: 100,
+      distanceFilter: 100,
+      // Activity Recognition
+      stopTimeout: 5,
+      // Application config
+      debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
+      logLevel: BackgroundGeolocation.LOG_LEVEL_NONE,
+      stopOnTerminate: false,   // <-- [Default: true] Allow the background-service to continue tracking when user closes the app.
+      startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
+      // HTTP / SQLite config
+      // url: FUNCTION_PATH + '/coords',
+      url: GEO_LOCATION_URL,
+      batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
+      autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
+      // headers: {              // <-- Optional HTTP headers
+      //   "X-FOO": "bar"
+      // },
+      extras: {
+        id,
+      },
+      params: { // <-- Optional HTTP params
+        id,
+      },
+    }, (state) => {
+      // If we are not currently tracking, start tracking.
+      if (!state.enabled) {
+        //
+        // 3. Start tracking!
+        //
+        BackgroundGeolocation.start(() => {
+          console.log(' - Start success');
         });
+      }
+    });
   }
 
   rowRenderer = (type, data) => this.renderCard(data.user);
@@ -284,72 +284,72 @@ class Stagg extends Component {
 }
 
 const styles = StyleSheet.create({
-    staggContainer: {
-        flex: 1,
-        // justifyContent: 'flex-start',
-        // alignItems: 'center',
-        marginTop: 5,
-        marginBottom: 5,
-    },
-    header: {
-        backgroundColor: 'black',
-    },
-    cardStyle: {
-        width: SCREEN_WIDTH,
-        // absolute position does not seem to work as a child of ScrollView
-        position: 'absolute',
-        elevation: 4,
-    },
-    undeterminedContainer: {
-        flex: 1,
-        justifyContent: 'space-between'
-    },
-    center: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginLeft: 30,
-        marginRight: 30,
-    },
-    button: {
-        padding: 10,
-        backgroundColor: 'purple',
-        alignSelf: 'center',
-        borderRadius: 5,
-        margin: 20,
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 20,
-    },
-    prospectText: {
-        color: '#fff',
-        fontSize: 32,
-        marginLeft: 20,
-        marginBottom: 20,
-        fontWeight: 'bold',
-    },
-    prospectView: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    prospectImage: {
-        height: (SCREEN_HEIGHT * 0.83),
-        justifyContent: 'flex-end',
-        alignItems: 'flex-start',
-        backgroundColor: 'transparent',
-        borderRadius: 7,
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderBottomWidth: 0,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.5,
-        // just like border radius, but with shadows
-        shadowRadius: 2,
-        // elevation makes items appear to jump out
-        elevation: 1,
-    },
+  staggContainer: {
+    flex: 1,
+    // justifyContent: 'flex-start',
+    // alignItems: 'center',
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  header: {
+    backgroundColor: 'black',
+  },
+  cardStyle: {
+    width: SCREEN_WIDTH,
+    // absolute position does not seem to work as a child of ScrollView
+    position: 'absolute',
+    elevation: 4,
+  },
+  undeterminedContainer: {
+    flex: 1,
+    justifyContent: 'space-between'
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 30,
+    marginRight: 30,
+  },
+  button: {
+    padding: 10,
+    backgroundColor: 'purple',
+    alignSelf: 'center',
+    borderRadius: 5,
+    margin: 20,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 20,
+  },
+  prospectText: {
+    color: '#fff',
+    fontSize: 32,
+    marginLeft: 20,
+    marginBottom: 20,
+    fontWeight: 'bold',
+  },
+  prospectView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  prospectImage: {
+    height: (SCREEN_HEIGHT * 0.83),
+    justifyContent: 'flex-end',
+    alignItems: 'flex-start',
+    backgroundColor: 'transparent',
+    borderRadius: 7,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    // just like border radius, but with shadows
+    shadowRadius: 2,
+    // elevation makes items appear to jump out
+    elevation: 1,
+  },
 });
 
 export default Stagg;
