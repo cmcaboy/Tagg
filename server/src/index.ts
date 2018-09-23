@@ -30,7 +30,7 @@ app.use("/schema", (req, res) => {
   res.send(printSchema(schema))
 });
 
-app.use("/coords", (req, res) => {
+app.use("/coords", bodyParser.json(), (req, res) => {
   console.log('coords req: ', req);
   const session = driver.session();
 
