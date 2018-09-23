@@ -6,6 +6,7 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { ApolloLink, split } from 'apollo-link';
 import { persistCache } from 'apollo-cache-persist';
+import { AsyncStorage } from 'react-native';
 import { GRAPHQL_SERVER, GRAPHQL_SERVER_WS } from '../variables';
 import { resolvers, defaults } from './localState';
 
@@ -22,10 +23,10 @@ const cache = new InMemoryCache({ dataIdFromObject: object => object.id });
 
 // persistCache allows apollo to store the cache or local state to AsyncStorage
 // This works similar to redux-persist.
-// persistCache({
-//   cache,
-//   storage: AsyncStorage
-// })
+persistCache({
+  cache,
+  storage: AsyncStorage,
+});
 
 // stateLink is the local graphql engine for state management
 const stateLink = withClientState({

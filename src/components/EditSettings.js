@@ -31,7 +31,7 @@ class EditSettings extends Component {
       ageValues: [minAgePreference, maxAgePreference],
       distance,
       sendNotifications,
-      followerDisplay,
+      followerDisplay: followerDisplay ? followerDisplay : 'Both',
     };
   }
 

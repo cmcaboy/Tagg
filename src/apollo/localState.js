@@ -105,7 +105,7 @@ export const resolvers = {
 export const defaults = {
   user: {
     __typename: 'user',
-    id: 'Marianna22@yahoo.com',
+    id: 0,
   },
 };
 
