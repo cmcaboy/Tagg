@@ -31,7 +31,7 @@ app.use("/schema", (req, res) => {
 });
 
 app.use("/coords", (req, res) => {
-  console.log('coords req.body: ', req.body);
+  console.log('coords req: ', req);
   const session = driver.session();
 
   // Ensure the request is valid

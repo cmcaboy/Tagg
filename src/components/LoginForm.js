@@ -10,73 +10,73 @@ import { NEW_USER } from '../apollo/mutations';
 import { SET_ID_LOCAL } from '../apollo/local/mutations';
 
 class LoginForm extends Component {
-    constructor(props) {
-      super(props);
+  constructor(props) {
+    super(props);
 
-      this.state = {
-        email: '',
-        password: '',
-        error: '',
-        isLoading: false,
-      };
-    }
+    this.state = {
+      email: '',
+      password: '',
+      error: '',
+      isLoading: false,
+    };
+  }
 
-    render() {
-      const { error } = this.props;
-        return (
-            <View style={styles.loginContainer}>
-              <View style={styles.content}>
-                <MyAppText style={styles.title}>
-                  {'Manhattan Stag'}
-                </MyAppText>
-                <MyAppText style={styles.errorTextStyle}>
-                  {error}
-                </MyAppText>
-                <CardSection style={{borderBottomWidth: 0 }}>
-                  <Mutation mutation={NEW_USER}>
-                    {(newUser) => {
-                      const startNewUser = user => newUser({
-                        variables: {
-                          id: user.id,
-                          name: user.name,
-                          active: user.active,
-                          email: user.email,
-                          gender: user.gender,
-                          description: user.description,
-                          school: user.school,
-                          work: user.work,
-                          sendNotifications: user.sendNotifications,
-                          distance: user.distance,
-                          token: user.token,
-                          latitude: user.latitude || DEFAULT_LATITUDE,
-                          longitude: user.longitude || DEFAULT_LONGITUDE,
-                          minAgePreference: user.minAgePreference,
-                          maxAgePreference: user.maxAgePreference,
-                          pics: user.pics,
-                          registerDateTime: getCurrentTime(),
-                          followerDisplay: 'Both', // default
-                        },
-                      });
-                        return (
-                          <Mutation mutation={SET_ID_LOCAL}>
-                            {(setId) => {
-                              const startSetId = id => setId({ variables: { id } });
-                              return (
-                                <ApolloConsumer>
-                                  {client => <FBLoginButton client={client} startNewUser={startNewUser} startSetId={startSetId} />}
-                                </ApolloConsumer>
-                              );
-                            }}
-                          </Mutation>
-                        );
+  render() {
+    const { error } = this.props;
+    return (
+      <View style={styles.loginContainer}>
+        <View style={styles.content}>
+          <MyAppText style={styles.title}>
+            { 'Tagg' }
+          </MyAppText>
+          <MyAppText style={styles.errorTextStyle}>
+            {error}
+          </MyAppText>
+          <CardSection style={{ borderBottomWidth: 0 }}>
+            <Mutation mutation={NEW_USER}>
+              {(newUser) => {
+                const startNewUser = user => newUser({
+                  variables: {
+                    id: user.id,
+                    name: user.name,
+                    active: user.active,
+                    email: user.email,
+                    gender: user.gender,
+                    description: user.description,
+                    school: user.school,
+                    work: user.work,
+                    sendNotifications: user.sendNotifications,
+                    distance: user.distance,
+                    token: user.token,
+                    latitude: user.latitude || DEFAULT_LATITUDE,
+                    longitude: user.longitude || DEFAULT_LONGITUDE,
+                    minAgePreference: user.minAgePreference,
+                    maxAgePreference: user.maxAgePreference,
+                    pics: user.pics,
+                    registerDateTime: getCurrentTime(),
+                    followerDisplay: 'Both', // default
+                  },
+                });
+                return (
+                  <Mutation mutation={SET_ID_LOCAL}>
+                    {(setId) => {
+                      const startSetId = id => setId({ variables: { id } });
+                      return (
+                        <ApolloConsumer>
+                          {client => <FBLoginButton client={client} startNewUser={startNewUser} startSetId={startSetId} />}
+                        </ApolloConsumer>
+                      );
                     }}
                   </Mutation>
-                </CardSection>
-              </View>
-              <View style={{ flex: 1 }} />
-            </View>
-        );
-    }
+                );
+              }}
+            </Mutation>
+          </CardSection>
+        </View>
+        <View style={{ flex: 1 }} />
+      </View>
+    );
+  }
 }
 
 const styles = {
