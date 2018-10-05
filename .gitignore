@@ -28,6 +28,7 @@ functions/lib
 
 android/local.properties
 #android/.idea
+android/secure
 
 server/etc
 
