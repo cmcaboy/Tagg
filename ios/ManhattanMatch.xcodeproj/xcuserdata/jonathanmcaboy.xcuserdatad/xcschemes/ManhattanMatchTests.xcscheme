@@ -22,6 +22,16 @@
                ReferencedContainer = "container:ManhattanMatch.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B798518C21612AF100E87909"
+               BuildableName = "ManhattanMatchUITests2.xctest"
+               BlueprintName = "ManhattanMatchUITests2"
+               ReferencedContainer = "container:ManhattanMatch.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <AdditionalOptions>
       </AdditionalOptions>

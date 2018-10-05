@@ -33,19 +33,24 @@ class FilterModal extends React.Component {
     render() {
       const { isVisible } = this.props;
       return (
-          <MyAppModal
-              isVisible={isVisible}
-              close={this.closeModal}
-          >
-              <EditSettingsContainer
-                  hideNotifications
-              />
-              <Button block style={styles.buttonStyle} onPress={this.closeModal}>
-                  <MyAppText style={styles.textStyle}>
-                    {'Done'}
-                  </MyAppText>
-              </Button>
-          </MyAppModal>
+        <MyAppModal
+          isVisible={isVisible}
+          close={this.closeModal}
+        >
+            <EditSettingsContainer
+              hideNotifications
+            />
+            <Button
+              accessible={false}
+              block
+              style={styles.buttonStyle}
+              onPress={this.closeModal}
+            >
+                <MyAppText style={styles.textStyle}>
+                {'Done'}
+                </MyAppText>
+            </Button>
+        </MyAppModal>
       )
     }
 }

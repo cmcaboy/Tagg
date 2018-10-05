@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "api-7425397782507019730-905831",
+  "private_key_id": "7a15539988f921756e5258a83da8da54d6c447bb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDSG9RlWb1NpoiD\nAeYwXoX2hZhbDIhnbO4Ae9NIchVydL3HN8Vdv10eZMzOtntpqtJ1oVkwfM4eV5AC\nNUJY0va8UusfWLOJo9fmfxe8j1UrXguRGYf9vRL4W7u3FKuNW9+zBvxcg6H+0AYG\nn/Ahhi9r5VTXR8g3qCPCDN7mT/SycZ3JPFh1vc/iQ0+WWwCMjVkV4yY5cUdu5ob3\nYwZkdsS2aqo8cHg2mxgX5t4GopVlZo+EF/Sbl9yJyeMc34P+7Pt+PYYd0qmeKTsp\nLXrb674d0cZS07aMeyn/uyukEmC6mHzPN0u1FCOak9hz9zGMK1iBGe3kP+kwGZE0\nHQeenSfTAgMBAAECggEAKbLBO94L/lGrLQje9MGFp6/K1WMO3SvWrjzk6S9PB1iY\n42Uzo8/bPLF3nhzEMGvo+dRsPX2/cHEjUPTd9n/j3Os944o4k3vzWLjnbpIproIr\nHIBrJ1XzYlveTM7q3xKZOlAMHJY5O7dwQrdSMm0Nk0W/yTvjRfx2IEhqol3C6/jZ\nOgW9O2np21oXyQCeAuOZR+qVvubZMOJEpK5UPfPbuOr4gtoiNwTJkoYJLPveU2CU\nUxNMGCk/hTflbG+BnyHc5Fh+SAyVCnrZ5/qemWMCDFtqQHdHvL4B87oOuV8nLrXK\nf3MCIyWepYPostRDA4SUMfkwWm5VRpA+1ljskE4RJQKBgQD4I7d5MvRdR3SY/W+o\nsPHbgW5AHJDteWktcsMdpRvPC5yJC8/X//86zDyfNfZa3EF/mhHCTAeZeHdSIsyN\nmNKw0k7qApSVyemHujFRX2qdO0rN400oMZja/ZzYe66AFKW71rzJ66xKYi3UR4PC\nGqmMo+W/Eu+gNNNvptUgva83nwKBgQDYw7Pof7EBrmH3BqkrpBxKDQi4ic6gIdhK\nv1QBWFNRxBBXxd3s8UH0AMVnO5E/bAbEUhK7HVZDlwRvGMe0mP31UwdUFmIz7hMI\npvEW0UFHoekQ0xa3X3IOQhibqNcgjNBz99QywjJimeyNNUd/T9GTNQJ1YwJoR1ik\n9cUakfNzTQKBgQCmhuHEtsuEJkY7vinHXiiSFYS2BfXFSWuqkpAbPwkwpCxDVOgB\nn83b2eD9QCu6woI6bl1otbmL52q8dposlNkgzaMkLOMmu0C8U9pxL8XPC1GiZt8L\nEG3y2az/I9HyJukq7Gv6Xu1bZhQ3mF72TwpmVkADQWQLcihLj/0MYgBLJQKBgQCB\n/DlyfsAihfPxMmlX5j2gmlhUcS8bD7CogjtZ4yFzsuMp/1mpsLMgIyY9VZcwNROJ\nvr3Evz7voSvjgzSes+/2oSeP4Sxaf7WiRpnkWO+QiSM+F5dTt0SqEDC5h3IZ7tdB\n86eoGJQmVK9prj2FttOyNuOWiRz0c3RQ16Cu4j7fMQKBgQC1/CqpKNhowhxVNtpt\nNy9AyqszPSYpA8vAj9i3bzrrM2z5YJy9zXfFsX0UIX249qZKLjQoRIXeXFHUWM7C\nllyZTQ91QO/hV7WwzR7MAB/TjD8Gs00viJW0wUAr9HLelra70+LuYiJ7LQauBvrC\nz40Z/n3RSmL9GKlLmF0yqf3FdA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "mcaboydigital@api-7425397782507019730-905831.iam.gserviceaccount.com",
+  "client_id": "114560891977107648861",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mcaboydigital%40api-7425397782507019730-905831.iam.gserviceaccount.com"
+}

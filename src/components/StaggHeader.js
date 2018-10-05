@@ -20,14 +20,14 @@ const StaggHeader = ({ flipNewDateModal, flipFilterModal }) => {
   return (
     <HeaderCard style={styles.overRide}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={newDate} style={{ flex: 1 }}>
+        <TouchableOpacity onPress={newDate} style={{ flex: 1 }} accessible={false}>
           <View style={[styles.headerItem]}>
             <MyAppText style={styles.textStyle}>
               {'New Date'}
             </MyAppText>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={showFilter} style={{ flex: 1 }}>
+        <TouchableOpacity onPress={showFilter} style={{ flex: 1 }} accessible={false}>
           <View style={[styles.headerItem, { borderLeftWidth: 1, borderLeftColor: 'black' }]}>
             <MyAppText style={styles.textStyle}>
               {'Filter'}

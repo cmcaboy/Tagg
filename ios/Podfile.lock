@@ -77,7 +77,6 @@ PODS:
   - FirebaseSwizzlingUtilities/ISASwizzling (2.0.0)
   - FirebaseSwizzlingUtilities/MethodSwizzling (2.0.0):
     - FirebaseCore (~> 5.0)
-  - FLAnimatedImage (1.0.12)
   - GoogleToolboxForMac/Defines (2.1.4)
   - GoogleToolboxForMac/Logger (2.1.4):
     - GoogleToolboxForMac/Defines (= 2.1.4)
@@ -114,11 +113,6 @@ PODS:
   - Protobuf (3.6.1)
   - React (0.55.4):
     - React/Core (= 0.55.4)
-  - react-native-fast-image (4.0.14):
-    - FLAnimatedImage
-    - React
-    - SDWebImage/Core
-    - SDWebImage/GIF
   - React/Core (0.55.4):
     - yoga (= 0.55.4.React)
   - React/DevSupport (0.55.4):
@@ -143,10 +137,6 @@ PODS:
   - RNBackgroundGeolocation (2.13.1):
     - CocoaLumberjack (~> 3.0)
     - React
-  - SDWebImage/Core (4.4.2)
-  - SDWebImage/GIF (4.4.2):
-    - FLAnimatedImage (~> 1.0)
-    - SDWebImage/Core
   - yoga (0.55.4.React)
 
 DEPENDENCIES:
@@ -158,7 +148,6 @@ DEPENDENCIES:
   - Firebase/Messaging (~> 5.3.0)
   - Firebase/Performance (~> 5.3.0)
   - Firebase/Storage
-  - react-native-fast-image (from `../node_modules/react-native-fast-image`)
   - React/Core (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
   - React/RCTImage (from `../node_modules/react-native`)
@@ -185,7 +174,6 @@ SPEC REPOS:
     - FirebasePerformance
     - FirebaseStorage
     - FirebaseSwizzlingUtilities
-    - FLAnimatedImage
     - GoogleToolboxForMac
     - gRPC
     - gRPC-Core
@@ -195,13 +183,10 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - Protobuf
-    - SDWebImage
 
 EXTERNAL SOURCES:
   React:
     :path: "../node_modules/react-native"
-  react-native-fast-image:
-    :path: "../node_modules/react-native-fast-image"
   RNBackgroundFetch:
     :path: "../node_modules/react-native-background-fetch"
   RNBackgroundGeolocation:
@@ -224,7 +209,6 @@ SPEC CHECKSUMS:
   FirebasePerformance: 1ebd87ffee5ca814582db1dc9e25651792ba02db
   FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   FirebaseSwizzlingUtilities: 6c22677c50d0b6f5f0dc637c1233f13694a3003f
-  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   gRPC: 65fa2a50c4fd61940b76f4962d75c239c92c6a8d
   gRPC-Core: e3ace1e1161e75903135de8d8231bb69c9d35721
@@ -235,12 +219,10 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   React: aa2040dbb6f317b95314968021bd2888816e03d5
-  react-native-fast-image: cba3d9bf9c2cf8ddb643d887a686c53a5dd90a2c
   RNBackgroundFetch: 8c4f77f83c398c659bce82af2f0a885079417b9e
   RNBackgroundGeolocation: c9bbf69b9aa277f0b46754cc5f853bd26051a18f
-  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
-PODFILE CHECKSUM: ee0cc4af0060278a5c7ada3b061c762404cb62bb
+PODFILE CHECKSUM: b78bed2d73aa6a97360d2c4e50c613f33eff01d4
 
 COCOAPODS: 1.5.3

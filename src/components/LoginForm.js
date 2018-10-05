@@ -1,80 +1,150 @@
 import React, { Component } from 'react';
 // import firebase from 'firebase';
-import { View } from 'react-native';
+import { View, TouchableOpacity, LayoutAnimation, UIManager } from 'react-native';
 import { ApolloConsumer, Mutation } from 'react-apollo';
+import { Form, Item, Input, Button, Text } from 'native-base';
 import { CardSection, MyAppText } from './common';
 import { PRIMARY_COLOR, BACKGROUND_COLOR, DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from '../variables';
 import { getCurrentTime } from '../format';
 import FBLoginButton from '../services/FBLoginButton';
 import { NEW_USER } from '../apollo/mutations';
 import { SET_ID_LOCAL } from '../apollo/local/mutations';
+import emailLogin from '../services/emailLogin';
 
 class LoginForm extends Component {
   constructor(props) {
     super(props);
 
+    UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+    LayoutAnimation.linear();
+
     this.state = {
       email: '',
       password: '',
       error: '',
+      emailError: '',
       isLoading: false,
+      showEmail: true,
     };
   }
 
+  toggleEmail = () => this.setState(prev => ({ showEmail: !prev.showEmail }))
+
+  componentWillUpdate = () => {
+    UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+    LayoutAnimation.linear();
+  }
+
   render() {
-    const { error } = this.props;
+    const { error, emailError } = this.state;
     return (
-      <View style={styles.loginContainer}>
-        <View style={styles.content}>
-          <MyAppText style={styles.title}>
-            { 'Tagg' }
-          </MyAppText>
-          <MyAppText style={styles.errorTextStyle}>
-            {error}
-          </MyAppText>
-          <CardSection style={{ borderBottomWidth: 0 }}>
-            <Mutation mutation={NEW_USER}>
-              {(newUser) => {
-                const startNewUser = user => newUser({
-                  variables: {
-                    id: user.id,
-                    name: user.name,
-                    active: user.active,
-                    email: user.email,
-                    gender: user.gender,
-                    description: user.description,
-                    school: user.school,
-                    work: user.work,
-                    sendNotifications: user.sendNotifications,
-                    distance: user.distance,
-                    token: user.token,
-                    latitude: user.latitude || DEFAULT_LATITUDE,
-                    longitude: user.longitude || DEFAULT_LONGITUDE,
-                    minAgePreference: user.minAgePreference,
-                    maxAgePreference: user.maxAgePreference,
-                    pics: user.pics,
-                    registerDateTime: getCurrentTime(),
-                    followerDisplay: 'Both', // default
-                  },
-                });
+      <Mutation mutation={NEW_USER}>
+        {(newUser) => {
+          const startNewUser = user => newUser({
+            variables: {
+              id: user.id,
+              name: user.name,
+              active: user.active,
+              email: user.email,
+              gender: user.gender,
+              description: user.description,
+              school: user.school,
+              work: user.work,
+              sendNotifications: user.sendNotifications,
+              distance: user.distance,
+              token: user.token,
+              latitude: user.latitude || DEFAULT_LATITUDE,
+              longitude: user.longitude || DEFAULT_LONGITUDE,
+              minAgePreference: user.minAgePreference,
+              maxAgePreference: user.maxAgePreference,
+              pics: user.pics,
+              registerDateTime: getCurrentTime(),
+              followerDisplay: 'Both', // default
+            },
+          });
+          return (
+            <Mutation mutation={SET_ID_LOCAL}>
+              {(setId) => {
+                const startSetId = id => setId({ variables: { id } });
                 return (
-                  <Mutation mutation={SET_ID_LOCAL}>
-                    {(setId) => {
-                      const startSetId = id => setId({ variables: { id } });
-                      return (
+                  <View style={styles.loginContainer}>
+                    <View style={styles.content}>
+                      <MyAppText style={styles.title}>
+                        { 'Tagg' }
+                      </MyAppText>
+                      <MyAppText style={styles.subTitle}>
+                        { 'Find a date...... Fast!' }
+                      </MyAppText>
+                      <MyAppText style={styles.errorTextStyle}>
+                        {error}
+                      </MyAppText>
+                      <CardSection style={{ borderBottomWidth: 0 }}>
                         <ApolloConsumer>
                           {client => <FBLoginButton client={client} startNewUser={startNewUser} startSetId={startSetId} />}
                         </ApolloConsumer>
-                      );
-                    }}
-                  </Mutation>
+                      </CardSection>
+                    </View>
+                      <View style={styles.emailContainer}>
+                        <TouchableOpacity onPress={this.toggleEmail}>
+                          <Text style={styles.emailFormTitleText}>
+                            { 'Login with Email' }
+                          </Text>
+                        </TouchableOpacity>
+                        {this.state.showEmail && (
+                          <View style={styles.emailForm}>
+                            <MyAppText style={styles.errorTextStyle}>
+                              {emailError}
+                            </MyAppText>
+                            <Form>
+                              <Item>
+                                <Input
+                                  placeholder="Email"
+                                  value={this.state.email}
+                                  onChangeText={email => this.setState({ email: email })}
+                                />
+                              </Item>
+                              <Item>
+                                <Input
+                                  secureTextEntry
+                                  placeholder="Password"
+                                  value={this.state.password}
+                                  onChangeText={password => this.setState({ password })}
+                                />
+                              </Item>
+                              <ApolloConsumer>
+                                {client => (
+                                  <Button
+                                    style={styles.signInButton}
+                                    block
+                                    onPress={() => {
+                                      const { email, password } = this.state;
+                                      this.setState({ emailError: '' });
+                                      emailLogin({
+                                        email,
+                                        password,
+                                        client,
+                                        startSetId,
+                                        startNewUser,
+                                      }).then(e => this.setState({ emailError: e }))
+                                    }}
+                                  >
+                                    <Text>
+                                      { 'Sign in' }
+                                    </Text>
+                                  </Button>
+                                )}
+                              </ApolloConsumer>
+                            </Form>
+                          </View>
+                        )}
+                      </View>
+                  </View>
                 );
               }}
             </Mutation>
-          </CardSection>
-        </View>
-        <View style={{ flex: 1 }} />
-      </View>
+          );
+        }}
+      </Mutation>
     );
   }
 }
@@ -85,6 +155,19 @@ const styles = {
     alignSelf: 'center',
     color: 'red',
   },
+  emailContainer: {
+    // flex: 1,
+    margin: 15,
+    // justifyContent: 'flex-start',
+    // alignItems: 'stretch',
+  },
+  emailForm: {
+  },
+  emailFormTitleText: {
+    fontSize: 11,
+    color: PRIMARY_COLOR,
+    alignSelf: 'center',
+  },
   buttonFBStyle: {
     backgroundColor: '#4C69BA',
   },
@@ -92,19 +175,27 @@ const styles = {
     color: '#FFF',
   },
   loginContainer: {
-    flex: 1,
+    paddingTop: 100,
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    // alignItems: 'center',
     backgroundColor: BACKGROUND_COLOR,
   },
   title: {
-    fontSize: 32,
+    fontSize: 48,
     color: PRIMARY_COLOR,
   },
+  subTitle: {
+    fontSize: 14,
+    marginTop: 5,
+    // color: PRIMARY_COLOR,
+    fontStyle: 'italic',
+  },
   content: {
-    flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  signInButton: {
+    marginTop: 15,
   },
 };
 

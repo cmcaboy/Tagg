@@ -17,7 +17,7 @@ export const TAB_BAR_HEIGHT = 56;
 export const PRIMARY_COLOR = '#03A9F4';
 export const SECONDARY_COLOR = '#02FCED';
 export const STATUS_BAR_COLOR = '#81D4FA';
-export const BACKGROUND_COLOR = '#000';
+export const BACKGROUND_COLOR = '#FFF';
 
 export const CARD_HEIGHT = 120;
 export const CARD_FOOTER_HEIGHT = 35;

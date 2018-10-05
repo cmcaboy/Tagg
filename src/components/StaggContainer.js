@@ -27,7 +27,7 @@ class StaggContainer extends Component {
           if (id === 0) return <Spinner />;
           // if (id === 0) return <LoginButton onLogoutFinished={async () => firebase.auth().signOut()} />;
           return (
-            <Query query={GET_QUEUE} variables={{ id }}>
+            <Query query={GET_QUEUE} variables={{ id }} fetchPolicy="network-only">
               {({ loading, error, data, fetchMore, networkStatus, refetch }) => {
                 // console.log('data stagg: ',data);
                 // console.log('error stagg: ',error);

@@ -61,6 +61,7 @@ class Matches extends Component {
             >
             {matches.map(match => (
               <TouchableOpacity
+                accessible={false}
                   onPress={() => navigate('MessengerContainer', {
                       matchId: match.matchId,
                       id,
@@ -93,6 +94,7 @@ class Matches extends Component {
               <List>
                 {dateRequests.map(date => (
                   <ListItem
+                    accessible={false}
                     key={date.id}
                     style={{ marginLeft: 0 }}
                     onPress={() => navigate('BidList', {
@@ -136,7 +138,7 @@ class Matches extends Component {
 
               const { id } = data.user;
               return (
-                <Query query={GET_MATCHES} variables={{ id }}>
+                <Query query={GET_MATCHES} variables={{ id }} fetchPolicy="network-only">
                   {({ loading, error, data, networkStatus, refetch }) => {
                     console.log('data in matches: ', data);
                     // console.log('error: ',error);

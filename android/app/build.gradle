@@ -89,6 +89,11 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-image-picker')
+    compile project(':react-native-fbsdk')
+    compile project(':react-native-fast-image')
+    compile project(':react-native-background-geolocation')
     //compile project(':react-native-fbsdk')
     compile project(':react-native-config')
     compile(project(':react-native-firebase')) {

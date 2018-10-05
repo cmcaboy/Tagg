@@ -17,12 +17,14 @@ const DateOpenButton = ({ hasDateOpen = false, id, navigation, hostId, name, pro
               opacity: 0.7,
           }}
       />
-      <TouchableOpacity onPress={() => navigation.navigate('OpenDateList', {
+      <TouchableOpacity 
+        accessible={false}
+        onPress={() => navigation.navigate('OpenDateList', {
           id: hostId,
           otherId: id,
           otherName: name,
           otherPic: profilePic,
-      })}
+        })}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
           <View style={styles.footerContent}>

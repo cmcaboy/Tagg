@@ -97,7 +97,7 @@ const MainNavigator = StackNavigator({
     headerMode: 'screen',
     navigationOptions: {
         headerForceInset: {top: 'never'},
-      },
+    },
       
     // headerTitleStyle: { height: Platform.OS === 'ios' ? 0 : TAB_BAR_HEIGHT },
     //   headerStyle: { 

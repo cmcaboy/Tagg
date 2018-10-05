@@ -19,6 +19,20 @@
             buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B7CDA51E216630D7004F0B1D"
+               BuildableName = "build-env"
+               BlueprintName = "build-env"
+               ReferencedContainer = "container:ManhattanMatch.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
             buildForArchiving = "YES"
             buildForAnalyzing = "YES">
             <BuildableReference
@@ -72,6 +86,26 @@
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
                BuildableName = "ManhattanMatchTests.xctest"
                BlueprintName = "ManhattanMatchTests"
+               ReferencedContainer = "container:ManhattanMatch.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B70BC2FA2161250000408492"
+               BuildableName = "ManhattanMatchUITests.xctest"
+               BlueprintName = "ManhattanMatchUITests"
+               ReferencedContainer = "container:ManhattanMatch.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B798518C21612AF100E87909"
+               BuildableName = "ManhattanMatchUITests2.xctest"
+               BlueprintName = "ManhattanMatchUITests2"
                ReferencedContainer = "container:ManhattanMatch.xcodeproj">
             </BuildableReference>
          </TestableReference>

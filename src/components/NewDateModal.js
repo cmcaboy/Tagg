@@ -63,6 +63,7 @@ class NewDateModal extends React.Component {
             <Mutation mutation={NEW_DATE}>
               {newDate => (
                 <Button
+                  accessible={false}
                   block
                   onPress={() => {
                     this.closeModal();

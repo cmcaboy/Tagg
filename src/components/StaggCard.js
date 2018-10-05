@@ -27,7 +27,7 @@ const StaggCard = (
   return (
     <WideCard footer={!!hasDateOpen}>
       <View style={styles.bodyStyle}>
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity accessible={false} onPress={onPress}>
           <Image
             source={{ uri: profilePic }}
             style={{ height: PICTURE_WIDTH, width: PICTURE_WIDTH, borderRadius: 5 }}
@@ -36,7 +36,7 @@ const StaggCard = (
         <View style={styles.userInfo}>
           <View style={{ justifyContent: 'space-between' }}>
             <View style={styles.description}>
-              <TouchableOpacity onPress={onPress}>
+              <TouchableOpacity onPress={onPress} accessible={false}>
                 <View style={{ flexDirection: 'row' }}>
                   <MyAppText style={styles.nameText}>
                     {formatName(name)}
