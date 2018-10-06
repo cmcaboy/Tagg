@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 // import firebase from 'firebase';
-import { View, TouchableOpacity, LayoutAnimation, UIManager } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  LayoutAnimation,
+  UIManager,
+  ScrollView,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { ApolloConsumer, Mutation } from 'react-apollo';
 import { Form, Item, Input, Button, Text } from 'native-base';
 import { CardSection, MyAppText } from './common';
@@ -24,11 +31,17 @@ class LoginForm extends Component {
       error: '',
       emailError: '',
       isLoading: false,
-      showEmail: true,
+      showEmail: false,
     };
   }
 
   toggleEmail = () => this.setState(prev => ({ showEmail: !prev.showEmail }))
+
+  emailInput = email => this.setState({ email: email.toLowerCase() })
+
+  passwordInput = password => this.setState({ password });
+
+  setError = e => this.setState({ emailError: e })
 
   componentWillUpdate = () => {
     UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -67,23 +80,28 @@ class LoginForm extends Component {
               {(setId) => {
                 const startSetId = id => setId({ variables: { id } });
                 return (
-                  <View style={styles.loginContainer}>
-                    <View style={styles.content}>
-                      <MyAppText style={styles.title}>
-                        { 'Tagg' }
-                      </MyAppText>
-                      <MyAppText style={styles.subTitle}>
-                        { 'Find a date...... Fast!' }
-                      </MyAppText>
-                      <MyAppText style={styles.errorTextStyle}>
-                        {error}
-                      </MyAppText>
-                      <CardSection style={{ borderBottomWidth: 0 }}>
-                        <ApolloConsumer>
-                          {client => <FBLoginButton client={client} startNewUser={startNewUser} startSetId={startSetId} />}
-                        </ApolloConsumer>
-                      </CardSection>
-                    </View>
+                  <ScrollView>
+                    <KeyboardAvoidingView
+                      style={styles.loginContainer}
+                      behavior="padding"
+                      enabled
+                    >
+                      <View style={styles.content}>
+                        <MyAppText style={styles.title}>
+                          { 'Tagg' }
+                        </MyAppText>
+                        <MyAppText style={styles.subTitle}>
+                          { 'Find a date...... Fast!' }
+                        </MyAppText>
+                        <MyAppText style={styles.errorTextStyle}>
+                          {error}
+                        </MyAppText>
+                        <CardSection style={{ borderBottomWidth: 0 }}>
+                          <ApolloConsumer>
+                            {client => <FBLoginButton client={client} startNewUser={startNewUser} startSetId={startSetId} />}
+                          </ApolloConsumer>
+                        </CardSection>
+                      </View>
                       <View style={styles.emailContainer}>
                         <TouchableOpacity onPress={this.toggleEmail}>
                           <Text style={styles.emailFormTitleText}>
@@ -100,7 +118,7 @@ class LoginForm extends Component {
                                 <Input
                                   placeholder="Email"
                                   value={this.state.email}
-                                  onChangeText={email => this.setState({ email: email })}
+                                  onChangeText={this.emailInput}
                                 />
                               </Item>
                               <Item>
@@ -108,7 +126,7 @@ class LoginForm extends Component {
                                   secureTextEntry
                                   placeholder="Password"
                                   value={this.state.password}
-                                  onChangeText={password => this.setState({ password })}
+                                  onChangeText={this.passwordInput}
                                 />
                               </Item>
                               <ApolloConsumer>
@@ -118,14 +136,14 @@ class LoginForm extends Component {
                                     block
                                     onPress={() => {
                                       const { email, password } = this.state;
-                                      this.setState({ emailError: '' });
+                                      this.setError('');
                                       emailLogin({
                                         email,
                                         password,
                                         client,
                                         startSetId,
                                         startNewUser,
-                                      }).then(e => this.setState({ emailError: e }))
+                                      }).then(e => this.setError(e));
                                     }}
                                   >
                                     <Text>
@@ -138,7 +156,8 @@ class LoginForm extends Component {
                           </View>
                         )}
                       </View>
-                  </View>
+                    </KeyboardAvoidingView>
+                  </ScrollView>
                 );
               }}
             </Mutation>

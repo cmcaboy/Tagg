@@ -145,11 +145,11 @@ class EditProfile extends Component {
               </Mutation>
             </Card>
           
-          <Card>
-            <FakeButton />
-          </Card>
           
           {/*
+            <Card>
+              <FakeButton />
+            </Card>
             <Card>
               <Button onPress={this.removeAccount}>Remove Account</Button>
             </Card>

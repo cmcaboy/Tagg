@@ -639,7 +639,7 @@ const resolvers = {
             let query = `MATCH(a:User{id: '${args.id}'}) SET `;
             !!args.name && (query = query+ `a.name='${args.name}',`)
             isBoolean(args.active) && (query = query+ `a.active=${args.active},`)
-            !!args.email && (query = query+ `a.email='${args.email}',`)
+            !!args.email && (query = query+ `a.email='${args.email.toLowerCase()}',`)
             !!args.gender && (query = query+ `a.gender='${args.gender}',`)
             !!args.age && (query = query+ `a.age=${args.age},`)
             !!args.description && (query = query+ `a.description="${args.description}",`)
@@ -705,7 +705,7 @@ const resolvers = {
                 id: '${args.id}',
                 name: '${args.name}',
                 active: ${args.active},
-                email: '${args.email}',
+                email: '${args.email.toLowerCase()}',
                 gender: '${args.gender}',`;
             !!args.age && (query = query+ `age:${args.age},`)
             !!args.description && (query = query+ `description:"${args.description}",`)

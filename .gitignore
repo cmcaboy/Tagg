@@ -42,3 +42,5 @@ ios/fastlane/report.xml
 ios/fastlane/Preview.html
 ios/fastlane/screenshots
 
+android/sentry.properties
+ios/sentry.properties

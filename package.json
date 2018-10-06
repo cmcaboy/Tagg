@@ -78,6 +78,7 @@
     "react-native-modalbox": "^1.6.0",
     "react-native-permissions": "^1.1.1",
     "react-native-picker-select": "3.0.0",
+    "react-native-sentry": "^0.39.0",
     "react-native-status-bar-height": "^2.0.0",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "1.5.0",

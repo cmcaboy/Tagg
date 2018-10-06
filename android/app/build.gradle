@@ -12,6 +12,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-sentry/sentry.gradle"
 
 project.ext.vectoricons = [
     iconFontNames: [ 'MaterialIcons.ttf', 'IoniIcons.ttf', 'FontAwesome.ttf' ] // Name of the font files you want to copy
@@ -89,6 +90,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-sentry')
     compile project(':react-native-vector-icons')
     compile project(':react-native-image-picker')
     compile project(':react-native-fbsdk')

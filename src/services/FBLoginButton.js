@@ -31,7 +31,7 @@ class FBLoginButton extends Component {
     return (
       <View>
         <LoginButton
-          readPermissions={['public_profile', 'email', 'user_photos', 'user_birthday', 'user_hometown', 'user_gender']}
+          readPermissions={['public_profile', 'email']}
           onLoginFinished={
             async (error, result) => {
               this.setState({ loading: true });

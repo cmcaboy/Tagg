@@ -137,6 +137,12 @@ PODS:
   - RNBackgroundGeolocation (2.13.1):
     - CocoaLumberjack (~> 3.0)
     - React
+  - Sentry (4.0.1):
+    - Sentry/Core (= 4.0.1)
+  - Sentry/Core (4.0.1)
+  - SentryReactNative (0.39.0):
+    - React
+    - Sentry (~> 4.0.1)
   - yoga (0.55.4.React)
 
 DEPENDENCIES:
@@ -156,6 +162,7 @@ DEPENDENCIES:
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - RNBackgroundGeolocation (from `../node_modules/react-native-background-geolocation`)
+  - SentryReactNative (from `../node_modules/react-native-sentry`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -183,6 +190,7 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - Protobuf
+    - Sentry
 
 EXTERNAL SOURCES:
   React:
@@ -191,6 +199,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-background-fetch"
   RNBackgroundGeolocation:
     :path: "../node_modules/react-native-background-geolocation"
+  SentryReactNative:
+    :path: "../node_modules/react-native-sentry"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -221,8 +231,10 @@ SPEC CHECKSUMS:
   React: aa2040dbb6f317b95314968021bd2888816e03d5
   RNBackgroundFetch: 8c4f77f83c398c659bce82af2f0a885079417b9e
   RNBackgroundGeolocation: c9bbf69b9aa277f0b46754cc5f853bd26051a18f
+  Sentry: a38f7879924c02239e121b19d993d23bdd1684db
+  SentryReactNative: d476259b21060a59dc637a29a40d60f0aac09cf7
   yoga: a23273df0088bf7f2bb7e5d7b00044ea57a2a54a
 
-PODFILE CHECKSUM: b78bed2d73aa6a97360d2c4e50c613f33eff01d4
+PODFILE CHECKSUM: f994dd029c22a4975ddd8574eb7224df165e3838
 
 COCOAPODS: 1.5.3
