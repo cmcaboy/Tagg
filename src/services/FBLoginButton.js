@@ -136,7 +136,10 @@ class FBLoginButton extends Component {
               }
             }
           }
-          onLogoutFinished={async () => firebase.auth().signOut()}
+          onLogoutFinished={async () => {
+            firebase.auth().signOut();
+            await startSetId(0);
+          }}
         />
       </View>
     );

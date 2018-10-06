@@ -27,6 +27,7 @@ import {
   SET_SCHOOL,
   SET_DESCRIPTION,
   SET_PICS,
+  SET_EMAIL,
 } from '../apollo/mutations';
 import FakeButton from './FakeButton';
 
@@ -49,7 +50,7 @@ class EditProfile extends Component {
     // this.props.startLogout();
   }
 
-  renderContent = ({ name, age, school, work, description, pics = [], id }) => {
+  renderContent = ({ name, age, school, work, description, pics = [], id, email }) => {
     console.log('get profile component');
     return (
       <ScrollView contentContainerStyle={styles.settingsContainer}>
@@ -58,21 +59,21 @@ class EditProfile extends Component {
         >
           <Card style={{ padding: 2 }}>
             <Mutation mutation={SET_PICS}>
-            {(changePics) => {
-              const startChangePics = newPics => changePics({ variables: { id, pics: newPics } });
-              return (
-                <PhotoSelector
-                  urlList={pics}
-                  startChangePics={startChangePics}
-                />
-              );
-            }}
+              {(changePics) => {
+                const startChangePics = newPics => changePics({ variables: { id, pics: newPics } });
+                return (
+                  <PhotoSelector
+                    urlList={pics}
+                    startChangePics={startChangePics}
+                  />
+                );
+              }}
             </Mutation>
           </Card>
-            <Text style={styles.hint}>
-              {PHOTO_HINT}
-            </Text>
-            <Card style={{ padding: 0 }}>
+          <Text style={styles.hint}>
+            {PHOTO_HINT}
+          </Text>
+          <Card style={{ padding: 0 }}>
             <Mutation mutation={SET_NAME}>
               {(changeName) => {
                 const startChangeName = newName => changeName({ variables: { id, name: newName } });
@@ -85,26 +86,39 @@ class EditProfile extends Component {
                 );
               }}
             </Mutation>
-            <Mutation mutation={SET_AGE}>
-            {(changeAge) => {
-              const startChangeAge = newAge => changeAge({ variables: { id, age: newAge } });
-              return (
-              <CondInput
-                field="Age"
-                value={age}
-                updateValue={startChangeAge}
-              />
-              );
-            }}
+            <Mutation mutation={SET_EMAIL}>
+              {(changeEmail) => {
+                const startChangeEmail = newEmail => changeEmail({ variables: { id, email: newEmail } });
+                return (
+                  <CondInput
+                    field="Email"
+                    value={email}
+                    updateValue={startChangeEmail}
+                    lowerCaseOnly
+                  />
+                );
+              }}
             </Mutation>
-              {/*
-              <CondInput
-                field="Gender"
-                value={this.props.gender}
-                updateValue={this.props.startChangeGender}
-              />
-              */}
-              <Mutation mutation={SET_SCHOOL}>
+            <Mutation mutation={SET_AGE}>
+              {(changeAge) => {
+                const startChangeAge = newAge => changeAge({ variables: { id, age: newAge } });
+                return (
+                  <CondInput
+                    field="Age"
+                    value={age}
+                    updateValue={startChangeAge}
+                  />
+                );
+              }}
+            </Mutation>
+            {/*
+            <CondInput
+              field="Gender"
+              value={this.props.gender}
+              updateValue={this.props.startChangeGender}
+            />
+            */}
+            <Mutation mutation={SET_SCHOOL}>
               {(changeSchool) => {
                 const startChangeSchool = newSchool => changeSchool({ variables: { id, school: newSchool } });
                 return (
@@ -115,8 +129,8 @@ class EditProfile extends Component {
                   />
                 );
               }}
-              </Mutation>
-              <Mutation mutation={SET_WORK}>
+            </Mutation>
+            <Mutation mutation={SET_WORK}>
               {(changeWork) => {
                 const startChangeWork = newWork => changeWork({ variables: { id, work: newWork } });
                 return (
@@ -127,8 +141,8 @@ class EditProfile extends Component {
                   />
                 );
               }}
-              </Mutation>
-              <Mutation mutation={SET_DESCRIPTION}>
+            </Mutation>
+            <Mutation mutation={SET_DESCRIPTION}>
               {(changeDescription) => {
                 const startChangeDescription = newDescription => changeDescription({
                   variables: { id, description: newDescription },
@@ -142,8 +156,8 @@ class EditProfile extends Component {
                   />
                 );
               }}
-              </Mutation>
-            </Card>
+            </Mutation>
+          </Card>
           
           
           {/*

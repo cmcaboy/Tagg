@@ -80,7 +80,7 @@ class LoginForm extends Component {
               {(setId) => {
                 const startSetId = id => setId({ variables: { id } });
                 return (
-                  <ScrollView>
+                 
                     <KeyboardAvoidingView
                       style={styles.loginContainer}
                       behavior="padding"
@@ -157,7 +157,7 @@ class LoginForm extends Component {
                         )}
                       </View>
                     </KeyboardAvoidingView>
-                  </ScrollView>
+                
                 );
               }}
             </Mutation>
@@ -183,6 +183,7 @@ const styles = {
   emailForm: {
   },
   emailFormTitleText: {
+    display: 'none',
     fontSize: 11,
     color: PRIMARY_COLOR,
     alignSelf: 'center',

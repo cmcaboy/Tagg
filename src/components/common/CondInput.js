@@ -11,11 +11,13 @@ import { CardSection, Button, ActionIcon } from './index';
 class CondInput extends Component {
   constructor(props) {
     super(props);
-    const { value } = this.props;
+    const { value, lowerCaseOnly } = this.props;
     this.state = {
       isEdit: false,
       value,
     };
+
+    this.lowerCaseOnly = lowerCaseOnly;
   }
 
   confirmUpdate = () => {
@@ -25,27 +27,37 @@ class CondInput extends Component {
     this.setState({ isEdit: false });
   }
 
+  onChangeText = (v) => {
+    if (this.lowerCaseOnly) {
+      this.setState({ value: v.toLowerCase() });
+    } else {
+      this.setState({ value: v });
+    }
+  }
+
+  enableEditMode = () => this.setState({ isEdit: true })
+
   render() {
     const { isEdit, value } = this.state;
     const { field, multiline = false } = this.props;
     return (
       <View style={styles.container}>
         {!isEdit ? (
-          <TouchableOpacity onPress={() => this.setState({ isEdit: true })}>
+          <TouchableOpacity onPress={this.enableEditMode}>
             <CardSection style={styles.cardSection}>
               <Text style={value ? styles.field : styles.blankField}>
                 { value || field }
               </Text>
             </CardSection>
           </TouchableOpacity>
-          ) : (
+        ) : (
           <CardSection style={styles.cardSection}>
             <View style={styles.editView}>
               <TextInput
                 selectTextOnFocus
                 autoFocus
                 style={styles.textInputStyle}
-                onChangeText={v => this.setState({ value: v })}
+                onChangeText={this.onChangeText}
                 value={`${value}`}
                 multiline={multiline}
                 onEndEditing={() => this.confirmUpdate()}
@@ -64,7 +76,7 @@ class CondInput extends Component {
               */}
             </View>
           </CardSection>
-      )}
+        )}
       </View>
     );
   }

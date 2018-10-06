@@ -243,6 +243,7 @@ query user($id: String!) {
       school
       work
       description
+      email
   }
 }
 `
