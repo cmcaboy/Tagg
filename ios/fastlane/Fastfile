@@ -80,5 +80,12 @@ platform :ios do
     capture_screenshots(stop_after_first_error: true)
     upload_to_app_store
   end
+
+  desc ""
+  lane :pushNotification do
+    pem
+  end
+  
+  
   
 end

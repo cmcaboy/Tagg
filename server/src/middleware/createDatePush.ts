@@ -58,7 +58,6 @@ export const createDatePush = async (id,date) => {
             notification: { // notification content
                 title: createDatePushTitle(name),
                 body: createDatePushBody(name,date),
-                content_available: true,
             },
             apns: {
                 payload: {

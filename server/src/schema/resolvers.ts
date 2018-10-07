@@ -736,8 +736,8 @@ const resolvers = {
                 .catch(e => console.log('newUser error: ',e))
         },
         newMessage: async (_,args) => {
-            console.log('in newMessage resolver');
-            console.log('args: ',args);
+            // console.log('in newMessage resolver');
+            // console.log('args: ',args);
             const message = {
                 _id: args._id,
                 name: args.name,
@@ -749,7 +749,7 @@ const resolvers = {
                 //createdAt: moment().format('MMMM Do YYYY, h:mm:ss a')
             };
 
-            console.log('message: ',message);
+            // console.log('message: ',message);
 
             try {
                 await db.collection(`matches/${args.matchId}/messages`).add(message);
@@ -761,9 +761,9 @@ const resolvers = {
             // Call our subscription asynchronously so we don't slow down our client.
             const asyncFunc = async () => {
                 console.log('in pubsub async');
-                console.log('args.matchId: ',args.matchId);
-                console.log('message: ',message);
-                console.log('sub tag: ',NEW_MESSAGE);
+                // console.log('args.matchId: ',args.matchId);
+                // console.log('message: ',message);
+                // console.log('sub tag: ',NEW_MESSAGE);
                 pubsub.publish(NEW_MESSAGE, { newMessageSub: {message, matchId: args.matchId}});
                 newMessagePush({matchId: args.matchId, otherId: args.uid, otherName: args.name, otherPic: args.avatar, text: args.text,id: args.receiverId})
             }

@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         marginLeft: 0,
         marginRight: 0,
+        backgroundColor: '#FFF',
     },
     textHeader: {
         alignSelf: 'center',

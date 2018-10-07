@@ -2,8 +2,8 @@
 // Send a congrats message to the winner
 // send a failure message to all the others
 
-import {messaging} from '../db/firestore';
-import {driver} from '../db/neo4j';
+import { messaging } from '../db/firestore';
+import { driver } from '../db/neo4j';
 import {
     newMessagePushTitle,
     newMessagePushBody,
