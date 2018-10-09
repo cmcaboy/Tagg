@@ -145,7 +145,7 @@ class Matches extends Component {
                     // console.log('loading: ',loading);
                     // console.log('networkStatus: ',networkStatus);
                     if (loading) return <Spinner />;
-                    if (error) return <ErrorMessage error={error.message} />;
+                    if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
                     return this.renderContent({
                       matches: data.user.matchedDates.list,
                       dateRequests: data.user.dateRequests.list,

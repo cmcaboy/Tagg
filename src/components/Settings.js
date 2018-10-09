@@ -17,7 +17,7 @@ import {
   Spinner,
   ErrorMessage,
 } from './common';
-import { PRIMARY_COLOR, PLACEHOLDER_PHOTO } from '../variables';
+import { PRIMARY_COLOR, PLACEHOLDER_PHOTO, PROFILE_NOT_FOUND } from '../variables';
 import { GET_PROFILE } from '../apollo/queries';
 import { GET_ID } from '../apollo/local/queries';
 
@@ -133,13 +133,13 @@ class Settings extends React.Component {
 
           return (
             <Query query={GET_PROFILE} variables={{ id }}>
-              {({ loading, error, data }) => {
+              {({ loading, error, data, refetch }) => {
                 // console.log('loading: ',loading);
                 // console.log('error: ',error);
                 // console.log('data: ',data);
                 if (loading) return <Spinner />;
-                if (error) return <ErrorMessage error={error.message} />;
-
+                if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
+                if (!data.user) return <ErrorMessage error={PROFILE_NOT_FOUND} refetch={refetch} />;
                 return this.renderContent(data.user);
               }}
             </Query>

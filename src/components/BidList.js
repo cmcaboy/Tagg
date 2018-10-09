@@ -49,7 +49,7 @@ class BidList extends React.Component {
           {({ data, loading, error, refetch }) => {
             console.log('BidList data: ', data);
             if (loading) return <Spinner />;
-            if (error) return <ErrorMessage error={error.message} />;
+            if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
             if (!data.otherBids.list.length) {
               return (
                 <EmptyList refetch={refetch} text="No one has bid on your date yet" subText="Be patient!" />

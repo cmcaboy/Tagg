@@ -6,6 +6,7 @@ import { GET_QUEUE, MORE_QUEUE } from '../apollo/queries';
 import { GET_ID } from '../apollo/local/queries';
 import { SET_COORDS, SET_PUSH_TOKEN } from '../apollo/mutations';
 import Stagg from './Stagg';
+import EmptyList from './EmptyList';
 
 class StaggContainer extends Component {
   componentDidMount = () => {
@@ -43,14 +44,15 @@ class StaggContainer extends Component {
                 //     return <Spinner />
                 // } else if() {}
                 // if(loading) return <Spinner />
-                if (error) return <ErrorMessage error={error.message} />;
-                const { followerDisplay } = data.user;
-                // console.log('followerDisplay: ',followerDisplay);
+                if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
                 const refetchQueue = () => {
                   console.log('in refetchQueue');
 
                   refetch();
                 };
+                if (!data.user) return <EmptyList refetch={refetchQueue} text="There is no one new in your area." subText="Try again later." />;
+                const { followerDisplay } = data.user;
+                // console.log('followerDisplay: ',followerDisplay);
                 const fetchMoreQueue = () => {
                   console.log('in fetchMoreQueue');
                   if (!data.user.queue) {

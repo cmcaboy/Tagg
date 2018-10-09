@@ -53,12 +53,12 @@ class UserProfile extends Component {
 
     return (
       <Query query={GET_USER_PROFILE} variables={{ id, hostId }}>
-      {({ loading, error, data }) => {
+      {({ loading, error, data, refetch }) => {
         // console.log('loading: ',loading);
         // console.log('error: ',error);
         // console.log('data: ',data);
         if (loading) return <Spinner />;
-        if (error) return <ErrorMessage error={error.message} />;
+        if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
         const {
           name, school, work, description, pics, isFollowing, distanceApart, hasDateOpen,
         } = data.user;

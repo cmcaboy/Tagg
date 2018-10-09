@@ -103,26 +103,26 @@ class UserProfilePhotos extends Component {
     return (
       <Animated.View style={userPics} {...panHandlers}>
         {pics.map((pic, i) => (
-            <FastImage
-              key={pic}
-              source={{ uri: pic }}
-              style={[
-                userPhoto,
-                { display: i === currentImage ? 'flex' : 'none' },
-                { height: picHeight },
-                { width: picWidth },
-                customPicStyle,
-                { borderRadius },
-              ]}
-              imageStyle={{ borderRadius }}
-            >
+          <FastImage
+            key={pic}
+            source={{ uri: pic }}
+            style={[
+              userPhoto,
+              { display: i === currentImage ? 'flex' : 'none' },
+              { height: picHeight },
+              { width: picWidth },
+              customPicStyle,
+              { borderRadius },
+            ]}
+            imageStyle={{ borderRadius }}
+          >
 
               <View style={picIndicator}>
                 {pics.map((uri, i2) => (i2 === currentImage ? (
-                    <FontAwesome key={uri} name="circle" size={12} color="white" style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }} />
-                  ) : (
-                    <FontAwesome key={uri} name="circle-o" size={12} color="white" style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }} />
-                  )
+                  <FontAwesome key={uri} name="circle" size={12} color="white" style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }} />
+                ) : (
+                  <FontAwesome key={uri} name="circle-o" size={12} color="white" style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }} />
+                )
                 ))}
               </View>
 

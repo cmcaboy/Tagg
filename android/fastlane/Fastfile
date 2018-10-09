@@ -27,7 +27,12 @@ platform :android do
       gradle_file_path: "./app/build.gradle"
     )
 
-    gradle(task: "assembleRelease")
+    gradle(
+      task: "assembleRelease",
+      system_properties: {
+        "ENVFILE": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/.env.prod"
+      }
+    )
 
     supply(
       track: "alpha",

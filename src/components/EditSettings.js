@@ -57,53 +57,53 @@ class EditSettings extends Component {
         <View style={{ paddingTop: 20, width: SLIDER_WIDTH }}>
           <Mutation mutation={SET_AGE_PREFERENCE}>
             {updateAgePreference => (
-                <MultiSlider
-                  containerStyle={{ height: 12 }}
-                  markerOffsetX={0}
-                  sliderLength={hideNotifications ? (SLIDER_WIDTH * 0.70) : SLIDER_WIDTH}
-                  markerStyle={styles.markerStyle}
-                  step={1}
-                  values={ageValues}
-                  max={45}
-                  min={18}
-                  onValuesChange={av => this.setState({ ageValues: av })}
-                  onValuesChangeFinish={av => updateAgePreference({
-                      variables: { id, minAgePreference: av[0], maxAgePreference: av[1] },
-                      optimisticResponse: {
-                        __typename: 'Mutation',
-                        editUser: {
-                          id,
-                          minAgePreference: av[0],
-                          maxAgePreference: av[1],
-                          __typename: 'User',
-                        },
-                      },
-                      update: (store, data) => {
-                        const fragment = gql`
-                            fragment updateAgePreference on User {
-                                minAgePreference
-                                maxAgePreference
-                        }
-                        `;
-                        const storeData = store.readFragment({
-                            id: data.data.editUser.id,
-                            fragment,
-                        });
+              <MultiSlider
+                containerStyle={{ height: 12 }}
+                markerOffsetX={0}
+                sliderLength={hideNotifications ? (SLIDER_WIDTH * 0.70) : SLIDER_WIDTH}
+                markerStyle={styles.markerStyle}
+                step={1}
+                values={ageValues}
+                max={45}
+                min={18}
+                onValuesChange={av => this.setState({ ageValues: av })}
+                onValuesChangeFinish={av => updateAgePreference({
+                  variables: { id, minAgePreference: av[0], maxAgePreference: av[1] },
+                  optimisticResponse: {
+                    __typename: 'Mutation',
+                    editUser: {
+                      id,
+                      minAgePreference: av[0],
+                      maxAgePreference: av[1],
+                      __typename: 'User',
+                    },
+                  },
+                  update: (store, data) => {
+                    const fragment = gql`
+                        fragment updateAgePreference on User {
+                            minAgePreference
+                            maxAgePreference
+                    }
+                    `;
+                    const storeData = store.readFragment({
+                      id: data.data.editUser.id,
+                      fragment,
+                    });
 
-                        store.writeFragment({
-                            id: data.data.editUser.id,
-                            fragment,
-                            data: {
-                                ...storeData,
-                                minAgePreference: data.data.editUser.minAgePreference,
-                                maxAgePreference: data.data.editUser.maxAgePreference,
-                            },
-                        });
+                    store.writeFragment({
+                      id: data.data.editUser.id,
+                      fragment,
+                      data: {
+                        ...storeData,
+                        minAgePreference: data.data.editUser.minAgePreference,
+                        maxAgePreference: data.data.editUser.maxAgePreference,
                       },
-                    })
-                  }
-                />
-              )
+                    });
+                  },
+                })
+                }
+              />
+            )
             }
           </Mutation>
         </View>
@@ -122,111 +122,111 @@ class EditSettings extends Component {
         <View>
           <Mutation mutation={SET_DISTANCE}>
             {updateDistance => (
-                <Slider
-                  step={1}
-                  value={distance}
-                  maximumValue={50}
-                  minimumValue={1}
-                  disabled={false}
-                  onValueChange={d => this.setState({ distance: d })}
-                  onSlidingComplete={d => updateDistance({
-                    variables: { id, distance: d },
-                    optimisticResponse: {
-                      __typename: 'Mutation',
-                      editUser: {
-                        id,
-                        distance: d,
-                        __typename: 'User',
-                      },
+              <Slider
+                step={1}
+                value={distance}
+                maximumValue={50}
+                minimumValue={1}
+                disabled={false}
+                onValueChange={d => this.setState({ distance: d })}
+                onSlidingComplete={d => updateDistance({
+                  variables: { id, distance: d },
+                  optimisticResponse: {
+                    __typename: 'Mutation',
+                    editUser: {
+                      id,
+                      distance: d,
+                      __typename: 'User',
                     },
-                    // update: (store,data) => updateQueue(store,data)
-                    update: (store, data) => {
-                      console.log('store: ', store);
-                      console.log('data: ', data);
-                      const fragment = gql`
-                        fragment updateDistance on User {
-                          distance
-                      }
-                      `;
-                      const storeData = store.readFragment({
-                        id: data.data.editUser.id,
-                        fragment,
-                      });
+                  },
+                  // update: (store,data) => updateQueue(store,data)
+                  update: (store, data) => {
+                    console.log('store: ', store);
+                    console.log('data: ', data);
+                    const fragment = gql`
+                      fragment updateDistance on User {
+                        distance
+                    }
+                    `;
+                    const storeData = store.readFragment({
+                      id: data.data.editUser.id,
+                      fragment,
+                    });
 
-                      console.log('storeData: ', storeData);
-                      store.writeFragment({
-                        id: data.data.editUser.id,
-                        fragment,
-                        data: {
-                          ...storeData,
-                          distance: data.data.editUser.distance,
-                        },
-                      });
-                    },
-                    })
-                  }
-                />
-              )
+                    console.log('storeData: ', storeData);
+                    store.writeFragment({
+                      id: data.data.editUser.id,
+                      fragment,
+                      data: {
+                        ...storeData,
+                        distance: data.data.editUser.distance,
+                      },
+                    });
+                  },
+                })
+                }
+              />
+            )
             }
           </Mutation>
         </View>
       </View>
     </Card>
-    {!hideNotifications && (
-      <Card>
-        <View style={styles.titleSlider}>
-          <Text>
-            {'Send Notifications'}
-          </Text>
-          <Mutation mutation={SET_NOTIFICATIONS}>
-            {updateSendNotifications => (
-              <Switch
-                onValueChange={() => {
-                  const newSendNotifications = !sendNotifications;
-                  updateSendNotifications({
-                    variables: {
+      {!hideNotifications && (
+        <Card>
+          <View style={styles.titleSlider}>
+            <Text>
+              {'Send Notifications'}
+            </Text>
+            <Mutation mutation={SET_NOTIFICATIONS}>
+              {updateSendNotifications => (
+                <Switch
+                  onValueChange={() => {
+                    const newSendNotifications = !sendNotifications;
+                    updateSendNotifications({
+                      variables: {
                         id,
                         sendNotifications: newSendNotifications,
-                    },
-                    optimisticResponse: {
-                      __typename: 'Mutation',
-                      editUser: {
-                        id,
-                        sendNotifications: newSendNotifications,
-                        __typename: 'User',
                       },
-                    },
-                    update: (store, data) => {
-                      const fragment = gql`
-                          fragment updateNotifications on User {
-                              sendNotifications
-                      }
-                      `;
-                      const storeData = store.readFragment({
+                      optimisticResponse: {
+                        __typename: 'Mutation',
+                        editUser: {
+                          id,
+                          sendNotifications: newSendNotifications,
+                          __typename: 'User',
+                        },
+                      },
+                      update: (store, data) => {
+                        const fragment = gql`
+                            fragment updateNotifications on User {
+                                sendNotifications
+                        }
+                        `;
+                        const storeData = store.readFragment({
                           id: data.data.editUser.id,
                           fragment,
-                      });
+                        });
 
-                      store.writeFragment({
+                        store.writeFragment({
                           id: data.data.editUser.id,
                           fragment,
                           data: {
-                              ...storeData,
-                              sendNotifications: data.data.editUser.sendNotifications,
+                            ...storeData,
+                            sendNotifications: data.data.editUser.sendNotifications,
                           },
-                      });
-                    },
-                  });
-                  this.notificationChange();
-                }}
-                value={sendNotifications}
-              />
+                        });
+                      },
+                    });
+                    this.notificationChange();
+                  }}
+                  value={sendNotifications}
+                />
               )}
-          </Mutation>
-        </View>
-      </Card>
-    )
-    }
+            </Mutation>
+          </View>
+        </Card>
+      )
+      }
       <Card>
         <View style={styles.titleSlider}>
           <Mutation mutation={SET_FOLLOWER_DISPLAY}>
@@ -239,8 +239,8 @@ class EditSettings extends Component {
                   console.log('newFollowerDisplay: ', newFollowerDisplay);
                   changeFollowerDisplay({
                     variables: {
-                        id,
-                        followerDisplay: newFollowerDisplay,
+                      id,
+                      followerDisplay: newFollowerDisplay,
                     },
                     optimisticResponse: {
                       __typename: 'Mutation',
@@ -260,19 +260,19 @@ class EditSettings extends Component {
                       }
                       `;
                       const storeData = store.readFragment({
-                          id: data.data.editUser.id,
-                          fragment,
+                        id: data.data.editUser.id,
+                        fragment,
                       });
 
                       console.log('storeData: ', storeData);
                       store.writeFragment({
-                          id: data.data.editUser.id,
-                          fragment,
-                          data: {
-                              ...storeData,
-                              followerDisplay: data.data.editUser.followerDisplay,
-                          }
-                      })
+                        id: data.data.editUser.id,
+                        fragment,
+                        data: {
+                          ...storeData,
+                          followerDisplay: data.data.editUser.followerDisplay,
+                        },
+                      });
                       console.log('store: ', store);
                       this.setState({followerDisplay: data.data.editUser.followerDisplay });
                     },
@@ -283,14 +283,14 @@ class EditSettings extends Component {
                 <Picker.Item label="Non-Following Only" value="Non-Following Only" />
                 <Picker.Item label="Both" value="Both" />
               </Picker>
-              )
+            )
             }
           </Mutation>
         </View>
       </Card>
     </View>
-  );
-}
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     height: 12,
     width: 12,
     borderRadius: 12,
-  }
+  },
 });
 
 export default EditSettings;

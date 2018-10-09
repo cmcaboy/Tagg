@@ -30,9 +30,9 @@ class EmptyList extends React.Component  {
           >
             <View style={styles.noBidders}>
                 <Ionicons
-                    name="md-sad"
-                    size={100}
-                    color="black"
+                  name="md-sad"
+                  size={100}
+                  color="black"
                 />
                 <MyAppText>
                   {text}

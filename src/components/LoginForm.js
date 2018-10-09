@@ -183,7 +183,7 @@ const styles = {
   emailForm: {
   },
   emailFormTitleText: {
-    display: 'none',
+    // display: 'none',
     fontSize: 11,
     color: PRIMARY_COLOR,
     alignSelf: 'center',

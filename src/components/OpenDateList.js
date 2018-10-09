@@ -60,9 +60,9 @@ class OpenDateList extends React.Component {
         <Content>
           <List>
             <Query query={GET_DATES} variables={{ id: otherId }}>
-            {({ data, loading, error }) => {
+            {({ data, loading, error, refetch }) => {
               if (loading) return <Spinner />;
-              if (error) return <ErrorMessage error={error.message} />;
+              if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
               console.log('data.user.dateRequests.list: ', data.user.dateRequests.list);
               return data.user.dateRequests.list.filter(date => date.open).map(date => (
                 <ListItem

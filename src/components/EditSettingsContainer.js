@@ -36,12 +36,12 @@ class EditSettingsContainer extends Component {
 
           return (
             <Query query={GET_SETTINGS} variables={{ id }}>
-                {({ loading, error, data }) => {
+              {({ loading, error, data, refetch }) => {
                 // console.log('loading: ',loading);
                 // console.log('error: ',error);
                 // console.log('data: ',data);
                 if (loading) return <Spinner />;
-                if (error) return <ErrorMessage error={error.message} />;
+                if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
                 const {
                   minAgePreference,
                   maxAgePreference,
@@ -49,21 +49,21 @@ class EditSettingsContainer extends Component {
                   sendNotifications,
                   followerDisplay,
                 } = data.user;
-                    return (
-                      <EditSettings
-                        id={id}
-                        minAgePreference={minAgePreference}
-                        maxAgePreference={maxAgePreference}
-                        distance={distance}
-                        sendNotifications={sendNotifications}
-                        followerDisplay={followerDisplay}
-                        hideNotifications={hideNotifications}
-                        refetchQueue={refetchQueue}
-                      />
-                    );
-                }}
+                return (
+                  <EditSettings
+                    id={id}
+                    minAgePreference={minAgePreference}
+                    maxAgePreference={maxAgePreference}
+                    distance={distance}
+                    sendNotifications={sendNotifications}
+                    followerDisplay={followerDisplay}
+                    hideNotifications={hideNotifications}
+                    refetchQueue={refetchQueue}
+                  />
+                );
+              }}
             </Query>
-            );
+          );
         }}
       </Query>
     );

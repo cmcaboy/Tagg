@@ -10,14 +10,8 @@ import io.sentry.RNSentryPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
-import com.dylanvann.fastimage.FastImageViewPackage;
-import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
-import com.facebook.reactnative.androidsdk.FBSDKPackage;
+//import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
-import com.transistorsoft.rnbackgroundgeolocation.RNBackgroundGeolocation;
-import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
-import com.imagepicker.ImagePickerPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -60,15 +54,10 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
             new RNSentryPackage(),
-            new VectorIconsPackage(),
-            new ImagePickerPackage(),
-            new FBSDKPackage(),
-            new FastImageViewPackage(),
-            new RNBackgroundGeolocation(),
-            //new FBSDKPackage(),
-            new ReactNativeConfigPackage(),
             new RNBackgroundGeolocation(),
             new RNBackgroundFetchPackage(),
+            //new FBSDKPackage(),
+            new ReactNativeConfigPackage(),
             new RNFirebasePackage(),
             new RNFirebaseAuthPackage(), 
             new RNFirebaseFirestorePackage(),

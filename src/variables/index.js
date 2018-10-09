@@ -25,6 +25,7 @@ export const CARD_MARGIN = 7;
 export const PICTURE_WIDTH = 100;
 
 export const PHOTO_HINT = 'Hint: Press 2 photos to switch the position of the photos. Press and hold a photo to upload a new photo';
+export const PROFILE_NOT_FOUND = 'We could not find your profile.';
 
 export const DEFAULT_LATITUDE = 40.000;
 export const DEFAULT_LONGITUDE = -75.000;
