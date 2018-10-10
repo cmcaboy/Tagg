@@ -23,12 +23,16 @@ src/variables/sensitive.js
 
 ios/build
 ios/pods
+ios/Frameworks
 android/app/build
 functions/lib
 
+# Android
 android/local.properties
-#android/.idea
+android/.idea
 android/secure
+android/.gradle
+android/*.iml
 
 server/etc
 
@@ -44,3 +48,9 @@ ios/fastlane/screenshots
 
 android/sentry.properties
 ios/sentry.properties
+
+# Fastlane
+*/fastlane/report.xml
+*/fastlane/Preview.html
+*/fastlane/screenshots
+
