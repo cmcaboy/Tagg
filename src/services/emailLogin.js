@@ -1,38 +1,29 @@
 import { auth } from '../firebase';
 
-export default async ({ email, password, client, startSetId, startNewUser }) => {
-
+export default async ({ email, password, startSetId }) => {
   console.log('Attempting to Login');
-  console.log('email: ', email);
-  console.log('password: ', password);
 
   let login = null;
+
+  // Set ID in cache anticipating logic success
+  // As soon as the user is authenticated, it will try to fetch data from the server
+  // Therefore, it is better to set the ID prior to attempting the authentication.
+  // If the authentication fails, simply catch the error and reset the ID back to 0.
+  startSetId(email);
 
   // Attempt login
   try {
     login = await auth.signInAndRetrieveDataWithEmailAndPassword(email, password);
   } catch (e) {
+    // If authentication fails, reset the id back to 0.
     console.log('Error logging in: ', e);
     login = false;
+    startSetId(0);
+    return 'Invalid username and password combination. Please try again.';
   }
 
-  console.log('login: ', login);
+  console.log('login successful: ', login);
 
-  // If login does not work, attempt to sign the user up
-  if (!login) {
-    let signup = null;
-    try {
-      signup = await auth.createUserAndRetrieveDataWithEmailAndPassword(email, password);
-    } catch (e) {
-      console.log('Error signing up via email: ', e);
-      signup = false;
-      return e;
-    }
-
-    console.log('signup: ', signup);
-  }
-
-  startSetId(email);
   // If execution successful, return null.
   return null;
 };

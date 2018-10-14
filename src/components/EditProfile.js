@@ -196,10 +196,10 @@ class EditProfile extends Component {
                 return this.renderContent(data.user);
               }}
             </Query>
-          ) 
+          );
         }}
       </Query>
-    )
+    );
   }
 }
 

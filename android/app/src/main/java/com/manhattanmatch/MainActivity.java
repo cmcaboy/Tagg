@@ -1,4 +1,4 @@
-package io.mcaboydigital.tagg.fastlane;
+package com.manhattanmatch;
 
 import android.content.Intent;
 import com.facebook.react.ReactActivity;

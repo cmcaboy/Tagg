@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Modal from 'react-native-modalbox';
 
-const MyAppModal = ({ isVisible, close, children }) => (
+const MyAppModal = ({ isVisible, close, children, swipeToClose = true }) => (
   // <Modal
   //   isVisible={props.isVisible}
   //   //transparent={false}
@@ -21,6 +21,7 @@ const MyAppModal = ({ isVisible, close, children }) => (
     backButtonClose
     onClosed={close}
     coverScreen
+    swipeToClose={swipeToClose}
   >
     <View style={styles.container}>
       {children}

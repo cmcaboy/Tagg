@@ -2153,8 +2153,8 @@
 				DEVELOPMENT_TEAM = 96WSSA5AM3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks/",
+					"$(inherited)/**",
+					"$(PROJECT_DIR)/Frameworks/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
 				);
@@ -2210,8 +2210,8 @@
 				DEVELOPMENT_TEAM = 96WSSA5AM3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks/",
+					"$(inherited)/**",
+					"$(PROJECT_DIR)/Frameworks/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
 				);

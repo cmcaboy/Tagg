@@ -29,3 +29,15 @@ export const PROFILE_NOT_FOUND = 'We could not find your profile.';
 
 export const DEFAULT_LATITUDE = 40.000;
 export const DEFAULT_LONGITUDE = -75.000;
+
+export const settingDefaults = {
+  latitude: DEFAULT_LATITUDE,
+  longitude: DEFAULT_LONGITUDE,
+  sendNotifications: true,
+  distance: 15,
+  minAgePreference: 18,
+  maxAgePreference: 28,
+  followerDisplay: 'Both',
+};
+
+export const EMAIL_REGEX = RegExp(/^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i);

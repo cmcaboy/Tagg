@@ -1,19 +1,19 @@
 PODS:
-  - BoringSSL (10.0.6):
-    - BoringSSL/Implementation (= 10.0.6)
-    - BoringSSL/Interface (= 10.0.6)
-  - BoringSSL/Implementation (10.0.6):
-    - BoringSSL/Interface (= 10.0.6)
-  - BoringSSL/Interface (10.0.6)
+  - BoringSSL-GRPC (0.0.2):
+    - BoringSSL-GRPC/Implementation (= 0.0.2)
+    - BoringSSL-GRPC/Interface (= 0.0.2)
+  - BoringSSL-GRPC/Implementation (0.0.2):
+    - BoringSSL-GRPC/Interface (= 0.0.2)
+  - BoringSSL-GRPC/Interface (0.0.2)
   - CocoaLumberjack (3.4.2):
     - CocoaLumberjack/Default (= 3.4.2)
     - CocoaLumberjack/Extensions (= 3.4.2)
   - CocoaLumberjack/Default (3.4.2)
   - CocoaLumberjack/Extensions (3.4.2):
     - CocoaLumberjack/Default
-  - Crashlytics (3.10.7):
-    - Fabric (~> 1.7.11)
-  - Fabric (1.7.11)
+  - Crashlytics (3.10.9):
+    - Fabric (~> 1.7.13)
+  - Fabric (1.7.13)
   - Firebase/Auth (5.3.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.1)
@@ -82,27 +82,27 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.4)
   - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
     - GoogleToolboxForMac/Defines (= 2.1.4)
-  - gRPC (1.14.1):
-    - gRPC-RxLibrary (= 1.14.1)
-    - gRPC/Main (= 1.14.1)
-  - gRPC-Core (1.14.1):
-    - gRPC-Core/Implementation (= 1.14.1)
-    - gRPC-Core/Interface (= 1.14.1)
-  - gRPC-Core/Implementation (1.14.1):
-    - BoringSSL (~> 10.0)
-    - gRPC-Core/Interface (= 1.14.1)
+  - gRPC (1.15.1):
+    - gRPC-RxLibrary (= 1.15.1)
+    - gRPC/Main (= 1.15.1)
+  - gRPC-Core (1.15.1):
+    - gRPC-Core/Implementation (= 1.15.1)
+    - gRPC-Core/Interface (= 1.15.1)
+  - gRPC-Core/Implementation (1.15.1):
+    - BoringSSL-GRPC (= 0.0.2)
+    - gRPC-Core/Interface (= 1.15.1)
     - nanopb (~> 0.3)
-  - gRPC-Core/Interface (1.14.1)
-  - gRPC-ProtoRPC (1.14.1):
-    - gRPC-ProtoRPC/Main (= 1.14.1)
-  - gRPC-ProtoRPC/Main (1.14.1):
-    - gRPC (= 1.14.1)
-    - gRPC-RxLibrary (= 1.14.1)
+  - gRPC-Core/Interface (1.15.1)
+  - gRPC-ProtoRPC (1.15.1):
+    - gRPC-ProtoRPC/Main (= 1.15.1)
+  - gRPC-ProtoRPC/Main (1.15.1):
+    - gRPC (= 1.15.1)
+    - gRPC-RxLibrary (= 1.15.1)
     - Protobuf (~> 3.0)
-  - gRPC-RxLibrary (1.14.1)
-  - gRPC/Main (1.14.1):
-    - gRPC-Core (= 1.14.1)
-    - gRPC-RxLibrary (= 1.14.1)
+  - gRPC-RxLibrary (1.15.1)
+  - gRPC/Main (1.15.1):
+    - gRPC-Core (= 1.15.1)
+    - gRPC-RxLibrary (= 1.15.1)
   - GTMSessionFetcher/Core (1.2.0)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
@@ -167,7 +167,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - BoringSSL
+    - BoringSSL-GRPC
     - CocoaLumberjack
     - Crashlytics
     - Fabric
@@ -205,10 +205,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
+  BoringSSL-GRPC: 2a230d9cd93e7ce39916044f645cebb31f37dde6
   CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
-  Crashlytics: ccaac42660eb9351b9960c0d66106b0bcf99f4fa
-  Fabric: f233c9492b3bbc1f04e3882986740f7988a58edb
+  Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
+  Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   Firebase: 68afeeb05461db02d7c9e3215cda28068670f4aa
   FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
   FirebaseAuth: 463b8ce33bd5d05f706dcd4615499e3212b4132b
@@ -220,10 +220,10 @@ SPEC CHECKSUMS:
   FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   FirebaseSwizzlingUtilities: 6c22677c50d0b6f5f0dc637c1233f13694a3003f
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
-  gRPC: 65fa2a50c4fd61940b76f4962d75c239c92c6a8d
-  gRPC-Core: e3ace1e1161e75903135de8d8231bb69c9d35721
-  gRPC-ProtoRPC: 78f976fc6a1eafc0e1f4965c255c313aa0859b1e
-  gRPC-RxLibrary: c4c826507ad3c8c8fab6887f153938eb04b86d59
+  gRPC: c1fa6fccfc3d31212f32aa7d4e40ab0452195ccb
+  gRPC-Core: 840d1068a0a57eeca00b52486897ad6265b8f0be
+  gRPC-ProtoRPC: 69552f09c9e8e6c253663668525b7c708814a9bd
+  gRPC-RxLibrary: 67a03bd22ef654e95fd7d6e4b9c5e62420a867b8
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3

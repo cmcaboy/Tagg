@@ -9,13 +9,9 @@ import Stagg from './Stagg';
 import EmptyList from './EmptyList';
 
 class StaggContainer extends Component {
-  componentDidMount = () => {
-    console.log('staggContainer didMount');
-  }
 
   render() {
     const { navigation } = this.props;
-    console.log('stag container');
     return (
       <Query query={GET_ID}>
         {({ loading, error, data }) => {

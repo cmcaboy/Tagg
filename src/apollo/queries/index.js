@@ -246,4 +246,13 @@ query user($id: String!) {
       email
   }
 }
-`
+`;
+
+export const CHECK_EMAIL = gql`
+query user($id: String!) {
+  user(id: $id) {
+      id
+      email
+  }
+}
+`;

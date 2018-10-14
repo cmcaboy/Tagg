@@ -57,11 +57,12 @@ class PhotoSelector extends React.Component {
       }
       return item;
     });
-
+    console.log('change pics temp: ', temp);
     startChangePics(temp);
   }
 
   pickImage = (i) => {
+    console.log('pickImage i: ', i);
     this.setState(prevState => ({
       isLoading: prevState.isLoading.map((item, index) => (
         index === i ? true : item
@@ -82,7 +83,9 @@ class PhotoSelector extends React.Component {
     ImagePicker.showImagePicker(options, async (response) => {
       const { startChangePics } = this.props;
       const { urlList } = this.state;
-      console.log('Response = ', response);
+
+      console.log('in imagepicker');
+      console.log('response: ', response);
 
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -95,7 +98,7 @@ class PhotoSelector extends React.Component {
       } else {
         const source = { uri: response.uri.uri };
 
-        console.log('source: ', source);
+        // console.log('source: ', source);
 
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
@@ -103,17 +106,16 @@ class PhotoSelector extends React.Component {
         const url = await uploadImage(source);
 
         const newUrlList = urlList.map((item, index) => {
-          // console.log('item: ',item);
-          // console.log('index: ',index);
           return index === i ? url : item;
         });
+        console.log('newUrlList: ', newUrlList);
         startChangePics(newUrlList);
 
-      this.setState(prevState => ({
-        isLoading: prevState.isLoading.map((item, index) => (
-          index === i ? false : item
-        )),
-      }));
+        this.setState(prevState => ({
+          isLoading: prevState.isLoading.map((item, index) => (
+            index === i ? false : item
+          )),
+        }));
       }
     });
   }
@@ -122,6 +124,7 @@ class PhotoSelector extends React.Component {
     const { urlList } = this.state;
     this.setState({ isSelected: urlList.map(item => false) });
   }
+
   resetLoading = () => {
     const { urlList } = this.state;
     this.setState({ isLoading: urlList.map(item => false) });
@@ -132,10 +135,10 @@ class PhotoSelector extends React.Component {
     await this.setState(prevState => ({ 
       isSelected: prevState.isSelected.map((k, i) => (i === index ? !k : k)),
     }));
-    console.log('select: ',this.state.isSelected);
-    console.log('num selected: ', this.state.isSelected.filter(item => item === true))
+    // console.log('select: ',this.state.isSelected);
+    // console.log('num selected: ', this.state.isSelected.filter(item => item === true))
     if (this.state.isSelected.filter(item => item === true).length > 1) {
-      console.log('both selected');
+      // console.log('both selected');
       const a = [];
       this.state.isSelected.forEach((item, ind) => {
         if (item === true) {
@@ -158,11 +161,11 @@ class PhotoSelector extends React.Component {
     // console.log('isSelected: ',this.state.isSelected);
     // console.log('isLoading: ',this.state.isLoading);
     const { urlList, isLoading, isSelected } = this.state;
-    console.log('urlList: ', urlList);
+    // console.log('urlList: ', urlList);
     return (
       <View style={styles.container}>
         {urlList.map((item, index) => {
-          console.log('item: ', item);
+          // console.log('item: ', item);
           return isLoading[index] ? (
             <Spinner key={index} size="small" style={styles.photo} />
           ) : (
@@ -191,7 +194,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     flexWrap: 'wrap',
     // height: 150
   },

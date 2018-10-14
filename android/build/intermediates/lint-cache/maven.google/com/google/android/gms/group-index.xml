@@ -92,7 +92,7 @@
   <play-services-phenotype versions="15.0.0,15.0.1,16.0.0"/>
   <play-services-ads-base versions="15.0.0,15.0.1,16.0.0,17.0.0"/>
   <play-services-stats versions="15.0.0,15.0.1,16.0.1"/>
-  <strict-version-matcher-plugin versions="1.0.0,1.0.1,1.0.2,1.0.3"/>
+  <strict-version-matcher-plugin versions="1.0.0,1.0.1,1.0.2,1.0.3,1.1.0"/>
   <play-services-vision-image-label versions="15.0.0,16.2.0"/>
   <oss-licenses-plugin versions="0.9.3"/>
   <play-services-measurement-sdk-api versions="16.0.1,16.0.2"/>
