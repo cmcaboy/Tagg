@@ -33,6 +33,7 @@ android/.idea
 android/secure
 android/.gradle
 android/*.iml
+android/.gradle/4.6/taskHistory
 
 server/etc
 
