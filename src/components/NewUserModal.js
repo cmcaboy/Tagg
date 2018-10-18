@@ -139,22 +139,21 @@ export default class NewUserModal extends Component {
   }
 
   render() {
-    const { settingsContainer, hint } = styles;
+    const { settingsContainer, hint, sectionTitle } = styles;
     const { pics, name, email, age, school, work, description, gender } = this.state;
     const { closeModal } = this.props;
 
     console.log('gender: ', gender);
     console.log('pics: ', pics);
 
-    console.log('error: ', this.state.error);
     return (
       <ScrollView contentContainerStyle={settingsContainer}>
         <MyTitleText style={{ textDecorationLine: 'underline' }}>
           { 'New Profile Setup' }
         </MyTitleText>
         <Card style={{ padding: 2, marginTop: 15 }}>
-          <CardSection>
-            <MyAppText style={{ fontWeight: 'bold' }}>
+          <CardSection style={sectionTitle}>
+            <MyAppText style={{ fontWeight: 'bold', color: '#FFF' }}>
               { 'First, Upload a few pictures. Click on a plus image to upload a new image.' }
             </MyAppText>
           </CardSection>
@@ -167,8 +166,8 @@ export default class NewUserModal extends Component {
           </Text>
         </Card>
         <Card style={{ padding: 0 }}>
-          <CardSection>
-            <MyAppText style={{ fontWeight: 'bold' }}>
+          <CardSection style={sectionTitle}>
+            <MyAppText style={{ fontWeight: 'bold', color: '#FFF' }}>
               { 'Next, tell us about yourself...' }
             </MyAppText>
           </CardSection>
@@ -290,5 +289,11 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'center',
     margin: 15,
+  },
+  sectionTitle: {
+    backgroundColor: '#000',
+    overflow: 'hidden',
+    borderTopRightRadius: 5,
+    borderTopLeftRadius: 5,
   },
 });
