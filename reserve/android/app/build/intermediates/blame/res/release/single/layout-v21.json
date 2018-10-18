@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/release/layout-v21/notification_action_tombstone.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/62868ba84d761aeb63d029b9e8d2f97e/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/release/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/62868ba84d761aeb63d029b9e8d2f97e/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/release/layout-v21/notification_action.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/62868ba84d761aeb63d029b9e8d2f97e/res/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/release/layout-v21/notification_template_custom_big.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/62868ba84d761aeb63d029b9e8d2f97e/res/layout-v21/notification_template_custom_big.xml"
+    }
+]

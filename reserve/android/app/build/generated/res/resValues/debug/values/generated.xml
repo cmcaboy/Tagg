@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Automatically generated file. DO NOT MODIFY -->
+
+    <!-- Values from default config. -->
+    <string name="FUNCTION_PATH" translatable="false">"https://us-central1-manhattanmatch-9f9fe.cloudfunctions.net"</string>
+    <string name="GEO_LOCATION_URL" translatable="false">"http://35.199.37.151:4000/coords"</string>
+    <string name="GOOGLE_MAPS_API_KEY" translatable="false">"AIzaSyAlVUE0QmItEkmjVUBLhkb3ShhebQMJUdA"</string>
+    <string name="GRAPHQL_SERVER" translatable="false">"http://35.199.37.151:4000"</string>
+    <string name="GRAPHQL_SERVER_WS" translatable="false">"ws://35.199.37.151:4000"</string>
+    <string name="PHOTO_ADD_URL" translatable="false">"https://firebasestorage.googleapis.com/v0/b/stagg-cc356.appspot.com/o/icons\u00252Fadd_pic.png?alt=media&amp;token=8150e06c-5dce-408a-b2a5-bda2edd35131"</string>
+    <string name="PLACEHOLDER_PHOTO" translatable="false">"https://firebasestorage.googleapis.com/v0/b/stagg-cc356.appspot.com/o/icons\u00252Fstagg_512.png?alt=media&amp;token=fab7e588-a23d-4a7d-8183-6f33c653ac18"</string>
+
+</resources>

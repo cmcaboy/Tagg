@@ -1,0 +1,106 @@
+[
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_tint_seek_thumb.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_hint_foreground_material_dark.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_hint_foreground_material_dark.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_search_url_text.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_search_url_text.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_tint_spinner.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_tint_switch_track.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/com_facebook_send_button_text_color.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/facebook-share-4.35.0.aar/7b7d3ad11fc4de662d68798d38fd3d17/res/color/com_facebook_send_button_text_color.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_primary_text_material_dark.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_primary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/com_facebook_button_text_color.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/facebook-common-4.35.0.aar/fb0fb63272c86964e8cf148b1c04c799/res/color/com_facebook_button_text_color.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/common_google_signin_btn_text_dark.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/cb464015f6944635fbc0d0e48f971899/res/color/common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_tint_default.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_tint_default.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_background_cache_hint_selector_material_dark.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/common_google_signin_btn_text_light.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/cb464015f6944635fbc0d0e48f971899/res/color/common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_primary_text_disable_only_material_dark.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_primary_text_disable_only_material_dark.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_btn_colored_text_material.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/common_google_signin_btn_tint.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/cb464015f6944635fbc0d0e48f971899/res/color/common_google_signin_btn_tint.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/switch_thumb_material_dark.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/switch_thumb_material_dark.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/switch_thumb_material_light.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_secondary_text_material_dark.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_secondary_text_material_dark.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_tint_btn_checkable.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_primary_text_material_light.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_primary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_primary_text_disable_only_material_light.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_primary_text_disable_only_material_light.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_secondary_text_material_light.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_secondary_text_material_light.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_hint_foreground_material_light.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_hint_foreground_material_light.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_btn_colored_borderless_text_material.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/debug/color/abc_tint_edittext.xml",
+        "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/color/abc_tint_edittext.xml"
+    }
+]

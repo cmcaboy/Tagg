@@ -1,0 +1,3 @@
+# view AndroidManifest.xml #generated:64
+-keep class com.manhattanmatch.MainApplication { <init>(...); }
+

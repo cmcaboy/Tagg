@@ -1,0 +1,48 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/release/values-as/values-as.xml",
+            "map": [
+                {
+                    "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.1.0.aar/c78a55c6f721318c89875e05cd9486c0/res/values-as/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "205",
+                        "endColumns": "99",
+                        "endOffsets": "304"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "103",
+                        "endOffsets": "154"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-as/values-as.xml",
+            "map": [
+                {
+                    "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.1.0.aar/c78a55c6f721318c89875e05cd9486c0/res/values-as/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "205",
+                        "endColumns": "99",
+                        "endOffsets": "304"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "103",
+                        "endOffsets": "154"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+dependencies: \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/AuthProviders/Phone/FIRPhoneAuthProvider.m \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/Public/FIRPhoneAuthProvider.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/Headers/Private/FirebaseCore/FIRLogger.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/Headers/Private/FirebaseCore/FIRLoggerLevel.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/AuthProviders/Phone/FIRPhoneAuthCredential_Internal.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/Public/FIRPhoneAuthCredential.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/Public/FIRAuthCredential.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/Headers/Private/FirebaseCore/FIRApp.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/FIRAuthAPNSToken.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/Public/FIRAuthAPNSTokenType.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/FIRAuthAPNSTokenManager.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/FIRAuthAppCredential.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/FIRAuthAppCredentialManager.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/FIRAuthGlobalWorkQueue.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/FIRAuth_Internal.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/Public/FIRAuth.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/Public/FIRAuthErrors.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/FIRAuthURLPresenter.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/FIRAuthNotificationManager.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/FIRAuthErrorUtils.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/RPCs/FIRAuthBackend.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/Public/FIRAuthSettings.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/FIRAuthWebUtils.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/Public/FirebaseAuthVersion.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/Headers/Private/FirebaseCore/FIROptions.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/RPCs/FIRGetProjectConfigRequest.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/RPCs/FIRIdentityToolkitRequest.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/RPCs/FIRAuthRequestConfiguration.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/RPCs/FIRAuthRPCRequest.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/RPCs/FIRGetProjectConfigResponse.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/RPCs/FIRAuthRPCResponse.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/RPCs/FIRSendVerificationCodeRequest.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/RPCs/FIRSendVerificationCodeResponse.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/RPCs/FIRVerifyClientRequest.h \
+  /Users/jonathanmcaboy/Desktop/Dev/Tagg/ios/Pods/FirebaseAuth/Firebase/Auth/Source/RPCs/FIRVerifyClientResponse.h

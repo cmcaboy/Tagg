@@ -1,0 +1,66 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '9.0'
+
+target 'ManhattanMatch' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  pod 'Firebase/Core', '~> 5.3.0'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Storage'
+  pod 'Firebase/Messaging', '~> 5.3.0'
+  pod 'Fabric', '~> 1.7.5'
+  pod 'Crashlytics', '~> 3.10.4'
+  pod 'Firebase/Performance', '~> 5.3.0'
+
+  # Pods for ManhattanMatch
+  
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  
+  #use_frameworks!  # <-- comment this out!
+  pod 'React', :path => '../node_modules/react-native', :subspecs => [
+  'Core',
+  'DevSupport',
+  'RCTText',
+  'RCTNetwork',
+  'RCTWebSocket',
+  'RCTImage'
+  ]
+  pod 'RNBackgroundGeolocation', :path => '../node_modules/react-native-background-geolocation'
+  pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
+
+  #pod 'RNBackgroundFetch', :path => '../node_modules/react-native-background-fetch'
+  #pod 'react-native-fast-image', :path => '../node_modules/react-native-fast-image'
+
+  #pod 'react-native-config', :path => '../node_modules/react-native-config'
+
+  pod 'SentryReactNative', :path => '../node_modules/react-native-sentry'
+
+  target 'ManhattanMatchTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+
+target 'ManhattanMatch-tvOS' do
+  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
+  # use_frameworks!
+
+  # Pods for ManhattanMatch-tvOS
+
+  target 'ManhattanMatch-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        if target.name == "React"
+            target.remove_from_project
+        end
+    end
+end

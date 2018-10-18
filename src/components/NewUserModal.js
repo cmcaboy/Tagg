@@ -46,7 +46,7 @@ export default class NewUserModal extends Component {
 
   changeName = name => this.setState({ name });
 
-  changeEmail = email => this.setState({ email: emailValidation(email.toLowerCase()) });
+  changeEmail = email => this.setState({ email: email.toLowerCase() });
 
   changeAge = age => this.setState({ age });
 
@@ -78,7 +78,10 @@ export default class NewUserModal extends Component {
       return false;
     }
     if (!emailValidation(email)) {
-      this.setState({ error: 'Please specify an email address.' });
+      console.log('email: ', email);
+      console.log('email test: ', emailValidation(email));
+      this.setState({ error: 'Please specify a valid email address.' });
+      return false;
     }
     // all validation fields have passed; return true
     return true;
@@ -99,9 +102,12 @@ export default class NewUserModal extends Component {
       return false;
     }
 
-    return newUser({
+    console.log('validation complete');
+
+    newUser({
       variables: {
         id: email,
+        active: true,
         name,
         email,
         age,
@@ -113,6 +119,8 @@ export default class NewUserModal extends Component {
         ...settingDefaults,
       },
       update: (store, data) => {
+        console.log('newUser udpate function');
+        console.log('data: ', data);
         // check for an error
         if (!data) {
           this.setState({ loading: false, error: 'Could not connect to the network' });
@@ -146,7 +154,7 @@ export default class NewUserModal extends Component {
         </MyTitleText>
         <Card style={{ padding: 2, marginTop: 15 }}>
           <CardSection>
-            <MyAppText>
+            <MyAppText style={{ fontWeight: 'bold' }}>
               { 'First, Upload a few pictures. Click on a plus image to upload a new image.' }
             </MyAppText>
           </CardSection>
@@ -160,7 +168,7 @@ export default class NewUserModal extends Component {
         </Card>
         <Card style={{ padding: 0 }}>
           <CardSection>
-            <MyAppText>
+            <MyAppText style={{ fontWeight: 'bold' }}>
               { 'Next, tell us about yourself...' }
             </MyAppText>
           </CardSection>

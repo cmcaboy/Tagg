@@ -1,0 +1,72 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/res/merged/release/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/62868ba84d761aeb63d029b9e8d2f97e/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/app/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-v16/values-v16.xml",
+            "map": [
+                {
+                    "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/531e319910a0303865f683187512e45e/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "223"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "121",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "289"
+                    }
+                },
+                {
+                    "source": "/Users/jonathanmcaboy/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/62868ba84d761aeb63d029b9e8d2f97e/res/values-v16/values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        }
+    ]
+}

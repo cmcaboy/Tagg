@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.010078">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: increment_build_number" time="1.74665">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: match" time="9.898197">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: cocoapods" time="45.617595">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: build_app" time="2680.864274">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: upload_to_testflight" time="72.582974">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: clean_build_artifacts" time="0.038368">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="7: commit_version_bump" time="0.757978">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>
