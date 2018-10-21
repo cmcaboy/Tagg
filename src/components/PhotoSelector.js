@@ -96,14 +96,17 @@ class PhotoSelector extends React.Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = { uri: response.uri.uri };
+        // const source = { uri: response.uri.uri };
+        const source = response.uri;
+        console.log('source: ', source);
 
         // console.log('source: ', source);
 
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-
+        console.log('before uploadImage');
         const url = await uploadImage(source);
+        console.log('after uploadImage');
 
         const newUrlList = urlList.map((item, index) => {
           return index === i ? url : item;
@@ -157,7 +160,7 @@ class PhotoSelector extends React.Component {
 
 
   render() {
-    // console.log('urlList: ',this.props.urlList);
+    console.log('urlList: ',this.props.urlList);
     // console.log('isSelected: ',this.state.isSelected);
     // console.log('isLoading: ',this.state.isLoading);
     const { urlList, isLoading, isSelected } = this.state;
@@ -178,6 +181,7 @@ class PhotoSelector extends React.Component {
               )}
               onLongPress={() => this.pickImage(index)}
             >
+              {console.log('item: ', item)}
               <Image
                 style={[styles.photo, isSelected[index] ? styles.highlighted : styles.notHightlighted]}
                 source={{ uri: item || PHOTO_ADD_URL }}

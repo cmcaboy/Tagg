@@ -6,20 +6,28 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   View,
+  TextInput,
+  LayoutAnimation,
+  UIManager,
 } from 'react-native';
 import { Button } from 'native-base';
 import { Mutation } from 'react-apollo';
 import RadioGroup from 'react-native-radio-buttons-group';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { PHOTO_HINT, settingDefaults, PRIMARY_COLOR } from '../variables/index';
-import { CondInput, Card, MyAppText, Spinner, MyTitleText, CardSection } from './common';
+import { Card, MyAppText, Spinner, MyTitleText, CardSection } from './common';
 import PhotoSelector from './PhotoSelector';
 import { NEW_USER } from '../apollo/mutations';
 import toastMessage from '../services/toastMessage';
 import emailValidation from '../services/emailValidation';
+import emailSignup from '../services/emailSignup';
 
 export default class NewUserModal extends Component {
   constructor(props) {
     super(props);
+
+    UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+    LayoutAnimation.spring();
 
     this.state = {
       pics: [], // Must use at least 1 image
@@ -41,8 +49,14 @@ export default class NewUserModal extends Component {
       description: '', // optional
       loading: false,
       error: '',
+      password: '',
+      validatePassword: '',
     };
   }
+
+  passwordInput = password => this.setState({ password });
+
+  validatePasswordInput = validatePassword => this.setState({ validatePassword });
 
   changeName = name => this.setState({ name });
 
@@ -60,10 +74,15 @@ export default class NewUserModal extends Component {
 
   changeGender = gender => this.setState({ gender });
 
+  validatePassword = () => {
+    const { password, validatePassword } = this.state;
+    return (password.length && password === validatePassword);
+  };
+
   validateFields = () => {
     // returns true if all fields are validated
     // false if there is a violation
-    const { name, gender, email, pics } = this.state;
+    const { name, gender, email, pics, password } = this.state;
     console.log('validate fields');
     if (!name) {
       this.setState({ error: 'Please specify a name.' });
@@ -83,18 +102,24 @@ export default class NewUserModal extends Component {
       this.setState({ error: 'Please specify a valid email address.' });
       return false;
     }
+    if (!password.length) {
+      console.log('no password inputted');
+      this.setState({ error: 'Please specify a password.' });
+      return false;
+    }
+    if (!this.validatePassword()) {
+      console.log('passwords do not match!');
+      this.setState({ error: 'Passwords do not match!' });
+      return false;
+    }
     // all validation fields have passed; return true
     return true;
   }
 
-  // toggleLoading = () => this.setState(prev => ({ loading: !prev.loading }))
-
-  onPressRadioGroup = data => this.setState({ data });
-
   submitNewUser = (newUser) => {
     this.setState({ loading: true, error: '' });
-    const { name, email, age, school, work, description, gender, pics } = this.state;
-    const { closeModal } = this.props;
+    const { name, email, age, school, work, description, gender, pics, password } = this.state;
+    const { closeModal, startSetId } = this.props;
 
     // validate fields
     if (!this.validateFields()) {
@@ -104,7 +129,7 @@ export default class NewUserModal extends Component {
 
     console.log('validation complete');
 
-    newUser({
+    return newUser({
       variables: {
         id: email,
         active: true,
@@ -118,7 +143,7 @@ export default class NewUserModal extends Component {
         gender: gender.filter(g => g.selected)[0].label,
         ...settingDefaults,
       },
-      update: (store, data) => {
+      update: async (store, data) => {
         console.log('newUser udpate function');
         console.log('data: ', data);
         // check for an error
@@ -126,28 +151,64 @@ export default class NewUserModal extends Component {
           this.setState({ loading: false, error: 'Could not connect to the network' });
           return false;
         }
+        // This method can return an error. I need to check for an error before closing the modal
+        // and showing the user a sucess confirmation. Consider making this function async
+        startSetId(email);
+
+        const checkAuthentication = await emailSignup({ email, password });
+        console.log('Check Authentication: ', checkAuthentication);
+        if (checkAuthentication) {
+          // If the authentication system update fails, remove the user from our records
+          this.setState({ loading: false, error: checkAuthentication });
+          startSetId(0);
+          // Need to add a function to remove the user in the event of a failure here
+          return null;
+        }
+
         // If successful...
         // Present toast message to user confirming success
+        console.log('before toastMessage');
         toastMessage({
           text: 'Your account has been created!',
         });
+        console.log('after toast message');
         // Close modal
         closeModal();
+        console.log('after close modal');
         return true;
       },
     });
   }
 
   render() {
-    const { settingsContainer, hint, sectionTitle } = styles;
-    const { pics, name, email, age, school, work, description, gender } = this.state;
+    const {
+      settingsContainer,
+      hint,
+      sectionTitle,
+      textInputStyle,
+      submitButton,
+      cancelButton,
+      errorText,
+    } = styles;
+    const {
+      pics,
+      name,
+      email,
+      age,
+      school,
+      work,
+      description,
+      gender,
+      password,
+      validatePassword,
+      loading,
+      error,
+    } = this.state;
     const { closeModal } = this.props;
-
-    console.log('gender: ', gender);
     console.log('pics: ', pics);
 
     return (
-      <ScrollView contentContainerStyle={settingsContainer}>
+      <KeyboardAwareScrollView contentContainerStyle={settingsContainer} scrollEnabled enableOnAndroid>
         <MyTitleText style={{ textDecorationLine: 'underline' }}>
           { 'New Profile Setup' }
         </MyTitleText>
@@ -171,53 +232,83 @@ export default class NewUserModal extends Component {
               { 'Next, tell us about yourself...' }
             </MyAppText>
           </CardSection>
-          <CondInput
-            field="Name"
-            value={name}
-            updateValue={this.changeName}
-          />
-          <CondInput
-            field="Email"
+          <TextInput
+            placeholder="Email"
+            placeholderTextColor="red" // Red color indicates required field
             value={email}
-            updateValue={this.changeEmail}
-            lowerCaseOnly
+            onChangeText={this.changeEmail}
+            style={[textInputStyle, { opacity: email.length ? 1 : 0.4 }]}
           />
-          <CondInput
-            field="Age"
+          <TextInput
+            placeholder="Name"
+            placeholderTextColor="red" // Red color indicates required field
+            value={name}
+            onChangeText={this.changeName}
+            style={[textInputStyle, { opacity: name.length ? 1 : 0.4 }]}
+          />
+          <TextInput
+            placeholder="Age"
             value={age}
-            updateValue={this.changeAge}
+            onChangeText={this.changeAge}
+            style={textInputStyle}
           />
-          <CondInput
-            field="Education"
+          <TextInput
+            placeholder="Education"
             value={school}
-            updateValue={this.changeSchool}
+            onChangeText={this.changeSchool}
+            style={textInputStyle}
           />
-          <CondInput
-            field="Work"
+          <TextInput
+            placeholder="Work"
             value={work}
-            updateValue={this.changeWork}
+            onChangeText={this.changeWork}
+            style={textInputStyle}
           />
-          <CondInput
-            field="Description"
+          <TextInput
+            placeholder="Description"
+            style={textInputStyle}
             value={description}
-            updateValue={this.changeDescription}
+            onChangeText={this.changeDescription}
             multiline
           />
           <CardSection style={{ flexDirection: 'column' }}>
             <MyAppText>
               { 'Gender' }
             </MyAppText>
-            <RadioGroup radioButtons={gender} onPress={this.onPressRadioGroup} flexDirection="row" />
+            <RadioGroup radioButtons={gender} onPress={this.changeGender} flexDirection="row" />
           </CardSection>
         </Card>
-        {!!this.state.error && (
-          <MyAppText style={{ color: 'red', textAlign: 'center', margin: 15 }}>
-            { this.state.error }
+        <Card style={{ padding: 0 }}>
+          <CardSection style={sectionTitle}>
+            <MyAppText style={{ fontWeight: 'bold', color: '#FFF' }}>
+              { 'Finally, create a password.' }
+            </MyAppText>
+          </CardSection>
+          <CardSection style={{ flexDirection: 'column' }}>
+            <TextInput
+              style={textInputStyle}
+              secureTextEntry
+              placeholder="Password"
+              value={password}
+              onChangeText={this.passwordInput}
+            />
+            <TextInput
+              secureTextEntry
+              style={textInputStyle}
+              placeholder="Re-enter Password"
+              value={validatePassword}
+              onChangeText={this.validatePasswordInput}
+            />
+          </CardSection>
+        </Card>
+        {!!error && (
+          <MyAppText style={errorText}>
+            { error }
           </MyAppText>
         )}
         <Mutation mutation={NEW_USER}>
           {(newUser) => {
-            if (this.state.loading) {
+            if (loading) {
               return <Spinner />;
             }
             return (
@@ -227,13 +318,13 @@ export default class NewUserModal extends Component {
                   onPress={() => this.submitNewUser(newUser)}
                 >
                   <MyAppText
-                    style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}
+                    style={submitButton}
                   >
                     { 'Submit' }
                   </MyAppText>
                 </Button>
                 <TouchableOpacity onPress={closeModal}>
-                  <MyAppText style={{ color: PRIMARY_COLOR, margin: 20, textAlign: 'center' }}>
+                  <MyAppText style={cancelButton}>
                     { 'Cancel' }
                   </MyAppText>
                 </TouchableOpacity>
@@ -241,59 +332,45 @@ export default class NewUserModal extends Component {
             );
           }}
         </Mutation>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   settingsContainer: {
-    // justifyContent: 'space-between',
-    // alignItems: 'center',
     padding: 10,
   },
   textInputStyle: {
-    height: 40,
-    width: 100,
-    borderColor: 'gray',
-    borderWidth: 1,
-  },
-  cardContainer: {
-    width: 300,
-    height: 400,
-  },
-  cardSection: {
-    height: 40,
-  },
-  editView: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  img: {
-    width: 150,
-    height: 150,
-    resizeMode: 'contain',
-    backgroundColor: 'black',
-  },
-  spinner: {
-    width: 150,
-    height: 150,
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#D3D3D3',
+    minHeight: 40,
   },
   hint: {
     margin: 10,
     fontStyle: 'italic',
     fontSize: 10,
   },
-  errorText: {
-    color: 'red',
-    textAlign: 'center',
-    margin: 15,
-  },
   sectionTitle: {
     backgroundColor: '#000',
     overflow: 'hidden',
     borderTopRightRadius: 5,
     borderTopLeftRadius: 5,
+  },
+  cancelButton: {
+    color: PRIMARY_COLOR,
+    margin: 20,
+    textAlign: 'center',
+  },
+  submitButton: {
+    fontWeight: 'bold',
+    color: '#fff',
+    fontSize: 18,
+  },
+  errorText: {
+    color: 'red',
+    textAlign: 'center',
+    margin: 15,
   },
 });

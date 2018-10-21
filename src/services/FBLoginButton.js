@@ -59,7 +59,7 @@ class FBLoginButton extends Component {
                 let isRegistered;
       
                 console.log('Before firebase auth');
-                const result = await firebase.auth().signInAndRetrieveDataWithCredential(credential);
+                const result = await firebase.auth().signInWithCredential(credential);
                 console.log('after firebase auth');
       
                 try {

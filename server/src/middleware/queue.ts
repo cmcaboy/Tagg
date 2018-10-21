@@ -50,7 +50,7 @@ export const getQueue = ({id,followerDisplay}) => {
                 .then(result => result.records)
                 .then(records => {
                     const list = records.map(record => {
-                        // console.log('queue record: ',record);
+                        console.log('queue record: ',record);
                         // console.log('field 0: ',record._fields[0]);
                         // console.log('field 1: ',record._fields[1]);
                         // console.log('field 2: ',record._fields[2]);

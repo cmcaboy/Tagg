@@ -6,9 +6,11 @@ import {
   LayoutAnimation,
   UIManager,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import { ApolloConsumer, Mutation } from 'react-apollo';
 import { Form, Item, Input, Button, Text } from 'native-base';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { CardSection, MyAppText, MyAppModal, Spinner } from './common';
 import { PRIMARY_COLOR, BACKGROUND_COLOR, DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from '../variables';
 import { getCurrentTime } from '../format';
@@ -103,26 +105,6 @@ class LoginForm extends Component {
     this.setState({ modalDisplay: true, loading: false });
   }
 
-  completeEmailSignupAuth = async ({ startSetId }) => {
-    const { email, password } = this.state;
-    // Upload new data to our database; Do not continue until successful confirmation is returned
-
-    // Set local state id
-    startSetId(email);
-
-    // Finally, register the user in our authentication system
-    const checkAuthentication = await emailSignup({ email, password });
-    if (checkAuthentication) {
-      // If the authentication system update fails, remove the user from our records
-      this.setError('Unfortunately, we could not register email your email at this time');
-      startSetId(0);
-      // Need to add a function to remove the user in the event of a failure here
-      return null;
-    }
-    // If you made it this far, everything has worked out!
-    return true;
-  }
-
   componentWillUpdate = () => {
     UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
     LayoutAnimation.linear();
@@ -164,10 +146,10 @@ class LoginForm extends Component {
                   setId({ variables: { id } });
                 };
                 return (
-                  <KeyboardAvoidingView
-                    style={styles.loginContainer}
-                    behavior="padding"
-                    enabled
+                  <KeyboardAwareScrollView
+                    contentContainerStyle={styles.loginContainer}
+                    scrollEnabled
+                    enableOnAndroid
                   >
                     <MyAppModal
                       isVisible={this.state.modalDisplay}
@@ -177,7 +159,6 @@ class LoginForm extends Component {
                       <NewUserModal
                         closeModal={this.modalClose}
                         startSetId={startSetId}
-                        completeEmailSignupAuth={() => this.completeEmailSignupAuth({ startSetId })}
                       />
                     </MyAppModal>
                     <View style={styles.content}>
@@ -199,7 +180,7 @@ class LoginForm extends Component {
                     <View style={styles.emailContainer}>
                       <TouchableOpacity onPress={this.toggleEmail}>
                         <Text style={styles.emailFormTitleText}>
-                          { 'Login with Email' }
+                          { 'Use Email Instead' }
                         </Text>
                       </TouchableOpacity>
                       {this.state.showEmail && (
@@ -241,7 +222,7 @@ class LoginForm extends Component {
                                     </Button>
                                     <TouchableOpacity onPress={() => this.emailSignup({ client, startSetId, startNewUser })}>
                                       <MyAppText style={signUp}>
-                                        { 'Sign up' }
+                                        { 'Sign up with Email' }
                                       </MyAppText>
                                     </TouchableOpacity>
                                   </View>
@@ -252,7 +233,7 @@ class LoginForm extends Component {
                         </View>
                       )}
                     </View>
-                  </KeyboardAvoidingView>
+                  </KeyboardAwareScrollView>
                 );
               }}
             </Mutation>

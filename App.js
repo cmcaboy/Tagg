@@ -2,6 +2,7 @@ import React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { YellowBox } from 'react-native';
 import { Sentry } from 'react-native-sentry';
+import { Root } from 'native-base';
 import Authentication from './src/components/Authentication';
 import { client } from './src/apollo';
 
@@ -14,6 +15,8 @@ YellowBox.ignoreWarnings(['Require cycle:']);
 
 export default () => (
   <ApolloProvider client={client}>
-    <Authentication />
+    <Root>
+      <Authentication />
+    </Root>
   </ApolloProvider>
 );

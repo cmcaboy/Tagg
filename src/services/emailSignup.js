@@ -7,11 +7,11 @@ export default async ({ email, password }) => {
 
   let signup = null;
   try {
-    signup = await auth.createUserAndRetrieveDataWithEmailAndPassword(email, password);
+    signup = await auth.createUserWithEmailAndPassword(email, password);
   } catch (e) {
     console.log('Error signing up via email: ', e);
     signup = false;
-    return e;
+    return e.toString();
   }
 
   console.log('signup: ', signup);

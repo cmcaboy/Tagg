@@ -39,7 +39,7 @@ class CondInput extends Component {
 
   render() {
     const { isEdit, value } = this.state;
-    const { field, multiline = false } = this.props;
+    const { field, multiline = false, secureTextEntry = false } = this.props;
     return (
       <View style={styles.container}>
         {!isEdit ? (
@@ -54,6 +54,7 @@ class CondInput extends Component {
           <CardSection style={styles.cardSection}>
             <View style={styles.editView}>
               <TextInput
+                secureTextEntry={secureTextEntry}
                 selectTextOnFocus
                 autoFocus
                 style={styles.textInputStyle}
