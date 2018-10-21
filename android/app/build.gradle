@@ -40,11 +40,11 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.manhattanmatch"
+        applicationId "com.manhattanmatch2"
         minSdkVersion 16
         targetSdkVersion rootProject.targetSdkVersion
         multiDexEnabled true
-        versionCode 13
+        versionCode 26
         versionName "0.1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -52,14 +52,18 @@ android {
     }
     signingConfigs {
         release {
-            //storeFile file(System.getenv("TAGG_RELEASE_STORE_FILE"))
-            //storePassword System.getenv("TAGG_RELEASE_STORE_PASSWORD")
-            //keyAlias System.getenv("TAGG_RELEASE_KEY_ALIAS")
-            //keyPassword System.getenv("TAGG_RELEASE_KEY_PASSWORD")
-            storeFile file("/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/secure/tagg-key.keystore")
-            storePassword "HHCdty28"
-            keyAlias "tagg-key-alias"
-            keyPassword "HHCdty28"
+            // storeFile file(System.getenv("TAGG_RELEASE_STORE_FILE"))
+            // storePassword System.getenv("TAGG_RELEASE_STORE_PASSWORD")
+            // keyAlias System.getenv("TAGG_RELEASE_KEY_ALIAS")
+            // keyPassword System.getenv("TAGG_RELEASE_KEY_PASSWORD")
+            storeFile file(project.env.get("TAGG_RELEASE_STORE_FILE"))
+            storePassword project.env.get("TAGG_RELEASE_STORE_PASSWORD")
+            keyAlias project.env.get("TAGG_RELEASE_KEY_ALIAS")
+            keyPassword project.env.get("TAGG_RELEASE_KEY_PASSWORD")
+            // storeFile file("/Users/jonathanmcaboy/Desktop/Dev/Tagg/android/secure/tagg-key.keystore")
+            // storePassword "HHCdty28"
+            // keyAlias "tagg-key-alias"
+            // keyPassword "HHCdty28"
         }
     }
 
@@ -96,7 +100,6 @@ android {
 
 dependencies {
     compile project(':rn-fetch-blob')
-    compile project(':react-native-vector-icons')
     compile project(':react-native-sentry')
     //compile project(':react-native-vector-icons')
     //compile project(':react-native-image-picker')
