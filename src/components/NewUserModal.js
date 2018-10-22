@@ -9,6 +9,7 @@ import {
   TextInput,
   LayoutAnimation,
   UIManager,
+  Platform,
 } from 'react-native';
 import { Button } from 'native-base';
 import { Mutation } from 'react-apollo';
@@ -60,7 +61,7 @@ export default class NewUserModal extends Component {
 
   changeName = name => this.setState({ name });
 
-  changeEmail = email => this.setState({ email: email.toLowerCase() });
+  changeEmail = email => this.setState({ email });
 
   changeAge = age => this.setState({ age });
 
@@ -131,10 +132,10 @@ export default class NewUserModal extends Component {
 
     return newUser({
       variables: {
-        id: email,
+        id: email.toLowerCase(),
         active: true,
         name,
-        email,
+        email: email.toLowerCase(),
         age,
         school,
         work,
@@ -189,6 +190,7 @@ export default class NewUserModal extends Component {
       submitButton,
       cancelButton,
       errorText,
+      blankView,
     } = styles;
     const {
       pics,
@@ -208,7 +210,14 @@ export default class NewUserModal extends Component {
     console.log('pics: ', pics);
 
     return (
-      <KeyboardAwareScrollView contentContainerStyle={settingsContainer} scrollEnabled enableOnAndroid>
+      <KeyboardAwareScrollView
+        contentContainerStyle={settingsContainer}
+        scrollEnabled
+        enableAutomaticScroll
+        enableOnAndroid
+        // extraHeight={200}
+        // extraScrollHeight={200}
+      >
         <MyTitleText style={{ textDecorationLine: 'underline' }}>
           { 'New Profile Setup' }
         </MyTitleText>
@@ -332,6 +341,7 @@ export default class NewUserModal extends Component {
             );
           }}
         </Mutation>
+        <View style={blankView} />
       </KeyboardAwareScrollView>
     );
   }
@@ -372,5 +382,8 @@ const styles = StyleSheet.create({
     color: 'red',
     textAlign: 'center',
     margin: 15,
+  },
+  blankView: {
+    height: Platform.OS === 'android' ? 200 : 0,
   },
 });

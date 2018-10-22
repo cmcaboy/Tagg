@@ -1,4 +1,4 @@
-package com.manhattanmatch;
+package com.manhattanmatch2;
 
 import android.content.Intent;
 import com.facebook.react.ReactActivity;

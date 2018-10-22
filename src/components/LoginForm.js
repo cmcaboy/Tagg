@@ -5,8 +5,6 @@ import {
   TouchableOpacity,
   LayoutAnimation,
   UIManager,
-  KeyboardAvoidingView,
-  ScrollView,
 } from 'react-native';
 import { ApolloConsumer, Mutation } from 'react-apollo';
 import { Form, Item, Input, Button, Text } from 'native-base';
@@ -18,7 +16,7 @@ import FBLoginButton from '../services/FBLoginButton';
 import { NEW_USER } from '../apollo/mutations';
 import { SET_ID_LOCAL } from '../apollo/local/mutations';
 import emailLogin from '../services/emailLogin';
-import emailSignup from '../services/emailSignup';
+// import emailSignup from '../services/emailSignup';
 import checkEmail from '../services/checkEmail';
 import NewUserModal from './NewUserModal';
 import emailValidation from '../services/emailValidation';
@@ -150,6 +148,7 @@ class LoginForm extends Component {
                     contentContainerStyle={styles.loginContainer}
                     scrollEnabled
                     enableOnAndroid
+                    enableAutomaticScroll
                   >
                     <MyAppModal
                       isVisible={this.state.modalDisplay}

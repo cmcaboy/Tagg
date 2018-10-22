@@ -10,41 +10,14 @@
       "client_info": {
         "mobilesdk_app_id": "1:827302466800:android:823be4bd84105394",
         "android_client_info": {
-          "package_name": "com.manhattanmatch"
+          "package_name": "com.manhattanmatch2"
         }
       },
       "oauth_client": [
         {
           "client_id": "827302466800-ato673o04g9ra2nbtjr2b82gc7sf2q2s.apps.googleusercontent.com",
           "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBzq2VXhmryYrkG6ixjnviBhc-cZab1F5A"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
         },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:827302466800:android:f5bb26746417b403",
-        "android_client_info": {
-          "package_name": "com.manhattanmatch2"
-        }
-      },
-      "oauth_client": [
         {
           "client_id": "827302466800-ato673o04g9ra2nbtjr2b82gc7sf2q2s.apps.googleusercontent.com",
           "client_type": 3
