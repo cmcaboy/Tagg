@@ -1,5 +1,5 @@
 import Config from 'react-native-config';
-
+import { Dimensions } from 'react-native';
 export const ENV = 'PROD';
 
 export const {
@@ -29,6 +29,9 @@ export const PROFILE_NOT_FOUND = 'We could not find your profile.';
 
 export const DEFAULT_LATITUDE = 40.000;
 export const DEFAULT_LONGITUDE = -75.000;
+
+export const ICON_OPACITY = 0.75;
+export const ICON_SIZE = Dimensions.get('window').height * 0.05;
 
 export const settingDefaults = {
   latitude: DEFAULT_LATITUDE,

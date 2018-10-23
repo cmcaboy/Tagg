@@ -41,7 +41,7 @@ class LoginForm extends Component {
 
   toggleEmail = () => this.setState(prev => ({ showEmail: !prev.showEmail }))
 
-  emailInput = email => this.setState({ email: email.toLowerCase() })
+  emailInput = email => this.setState({ email })
 
   passwordInput = password => this.setState({ password });
 

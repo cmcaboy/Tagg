@@ -2,8 +2,12 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, Text } from 'native-base';
+import { Mutation } from 'react-apollo';
+import { SET_ID_LOCAL } from '../../apollo/local/mutations';
+import { auth } from '../../firebase';
 import { MyAppText } from './MyAppText';
 import { Spinner } from './Spinner';
+import LogoutButton from '../LogoutButton';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -51,6 +55,7 @@ class ErrorMessage extends React.Component {
           {`Whoops! Something with wrong: ${error}`}
         </MyAppText>
         {this.refreshButton()}
+        <LogoutButton />
       </View>
     );
   }
