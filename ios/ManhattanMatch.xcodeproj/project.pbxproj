@@ -86,6 +86,10 @@
 		B7B1C1A020CAFE7200E7D02F /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7B1C19520CAFE7100E7D02F /* SimpleLineIcons.ttf */; };
 		B7B1C1A120CAFE7200E7D02F /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7B1C19620CAFE7100E7D02F /* MaterialIcons.ttf */; };
 		B7CDAAA8216A1E10004F0B1D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B7CDAAA7216A1E10004F0B1D /* GoogleService-Info.plist */; };
+<<<<<<< HEAD
+=======
+		B7EB6C12217BC398001A0F23 /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7EB6C0E217BC361001A0F23 /* libRNFetchBlob.a */; };
+>>>>>>> temp2
 		C80D251E36DE45E59EC394B8 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD7A7D2028DA41F6ABE5F31D /* SimpleLineIcons.ttf */; };
 		CB22CB6958514BBBAC892C58 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D59DA7F5D0FC4A69B29DA8BA /* Ionicons.ttf */; };
 		CBBE339F8F5746248A6FA973 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85CB27353C8A44B4B1CB25E6 /* Entypo.ttf */; };
@@ -469,6 +473,16 @@
 			remoteGlobalIDString = A287971D1DE0C0A60081BDFA;
 			remoteInfo = FastImage;
 		};
+<<<<<<< HEAD
+=======
+		B7EB6C0D217BC361001A0F23 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7EB6BDC217BC361001A0F23 /* RNFetchBlob.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A15C300E1CD25C330074CB35;
+			remoteInfo = RNFetchBlob;
+		};
+>>>>>>> temp2
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -563,6 +577,10 @@
 		B7CDAAA7216A1E10004F0B1D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B7E0D5DB21357B140001F23C /* ManhattanMatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ManhattanMatch.entitlements; path = ManhattanMatch/ManhattanMatch.entitlements; sourceTree = "<group>"; };
 		B7E58627A6B549E58BCC4BF9 /* libRNBackgroundGeolocation.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBackgroundGeolocation.a; sourceTree = "<group>"; };
+<<<<<<< HEAD
+=======
+		B7EB6BDC217BC361001A0F23 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
+>>>>>>> temp2
 		B8A26E5230FF2D64BFBCD3AB /* libPods-ManhattanMatch-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ManhattanMatch-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCDC8501D35541EF8321366C /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		C107984187721221880D7E08 /* Pods-ManhattanMatch-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManhattanMatch-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ManhattanMatch-tvOSTests/Pods-ManhattanMatch-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -599,6 +617,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD
+=======
+				B7EB6C12217BC398001A0F23 /* libRNFetchBlob.a in Frameworks */,
+>>>>>>> temp2
 				B7144249214D3E46001F6DAA /* libReactNativeConfig.a in Frameworks */,
 				B7113EC9213C8B5200BCAB68 /* libRCTPushNotification.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
@@ -850,6 +872,10 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+=======
+				B7EB6BDC217BC361001A0F23 /* RNFetchBlob.xcodeproj */,
+>>>>>>> temp2
 				B7144243214D3E06001F6DAA /* ReactNativeConfig.xcodeproj */,
 				B7113E94213C8B0C00BCAB68 /* RCTPushNotification.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -1078,6 +1104,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
+=======
+		B7EB6BDD217BC361001A0F23 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B7EB6C0E217BC361001A0F23 /* libRNFetchBlob.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+>>>>>>> temp2
 		EA37D622E9BC4B2CA3D078B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1374,6 +1411,13 @@
 					ProjectRef = 3EE1B2D713094D92A338A0C1 /* RNBackgroundGeolocation.xcodeproj */;
 				},
 				{
+<<<<<<< HEAD
+=======
+					ProductGroup = B7EB6BDD217BC361001A0F23 /* Products */;
+					ProjectRef = B7EB6BDC217BC361001A0F23 /* RNFetchBlob.xcodeproj */;
+				},
+				{
+>>>>>>> temp2
 					ProductGroup = B7B1C23920D6F40700E7D02F /* Products */;
 					ProjectRef = 859AB8EF92864D3A873DE178 /* RNFirebase.xcodeproj */;
 				},
@@ -1736,6 +1780,16 @@
 			remoteRef = B7CDA4D721662807004F0B1D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+<<<<<<< HEAD
+=======
+		B7EB6C0E217BC361001A0F23 /* libRNFetchBlob.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFetchBlob.a;
+			remoteRef = B7EB6C0D217BC361001A0F23 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+>>>>>>> temp2
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -2064,6 +2118,10 @@
 					"$(PROJECT_DIR)/Frameworks/",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+<<<<<<< HEAD
+=======
+					"$(inherited)",
+>>>>>>> temp2
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -2111,6 +2169,10 @@
 					"$(PROJECT_DIR)/Frameworks/",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+<<<<<<< HEAD
+=======
+					"$(inherited)",
+>>>>>>> temp2
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2148,7 +2210,11 @@
 				CODE_SIGN_ENTITLEMENTS = ManhattanMatch/ManhattanMatch.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jonathan McAboy (GTZ7BL7JLG)";
 				CODE_SIGN_STYLE = Manual;
+<<<<<<< HEAD
 				CURRENT_PROJECT_VERSION = 38;
+=======
+				CURRENT_PROJECT_VERSION = 45;
+>>>>>>> temp2
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 96WSSA5AM3;
 				ENABLE_BITCODE = NO;
@@ -2157,6 +2223,11 @@
 					"$(PROJECT_DIR)/Frameworks/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+<<<<<<< HEAD
+=======
+					"$(inherited)",
+					"~/Documents/FacebookSDK",
+>>>>>>> temp2
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2206,7 +2277,11 @@
 				CODE_SIGN_ENTITLEMENTS = ManhattanMatch/ManhattanMatch.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan McAboy (96WSSA5AM3)";
 				CODE_SIGN_STYLE = Manual;
+<<<<<<< HEAD
 				CURRENT_PROJECT_VERSION = 38;
+=======
+				CURRENT_PROJECT_VERSION = 45;
+>>>>>>> temp2
 				DEVELOPMENT_TEAM = 96WSSA5AM3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2214,6 +2289,11 @@
 					"$(PROJECT_DIR)/Frameworks/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+<<<<<<< HEAD
+=======
+					"$(inherited)",
+					"~/Documents/FacebookSDK",
+>>>>>>> temp2
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2271,6 +2351,10 @@
 					"$(PROJECT_DIR)/Frameworks/",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+<<<<<<< HEAD
+=======
+					"$(inherited)",
+>>>>>>> temp2
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = (
@@ -2319,6 +2403,10 @@
 					"$(PROJECT_DIR)/Frameworks/",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-geolocation/ios/**",
 					"$(PROJECT_DIR)/../node_modules/react-native-background-fetch/ios/**",
+<<<<<<< HEAD
+=======
+					"$(inherited)",
+>>>>>>> temp2
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				HEADER_SEARCH_PATHS = (

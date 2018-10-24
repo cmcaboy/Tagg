@@ -719,7 +719,11 @@ const resolvers = {
             !!args.longitude && (query = query+ `longitude:${args.longitude},`)
             !!args.minAgePreference && (query = query+ `minAgePreference:${args.minAgePreference},`)
             !!args.maxAgePreference && (query = query+ `maxAgePreference:${args.maxAgePreference},`)
+<<<<<<< HEAD
             !!args.followerDisplay && (query = query+ `followerDisplay='${args.followerDisplay}',`)
+=======
+            !!args.followerDisplay && (query = query+ `followerDisplay:'${args.followerDisplay}',`)
+>>>>>>> temp2
             !!args.pics && (query = query+ `pics:[${args.pics.map(pic => `"${pic}"`)}],`)
 
             query = query.slice(-1) === ','? query.slice(0,-1) : query;

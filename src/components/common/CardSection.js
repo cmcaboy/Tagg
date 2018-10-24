@@ -3,7 +3,11 @@ import { View } from 'react-native';
 
 const CardSection = ({ style, children }) => {
     return (
+<<<<<<< HEAD
         <View style={[styles.containerStyle, style]}>
+=======
+        <View style={[ styles.containerStyle, style ]}>
+>>>>>>> temp2
             {children}
         </View>
     );
