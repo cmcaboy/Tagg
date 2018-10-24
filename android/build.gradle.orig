@@ -39,8 +39,6 @@ allprojects {
     }
 }
 
-<<<<<<< HEAD
-=======
 subprojects {
     afterEvaluate {project ->
         if (project.hasProperty("android")) {
@@ -52,7 +50,6 @@ subprojects {
     }
 }
 
->>>>>>> temp2
 ext {
     compileSdkVersion   = 27
     targetSdkVersion    = 27

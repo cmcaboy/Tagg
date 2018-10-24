@@ -1,17 +1,5 @@
 {
   "presets": [
-<<<<<<< HEAD
-    "babel-preset-react-native-stage-0/decorator-support"
-  ],
-  "env": {
-    "development": {
-      "plugins": [
-        "transform-react-jsx-source"
-      ]
-    }
-  }
-}
-=======
     "babel-preset-react-native",
     "module:metro-react-native-babel-preset"
   ],
@@ -21,4 +9,3 @@
     }
   }
 }
->>>>>>> temp2

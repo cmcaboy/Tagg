@@ -33,10 +33,6 @@ android/.idea
 android/secure
 android/.gradle
 android/*.iml
-<<<<<<< HEAD
-android/.gradle/4.6/taskHistory
-=======
->>>>>>> temp2
 
 server/etc
 

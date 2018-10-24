@@ -1,20 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-<<<<<<< HEAD
-    package="com.manhattanmatch"
-=======
     package="com.manhattanmatch2"
->>>>>>> temp2
     >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-<<<<<<< HEAD
-=======
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
->>>>>>> temp2
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -49,11 +42,7 @@
         </service>
         <service android:name="io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService" />
         <!-- react-native-background-geolocation licence -->
-<<<<<<< HEAD
-        <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="81c1f66af6ec7ce2a03650c43e9d4d8bb521b5c23876cdaa7710d2e503b00f76" />
-=======
         <meta-data android:name="com.transistorsoft.locationmanager.license" android:value="9203d06a1e8e6f2151a8536de5b4176f3cbb00e8515ba2298cb93d73c02cbc75" />
->>>>>>> temp2
         <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
             See README(https://goo.gl/l4GJaQ) for more. -->
         <!---<meta-data
@@ -69,11 +58,7 @@
             android:label="@string/app_name"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
-<<<<<<< HEAD
-            android:windowSoftInputMode="adjustResize">
-=======
             android:windowSoftInputMode="adjustPan">
->>>>>>> temp2
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

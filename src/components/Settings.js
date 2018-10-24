@@ -10,38 +10,19 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Query } from 'react-apollo';
 import { LoginManager } from 'react-native-fbsdk';
-<<<<<<< HEAD
-import { firebase, crashlytics } from '../firebase';
-=======
 import { firebase } from '../firebase';
->>>>>>> temp2
 import {
   CirclePicture,
   MyAppText,
   Spinner,
   ErrorMessage,
 } from './common';
-<<<<<<< HEAD
-import { PRIMARY_COLOR, PLACEHOLDER_PHOTO, PROFILE_NOT_FOUND } from '../variables';
-import { GET_PROFILE } from '../apollo/queries';
-import { GET_ID } from '../apollo/local/queries';
-
-const ICON_OPACITY = 0.75;
-const ICON_SIZE = Dimensions.get('window').height * 0.05;
-
-class Settings extends React.Component {
-    startLogout = () => {
-      firebase.auth().signOut();
-      LoginManager.logOut();
-    }
-=======
 import { PRIMARY_COLOR, PLACEHOLDER_PHOTO, PROFILE_NOT_FOUND, ICON_OPACITY, ICON_SIZE } from '../variables';
 import { GET_PROFILE } from '../apollo/queries';
 import { GET_ID } from '../apollo/local/queries';
 import LogoutButton from './LogoutButton';
 
 class Settings extends React.Component {
->>>>>>> temp2
 
     renderSubheading = (work, school) => {
         if (work || school) {
@@ -112,26 +93,7 @@ class Settings extends React.Component {
                 </MyAppText>
               </TouchableOpacity>
             </View>
-<<<<<<< HEAD
-            <View>
-              <TouchableOpacity
-                onPress={() => this.startLogout()}
-                style={styles.buttons}
-              >
-                <MaterialCommunityIcons
-                  name="logout"
-                  size={ICON_SIZE}
-                  color="black"
-                  style={{ opacity: ICON_OPACITY }}
-                />
-                <MyAppText style={styles.optionText}>
-                  {'Log out'}
-                </MyAppText>
-              </TouchableOpacity>
-            </View>
-=======
             <LogoutButton />
->>>>>>> temp2
         </View>
       );
     }

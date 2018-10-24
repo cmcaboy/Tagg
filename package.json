@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "name": "Tagg",
-=======
   "name": "ManhattanMatch",
->>>>>>> temp2
   "version": "0.1.0",
   "private": true,
   "rnpm": {
@@ -14,26 +10,17 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.40",
     "@babel/core": "^7.0.0-beta.40",
-<<<<<<< HEAD
-    "@babel/preset-env": "^7.0.0-beta.40",
-    "babel-eslint": "^8.2.6",
-    "babel-preset-react-native-stage-0": "^1.0.1",
-=======
     "@babel/plugin-external-helpers": "^7.0.0",
     "@babel/preset-env": "^7.0.0-beta.40",
     "@babel/runtime": "^7.1.2",
     "babel-eslint": "^8.2.6",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "babel-preset-react-native": "5",
->>>>>>> temp2
     "eslint": "^5.4.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
-<<<<<<< HEAD
-    "react-test-renderer": "16.0.0"
-=======
     "metro-react-native-babel-preset": "^0.48.1",
     "react-test-renderer": "16.0.0",
     "schedule": "0.4.0"
@@ -41,7 +28,6 @@
   "resolutions": {
     "@babel/core": "^7.0.0-beta.40",
     "babel-core": "7.0.0-bridge.0"
->>>>>>> temp2
   },
   "scripts": {
     "build-android-prod": "export ENVFILE=.env.prod && cd android && ./gradlew assembleRelease && cd ..",
@@ -83,17 +69,10 @@
     "moment": "^2.22.1",
     "native-base": "^2.7.2",
     "plist": "^3.0.1",
-<<<<<<< HEAD
-    "react": "16.0.0",
-    "react-apollo": "^2.1.4",
-    "react-composer": "^5.0.1",
-    "react-native": "0.55.4",
-=======
     "react": "^16.5.2",
     "react-apollo": "^2.1.4",
     "react-composer": "^5.0.1",
     "react-native": "0.57.0",
->>>>>>> temp2
     "react-native-background-geolocation": "^2.12.2",
     "react-native-collapsible": "^0.10.0",
     "react-native-config": "^0.11.5",
@@ -101,16 +80,10 @@
     "react-native-elements": "^0.19.0",
     "react-native-fast-image": "^4.0.14",
     "react-native-fbsdk": "^0.8.0",
-<<<<<<< HEAD
-    "react-native-firebase": "^4.2.0",
-    "react-native-gifted-chat": "^0.3.0",
-    "react-native-image-picker": "^0.26.10",
-=======
     "react-native-firebase": "^5.0.0",
     "react-native-gifted-chat": "^0.3.0",
     "react-native-image-picker": "^0.26.10",
     "react-native-keyboard-aware-scroll-view": "^0.7.4",
->>>>>>> temp2
     "react-native-keyboard-spacer": "^0.4.1",
     "react-native-modalbox": "^1.6.0",
     "react-native-permissions": "^1.1.1",
@@ -121,10 +94,7 @@
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "1.5.0",
     "recyclerlistview": "^1.3.4",
-<<<<<<< HEAD
-=======
     "rn-fetch-blob": "^0.10.13",
->>>>>>> temp2
     "subscriptions-transport-ws": "^0.9.11",
     "uuid": "^3.3.2",
     "xcode": "^1.0.0"

@@ -17,9 +17,6 @@
         {
           "client_id": "827302466800-ato673o04g9ra2nbtjr2b82gc7sf2q2s.apps.googleusercontent.com",
           "client_type": 3
-<<<<<<< HEAD
-        },
-=======
         }
       ],
       "api_key": [
@@ -48,7 +45,6 @@
         }
       },
       "oauth_client": [
->>>>>>> temp2
         {
           "client_id": "827302466800-ato673o04g9ra2nbtjr2b82gc7sf2q2s.apps.googleusercontent.com",
           "client_type": 3
@@ -74,8 +70,4 @@
     }
   ],
   "configuration_version": "1"
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> temp2

@@ -17,10 +17,6 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-<<<<<<< HEAD
-	<string>38</string>
-=======
 	<string>45</string>
->>>>>>> temp2
 </dict>
 </plist>

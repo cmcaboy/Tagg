@@ -5,17 +5,10 @@ import {
   TouchableOpacity,
   LayoutAnimation,
   UIManager,
-<<<<<<< HEAD
-  KeyboardAvoidingView,
-} from 'react-native';
-import { ApolloConsumer, Mutation } from 'react-apollo';
-import { Form, Item, Input, Button, Text } from 'native-base';
-=======
 } from 'react-native';
 import { ApolloConsumer, Mutation } from 'react-apollo';
 import { Form, Item, Input, Button, Text } from 'native-base';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
->>>>>>> temp2
 import { CardSection, MyAppText, MyAppModal, Spinner } from './common';
 import { PRIMARY_COLOR, BACKGROUND_COLOR, DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from '../variables';
 import { getCurrentTime } from '../format';
@@ -23,11 +16,7 @@ import FBLoginButton from '../services/FBLoginButton';
 import { NEW_USER } from '../apollo/mutations';
 import { SET_ID_LOCAL } from '../apollo/local/mutations';
 import emailLogin from '../services/emailLogin';
-<<<<<<< HEAD
-import emailSignup from '../services/emailSignup';
-=======
 // import emailSignup from '../services/emailSignup';
->>>>>>> temp2
 import checkEmail from '../services/checkEmail';
 import NewUserModal from './NewUserModal';
 import emailValidation from '../services/emailValidation';
@@ -52,11 +41,7 @@ class LoginForm extends Component {
 
   toggleEmail = () => this.setState(prev => ({ showEmail: !prev.showEmail }))
 
-<<<<<<< HEAD
-  emailInput = email => this.setState({ email: email.toLowerCase() })
-=======
   emailInput = email => this.setState({ email })
->>>>>>> temp2
 
   passwordInput = password => this.setState({ password });
 
@@ -118,29 +103,6 @@ class LoginForm extends Component {
     this.setState({ modalDisplay: true, loading: false });
   }
 
-<<<<<<< HEAD
-  completeEmailSignupAuth = async ({ startSetId }) => {
-    const { email, password } = this.state;
-    // Upload new data to our database; Do not continue until successful confirmation is returned
-
-    // Set local state id
-    startSetId(email);
-
-    // Finally, register the user in our authentication system
-    const checkAuthentication = await emailSignup({ email, password });
-    if (checkAuthentication) {
-      // If the authentication system update fails, remove the user from our records
-      this.setError('Unfortunately, we could not register email your email at this time');
-      startSetId(0);
-      // Need to add a function to remove the user in the event of a failure here
-      return null;
-    }
-    // If you made it this far, everything has worked out!
-    return true;
-  }
-
-=======
->>>>>>> temp2
   componentWillUpdate = () => {
     UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
     LayoutAnimation.linear();
@@ -182,18 +144,11 @@ class LoginForm extends Component {
                   setId({ variables: { id } });
                 };
                 return (
-<<<<<<< HEAD
-                  <KeyboardAvoidingView
-                    style={styles.loginContainer}
-                    behavior="padding"
-                    enabled
-=======
                   <KeyboardAwareScrollView
                     contentContainerStyle={styles.loginContainer}
                     scrollEnabled
                     enableOnAndroid
                     enableAutomaticScroll
->>>>>>> temp2
                   >
                     <MyAppModal
                       isVisible={this.state.modalDisplay}
@@ -203,10 +158,6 @@ class LoginForm extends Component {
                       <NewUserModal
                         closeModal={this.modalClose}
                         startSetId={startSetId}
-<<<<<<< HEAD
-                        completeEmailSignupAuth={() => this.completeEmailSignupAuth({ startSetId })}
-=======
->>>>>>> temp2
                       />
                     </MyAppModal>
                     <View style={styles.content}>
@@ -228,11 +179,7 @@ class LoginForm extends Component {
                     <View style={styles.emailContainer}>
                       <TouchableOpacity onPress={this.toggleEmail}>
                         <Text style={styles.emailFormTitleText}>
-<<<<<<< HEAD
-                          { 'Login with Email' }
-=======
                           { 'Use Email Instead' }
->>>>>>> temp2
                         </Text>
                       </TouchableOpacity>
                       {this.state.showEmail && (
@@ -274,11 +221,7 @@ class LoginForm extends Component {
                                     </Button>
                                     <TouchableOpacity onPress={() => this.emailSignup({ client, startSetId, startNewUser })}>
                                       <MyAppText style={signUp}>
-<<<<<<< HEAD
-                                        { 'Sign up' }
-=======
                                         { 'Sign up with Email' }
->>>>>>> temp2
                                       </MyAppText>
                                     </TouchableOpacity>
                                   </View>
@@ -289,11 +232,7 @@ class LoginForm extends Component {
                         </View>
                       )}
                     </View>
-<<<<<<< HEAD
-                  </KeyboardAvoidingView>
-=======
                   </KeyboardAwareScrollView>
->>>>>>> temp2
                 );
               }}
             </Mutation>

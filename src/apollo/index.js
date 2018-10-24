@@ -23,17 +23,10 @@ const cache = new InMemoryCache({ dataIdFromObject: object => object.id });
 
 // persistCache allows apollo to store the cache or local state to AsyncStorage
 // This works similar to redux-persist.
-<<<<<<< HEAD
-// persistCache({
-//   cache,
-//   storage: AsyncStorage,
-// });
-=======
 persistCache({
   cache,
   storage: AsyncStorage,
 });
->>>>>>> temp2
 
 // stateLink is the local graphql engine for state management
 const stateLink = withClientState({

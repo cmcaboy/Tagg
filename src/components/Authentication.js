@@ -1,11 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, StatusBar } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-<<<<<<< HEAD
-import { Root } from 'native-base';
-=======
 // import { Root } from 'native-base';
->>>>>>> temp2
 import { Spinner } from './common';
 import LoginForm from './LoginForm';
 import MainNavigator from '../navigator';
@@ -56,13 +52,7 @@ class Authentication extends React.Component {
     switch (loggedIn) {
       case true:
           return (
-<<<<<<< HEAD
-            <Root>
               <MainNavigator />
-            </Root>
-=======
-              <MainNavigator />
->>>>>>> temp2
           );
           // <LoginForm />
           // return <Settings />

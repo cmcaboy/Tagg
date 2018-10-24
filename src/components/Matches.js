@@ -38,11 +38,7 @@ class Matches extends Component {
             {'You do not have any matches.'}
           </MyAppText>
           <MyAppText>
-<<<<<<< HEAD
-            {'Better get to swipping!'}
-=======
             {'Better get after it!'}
->>>>>>> temp2
           </MyAppText>
       </View>
     );
@@ -51,11 +47,7 @@ class Matches extends Component {
       const { navigation: { navigate } } = this.props;
 
       if (matches.length === 0 && dateRequests.length === 0) {
-<<<<<<< HEAD
-          return this.noMatches();
-=======
         return this.noMatches();
->>>>>>> temp2
       }
       console.log('matches: ', matches);
       return (

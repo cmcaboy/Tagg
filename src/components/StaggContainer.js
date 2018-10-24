@@ -26,11 +26,7 @@ class StaggContainer extends Component {
           return (
             <Query query={GET_QUEUE} variables={{ id }} fetchPolicy="network-only">
               {({ loading, error, data, fetchMore, networkStatus, refetch }) => {
-<<<<<<< HEAD
-                // console.log('data stagg: ',data);
-=======
                 console.log('data stagg: ', data);
->>>>>>> temp2
                 // console.log('error stagg: ',error);
                 // console.log('loading stagg: ',loading);
                 console.log('networkStatus: ', networkStatus);

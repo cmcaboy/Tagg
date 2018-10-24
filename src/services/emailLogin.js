@@ -13,11 +13,7 @@ export default async ({ email, password, startSetId }) => {
 
   // Attempt login
   try {
-<<<<<<< HEAD
-    login = await auth.signInAndRetrieveDataWithEmailAndPassword(email, password);
-=======
     login = await auth.signInWithEmailAndPassword(email, password);
->>>>>>> temp2
   } catch (e) {
     // If authentication fails, reset the id back to 0.
     console.log('Error logging in: ', e);
