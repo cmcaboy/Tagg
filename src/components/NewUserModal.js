@@ -119,7 +119,10 @@ export default class NewUserModal extends Component {
 
   submitNewUser = (newUser) => {
     this.setState({ loading: true, error: '' });
-    const { name, email, age, school, work, description, gender, pics, password } = this.state;
+    const { name, age, school, work, description, gender, pics, password } = this.state;
+    let { email } = this.state;
+    email = email.toLowerCase();
+
     const { closeModal, startSetId } = this.props;
 
     // validate fields
@@ -135,7 +138,7 @@ export default class NewUserModal extends Component {
         id: email.toLowerCase(),
         active: true,
         name,
-        email: email.toLowerCase(),
+        email,
         age,
         school,
         work,

@@ -30,16 +30,16 @@ class Matches extends Component {
     noMatches = () => (
       <View style={styles.noMatches}>
         <Ionicons
-            name="md-sad"
-            size={100}
-            color="black"
+          name="md-sad"
+          size={100}
+          color="black"
         />
-          <MyAppText>
-            {'You do not have any matches.'}
-          </MyAppText>
-          <MyAppText>
-            {'Better get after it!'}
-          </MyAppText>
+        <MyAppText>
+          {'You do not have any matches.'}
+        </MyAppText>
+        <MyAppText>
+          {'Better get after it!'}
+        </MyAppText>
       </View>
     );
 
@@ -59,31 +59,31 @@ class Matches extends Component {
             <ScrollView
               horizontal
             >
-            {matches.map(match => (
-              <TouchableOpacity
-                accessible={false}
+              {matches.map(match => (
+                <TouchableOpacity
+                  accessible={false}
                   onPress={() => navigate('MessengerContainer', {
-                      matchId: match.matchId,
-                      id,
-                      otherId: match.user.id,
-                      name,
-                      otherName: match.user.name,
-                      pic,
-                      otherPic: match.user.pics[0],
+                    matchId: match.matchId,
+                    id,
+                    otherId: match.user.id,
+                    name,
+                    otherName: match.user.name,
+                    pic,
+                    otherPic: match.user.pics[0],
                   })}
                   key={match.user.id}
-              >
-                <View style={styles.newMatch}>
-                  <CirclePicture imageURL={match.user.pics[0]} picSize="small" />
-                  <MyAppText>
-                    {formatName(match.user.name)}
-                  </MyAppText>
-                  <MyAppText>
-                    {formatDay(match.datetimeOfDate)}
-                  </MyAppText>
-                </View>
-              </TouchableOpacity>
-            ))}
+                >
+                  <View style={styles.newMatch}>
+                    <CirclePicture imageURL={match.user.pics[0]} picSize="small" />
+                    <MyAppText>
+                      {formatName(match.user.name)}
+                    </MyAppText>
+                    <MyAppText>
+                      {formatDay(match.datetimeOfDate)}
+                    </MyAppText>
+                  </View>
+                </TouchableOpacity>
+              ))}
             </ScrollView>
           </View>
           <View style={styles.messagesContainer}>
@@ -127,39 +127,38 @@ class Matches extends Component {
     }
 
     render() {
-        return (
-          <Query query={GET_ID}>
-            {({ loading, error, data }) => {
-              // console.log('local data: ',data);
-              // console.log('local error: ',error);
-              // console.log('local loading: ',loading);
-              if (loading) return <Spinner />;
-              if (error) return <ErrorMessage error={error.message} />;
-
-              const { id } = data.user;
-              return (
-                <Query query={GET_MATCHES} variables={{ id }} fetchPolicy="network-only">
-                  {({ loading, error, data, networkStatus, refetch }) => {
-                    console.log('data in matches: ', data);
-                    // console.log('error: ',error);
-                    // console.log('loading: ',loading);
-                    // console.log('networkStatus: ',networkStatus);
-                    if (loading) return <Spinner />;
-                    if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
-                    return this.renderContent({
-                      matches: data.user.matchedDates.list,
-                      dateRequests: data.user.dateRequests.list,
-                      id,
-                      name: data.user.name,
-                      pic: data.user.profilePic,
-                      refetch,
-                    });
-                  }}
-                </Query>
-              );
-            }}
-          </Query>
-        );
+      return (
+        <Query query={GET_ID}>
+          {({ loading, error, data }) => {
+            // console.log('local data: ',data);
+            // console.log('local error: ',error);
+            // console.log('local loading: ',loading);
+            if (loading) return <Spinner />;
+            if (error) return <ErrorMessage error={error.message} />;
+            const { id } = data.user;
+            return (
+              <Query query={GET_MATCHES} variables={{ id }} fetchPolicy="network-only">
+                {({ loading, error, data, networkStatus, refetch }) => {
+                  console.log('data in matches: ', data);
+                  // console.log('error: ',error);
+                  // console.log('loading: ',loading);
+                  // console.log('networkStatus: ',networkStatus);
+                  if (loading) return <Spinner />;
+                  if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
+                  return this.renderContent({
+                    matches: data.user.matchedDates.list,
+                    dateRequests: data.user.dateRequests.list,
+                    id,
+                    name: data.user.name,
+                    pic: data.user.profilePic,
+                    refetch,
+                  });
+                }}
+              </Query>
+            );
+          }}
+        </Query>
+      );
     }
 }
 
@@ -171,10 +170,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   newMatchesContainer: {
-    //flex: 2,
+    // flex: 2,
   },
   messagesContainer: {
-    //flex: 5,
+    // flex: 5,
   },
   newMatch: {
     margin: 5,

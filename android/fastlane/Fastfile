@@ -49,16 +49,52 @@ platform :android do
 
   desc "Submit a new Beta Build to Crashlytics Beta"
   lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
+    version_code = increment_version_code(
+      gradle_file_path: "./app/build.gradle"
+    )
+
+    gradle(
+      task: "clean assembleRelease",
+      system_properties: {
+        "ENVFILE": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/.env.prod"
+      }
+    )
+
+    supply(
+      track: "beta",
+      apk: "#{lane_context[SharedValues:: GRADLE_APK_OUTPUT_PATH]}"
+    )
+
+    git_commit(
+      path: "./app/build.gradle",
+      message: "Fastlane Android: Released new build #{version_code} [ci skip]"
+    )
     # sh "your_script.sh"
     # You can also use other beta testing services here
   end
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
+
+    version_code = increment_version_code(
+      gradle_file_path: "./app/build.gradle"
+    )
+
+    gradle(
+      task: "clean assembleRelease",
+      system_properties: {
+        "ENVFILE": "/Users/jonathanmcaboy/Desktop/Dev/Tagg/.env.prod"
+      }
+    )
+
+    supply(
+      track: "production",
+      apk: "#{lane_context[SharedValues:: GRADLE_APK_OUTPUT_PATH]}"
+    )
+
+    git_commit(
+      path: "./app/build.gradle",
+      message: "Fastlane Android: Released new build #{version_code} [ci skip]"
+    )
   end
 end

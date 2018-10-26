@@ -1,31 +1,38 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Mutation } from 'react-apollo';
 import { LoginManager } from 'react-native-fbsdk';
-import { auth } from '../firebase';
-import { SET_ID_LOCAL } from '../../apollo/local/mutations';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { auth } from '../firebase';
+import { SET_ID_LOCAL } from '../apollo/local/mutations';
 import { ICON_SIZE, ICON_OPACITY } from '../variables';
 import { MyAppText, Spinner } from './common';
 
 export default class LogoutButton extends Component {
   constructor(props) {
+    super(props);
     this.state = {
-      loading,
+      loading: false,
     };
   }
 
   startLogout = (setId) => {
+    // Render Spinner
     this.setState({ loading: true });
+    // sign out of Firebase auth
     auth.signOut();
+    // sign out of FBSDK
     LoginManager.logOut();
-    setId(0);
+    // set the id in our local catch to 0, which indicates to user is logged in.
+    setId({ variables: { id: 0 } });
+    // Turn the spinner off.
     this.setState({ loading: false });
   }
 
   renderLogoutButton = (setId) => {
     const { optionsText, buttons } = styles;
-    if(this.state.loading) {
+    const { loading } = this.state;
+    if (loading) {
       return <Spinner />;
     }
 
@@ -40,23 +47,23 @@ export default class LogoutButton extends Component {
           color="black"
           style={{ opacity: ICON_OPACITY }}
         />
-        <MyAppText style={optionText}>
+        <MyAppText style={optionsText}>
           {'Log Out'}
         </MyAppText>
       </TouchableOpacity>
-    )
+    );
   }
 
   render() {
     return (
       <Mutation mutation={SET_ID_LOCAL}>
-        {(setId) => (
+        {setId => (
           <View>
-            {renderLogoutButton(setId)}
+            {this.renderLogoutButton(setId)}
           </View>
         )}
       </Mutation>
-    )
+    );
   }
 }
 
@@ -68,4 +75,4 @@ const styles = StyleSheet.create({
   optionsText: {
     opacity: ICON_OPACITY,
   },
-})
+});

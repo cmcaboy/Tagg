@@ -63,11 +63,19 @@ platform :ios do
     # Sync certificates and profiles
     match(type: "appstore")
 
+    cocoapods
+
     # Generate IPA file
-    build_app(scheme: "ManhattanMatch")
+    build_app(
+      workspace: "ManhattanMatch.xcworkspace",
+      scheme: "ManhattanMatch"
+    )
 
     # Upload IPA to ios App Store
-    upload_to_app_store
+    upload_to_app_store(
+      submit_for_review: true,
+      force: true
+    )
   end
   
   desc "Capture ios screenshots"
@@ -78,7 +86,10 @@ platform :ios do
     # screenshots for one iphone of version 7 or greater. Apple will then
     # replicate the screenshots to the other phone versions.
     capture_screenshots(stop_after_first_error: true)
-    upload_to_app_store
+    upload_to_app_store(
+      submit_for_review: true,
+      force: true
+    )
   end
 
   desc ""

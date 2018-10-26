@@ -64,7 +64,7 @@ class LoginForm extends Component {
     }
 
     // Check to see if email is already on file
-    const isEmailAlreadyRegistered = await checkEmail({ email, client });
+    const isEmailAlreadyRegistered = await checkEmail({ email: email.toLowerCase(), client });
     console.log('isEmailAlreadyRegistered: ', isEmailAlreadyRegistered);
     if (!isEmailAlreadyRegistered) {
       this.setError('We could not find your email. Please try a different one or use facebook to login.');
@@ -74,7 +74,7 @@ class LoginForm extends Component {
 
     // Attempt login
     emailLogin({
-      email,
+      email: email.toLowerCase(),
       password,
       client,
       startSetId,
@@ -86,13 +86,14 @@ class LoginForm extends Component {
       this.setState({ loading: false });
       this.setError(e);
     });
+    return null;
   }
 
   emailSignup = async ({ client }) => {
     const { email } = this.state;
     this.setError('');
     // Check to see if email is already in file
-    const isEmailAlreadyRegistered = await checkEmail({ email, client });
+    const isEmailAlreadyRegistered = await checkEmail({ email: email.toLowerCase(), client });
     console.log('isEmailAlreadyRegistered: ', isEmailAlreadyRegistered);
     if (isEmailAlreadyRegistered) {
       this.setError('This email address is already in use. Choose another one or login with Facebook');
@@ -119,7 +120,7 @@ class LoginForm extends Component {
               id: user.id,
               name: user.name,
               active: user.active,
-              email: user.email,
+              email: user.email.toLowerCase(),
               gender: user.gender,
               description: user.description,
               school: user.school,
@@ -190,6 +191,7 @@ class LoginForm extends Component {
                           <Form>
                             <Item>
                               <Input
+                                autoCapitalize="none"
                                 placeholder="Email"
                                 value={this.state.email}
                                 onChangeText={this.emailInput}
