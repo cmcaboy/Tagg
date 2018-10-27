@@ -92,14 +92,6 @@ class LoginForm extends Component {
   emailSignup = async ({ client }) => {
     const { email } = this.state;
     this.setError('');
-    // Check to see if email is already in file
-    const isEmailAlreadyRegistered = await checkEmail({ email: email.toLowerCase(), client });
-    console.log('isEmailAlreadyRegistered: ', isEmailAlreadyRegistered);
-    if (isEmailAlreadyRegistered) {
-      this.setError('This email address is already in use. Choose another one or login with Facebook');
-      return null;
-    }
-    // If it is not, gather information on client
     // activate modal
     this.setState({ modalDisplay: true, loading: false });
   }
