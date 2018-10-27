@@ -60,9 +60,15 @@ platform :ios do
 
   desc "Deploy to a new release to the app store"
   lane :release do
+
+    increment_build_number(
+      xcodeproj: "ManhattanMatch.xcodeproj"
+    )
+
     # Sync certificates and profiles
     match(type: "appstore")
 
+    # Install dependencies using cocoapods
     cocoapods
 
     # Generate IPA file
