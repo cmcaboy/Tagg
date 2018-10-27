@@ -19,3 +19,4 @@ export * from './MyAppModal';
 export * from './MyTitleText';
 export * from './HorizontalLine';
 export * from './ErrorMessage';
+export * from './FloatingActionButton';

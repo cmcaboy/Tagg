@@ -16,7 +16,7 @@ export const NUM_PHOTOS = 6;
 export const TAB_BAR_HEIGHT = 56;
 
 export const PRIMARY_COLOR = '#03A9F4';
-export const SECONDARY_COLOR = '#02FCED';
+export const SECONDARY_COLOR = '#FFFF00';
 export const STATUS_BAR_COLOR = '#81D4FA';
 export const BACKGROUND_COLOR = '#FFF';
 

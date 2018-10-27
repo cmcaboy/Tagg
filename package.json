@@ -73,6 +73,7 @@
     "react-apollo": "^2.1.4",
     "react-composer": "^5.0.1",
     "react-native": "0.57.0",
+    "react-native-action-button": "^2.8.5",
     "react-native-background-geolocation": "^2.12.2",
     "react-native-collapsible": "^0.10.0",
     "react-native-config": "^0.11.5",

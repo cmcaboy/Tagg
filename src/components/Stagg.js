@@ -9,7 +9,9 @@ import {
 } from 'react-native';
 import BackgroundGeolocation from 'react-native-background-geolocation';
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview';
-import { Fab, Icon } from 'native-base';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { FloatingActionButton } from './common';
 import StaggCard from './StaggCard';
 import StaggHeader from './StaggHeader';
 import NewDateModal from './NewDateModal';
@@ -17,9 +19,8 @@ import FilterModal from './FilterModal';
 import EmptyList from './EmptyList';
 import { checkPermissions, pushNotificationHandler } from '../services/push_notifications';
 import toastMessage from '../services/toastMessage';
-import { CARD_HEIGHT, CARD_FOOTER_HEIGHT, CARD_MARGIN, GEO_LOCATION_URL } from '../variables';
+import { CARD_HEIGHT, CARD_FOOTER_HEIGHT, CARD_MARGIN, GEO_LOCATION_URL, SECONDARY_COLOR, PRIMARY_COLOR } from '../variables';
 import { firebase } from '../firebase';
-import { PRIMARY_COLOR } from '../variables/index';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -241,16 +242,20 @@ class Stagg extends Component {
           flipFilterModal={this.flipFilterModal}
           navigation={navigation}
         /> */}
-        <Fab
+        <FloatingActionButton
+          onPress={this.flipFilterModal}
+          style={{ backgroundColor: '#FFF', borderColor: PRIMARY_COLOR, borderWidth: 2 }}
           position="bottomLeft"
-          active
-          direction="up"
-          onPress={() => console.log('Fab press right')}
-          containerStyle={{ color: '#FFF' }}
-          style={{ borderColor: PRIMARY_COLOR, backgroundColor: '#FFF', borderWidth: 2 }}
         >
-          <Icon name="filter" type="FontAwesome" style={{ color: PRIMARY_COLOR }} />
-        </Fab>
+          <FontAwesome name="filter" size={40} color={PRIMARY_COLOR} />
+        </FloatingActionButton>
+        <FloatingActionButton
+          onPress={this.flipNewDateModal}
+          style={{ backgroundColor: SECONDARY_COLOR, borderColor: PRIMARY_COLOR, borderWidth: 0 }}
+          position="bottomRight"
+        >
+          <MaterialIcons name="add" size={40} color="#000" />
+        </FloatingActionButton>
         <NewDateModal
           id={id}
           isVisible={newDateModal}
@@ -314,7 +319,7 @@ const styles = StyleSheet.create({
   },
   undeterminedContainer: {
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   center: {
     flex: 1,
