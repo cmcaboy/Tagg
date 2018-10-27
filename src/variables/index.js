@@ -1,5 +1,6 @@
 import Config from 'react-native-config';
 import { Dimensions } from 'react-native';
+
 export const ENV = 'PROD';
 
 export const {

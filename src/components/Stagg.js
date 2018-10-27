@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import BackgroundGeolocation from 'react-native-background-geolocation';
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview';
+import { Fab, Icon } from 'native-base';
 import StaggCard from './StaggCard';
 import StaggHeader from './StaggHeader';
 import NewDateModal from './NewDateModal';
@@ -18,6 +19,7 @@ import { checkPermissions, pushNotificationHandler } from '../services/push_noti
 import toastMessage from '../services/toastMessage';
 import { CARD_HEIGHT, CARD_FOOTER_HEIGHT, CARD_MARGIN, GEO_LOCATION_URL } from '../variables';
 import { firebase } from '../firebase';
+import { PRIMARY_COLOR } from '../variables/index';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -234,11 +236,21 @@ class Stagg extends Component {
     return (
       // I'll need to change this to a FlatList eventually
       <View style={styles.staggContainer}>
-        <StaggHeader
+        {/* <StaggHeader
           flipNewDateModal={this.flipNewDateModal}
           flipFilterModal={this.flipFilterModal}
           navigation={navigation}
-        />
+        /> */}
+        <Fab
+          position="bottomLeft"
+          active
+          direction="up"
+          onPress={() => console.log('Fab press right')}
+          containerStyle={{ color: '#FFF' }}
+          style={{ borderColor: PRIMARY_COLOR, backgroundColor: '#FFF', borderWidth: 2 }}
+        >
+          <Icon name="filter" type="FontAwesome" style={{ color: PRIMARY_COLOR }} />
+        </Fab>
         <NewDateModal
           id={id}
           isVisible={newDateModal}

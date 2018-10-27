@@ -218,6 +218,7 @@ export default class NewUserModal extends Component {
         scrollEnabled
         enableAutomaticScroll
         enableOnAndroid
+        keyboardShouldPersistTaps
         // extraHeight={200}
         // extraScrollHeight={200}
       >
