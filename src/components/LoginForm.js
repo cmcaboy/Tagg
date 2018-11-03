@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { ApolloConsumer, Mutation } from 'react-apollo';
 import { Form, Item, Input, Button, Text } from 'native-base';
+import SplashScreen from 'react-native-splash-screen';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { CardSection, MyAppText, MyAppModal, Spinner } from './common';
 import { PRIMARY_COLOR, BACKGROUND_COLOR, DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from '../variables';
@@ -100,6 +101,8 @@ class LoginForm extends Component {
     UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
     LayoutAnimation.linear();
   }
+
+  componentDidMount = () => SplashScreen.hide();
 
   render() {
     const { error, emailError } = this.state;

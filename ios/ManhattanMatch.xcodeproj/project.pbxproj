@@ -69,6 +69,7 @@
 		A9F1C8F2C96340CDB717D7C4 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A006882C49E49369AAF4C34 /* EvilIcons.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B0E07E3448A646B79DCB2129 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 28DFD195D76B4326A74F766D /* FontAwesome.ttf */; };
+		B708C1B9218DCBFA008270A4 /* libSplashScreen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B708C1B8218DCBC7008270A4 /* libSplashScreen.a */; };
 		B70BC2FE2161250000408492 /* ManhattanMatchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70BC2FD2161250000408492 /* ManhattanMatchUITests.swift */; };
 		B7113EC9213C8B5200BCAB68 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7113EA8213C8B0C00BCAB68 /* libRCTPushNotification.a */; };
 		B7144249214D3E46001F6DAA /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7144248214D3E06001F6DAA /* libReactNativeConfig.a */; };
@@ -372,6 +373,13 @@
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
 		};
+		B708C1B7218DCBC7008270A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B708C182218DCBC6008270A4 /* SplashScreen.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D7682761D8E76B80014119E;
+			remoteInfo = SplashScreen;
+		};
 		B70BC3002161250000408492 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -548,6 +556,7 @@
 		A7769520EC51457A9B578E63 /* libCocoaLumberjack.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libCocoaLumberjack.a; sourceTree = "<group>"; };
 		AADED608DE82E02EE1DC1844 /* Pods-ManhattanMatch-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManhattanMatch-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ManhattanMatch-tvOSTests/Pods-ManhattanMatch-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
+		B708C182218DCBC6008270A4 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		B70BC2FB2161250000408492 /* ManhattanMatchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManhattanMatchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B70BC2FD2161250000408492 /* ManhattanMatchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManhattanMatchUITests.swift; sourceTree = "<group>"; };
 		B70BC2FF2161250000408492 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -608,6 +617,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B708C1B9218DCBFA008270A4 /* libSplashScreen.a in Frameworks */,
 				B7EB6C12217BC398001A0F23 /* libRNFetchBlob.a in Frameworks */,
 				B7144249214D3E46001F6DAA /* libReactNativeConfig.a in Frameworks */,
 				B7113EC9213C8B5200BCAB68 /* libRCTPushNotification.a in Frameworks */,
@@ -806,6 +816,7 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				B708C182218DCBC6008270A4 /* SplashScreen.xcodeproj */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -974,6 +985,14 @@
 			isa = PBXGroup;
 			children = (
 				B703294020C36E4900F5A56E /* libRCTFBSDK.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B708C183218DCBC6008270A4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B708C1B8218DCBC7008270A4 /* libSplashScreen.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1408,6 +1427,10 @@
 					ProductGroup = B7B1C16020CAFDA700E7D02F /* Products */;
 					ProjectRef = CBF221D467154B7EB26D9526 /* RNVectorIcons.xcodeproj */;
 				},
+				{
+					ProductGroup = B708C183218DCBC6008270A4 /* Products */;
+					ProjectRef = B708C182218DCBC6008270A4 /* SplashScreen.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1673,6 +1696,13 @@
 			fileType = archive.ar;
 			path = "libprivatedata-tvOS.a";
 			remoteRef = B703297C20C371FD00F5A56E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B708C1B8218DCBC7008270A4 /* libSplashScreen.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSplashScreen.a;
+			remoteRef = B708C1B7218DCBC7008270A4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		B7113EA8213C8B0C00BCAB68 /* libRCTPushNotification.a */ = {
@@ -2180,7 +2210,7 @@
 				CODE_SIGN_ENTITLEMENTS = ManhattanMatch/ManhattanMatch.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Jonathan McAboy (GTZ7BL7JLG)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 47;
+				CURRENT_PROJECT_VERSION = 56;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 96WSSA5AM3;
 				ENABLE_BITCODE = NO;
@@ -2213,6 +2243,7 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios/**",
 				);
 				INFOPLIST_FILE = ManhattanMatch/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -2240,7 +2271,7 @@
 				CODE_SIGN_ENTITLEMENTS = ManhattanMatch/ManhattanMatch.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jonathan McAboy (96WSSA5AM3)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 47;
+				CURRENT_PROJECT_VERSION = 56;
 				DEVELOPMENT_TEAM = 96WSSA5AM3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2272,6 +2303,7 @@
 					"$(SRCROOT)/../node_modules/react-native-firebase/ios/RNFirebase/**",
 					"$(SRCROOT)/../node_modules/react-native-Libraries/PushNotificationIOS/**",
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
+					"$(SRCROOT)/../node_modules/react-native-splash-screen/ios/**",
 				);
 				INFOPLIST_FILE = ManhattanMatch/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";

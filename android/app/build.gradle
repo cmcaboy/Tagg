@@ -44,7 +44,7 @@ android {
         minSdkVersion 16
         targetSdkVersion rootProject.targetSdkVersion
         multiDexEnabled true
-        versionCode 31
+        versionCode 32
         versionName "0.1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -99,6 +99,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-splash-screen')
     compile project(':rn-fetch-blob')
     compile project(':react-native-sentry')
     //compile project(':react-native-vector-icons')

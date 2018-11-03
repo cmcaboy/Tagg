@@ -11,6 +11,7 @@ import BackgroundGeolocation from 'react-native-background-geolocation';
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import SplashScreen from 'react-native-splash-screen';
 import { FloatingActionButton } from './common';
 import StaggCard from './StaggCard';
 import StaggHeader from './StaggHeader';
@@ -78,6 +79,8 @@ class Stagg extends Component {
 
   componentDidMount = async () => {
     const { id, navigation } = this.props;
+
+    SplashScreen.hide();
 
     // Track location via react-native-background-geolcation
     this.trackLocation();
