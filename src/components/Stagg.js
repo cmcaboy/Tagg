@@ -177,7 +177,7 @@ class Stagg extends Component {
 
     BackgroundGeolocation.ready({
       // Geolocation Config
-      reset: false,
+      reset: true,
       desiredAccuracy: 100,
       distanceFilter: 100,
       // Activity Recognition
@@ -190,6 +190,7 @@ class Stagg extends Component {
       // HTTP / SQLite config
       // url: FUNCTION_PATH + '/coords',
       url: GEO_LOCATION_URL,
+      notificationText: 'Looking for nearby matches',
       batchSync: false,       // <-- [Default: false] Set true to sync locations to server in a single HTTP request.
       autoSync: true,         // <-- [Default: true] Set true to sync each location to server as it arrives.
       // headers: {              // <-- Optional HTTP headers

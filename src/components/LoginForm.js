@@ -57,13 +57,11 @@ class LoginForm extends Component {
     const { email, password } = this.state;
 
     // Display a loading spinner and remove error display
-    this.setState({ loading: true });
-    this.setError('');
+    this.setState({ loading: true, error: '' });
 
     // Check to see if format of email is valid
     if (!emailValidation(email)) {
-      this.setError('Invalid Email format. Please use a valid email.');
-      this.setState({ loading: false });
+      this.setState({ loading: false, error: 'Invalid Email format. Please use a valid email.' });
       return false;
     }
 
@@ -82,25 +80,22 @@ class LoginForm extends Component {
     }
 
     // Attempt login
+    // If login is successful, the user is automatically routed to the functioning app (Stagg component)
     emailLogin({
       email: email.toLowerCase(),
       password,
       client,
       startSetId,
     })
-      .then((e) => {
-        this.setState({ loading: false });
-        this.setError(e);
-      })
+      .then(error => this.setState({ loading: false, error }))
       .catch((e) => {
         console.log('email login error: ', e);
-        this.setState({ loading: false });
-        this.setError(e);
+        this.setState({ loading: false, error: e });
       });
     return null;
   };
 
-  // activate modal
+  // activate modal - Modal is activated when modalDisplay is set to true
   emailSignup = () => this.setState({ error: '', modalDisplay: true, loading: false });
 
   componentWillUpdate = () => {

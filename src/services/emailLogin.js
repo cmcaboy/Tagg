@@ -1,5 +1,6 @@
 import { auth } from '../firebase';
 
+// This function attempts to login via Firebase email auth
 export default async ({ email, password, startSetId }) => {
   console.log('Attempting to Login');
 
