@@ -4,11 +4,8 @@ import { MyAppText } from './index';
 import { PRIMARY_COLOR } from '../../variables';
 
 const MyTitleText = ({ style, children }) => (
-  <MyAppText style={[styles.title, style]}>
-    {children}
-  </MyAppText>
-)
-
+  <MyAppText style={[styles.title, style]}>{children}</MyAppText>
+);
 
 const styles = StyleSheet.create({
   title: {

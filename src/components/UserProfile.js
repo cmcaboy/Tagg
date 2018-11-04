@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 // import getUserProfile from '../selectors/getUserProfile';
@@ -11,7 +7,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Query } from 'react-apollo';
 import UserProfilePhotos from './UserProfilePhotos';
 import DateOpenButton from './DateOpenButton';
-import { MyAppText, Spinner, FollowButton, ErrorMessage } from './common';
+import {
+  MyAppText, Spinner, FollowButton, ErrorMessage,
+} from './common';
 import { PRIMARY_COLOR } from '../variables';
 import { formatDistanceApart, formatName } from '../format';
 import { GET_USER_PROFILE } from '../apollo/queries';
@@ -19,23 +17,20 @@ import { GET_USER_PROFILE } from '../apollo/queries';
 class UserProfile extends Component {
   static navigationOptions = ({ navigation }) => ({
     // title: `${navigation.state.params.name}`,
-    headerRight: (<View />),
+    headerRight: <View />,
     headerTitle: (
       <View style={styles.headerViewStyle}>
-        <MyAppText style={styles.textHeader}>
-          { `${navigation.state.params.name}` }
-        </MyAppText>
+        <MyAppText style={styles.textHeader}>{`${navigation.state.params.name}`}</MyAppText>
         <View style={{ width: 30 }} />
       </View>
     ),
-    headerTitleStyle:
-      {
-        alignSelf: 'center',
-        textAlign: 'center',
-        fontWeight: 'normal',
-        fontSize: 22,
-        color: PRIMARY_COLOR,
-      },
+    headerTitleStyle: {
+      alignSelf: 'center',
+      textAlign: 'center',
+      fontWeight: 'normal',
+      fontSize: 22,
+      color: PRIMARY_COLOR,
+    },
   });
 
   // constructor(props) {
@@ -44,81 +39,90 @@ class UserProfile extends Component {
 
   render() {
     const {
-      userProfileContainer, userInfo, iconText,
-      nameText, subHeading, schoolText, userDescription,
-      userInfoLeft, userInfoRight,
+      userProfileContainer,
+      userInfo,
+      iconText,
+      nameText,
+      subHeading,
+      schoolText,
+      userDescription,
+      userInfoLeft,
+      userInfoRight,
     } = styles;
 
-    const { navigation, navigation: { state: { params: { id, hostId } } } } = this.props;
+    const {
+      navigation,
+      navigation: {
+        state: {
+          params: { id, hostId },
+        },
+      },
+    } = this.props;
 
     return (
       <Query query={GET_USER_PROFILE} variables={{ id, hostId }}>
-      {({ loading, error, data, refetch }) => {
-        // console.log('loading: ',loading);
-        // console.log('error: ',error);
-        // console.log('data: ',data);
-        if (loading) return <Spinner />;
-        if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
-        const {
-          name, school, work, description, pics, isFollowing, distanceApart, hasDateOpen,
-        } = data.user;
-        const profilePic = pics[0];
-        return (
-          <View style={userProfileContainer}>
-            <UserProfilePhotos
-              pics={pics}
-              cacheImages
-            />
-            <ScrollView>
-              <View style={userInfo}>
-                <View style={userInfoLeft}>
-                  <MyAppText style={nameText}>
-                    {formatName(name)}
-                  </MyAppText>
-                  {!!school && (
-                    <View style={subHeading}>
-                      <Ionicons name="md-school" size={14} color="black" style={iconText} />
-                      <MyAppText style={schoolText}>
-                        {school}
-                      </MyAppText>
-                    </View>
-                  )}
-                  {!!work && (
-                    <View style={subHeading}>
-                      <MaterialIcons name="work" size={14} color="black" style={iconText} />
-                      <MyAppText style={[schoolText, { paddingLeft: 4 }]}>
-                        {work}
-                      </MyAppText>
-                    </View>
-                  )}
+        {({
+          loading, error, data, refetch,
+        }) => {
+          // console.log('loading: ',loading);
+          // console.log('error: ',error);
+          // console.log('data: ',data);
+          if (loading) return <Spinner />;
+          if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
+          const {
+            name,
+            school,
+            work,
+            description,
+            pics,
+            isFollowing,
+            distanceApart,
+            hasDateOpen,
+          } = data.user;
+          const profilePic = pics[0];
+          return (
+            <View style={userProfileContainer}>
+              <UserProfilePhotos pics={pics} cacheImages />
+              <ScrollView>
+                <View style={userInfo}>
+                  <View style={userInfoLeft}>
+                    <MyAppText style={nameText}>{formatName(name)}</MyAppText>
+                    {!!school && (
+                      <View style={subHeading}>
+                        <Ionicons name="md-school" size={14} color="black" style={iconText} />
+                        <MyAppText style={schoolText}>{school}</MyAppText>
+                      </View>
+                    )}
+                    {!!work && (
+                      <View style={subHeading}>
+                        <MaterialIcons name="work" size={14} color="black" style={iconText} />
+                        <MyAppText style={[schoolText, { paddingLeft: 4 }]}>{work}</MyAppText>
+                      </View>
+                    )}
+                  </View>
+                  <View style={userInfoRight}>
+                    <MyAppText style={styles.distance}>
+                      {formatDistanceApart(distanceApart)}
+                    </MyAppText>
+                    <FollowButton id={hostId} followId={id} isFollowing={isFollowing} />
+                  </View>
                 </View>
-                <View style={userInfoRight}>
-                  <MyAppText style={styles.distance}>
-                    {formatDistanceApart(distanceApart)}
-                  </MyAppText>
-                  <FollowButton id={hostId} followId={id} isFollowing={isFollowing} />
+                <DateOpenButton
+                  hostId={hostId}
+                  hasDateOpen={!!hasDateOpen}
+                  id={id}
+                  name={name}
+                  profilePic={profilePic}
+                  navigation={navigation}
+                />
+                <View style={styles.horizontalLine} />
+                <View style={userDescription}>
+                  {!!description && <MyAppText>{description}</MyAppText>}
                 </View>
-              </View>
-              <DateOpenButton
-                hostId={hostId}
-                hasDateOpen={!!hasDateOpen}
-                id={id}
-                name={name}
-                profilePic={profilePic}
-                navigation={navigation}
-              />
-              <View style={styles.horizontalLine} />
-              <View style={userDescription}>
-                {!!description && (
-                  <MyAppText>
-                    {description}
-                  </MyAppText>
-                )}
-              </View>
-            </ScrollView>
-          </View>
-        );
-      }}
+              </ScrollView>
+            </View>
+          );
+        }}
       </Query>
     );
   }
@@ -187,7 +191,7 @@ const styles = StyleSheet.create({
   horizontalLine: {
     borderBottomColor: 'black',
     borderBottomWidth: 1,
-    //paddingVertical: 10,
+    // paddingVertical: 10,
     marginBottom: 10,
     marginTop: 0,
     opacity: 0.3,

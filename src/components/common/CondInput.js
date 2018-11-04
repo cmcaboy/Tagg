@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
+  View, Text, StyleSheet, TouchableOpacity, TextInput,
 } from 'react-native';
-import { CardSection, Button, ActionIcon } from './index';
+import { CardSection, ActionIcon } from './index';
 
 class CondInput extends Component {
   constructor(props) {
@@ -25,7 +21,7 @@ class CondInput extends Component {
     const { value } = this.state;
     updateValue(value);
     this.setState({ isEdit: false });
-  }
+  };
 
   onChangeText = (v) => {
     if (this.lowerCaseOnly) {
@@ -33,9 +29,9 @@ class CondInput extends Component {
     } else {
       this.setState({ value: v });
     }
-  }
+  };
 
-  enableEditMode = () => this.setState({ isEdit: true })
+  enableEditMode = () => this.setState({ isEdit: true });
 
   render() {
     const { isEdit, value } = this.state;
@@ -45,9 +41,7 @@ class CondInput extends Component {
         {!isEdit ? (
           <TouchableOpacity onPress={this.enableEditMode}>
             <CardSection style={styles.cardSection}>
-              <Text style={value ? styles.field : styles.blankField}>
-                { value || field }
-              </Text>
+              <Text style={value ? styles.field : styles.blankField}>{value || field}</Text>
             </CardSection>
           </TouchableOpacity>
         ) : (
@@ -96,7 +90,7 @@ const styles = StyleSheet.create({
   editView: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   textInputStyle: {
     height: 40,
@@ -110,7 +104,7 @@ const styles = StyleSheet.create({
   cardSection: {
     minHeight: 40,
     alignItems: 'center',
-  }
-})
+  },
+});
 
 export { CondInput };

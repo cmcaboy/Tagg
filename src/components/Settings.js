@@ -1,13 +1,11 @@
 import React from 'react';
 import {
-  View, TouchableOpacity, StyleSheet, Dimensions,
+  View, TouchableOpacity, StyleSheet,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Query } from 'react-apollo';
-import { LoginManager } from 'react-native-fbsdk';
-import { firebase } from '../firebase';
 import {
   CirclePicture, MyAppText, Spinner, ErrorMessage,
 } from './common';

@@ -16,7 +16,7 @@ import { PHOTO_ADD_URL } from '../variables';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 // const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SWIPE_THRESHOLD = (0.05 * SCREEN_WIDTH);
+const SWIPE_THRESHOLD = 0.05 * SCREEN_WIDTH;
 
 class UserProfilePhotos extends Component {
   constructor(props) {
@@ -25,11 +25,7 @@ class UserProfilePhotos extends Component {
     const panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       // onPanResponderMove: (event, gesture) => {},
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-          // return true if user is swiping, return false if it's a single click
-          // console.log('gestureState: ',{...gestureState});
-          return !(Math.abs(gestureState.dx) <= 0.5 && Math.abs(gestureState.dy) <= 0.5);
-      },
+      onMoveShouldSetPanResponder: (evt, gestureState) => !(Math.abs(gestureState.dx) <= 0.5 && Math.abs(gestureState.dy) <= 0.5),
       onPanResponderRelease: (_, gesture) => {
         if (gesture.dx > SWIPE_THRESHOLD) {
           this.clickLeftSide();
@@ -52,15 +48,15 @@ class UserProfilePhotos extends Component {
   componentDidMount = () => {
     const { cacheImages = true } = this.props;
     const { pics } = this.state;
-     if (cacheImages) {
+    if (cacheImages) {
       FastImage.preload(pics.map(uri => ({ uri })));
-     }
-  }
+    }
+  };
 
   componentWillUnmount = async () => {
     // Platform.OS === 'ioss' && await CacheManager.clearCache();
     // await CacheManager.clearCache();
-  }
+  };
 
   clickLeftSide = () => {
     const { currentImage } = this.state;
@@ -68,7 +64,7 @@ class UserProfilePhotos extends Component {
     if (currentImage > 0) {
       this.setState(prevState => ({ currentImage: prevState.currentImage - 1 }));
     }
-  }
+  };
 
   clickRightSide = () => {
     const { currentImage } = this.state;
@@ -77,16 +73,11 @@ class UserProfilePhotos extends Component {
     if (currentImage < pics.length - 1) {
       this.setState(prevState => ({ currentImage: prevState.currentImage + 1 }));
     }
-  }
+  };
 
   render() {
     const {
-      userPics,
-      userPhoto,
-      touchablePics,
-      leftClicker,
-      rightClicker,
-      picIndicator,
+      userPics, userPhoto, touchablePics, leftClicker, rightClicker, picIndicator,
     } = styles;
     const {
       picHeight = SCREEN_WIDTH,
@@ -95,7 +86,11 @@ class UserProfilePhotos extends Component {
       borderRadius,
       children,
     } = this.props;
-    const { pics, currentImage, panResponder: { panHandlers } } = this.state;
+    const {
+      pics,
+      currentImage,
+      panResponder: { panHandlers },
+    } = this.state;
     // console.log('pics: ',this.state.pics);
     // console.log('current image: ',this.state.currentImage);
     // console.log('pic: ',this.state.pics[this.state.currentImage]);
@@ -116,31 +111,42 @@ class UserProfilePhotos extends Component {
             ]}
             imageStyle={{ borderRadius }}
           >
-
-              <View style={picIndicator}>
-                {pics.map((uri, i2) => (i2 === currentImage ? (
-                  <FontAwesome key={uri} name="circle" size={12} color="white" style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }} />
+            <View style={picIndicator}>
+              {pics.map(
+                (uri, i2) => (i2 === currentImage ? (
+                  <FontAwesome
+                    key={uri}
+                    name="circle"
+                    size={12}
+                    color="white"
+                    style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }}
+                  />
                 ) : (
-                  <FontAwesome key={uri} name="circle-o" size={12} color="white" style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }} />
-                )
-                ))}
-              </View>
+                  <FontAwesome
+                    key={uri}
+                    name="circle-o"
+                    size={12}
+                    color="white"
+                    style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }}
+                  />
+                )),
+              )}
+            </View>
 
-              <View style={touchablePics}>
-                <TouchableWithoutFeedback onPress={this.clickLeftSide}>
-                  <View style={[leftClicker, { height: picHeight }]} />
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback onPress={this.clickRightSide}>
-                  <View style={[rightClicker, { height: picHeight }]} />
-                </TouchableWithoutFeedback>
-              </View>
-            </FastImage>
-            ))}
-            {children}
+            <View style={touchablePics}>
+              <TouchableWithoutFeedback onPress={this.clickLeftSide}>
+                <View style={[leftClicker, { height: picHeight }]} />
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={this.clickRightSide}>
+                <View style={[rightClicker, { height: picHeight }]} />
+              </TouchableWithoutFeedback>
+            </View>
+          </FastImage>
+        ))}
+        {children}
       </Animated.View>
-    )
+    );
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -153,7 +159,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  leftClicker:{
+  leftClicker: {
     width: SCREEN_WIDTH / 2,
     height: SCREEN_WIDTH * 0.9,
   },
@@ -171,7 +177,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     paddingTop: 3,
-  }
-})
+  },
+});
 
 export default UserProfilePhotos;

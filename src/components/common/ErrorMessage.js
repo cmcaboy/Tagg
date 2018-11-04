@@ -20,7 +20,7 @@ class ErrorMessage extends React.Component {
     this.setState({ loading: true });
     await this.props.refetch();
     this.setState({ loading: false });
-  }
+  };
 
   refreshButton = () => {
     const { refetch = null } = this.props;
@@ -31,26 +31,18 @@ class ErrorMessage extends React.Component {
     }
     return (
       <Button block onPress={this.attemptRefresh} style={styles.refreshButton}>
-        <Text>
-          { 'Refresh' }
-        </Text>
+        <Text>Refresh</Text>
       </Button>
     );
-  }
+  };
 
   render() {
     const { error } = this.props;
     const { errorStyle } = styles;
     return (
       <View style={errorStyle}>
-        <Ionicons
-          name="md-sad"
-          size={100}
-          color="black"
-        />
-        <MyAppText>
-          {`Whoops! Something with wrong: ${error}`}
-        </MyAppText>
+        <Ionicons name="md-sad" size={100} color="black" />
+        <MyAppText>{`Whoops! Something with wrong: ${error}`}</MyAppText>
         {this.refreshButton()}
         <LogoutButton />
       </View>
@@ -81,9 +73,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     marginTop: 10,
   },
-  noProspectsText: {
-
-  },
+  noProspectsText: {},
 });
 
 export { ErrorMessage };

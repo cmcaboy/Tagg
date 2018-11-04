@@ -33,15 +33,12 @@ const stateLink = withClientState({
   cache,
   defaults,
   resolvers,
-// typeDefs
+  // typeDefs
 });
 
 // We put both the state link and http link in httpLink to let the application
 // query the application state when applicable
-const httpLink = ApolloLink.from([
-  stateLink,
-  new HttpLink({ uri: `${GRAPHQL_SERVER}/graphql` }),
-]);
+const httpLink = ApolloLink.from([stateLink, new HttpLink({ uri: `${GRAPHQL_SERVER}/graphql` })]);
 
 // Websockets are used for subscriptions.
 const wsLink = new WebSocketLink({
@@ -71,10 +68,12 @@ export const client = new ApolloClient({
   // experimental
   dataIdFromObject: (object) => {
     switch (object.__typename) {
-      case 'Match': return object.matchId;
-      default: return object.id;
+      case 'Match':
+        return object.matchId;
+      default:
+        return object.id;
     }
-  }
+  },
 });
 
 // enable remote debugging

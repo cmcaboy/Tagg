@@ -1,6 +1,5 @@
 import RNFetchBlob from 'rn-fetch-blob';
 import { Platform } from 'react-native';
-import uuid from 'uuid';
 import { firebase } from './index';
 
 console.log('upload image file');
@@ -18,11 +17,12 @@ const uploadImage = (uri, name = 'dummytest', mime = 'application/octet-stream')
     console.log('in uploadimage promise');
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
     let uploadBlob = null;
-    const imageRef = firebase.storage().ref('pictures').child(name);
+    const imageRef = firebase
+      .storage()
+      .ref('pictures')
+      .child(name);
     fs.readFile(uploadUri, 'base64')
-      .then((data) => {
-        return Blob.build(data, { type: `${mime};BASE64` });
-      })
+      .then(data => Blob.build(data, { type: `${mime};BASE64` }))
       .then((blob) => {
         uploadBlob = blob;
         return imageRef.put(blob, { contentType: mime });

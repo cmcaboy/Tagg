@@ -15,7 +15,6 @@ export default async ({ email, client }) => {
       // If the email exists, return true
       return true;
     }
-
   } catch (e) {
     // If there was an error trying to retreive the email, return false.
     console.log('Error: checking email: ', e);

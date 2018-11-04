@@ -6,10 +6,10 @@ export const resolvers = {
       const query = gql`
         query getAgePreferenceLocal {
           id
-            user @client {
-              __typename
-              minAgePreference
-              maxAgePreference
+          user @client {
+            __typename
+            minAgePreference
+            maxAgePreference
           }
         }
       `;
@@ -31,9 +31,9 @@ export const resolvers = {
       const query = gql`
         query getDistanceLocal {
           user @client {
-              id
-              __typename
-              distance
+            id
+            __typename
+            distance
           }
         }
       `;
@@ -56,8 +56,8 @@ export const resolvers = {
       const query = gql`
         query getIdLocal {
           user @client {
-              id
-              __typename
+            id
+            __typename
           }
         }
       `;
@@ -78,9 +78,9 @@ export const resolvers = {
       const query = gql`
         query getSendNotificationsLocal {
           user @client {
-              id
-              __typename
-              sendNotifications
+            id
+            __typename
+            sendNotifications
           }
         }
       `;

@@ -28,11 +28,14 @@ export const PICTURE_WIDTH = 100;
 export const PHOTO_HINT = 'Hint: Press 2 photos to switch the position of the photos. Press and hold a photo to upload a new photo';
 export const PROFILE_NOT_FOUND = 'We could not find your profile.';
 
-export const DEFAULT_LATITUDE = 40.000;
-export const DEFAULT_LONGITUDE = -75.000;
+export const DEFAULT_LATITUDE = 40.0;
+export const DEFAULT_LONGITUDE = -75.0;
 
 export const ICON_OPACITY = 0.75;
 export const ICON_SIZE = Dimensions.get('window').height * 0.05;
+
+export const SCREEN_WIDTH = Dimensions.get('window').width;
+export const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export const settingDefaults = {
   latitude: DEFAULT_LATITUDE,
@@ -44,4 +47,6 @@ export const settingDefaults = {
   followerDisplay: 'Both',
 };
 
-export const EMAIL_REGEX = RegExp(/^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i);
+export const EMAIL_REGEX = RegExp(
+  /^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i,
+);

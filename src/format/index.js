@@ -14,7 +14,6 @@ export const formatWork = a => (a.length > 40 ? `${a.slice(0, 40)}...` : a);
 export const formatBids = numBids => (numBids === 1 ? `${numBids} bid` : `${numBids} bids`);
 export const formatDistanceApart = d => `${Math.round(d)} ${Math.round(d) === 1 ? ' mile away' : ' miles away'}`;
 
-
 // New time formats
 
 export const getCurrentTime = () => moment().unix(); // returns seconds since epoch

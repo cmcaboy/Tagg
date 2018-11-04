@@ -25,7 +25,10 @@ export default async (uri, name = uuid()) => {
     console.log('Error uploading photo: ', e);
   }
   console.log('name: ', name);
-  const url = await firebase.storage().ref(name).getDownloadURL();
+  const url = await firebase
+    .storage()
+    .ref(name)
+    .getDownloadURL();
   console.log('url: ', url);
   return url;
 };

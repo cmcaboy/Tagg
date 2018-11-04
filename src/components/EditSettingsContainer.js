@@ -9,19 +9,18 @@ import { PRIMARY_COLOR } from '../variables';
 
 class EditSettingsContainer extends Component {
   static navigationOptions = () => ({
-      title: 'Settings',
-      headerRight: (<View />),
-      headerTitleStyle: {
-        alignSelf: 'center',
-        textAlign: 'center',
-        fontWeight: 'normal',
-        fontSize: 22,
-        color: PRIMARY_COLOR,
-      },
-  })
+    title: 'Settings',
+    headerRight: <View />,
+    headerTitleStyle: {
+      alignSelf: 'center',
+      textAlign: 'center',
+      fontWeight: 'normal',
+      fontSize: 22,
+      color: PRIMARY_COLOR,
+    },
+  });
 
   render() {
-
     const { hideNotifications, refetchQueue } = this.props;
 
     return (
@@ -36,7 +35,9 @@ class EditSettingsContainer extends Component {
 
           return (
             <Query query={GET_SETTINGS} variables={{ id }}>
-              {({ loading, error, data, refetch }) => {
+              {({
+                loading, error, data, refetch,
+              }) => {
                 // console.log('loading: ',loading);
                 // console.log('error: ',error);
                 // console.log('data: ',data);

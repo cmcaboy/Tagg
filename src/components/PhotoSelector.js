@@ -9,7 +9,7 @@ import {
 import ImagePicker from 'react-native-image-picker';
 import uploadImage from '../firebase/uploadImage';
 import { Spinner } from './common';
-import { PLACEHOLDER_PHOTO, NUM_PHOTOS, PHOTO_ADD_URL } from '../variables';
+import { NUM_PHOTOS, PHOTO_ADD_URL } from '../variables';
 
 const fillBlanks = (u) => {
   const ul = [];
@@ -21,7 +21,7 @@ const fillBlanks = (u) => {
     }
   }
   return ul;
-}
+};
 
 class PhotoSelector extends React.Component {
   constructor(props) {

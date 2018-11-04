@@ -6,4 +6,6 @@ const auth = firebase.auth();
 const analytics = firebase.analytics();
 const perf = firebase.perf();
 
-export { firebase, db, analytics, perf, auth };
+export {
+  firebase, db, analytics, perf, auth,
+};

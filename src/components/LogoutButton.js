@@ -27,7 +27,7 @@ export default class LogoutButton extends Component {
     setId({ variables: { id: 0 } });
     // Turn the spinner off.
     this.setState({ loading: false });
-  }
+  };
 
   renderLogoutButton = (setId) => {
     const { optionsText, buttons } = styles;
@@ -37,31 +37,22 @@ export default class LogoutButton extends Component {
     }
 
     return (
-      <TouchableOpacity
-        onPress={() => this.startLogout(setId)}
-        style={buttons}
-      >
+      <TouchableOpacity onPress={() => this.startLogout(setId)} style={buttons}>
         <MaterialCommunityIcons
           name="logout"
           size={ICON_SIZE}
           color="black"
           style={{ opacity: ICON_OPACITY }}
         />
-        <MyAppText style={optionsText}>
-          {'Log Out'}
-        </MyAppText>
+        <MyAppText style={optionsText}>Log Out</MyAppText>
       </TouchableOpacity>
     );
-  }
+  };
 
   render() {
     return (
       <Mutation mutation={SET_ID_LOCAL}>
-        {setId => (
-          <View>
-            {this.renderLogoutButton(setId)}
-          </View>
-        )}
+        {setId => <View>{this.renderLogoutButton(setId)}</View>}
       </Mutation>
     );
   }

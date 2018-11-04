@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Query, Mutation } from 'react-apollo';
-import { CirclePicture, MyAppText, Spinner, ErrorMessage } from './common';
+import {
+  CirclePicture, MyAppText, Spinner, ErrorMessage,
+} from './common';
 import Messenger from './Messenger';
 import { GET_NEW_MESSAGES } from '../apollo/subscriptions';
 import { SEND_MESSAGE } from '../apollo/mutations';
@@ -13,18 +15,17 @@ class MessengerContainer extends Component {
     headerTitle: (
       <View style={styles.headerViewStyle}>
         {console.log('navigation params: ', navigation.state.params)}
-        <TouchableOpacity onPress={() => navigation.navigate('UserProfile',
-          {
+        <TouchableOpacity
+          onPress={() => navigation.navigate('UserProfile', {
             id: navigation.state.params.otherId,
             name: navigation.state.params.otherName,
             hostId: navigation.state.params.id,
-          })}
+          })
+          }
         >
           <CirclePicture imageURL={navigation.state.params.otherPic} picSize="mini" />
         </TouchableOpacity>
-        <MyAppText style={styles.textHeader}>
-          {`${navigation.state.params.otherName}`}
-        </MyAppText>
+        <MyAppText style={styles.textHeader}>{`${navigation.state.params.otherName}`}</MyAppText>
         <View style={{ width: 30 }} />
       </View>
     ),
@@ -35,7 +36,7 @@ class MessengerContainer extends Component {
       fontSize: 22,
       color: 'black',
     },
-  })
+  });
 
   render() {
     const {
@@ -59,7 +60,9 @@ class MessengerContainer extends Component {
           id: matchId,
         }}
       >
-        {({ loading, error, data, subscribeToMore, fetchMore, refetch }) => {
+        {({
+          loading, error, data, subscribeToMore, fetchMore, refetch,
+        }) => {
           if (loading) return <Spinner />;
           if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
           console.log('messages container data: ', data);
@@ -162,19 +165,18 @@ class MessengerContainer extends Component {
 }
 
 const styles = StyleSheet.create({
-    textHeader: {
-        alignSelf: 'center',
-        textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 18,
-        color: '#000',
-        paddingLeft: 8,
-    },
-    headerViewStyle: {
-        flexDirection: 'row',
-        paddingVertical: 5,
-    }
+  textHeader: {
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#000',
+    paddingLeft: 8,
+  },
+  headerViewStyle: {
+    flexDirection: 'row',
+    paddingVertical: 5,
+  },
 });
-
 
 export default MessengerContainer;

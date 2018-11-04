@@ -14,7 +14,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SplashScreen from 'react-native-splash-screen';
 import { FloatingActionButton } from './common';
 import StaggCard from './StaggCard';
-import StaggHeader from './StaggHeader';
+// import StaggHeader from './StaggHeader';
 import NewDateModal from './NewDateModal';
 import FilterModal from './FilterModal';
 import EmptyList from './EmptyList';
@@ -77,7 +77,7 @@ class Stagg extends Component {
     // ----------------------------------
   }
 
-  componentDidMount = async () => {
+  componentDidMount = async () => { 
     const { id, navigation } = this.props;
 
     SplashScreen.hide();

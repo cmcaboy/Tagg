@@ -1,3 +1,3 @@
 export const Fonts = {
-    Oxygen: 'Oxygen-Regular'
+  Oxygen: 'Oxygen-Regular',
 };

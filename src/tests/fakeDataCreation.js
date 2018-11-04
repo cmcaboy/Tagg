@@ -6,7 +6,9 @@ const TEST_CASE_SIZE = 100;
 const rand = r => Math.round(Math.random() * r);
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-export default async ({ newUser, follow, bid, createDate, chooseWinner }) => {
+export default async ({
+  newUser, follow, bid, createDate, chooseWinner,
+}) => {
   // Generate fake user data
   const users = [];
   for (let i = 0; i < TEST_CASE_SIZE; i += 1) {
@@ -15,17 +17,17 @@ export default async ({ newUser, follow, bid, createDate, chooseWinner }) => {
       name: faker.name.findName(),
       active: 1,
       email: faker.internet.email(),
-      gender: Math.round((Math.random() * 2)) % 2 === 0 ? 'male' : 'female',
+      gender: Math.round(Math.random() * 2) % 2 === 0 ? 'male' : 'female',
       description: faker.random.words(10),
       school: faker.company.companyName(),
       work: faker.company.companyName(),
       sendNotifications: faker.random.boolean(),
-      distance: Math.round((Math.random() * 50)) + 1,
+      distance: Math.round(Math.random() * 50) + 1,
       token: faker.random.alphaNumeric(),
-      latitude: Math.random() * 2 + 39.00,
-      longitude: Math.random() * -2 + -74.00,
-      minAgePreference: Math.round((Math.random() * 6)) + 18,
-      maxAgePreference: Math.round((Math.random() * 6)) + 25,
+      latitude: Math.random() * 2 + 39.0,
+      longitude: Math.random() * -2 + -74.0,
+      minAgePreference: Math.round(Math.random() * 6) + 18,
+      maxAgePreference: Math.round(Math.random() * 6) + 25,
       pics: [
         faker.image.avatar(),
         faker.image.avatar(),
@@ -68,7 +70,7 @@ export default async ({ newUser, follow, bid, createDate, chooseWinner }) => {
 
   // Create fake dates
   users.forEach(async (u) => {
-    for (let k = 0; k < Math.round((Math.random() * 5)); k += 1) {
+    for (let k = 0; k < Math.round(Math.random() * 5); k += 1) {
       await sleep(1);
       createDate({
         variables: {

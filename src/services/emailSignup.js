@@ -1,5 +1,4 @@
 import { auth } from '../firebase';
-import { CHECK_EMAIL } from '../apollo/queries';
 
 export default async ({ email, password }) => {
   console.log('Attempting to Signup');

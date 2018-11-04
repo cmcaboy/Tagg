@@ -1,7 +1,12 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
-const FloatingActionButton = ({ children, style = {}, onPress = () => {}, position = "bottomRight" }) => {
+const FloatingActionButton = ({
+  children,
+  style = {},
+  onPress = () => {},
+  position = 'bottomRight',
+}) => {
   const { floatingAction } = styles;
   let stylePosition = {};
 
@@ -23,10 +28,7 @@ const FloatingActionButton = ({ children, style = {}, onPress = () => {}, positi
   }
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[floatingAction, stylePosition, style]}
-    >
+    <TouchableOpacity onPress={onPress} style={[floatingAction, stylePosition, style]}>
       {children}
     </TouchableOpacity>
   );

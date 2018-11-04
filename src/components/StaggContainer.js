@@ -9,7 +9,6 @@ import Stagg from './Stagg';
 import EmptyList from './EmptyList';
 
 class StaggContainer extends Component {
-
   render() {
     const { navigation } = this.props;
     return (

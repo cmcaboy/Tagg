@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  KeyboardAvoidingView,
+  View, Text, StyleSheet, ScrollView, KeyboardAvoidingView,
 } from 'react-native';
 import { Query, Mutation } from 'react-apollo';
 import {
-  Card,
-  Spinner,
-  CondInput,
-  ErrorMessage,
+  Card, Spinner, CondInput, ErrorMessage,
 } from './common';
 // import { startLogout } from '../actions/auth';
 // import {firebase} from '../firebase';
@@ -34,7 +27,7 @@ import FakeButton from './FakeButton';
 class EditProfile extends Component {
   static navigationOptions = () => ({
     title: 'Edit Profile',
-    headerRight: (<View />),
+    headerRight: <View />,
     headerTitleStyle: {
       alignSelf: 'center',
       textAlign: 'center',
@@ -42,48 +35,35 @@ class EditProfile extends Component {
       fontSize: 22,
       color: PRIMARY_COLOR,
     },
-  })
+  });
 
   removeAccount = () => {
     console.log('Remove Account function');
     // this.props.startRemoveProfile();
     // this.props.startLogout();
-  }
+  };
 
-  renderContent = ({ name, age, school, work, description, pics = [], id, email }) => {
+  renderContent = ({
+    name, age, school, work, description, pics = [], id, email,
+  }) => {
     console.log('get profile component');
     return (
       <ScrollView contentContainerStyle={styles.settingsContainer}>
-        <KeyboardAvoidingView
-          behavior="position"
-        >
+        <KeyboardAvoidingView behavior="position">
           <Card style={{ padding: 2 }}>
             <Mutation mutation={SET_PICS}>
               {(changePics) => {
                 const startChangePics = newPics => changePics({ variables: { id, pics: newPics } });
-                return (
-                  <PhotoSelector
-                    urlList={pics}
-                    startChangePics={startChangePics}
-                  />
-                );
+                return <PhotoSelector urlList={pics} startChangePics={startChangePics} />;
               }}
             </Mutation>
           </Card>
-          <Text style={styles.hint}>
-            {PHOTO_HINT}
-          </Text>
+          <Text style={styles.hint}>{PHOTO_HINT}</Text>
           <Card style={{ padding: 0 }}>
             <Mutation mutation={SET_NAME}>
               {(changeName) => {
                 const startChangeName = newName => changeName({ variables: { id, name: newName } });
-                return (
-                  <CondInput
-                    field="Name"
-                    value={name}
-                    updateValue={startChangeName}
-                  />
-                );
+                return <CondInput field="Name" value={name} updateValue={startChangeName} />;
               }}
             </Mutation>
             <Mutation mutation={SET_EMAIL}>
@@ -102,13 +82,7 @@ class EditProfile extends Component {
             <Mutation mutation={SET_AGE}>
               {(changeAge) => {
                 const startChangeAge = newAge => changeAge({ variables: { id, age: newAge } });
-                return (
-                  <CondInput
-                    field="Age"
-                    value={age}
-                    updateValue={startChangeAge}
-                  />
-                );
+                return <CondInput field="Age" value={age} updateValue={startChangeAge} />;
               }}
             </Mutation>
             {/*
@@ -122,24 +96,14 @@ class EditProfile extends Component {
               {(changeSchool) => {
                 const startChangeSchool = newSchool => changeSchool({ variables: { id, school: newSchool } });
                 return (
-                  <CondInput
-                    field="Education"
-                    value={school}
-                    updateValue={startChangeSchool}
-                  />
+                  <CondInput field="Education" value={school} updateValue={startChangeSchool} />
                 );
               }}
             </Mutation>
             <Mutation mutation={SET_WORK}>
               {(changeWork) => {
                 const startChangeWork = newWork => changeWork({ variables: { id, work: newWork } });
-                return (
-                  <CondInput
-                    field="Work"
-                    value={work}
-                    updateValue={startChangeWork}
-                  />
-                );
+                return <CondInput field="Work" value={work} updateValue={startChangeWork} />;
               }}
             </Mutation>
             <Mutation mutation={SET_DESCRIPTION}>
@@ -158,8 +122,7 @@ class EditProfile extends Component {
               }}
             </Mutation>
           </Card>
-          
-          
+
           {/*
             <Card>
               <FakeButton />
@@ -171,7 +134,7 @@ class EditProfile extends Component {
         </KeyboardAvoidingView>
       </ScrollView>
     );
-  }
+  };
 
   render() {
     return (

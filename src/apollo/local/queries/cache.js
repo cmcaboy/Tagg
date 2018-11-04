@@ -22,8 +22,9 @@ export const updateQueue = (store, data) => {
       }
       cursor
       id
-  }
+    }
   `;
+
   const storeData = store.readFragment({
     id: data.data.editUserQueue.id,
     fragment,
@@ -52,7 +53,7 @@ export const updateDistance = (store, data) => {
   const fragment = gql`
     fragment User on User {
       distance
-  }
+    }
   `;
   const storeData = store.readFragment({
     id: data.data.editUser.id,

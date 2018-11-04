@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 // import firebase from 'firebase';
 import {
-  View,
-  TouchableOpacity,
-  LayoutAnimation,
-  UIManager,
+  View, TouchableOpacity, LayoutAnimation, UIManager,
 } from 'react-native';
 import { ApolloConsumer, Mutation } from 'react-apollo';
-import { Form, Item, Input, Button, Text } from 'native-base';
+import {
+  Form, Item, Input, Button, Text,
+} from 'native-base';
 import SplashScreen from 'react-native-splash-screen';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { CardSection, MyAppText, MyAppModal, Spinner } from './common';
-import { PRIMARY_COLOR, BACKGROUND_COLOR, DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from '../variables';
+import {
+  CardSection, MyAppText, MyAppModal, Spinner,
+} from './common';
+import {
+  PRIMARY_COLOR, BACKGROUND_COLOR, DEFAULT_LATITUDE, DEFAULT_LONGITUDE,
+} from '../variables';
 import { getCurrentTime } from '../format';
 import FBLoginButton from '../services/FBLoginButton';
 import { NEW_USER } from '../apollo/mutations';
 import { SET_ID_LOCAL } from '../apollo/local/mutations';
 import emailLogin from '../services/emailLogin';
-// import emailSignup from '../services/emailSignup';
 import checkEmail from '../services/checkEmail';
 import NewUserModal from './NewUserModal';
 import emailValidation from '../services/emailValidation';
@@ -27,6 +29,7 @@ class LoginForm extends Component {
     super(props);
 
     UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+
     LayoutAnimation.linear();
 
     this.state = {
@@ -40,9 +43,9 @@ class LoginForm extends Component {
     };
   }
 
-  toggleEmail = () => this.setState(prev => ({ showEmail: !prev.showEmail }))
+  toggleEmail = () => this.setState(prev => ({ showEmail: !prev.showEmail }));
 
-  emailInput = email => this.setState({ email })
+  emailInput = email => this.setState({ email });
 
   passwordInput = password => this.setState({ password });
 
@@ -65,10 +68,15 @@ class LoginForm extends Component {
     }
 
     // Check to see if email is already on file
-    const isEmailAlreadyRegistered = await checkEmail({ email: email.toLowerCase(), client });
+    const isEmailAlreadyRegistered = await checkEmail({
+      email: email.toLowerCase(),
+      client,
+    });
     console.log('isEmailAlreadyRegistered: ', isEmailAlreadyRegistered);
     if (!isEmailAlreadyRegistered) {
-      this.setError('We could not find your email. Please try a different one or use facebook to login.');
+      this.setError(
+        'We could not find your email. Please try a different one or use facebook to login.',
+      );
       this.setState({ loading: false });
       return null;
     }
@@ -79,29 +87,28 @@ class LoginForm extends Component {
       password,
       client,
       startSetId,
-    }).then((e) => {
-      this.setState({ loading: false });
-      this.setError(e);
-    }).catch((e) => {
-      console.log('email login error: ', e);
-      this.setState({ loading: false });
-      this.setError(e);
-    });
+    })
+      .then((e) => {
+        this.setState({ loading: false });
+        this.setError(e);
+      })
+      .catch((e) => {
+        console.log('email login error: ', e);
+        this.setState({ loading: false });
+        this.setError(e);
+      });
     return null;
-  }
+  };
 
-  emailSignup = async ({ client }) => {
-    const { email } = this.state;
-    this.setError('');
-    // activate modal
-    this.setState({ modalDisplay: true, loading: false });
-  }
+  // activate modal
+  emailSignup = () => this.setState({ error: '', modalDisplay: true, loading: false });
 
   componentWillUpdate = () => {
     UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
     LayoutAnimation.linear();
-  }
+  };
 
+  // Hides default splash screen when the page is mounted.
   componentDidMount = () => SplashScreen.hide();
 
   render() {
@@ -152,38 +159,31 @@ class LoginForm extends Component {
                       close={this.modalClose}
                       swipeToClose={false}
                     >
-                      <NewUserModal
-                        closeModal={this.modalClose}
-                        startSetId={startSetId}
-                      />
+                      <NewUserModal closeModal={this.modalClose} startSetId={startSetId} />
                     </MyAppModal>
                     <View style={styles.content}>
-                      <MyAppText style={styles.title}>
-                        { 'Tagg' }
-                      </MyAppText>
-                      <MyAppText style={styles.subTitle}>
-                        { 'Find a date...... Fast!' }
-                      </MyAppText>
-                      <MyAppText style={styles.errorTextStyle}>
-                        {error}
-                      </MyAppText>
+                      <MyAppText style={styles.title}>Tagg</MyAppText>
+                      <MyAppText style={styles.subTitle}>Find a date...... Fast!</MyAppText>
+                      <MyAppText style={styles.errorTextStyle}>{error}</MyAppText>
                       <CardSection style={{ borderBottomWidth: 0 }}>
                         <ApolloConsumer>
-                          {client => <FBLoginButton client={client} startNewUser={startNewUser} startSetId={startSetId} />}
+                          {client => (
+                            <FBLoginButton
+                              client={client}
+                              startNewUser={startNewUser}
+                              startSetId={startSetId}
+                            />
+                          )}
                         </ApolloConsumer>
                       </CardSection>
                     </View>
                     <View style={styles.emailContainer}>
                       <TouchableOpacity onPress={this.toggleEmail}>
-                        <Text style={styles.emailFormTitleText}>
-                          { 'Use Email Instead' }
-                        </Text>
+                        <Text style={styles.emailFormTitleText}>Use Email Instead</Text>
                       </TouchableOpacity>
                       {this.state.showEmail && (
                         <View style={styles.emailForm}>
-                          <MyAppText style={styles.errorTextStyle}>
-                            {emailError}
-                          </MyAppText>
+                          <MyAppText style={styles.errorTextStyle}>{emailError}</MyAppText>
                           <Form>
                             <Item>
                               <Input
@@ -213,14 +213,17 @@ class LoginForm extends Component {
                                       block
                                       onPress={() => this.emailLogin({ client, startSetId })}
                                     >
-                                      <Text>
-                                        { 'Sign in' }
-                                      </Text>
+                                      <Text>Sign in</Text>
                                     </Button>
-                                    <TouchableOpacity onPress={() => this.emailSignup({ client, startSetId, startNewUser })}>
-                                      <MyAppText style={signUp}>
-                                        { 'Sign up with Email' }
-                                      </MyAppText>
+                                    <TouchableOpacity
+                                      onPress={() => this.emailSignup({
+                                        client,
+                                        startSetId,
+                                        startNewUser,
+                                      })
+                                      }
+                                    >
+                                      <MyAppText style={signUp}>Sign up with Email</MyAppText>
                                     </TouchableOpacity>
                                   </View>
                                 );
@@ -255,8 +258,7 @@ const styles = {
     // justifyContent: 'flex-start',
     // alignItems: 'stretch',
   },
-  emailForm: {
-  },
+  emailForm: {},
   emailFormTitleText: {
     // display: 'none',
     fontSize: 11,
