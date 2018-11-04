@@ -6,7 +6,6 @@ import { Spinner } from './common';
 import LoginForm from './LoginForm';
 import MainNavigator from '../navigator';
 import { firebase } from '../firebase';
-import { standard_font } from '../styles';
 import { STATUS_BAR_COLOR } from '../variables';
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
@@ -14,14 +13,13 @@ function UdaciStatusBar({ backgroundColor, ...props }) {
     <View style={{ backgroundColor, height: getStatusBarHeight() }}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
-  )
+  );
 }
 
 class Authentication extends React.Component {
-
   state = {
     loggedIn: false,
-  }
+  };
 
   componentWillMount() {
     // Firebase authentication details gathered from my firebase account.
@@ -51,12 +49,10 @@ class Authentication extends React.Component {
 
     switch (loggedIn) {
       case true:
-          return (
-              <MainNavigator />
-          );
-          // <LoginForm />
-          // return <Settings />
-            // <CardSection><Button onPress={() => firebase.auth().signOut()}>Log Out</Button></CardSection>
+        return <MainNavigator />;
+      // <LoginForm />
+      // return <Settings />
+      // <CardSection><Button onPress={() => firebase.auth().signOut()}>Log Out</Button></CardSection>
       case false:
         return <LoginForm />;
       default:
@@ -87,7 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
 });
 
 export default Authentication;
