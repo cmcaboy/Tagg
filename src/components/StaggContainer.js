@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Query, Mutation } from 'react-apollo';
 import Composer from 'react-composer';
+import SplashScreen from 'react-native-splash-screen';
 import { Spinner, ErrorMessage } from './common';
 import { GET_QUEUE, MORE_QUEUE } from '../apollo/queries';
 import { GET_ID } from '../apollo/local/queries';
@@ -9,6 +10,8 @@ import Stagg from './Stagg';
 import EmptyList from './EmptyList';
 
 class StaggContainer extends Component {
+  componentDidMount = () => SplashScreen.hide();
+
   render() {
     const { navigation } = this.props;
     return (
