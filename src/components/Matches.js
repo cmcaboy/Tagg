@@ -7,7 +7,7 @@ import {
 } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Query } from 'react-apollo';
-import { PRIMARY_COLOR } from '../variables';
+import { PRIMARY_COLOR, PLACEHOLDER_PHOTO } from '../variables';
 import {
   CirclePicture, MyAppText, Spinner, ErrorMessage,
 } from './common';
@@ -42,6 +42,13 @@ class Matches extends Component {
         <View style={styles.newMatchesContainer}>
           <MyAppText style={styles.heading}>My Matched Dates</MyAppText>
           <ScrollView horizontal>
+            {console.log('matches length: ', matches.length)}
+            {!matches.length && (
+              <View style={styles.newMatch}>
+                <CirclePicture imageURL={PLACEHOLDER_PHOTO} picSize="small" />
+                <MyAppText>{formatName('No matches')}</MyAppText>
+              </View>
+            )}
             {matches.map(match => (
               <TouchableOpacity
                 accessible={false}
@@ -70,6 +77,13 @@ class Matches extends Component {
           <MyAppText style={styles.heading}>My Open Dates</MyAppText>
           <ScrollView>
             <List>
+              {console.log('dateRequests length: ', dateRequests.length)}
+              {!dateRequests.length && (
+                <View style={styles.newMatch}>
+                  <CirclePicture imageURL={PLACEHOLDER_PHOTO} picSize="small" />
+                  <MyAppText>{formatName('You havent created a date yet')}</MyAppText>
+                </View>
+              )}
               {dateRequests.map(date => (
                 <ListItem
                   accessible={false}

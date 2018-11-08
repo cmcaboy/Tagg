@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\11.8.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f0f484b1a18c1676984dfea4e572ceffda2f3b78">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-location-11.8.0_5be1d9fb28bd616c460a926dbb84db396d31f8c3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\ManhattanMatch\react-native-background-fetch\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="311add1cdd80ab825ff0dadc0e9c950d21e84c6c">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\ManhattanMatch-react-native-background-fetch-unspecified_9d7d2b34b9b4f32193d7885ff4d568fcd14b91f1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.fresco\imagepipeline\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="48c7f54c2515a2312d3a4481d10c43fbb807f3af">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-imagepipeline-1.3.0_5dcd653fbaaaa358664b60fdcd65a511102f0b7c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.android\facebook-places\4.33.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="6ab689d36e3c7425adf1e32986075045d1baf4b2">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.android-facebook-places-4.33.0_53cfcf3375b8e42ac58aa05e716e3f0c7782d5b6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.android.support\support-fragment\27.0.2\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="618f75fe11febf263e3234c7da7dc892232a5608">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-27.0.2_9714750b9425b3f26e133f6b2ed50489353411f2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\com.android.support\support-annotations\27.0.2\b9ef4342c934a1a8b107506273dc8061662a322\support-annotations-27.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="0b9ef4342c934a1a8b107506273dc8061662a322">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\support-annotations-27.0.2_06e83725e59a6c6887fdeea52ca147be69f6bc6a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.soloader\soloader\0.1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="8f615bca00639150c9eb6175d4b5471193f70794">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.soloader-soloader-0.1.0_6928f57e48e780034d65b4e98bfeef524dea5eef.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.android\facebook-messenger\4.33.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="6d3dda07fbd30171edc150e4f13884fce5cd9926">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.android-facebook-messenger-4.33.0_947ca0fdca470fe2e3b8edfc377a69d884139835.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\org.slf4j\slf4j-api\1.7.21\139535a69a4239db087de9bab0bee568bf8e0b70\slf4j-api-1.7.21.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="139535a69a4239db087de9bab0bee568bf8e0b70">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\slf4j-api-1.7.21_b1fdb6a1e42223d5e39b28f8723146059d9d8001.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.transistorsoft\tsbackgroundfetch\0.2.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="346d3de9f113614b94aec80ec8b1d0eb5000eff8">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.transistorsoft-tsbackgroundfetch-0.2.0_2da4222548a8b6aa3bb720819a9284f217e97952.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\3.0.0\5871fb60dc68d67da54a663c3fd636a10a532948\jsr305-3.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="5871fb60dc68d67da54a663c3fd636a10a532948">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\jsr305-3.0.0_3ca15f0807f799f4ceabe67bfa4e54e89245c0d6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\android.arch.lifecycle\runtime\1.0.3\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d7cc5473b9cf4ea159a263cd477fb3ecb2987b96">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\android.arch.lifecycle-runtime-1.0.3_10b08d848219283c82cc1e5041c330c4c9491b6c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.fresco\imagepipeline-okhttp3\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="c03c08c9934b23c8c09c803345ec51a74119127b">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-imagepipeline-okhttp3-1.3.0_6cff11741f671dd870cde52832b08f1b2fa2308f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\27.0.2\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ac2ce6027755bcf49442e70597bec0feb9064f68">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-27.0.2_02f3e3e1c05656423817813269066a7123e20721.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp-urlconnection\3.6.0\3f9b16b774f2c36cfd86dd2053d0b3059531dacc\okhttp-urlconnection-3.6.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="3f9b16b774f2c36cfd86dd2053d0b3059531dacc">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\okhttp-urlconnection-3.6.0_5fa8cea0aaabdc25e2a3a3b5a5984d46c0628b7c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.android\facebook-core\4.33.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b478831814c5b6a1337f9e75d696d5faa6973519">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.android-facebook-core-4.33.0_dff7a0410a69110ca30b0820b0d9edd06496f906.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\android.arch.lifecycle\common\1.0.3\7d7f60c4783872861222166f6164215f8951c7b1\common-1.0.3.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7d7f60c4783872861222166f6164215f8951c7b1">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\common-1.0.3_b78b79c001c24c0efc88b0bc89bbfb7117340030.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.fresco\imagepipeline-base\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="72128af126ddd7d6252da9357fe560d3abcdfb0c">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-imagepipeline-base-1.3.0_bd196a58d49b8d1e5914ab137efc6a09a2f53974.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.intentfilter\android-permissions\0.1.6\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d017be0e8d084dbf49feb46382b972f390fcab74">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.intentfilter-android-permissions-0.1.6_ba22fadae2372181fb703694318edd79f694e106.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.github.tony19\logback-android\1.1.1-9\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="1f4579f70d514509977ae76be02260ccb58bff5f">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.github.tony19-logback-android-1.1.1-9_fde90449a95a5fefb1bf7b7413577604c1f32011.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.fresco\drawee\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="c65a2e39d54023bac3aef64a2f0cff89289c7ff6">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-drawee-1.3.0_c0785d1f64ce4b5647a88cb24991480b16b19317.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\27.0.2\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="04cd0cacbedcb338f64665b88bad64d145325fbd">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-27.0.2_ca42b4917ab2af21b20e345cf5c85d333a150266.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.android.support\customtabs\27.0.2\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="cdebcd9e0580b35115f655f8dc8ed7a66a8ef0fc">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.android.support-customtabs-27.0.2_b1f62d210f09a5f29b2cec851ed71a268e8d113d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\ManhattanMatch\react-native-fbsdk\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f90c7e695e3c486f8a900c0e97eeeaa99a7e2d55">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\ManhattanMatch-react-native-fbsdk-unspecified_0457d20502fa595b8c2e8a36c4c4e7e140fb4e76.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-applinks\1.4.0\8ad21bf21784dacce5f2043afb97218cc377e835\bolts-applinks-1.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\bolts-applinks-1.4.0_ceb723b4ee488e7d866a675b999f80b30750734e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.android\facebook-login\4.33.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="95dbd34766d3f158ef20de4b5b0206118e960709">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.android-facebook-login-4.33.0_47244eae0e7882b915d800b9891be3e873e4bd07.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.transistorsoft\tslocationmanager\2.12.14\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="55f7d5a128895c8df95270d170ff2fac2303df25">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.transistorsoft-tslocationmanager-2.12.14_af79f6148372367446ed346ab81991e59928fa0a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\27.0.2\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="fe3916317a699975bcce0cba2d13fd2d8cf88922">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-27.0.2_b01eb626a06a5972703e5cdae921733ec9e79f5d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\android.arch.core\common\1.0.0\a2d487452376193fc8c103dd2b9bd5f2b1b44563\common-1.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a2d487452376193fc8c103dd2b9bd5f2b1b44563">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\common-1.0.0_d946b1a8e41b8a42ae4bffeaa4c2b7b71c02e804.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\org.greenrobot\eventbus\3.0.0\ddd99896e9569eaababbe81b35d80e1b91c4ad85\eventbus-3.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ddd99896e9569eaababbe81b35d80e1b91c4ad85">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\eventbus-3.0.0_86ce7533a127a569bdb4da0d311dbcdaf9b5ee49.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.fresco\fbcore\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="37345de2ed2772f385eaeec37a9c2ff0fea99ad7">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-fbcore-1.3.0_75ede5cd423f0a1d70441a49b100b65795149e5f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.10.0\7ef0f1d95bf4c0b3ba30bbae25e0e562b05cf75e\okhttp-3.10.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7ef0f1d95bf4c0b3ba30bbae25e0e562b05cf75e">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\okhttp-3.10.0_3d194a2ae06329792fe17224f637672615d96baf.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.react\react-native\0.55.4\jars\libs\infer-annotations-4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="9809e90be788acdb479b2b44e2112f3295a03068">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\infer-annotations-4.0_abaf039c2fc4918465f7e26c4119474c7aaa215f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\ManhattanMatch\react-native-image-picker\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ed80840d302bee1f5dd42cefa1fa8e6100100535">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\ManhattanMatch-react-native-image-picker-unspecified_cf498441d096e3f1a1cabcc4f07bd988c92a406e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.android\facebook-common\4.33.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="4d9151b05d74c7d17dba9485cbb56be7e16ed9aa">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.android-facebook-common-4.33.0_fee8b35eea598274cfcfdb26cf0c34932d232291.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.14.0\102d7be47241d781ef95f1581d414b0943053130\okio-1.14.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="102d7be47241d781ef95f1581d414b0943053130">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\okio-1.14.0_0405ccb47cc45be7ee3245fb0124001ef87631cc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\27.0.2\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="14bfdbf5594d4d7c320de20831849050788ab1e3">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-27.0.2_25337d4eb855e728ec438acf2dbb103b64a1bb41.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.fresco\fresco\1.3.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="fe85b87215e405f5917d40ae4960488ac9224b74">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.fresco-fresco-1.3.0_ad6f9e2b6833dc6c78feb091b036bc426b9e3917.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.github.tony19\apktool-lib\1.4.4-5\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d932076eb0135371e07b32648037810c41bbf81e">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.github.tony19-apktool-lib-1.4.4-5_2f8a82773d4b7ffd963a73267167fe03a51d34a3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\27.0.2\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="caa03787689212c10939f308a55a8dc8a3333ed2">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-27.0.2_19dc54d6ec3d2f76dbb35820534b9041d4942638.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.android\facebook-android-sdk\4.33.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b1c250352bb7bbd5ea1982ca5165f2a81f36b530">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.android-facebook-android-sdk-4.33.0_89425f03e5a1a029aa50d6ce2e5b37de68df445b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.react\react-native\0.55.4\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="e31331bdf6b5952badadbfc171f04b95c55d3b16">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.react-react-native-0.55.4_e3d2193c56f6ce47136d36d9caac37e119e4ad6e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.android.support\support-compat\27.0.2\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b432e82447a3af781e927b9ba0bbb9fe2a496d4a">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-27.0.2_584753604c2d856f1a927d4197d683f1afb423f3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\ManhattanMatch\react-native-vector-icons\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="279750fed3c920d06351dbf32889c1b48203c7ad">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\ManhattanMatch-react-native-vector-icons-unspecified_64f0b92a324c1ed897ebe0c7e26bdaefecc6c03a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\11.8.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="233d88c6f961d2a84758dfe27b7af61318190c7b">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-base-11.8.0_23ea609659bf79f3c08fd32b0e6edc30cf603201.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\ManhattanMatch\react-native-background-geolocation\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="dc505743d5a7da3c2e2a372ac3bb3e2f295457bb">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\ManhattanMatch-react-native-background-geolocation-unspecified_e58539a0135ca253f188c547779792035931fca0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\javax.inject\javax.inject\1\6975da39a7040257bd51d21a231b76c915872d38\javax.inject-1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\javax.inject-1_b958feb6dd2cfb06b441b9aff48f6535084d1c25.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\11.8.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="5ad3911825107d8dd4b017fdecebfd23c08048dd">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-basement-11.8.0_1b03e44708106ad504e975b4a01122dcb5892c3e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\27.0.2\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="25c8cb628374f9a2d59ff9e1172753751e9a9f84">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-media-compat-27.0.2_f88a19f743e75a475e137776071eedba7ba8ac9e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\com.google.zxing\core\3.3.0\73c49077166faa4c3c0059c5f583d1d7bd1475fe\core-3.3.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="73c49077166faa4c3c0059c5f583d1d7bd1475fe">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\core-3.3.0_2be2bc0836aedc0a4428ff1989827145d16e6b33.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.android\facebook-share\4.33.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f64aa03e24769f0e10f35f1c08e4d004b5db067b">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.android-facebook-share-4.33.0_ca94dcfe9331b107cd03e690c93f03b646a1db0b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.fbui.textlayoutbuilder\textlayoutbuilder\1.0.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f90b593491e4044903f0bbf68dc3fa2790b151b9">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.fbui.textlayoutbuilder-textlayoutbuilder-1.0.0_08f335fa9535e340ead91bb838cfa304589dbce5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-tasks\1.4.0\d85884acf6810a3bbbecb587f239005cbc846dc4\bolts-tasks-1.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\bolts-tasks-1.4.0_9e8fb50d7b7975e336e0ddcb23ce9039c4df8787.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.android.support\support-v4\27.0.2\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="bcd0bcdef85b31a656af76e39c0c95ce70800772">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-27.0.2_1397b4915ee5a3fb813fa7fa6bf6280c90bcb81c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\27.0.2\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ed6560f31a6a40b5965f5879d8f2eab1f68def05">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-27.0.2_5d579a36316833b4309655192da701ccfe9615f2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.facebook.android\facebook-applinks\4.33.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="82ea5a937ab84229fbd2f3fc8cf2a72cbdf0ee0f">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.facebook.android-facebook-applinks-4.33.0_bf548d09ffe4028600f34ee3015ea2a5e4b7cd44.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\.gradle\caches\modules-2\files-2.1\com.facebook.fbui.textlayoutbuilder\staticlayout-proxy\1.0\f162442a19fff13995fbd51ba414d9ee05579080\staticlayout-proxy-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f162442a19fff13995fbd51ba414d9ee05579080">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\staticlayout-proxy-1.0_742071d92c6ce3c006cad1df4206b9d4fe5f3b5b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tasks\11.8.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d2af2ef4d987d753f2e8ee2d1480ab964d5c7273">
+        <dex dex="C:\Users\cmcaboy\Dropbox\GitHub\react\ManhattanMatch\android\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-tasks-11.8.0_c94ef16e25565b17589859009356c245aca492fb.jar" />
+    </item>
+
+</items>

@@ -79,7 +79,7 @@ platform :ios do
 
     # Upload IPA to ios App Store
     upload_to_app_store(
-      submit_for_review: true,
+      submit_for_review: false,
       force: true
     )
   end
