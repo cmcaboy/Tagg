@@ -119,7 +119,7 @@ class Matches extends Component {
     return (
       <Query query={GET_ID}>
         {({ loading, error, data }) => {
-          // console.log('local data: ',data);
+          console.log('local data: ',data);
           // console.log('local error: ',error);
           // console.log('local loading: ',loading);
           if (loading) return <Spinner />;
@@ -136,6 +136,11 @@ class Matches extends Component {
                 // console.log('networkStatus: ',networkStatus);
                 if (loading) return <Spinner />;
                 if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
+
+                if (!data.user) {
+                  console.log('noMatches');
+                  return this.noMatches();
+                }
                 return this.renderContent({
                   matches: data.user.matchedDates.list,
                   dateRequests: data.user.dateRequests.list,

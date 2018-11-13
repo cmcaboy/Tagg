@@ -9,6 +9,7 @@ const typeDefs = `
         school: String
         work: String
         sendNotifications: Boolean
+        viewObjectionable: Boolean
         gender: String
         distance: Int
         token: String
@@ -30,6 +31,7 @@ const typeDefs = `
         dateRequests: DateList
         queue: Queue
         matchedDates: MatchList
+        objectionable: Boolean
     }
 
     type DateList {
@@ -149,6 +151,7 @@ const typeDefs = `
             minAgePreference: Int
             maxAgePreference: Int
             followerDisplay: String
+            objectionable: Boolean
             pics: [String]
         ): User
         editUserQueue (
@@ -178,6 +181,7 @@ const typeDefs = `
             minAgePreference: Int
             maxAgePreference: Int
             followerDisplay: String
+            objectionable: Boolean
             pics: [String]
         ): User
         newMessage (
@@ -196,6 +200,8 @@ const typeDefs = `
         bid(id: String!, dateId: String!, bidPlace: String, bidDescription: String): DateBid
         createDate(id: String!, datetimeOfDate: String, description: String): DateItem
         chooseWinner(id: String!, winnerId: String!, dateId: String!): DateItem
+        flag(id: String!, flaggedId: String!, block: Boolean): User
+        block(id: String!, blockedId: String): User
     }
     schema {
         query: Query

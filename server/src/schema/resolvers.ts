@@ -240,6 +240,11 @@ const resolvers = {
                     followQuery=``;
             }
 
+            let objectionable = '';
+
+            if (!args.viewObjectionable) {
+                objectionable = 'AND NOT objectionable'
+            }
 
             if(!args.cursor) {
                 console.log('No cursor passed in. You must be at the end of the list. No more values to retreive.');
@@ -259,6 +264,7 @@ const resolvers = {
                 exists((a)-[:FOLLOWING]->(b)) as isFollowing,
                 exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
                 where
+                a.viewObjectionable=b.objectionable AND
                 NOT b.id=a.id AND
                 NOT b.gender=a.gender AND
                 distanceApart < a.distance AND
@@ -654,6 +660,8 @@ const resolvers = {
             !!args.minAgePreference && (query = query+ `a.minAgePreference=${args.minAgePreference},`)
             !!args.maxAgePreference && (query = query+ `a.maxAgePreference=${args.maxAgePreference},`)
             !!args.followerDisplay && (query = query+ `a.followerDisplay='${args.followerDisplay}',`)
+            !!args.objectionable && (query = query+ `a.objectionable=${args.objectionable},`)
+            !!args.viewObjectionable && (query = query+ `a.viewObjectionable=${args.viewObjectionable},`)
             !!args.pics && (query = query+ `a.pics=[${args.pics.map(pic => `"${pic}"`)}],`)
 
             console.log('query slice: ',query.slice(0,-1));
@@ -720,6 +728,8 @@ const resolvers = {
             !!args.minAgePreference && (query = query+ `minAgePreference:${args.minAgePreference},`)
             !!args.maxAgePreference && (query = query+ `maxAgePreference:${args.maxAgePreference},`)
             !!args.followerDisplay && (query = query+ `followerDisplay:'${args.followerDisplay}',`)
+            !!args.viewObjectionable && (query = query+ `viewObjectionable:${args.viewObjectionable},`)
+            !!args.objectionable && (query = query+ `objectionable:${args.objectionable},`)
             !!args.pics && (query = query+ `pics:[${args.pics.map(pic => `"${pic}"`)}],`)
 
             query = query.slice(-1) === ','? query.slice(0,-1) : query;
@@ -926,6 +936,27 @@ const resolvers = {
             chooseWinnerPushLoser(date)
             console.log('chooseWinner date: ',date);
             return date;
+        },
+        block: (_, args) => {
+            console.log('args: ', args);
+            const { id, blockedId } = args;
+            session.run(`MATCH (a:User{id:'${id}'}), (b:User{id:'${blockedId}'}) 
+                CREATE (a)-[r:BLOCK { active: true }]->(b)
+                return a`)
+                .then(result => {
+                    return result.records[0]
+                })
+                .then(record => ({...record._fields[0].properties}))
+                .catch(e => console.log('Error blocking user: ', e))
+        },
+        flag: (_, args) => {
+            const { id, flaggedId } = args;
+            session.run(`MATCH (a:User{id:'${id}'}) set a.objectionable = true RETURN a`)
+                .then(result => {
+                    return result.records[0]
+                })
+                .then(record => ({...record._fields[0].properties}))
+                .catch(e => console.log('Error blocking user: ', e))
         },
     }
 }

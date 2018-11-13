@@ -42,13 +42,6 @@ platform :ios do
       skip_waiting_for_build_processing: true
     )
 
-    # These commands were recommended by Igor's udemy course
-    # match(type: "appstore")
-    # gym(scheme: "ManhattanMatch")
-    # pilot(
-    #   skip_to_waiting_for_build_processing: true
-    # )
-
     # These are cleanup steps recommended by Igor's udemy course
     clean_build_artifacts
     commit_version_bump(
@@ -79,7 +72,15 @@ platform :ios do
 
     # Upload IPA to ios App Store
     upload_to_app_store(
-      submit_for_review: false,
+      submit_for_review: true,
+      force: true
+    )
+
+    # These are cleanup steps recommended by Igor's udemy course
+    clean_build_artifacts
+    commit_version_bump(
+      message: "Fastlane iOS: Released new build #{lane_context[SharedValues::BUILD_NUMBER]} [ci skip]",
+      xcodeproj: "./ManhattanMatch.xcodeproj",
       force: true
     )
   end
@@ -97,12 +98,5 @@ platform :ios do
       force: true
     )
   end
-  
-  desc ""
-  lane :pushNotification do
-    pem
-  end
-  
-  
   
 end
