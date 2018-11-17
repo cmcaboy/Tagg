@@ -764,9 +764,9 @@ const resolvers = {
         (query = query + `a.maxAgePreference=${args.maxAgePreference},`);
       !!args.followerDisplay &&
         (query = query + `a.followerDisplay='${args.followerDisplay}',`);
-      !!args.objectionable &&
+      isBoolean(args.objectionable) &&
         (query = query + `a.objectionable=${args.objectionable},`);
-      !!args.viewObjectionable &&
+      isBoolean(args.viewObjectionable) &&
         (query = query + `a.viewObjectionable=${args.viewObjectionable},`);
       !!args.pics &&
         (query = query + `a.pics=[${args.pics.map(pic => `"${pic}"`)}],`);
@@ -818,6 +818,7 @@ const resolvers = {
     },
     newUser: (_, args) => {
       console.log("args: ", args);
+      const isBoolean = val => "boolean" === typeof val;
       let query = `CREATE(a:User{
                 id: '${args.id}',
                 name: '${args.name}',
@@ -843,9 +844,9 @@ const resolvers = {
         (query = query + `maxAgePreference:${args.maxAgePreference},`);
       !!args.followerDisplay &&
         (query = query + `followerDisplay:'${args.followerDisplay}',`);
-      !!args.viewObjectionable &&
+      isBoolean(args.viewObjectionable) &&
         (query = query + `viewObjectionable:${args.viewObjectionable},`);
-      !!args.objectionable &&
+      isBoolean(args.objectionable) &&
         (query = query + `objectionable:${args.objectionable},`);
       !!args.pics &&
         (query = query + `pics:[${args.pics.map(pic => `"${pic}"`)}],`);
