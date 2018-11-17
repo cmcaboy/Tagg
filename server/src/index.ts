@@ -69,7 +69,7 @@ app.use("/coords", bodyParser.json(), (req, res) => {
 
 //  const server = createServer(app);
 
-server.applyMiddware({
+server.applyMiddleware({
   app,
   path
 });
