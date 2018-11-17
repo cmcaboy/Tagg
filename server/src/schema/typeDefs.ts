@@ -152,6 +152,7 @@ const typeDefs = `
             maxAgePreference: Int
             followerDisplay: String
             objectionable: Boolean
+            viewObjectionable: Boolean
             pics: [String]
         ): User
         editUserQueue (
@@ -182,6 +183,7 @@ const typeDefs = `
             maxAgePreference: Int
             followerDisplay: String
             objectionable: Boolean
+            viewObjectionable: Boolean
             pics: [String]
         ): User
         newMessage (
