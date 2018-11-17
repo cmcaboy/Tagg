@@ -18,6 +18,7 @@
     "firebase-admin": "^5.13.1",
     "firebase-functions": "^1.0.4",
     "graphql": "^0.13.2",
+    "graphql-server-express": "^1.4.0",
     "graphql-subscriptions": "^0.5.8",
     "moment": "^2.22.1",
     "neo4j-driver": "^1.6.1",
