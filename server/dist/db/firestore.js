@@ -10,4 +10,6 @@ admin.initializeApp({
 });
 const db = admin.firestore();
 exports.db = db;
+const messaging = admin.messaging();
+exports.messaging = messaging;
 //# sourceMappingURL=firestore.js.map

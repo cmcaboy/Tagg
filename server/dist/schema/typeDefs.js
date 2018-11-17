@@ -10,7 +10,8 @@ const typeDefs = `
         description: String
         school: String
         work: String
-        sendNotifications: String
+        sendNotifications: Boolean
+        viewObjectionable: Boolean
         gender: String
         distance: Int
         token: String
@@ -18,53 +19,121 @@ const typeDefs = `
         longitude: Float
         minAgePreference: Int
         maxAgePreference: Int
+        followerDisplay: String
         match: Boolean
+        distanceApart: Float
+        order: Float
+        registerDateTime: String
         pics: [String]
-        profilePics: String
-        likes: [User]
-        dislikes: [User]
-        matches: [Match]
-        queue: [User]
+        profilePic: String
+        hasDateOpen: Boolean
+        isFollowing: Boolean
+        following: Following
+        bids: DateBidList
+        dateRequests: DateList
+        queue: Queue
+        matchedDates: MatchList
+        objectionable: Boolean
+    }
+
+    type DateList {
+        id: String
+        list: [DateItem]
+        cursor: Float
+    }
+
+    type DateBidList {
+        id: String
+        list: [DateBid]
+        cursor: Float
+    }
+
+    type Following {
+        id: String
+        list: [User]
+        cursor: Float
+    }
+
+    type Queue {
+        id: String
+        list: [User]
+        cursor: Float
+    }
+
+    type MatchList {
+        id: String
+        list: [Match]
+        cursor: Float
+    }
+
+    type DateItem {
+        id: String
+        creator: User
+        winner: User
+        creationTime: String
+        datetimeOfDate: String
+        description: String
+        bids: DateBidList
+        num_bids: Int
+        open: Boolean
+        creationTimeEpoch: Float
+        order: Float
+    }
+
+    type DateBid {
+        id: String
+        datetimeOfBid: String
+        bidDescription: String
+        bidPlace: String
+        dateUser: User
+        bidUser: User
+        date: DateItem
+    }
+
+    type MessageItem {
+        name: String
+        avatar: String
+        _id: String
+        createdAt: String
+        text: String
+        order: Float
+        uid: String
     }
     
     type Message {
-        id: String
-        name: String
-        date: String
-        message: String
-    }
-
-    type LikeUser {
-        id: String
-        name: String
-        match: Boolean
+        id: String 
+        cursor: String
+        list: [MessageItem]!
     }
 
     type Match {
+        id: String
         matchId: String
         user: User
-        messages: [Message]
-        lastMessage: Message
+        description: String
+        datetimeOfDate: String
+        messages: Message
+        lastMessage: MessageItem
     }
 
     type Query {
-        user(id: String!): User
-        match(matchId: String!): Match
+        user(id: String!, hostId: String): User
+        messages(id: String!): Message
+        date(id: String!): DateItem
+        dates(id: String!): DateList
+        otherBids(id: String!): DateBidList
+        moreMessages(id: String!, cursor: String!): Message
+        moreQueue(id: String!, followerDisplay: String, cursor: Float!): Queue
+        moreDates(id: String!, cursor: Float!): DateList
+        moreDateBids(id:String!, cursor: Float!): DateBidList
+        moreFollowing(id: String!, cursor: Float!): Following
     }
 
     type Subscription {
-        newMessageSub(matchId: String): Message
+        newMessageSub(matchId: String, id: String): MessageItem
     }
 
     type Mutation {
-        dislikeUser (
-            id: String! 
-            dislikedId: String!
-        ): User
-        likeUser (
-            id: String!
-            likedId: String!
-        ): LikeUser
         editUser (
             id: String!
             name: String
@@ -80,15 +149,27 @@ const typeDefs = `
             token: String
             latitude: Float
             longitude: Float
+            registerDateTime: String
             minAgePreference: Int
             maxAgePreference: Int
+            followerDisplay: String
+            objectionable: Boolean
+            viewObjectionable: Boolean
             pics: [String]
         ): User
+        editUserQueue (
+            id: String!
+            sendNotifications: Boolean
+            distance: Int
+            minAgePreference: Int
+            maxAgePreference: Int
+            followPreference: Int
+        ): Queue
         newUser (
             id: String!
-            name: String
+            name: String!
             active: Boolean
-            email: String
+            email: String!
             gender: String
             age: Int
             description: String
@@ -99,18 +180,33 @@ const typeDefs = `
             token: String
             latitude: Float
             longitude: Float
+            registerDateTime: String
             minAgePreference: Int
             maxAgePreference: Int
+            followerDisplay: String
+            objectionable: Boolean
+            viewObjectionable: Boolean
             pics: [String]
         ): User
         newMessage (
             matchId: String! 
-            id: String! 
             name: String 
-            message: String
-        ): Message
+            text: String
+            createdAt: String
+            avatar: String
+            order: Float
+            uid: String
+            _id: String
+            receiverId: String
+        ): MessageItem
+        follow (id: String!, followId: String!, isFollowing: Boolean): User
+        unFollow (id: String!, unFollowId: String!): User
+        bid(id: String!, dateId: String!, bidPlace: String, bidDescription: String): DateBid
+        createDate(id: String!, datetimeOfDate: String, description: String): DateItem
+        chooseWinner(id: String!, winnerId: String!, dateId: String!): DateItem
+        flag(id: String!, flaggedId: String!, block: Boolean): User
+        block(id: String!, blockedId: String!): User
     }
-
     schema {
         query: Query
         mutation: Mutation

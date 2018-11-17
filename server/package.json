@@ -14,27 +14,22 @@
     "body-parser": "^1.18.2",
     "busboy": "^0.2.14",
     "content-type": "^1.0.4",
-    "cors": "^2.8.4",
-    "expo-server-sdk": "^2.3.3",
     "express": "^4.16.2",
-    "express-graphql": "^0.6.12",
     "firebase-admin": "^5.13.1",
     "firebase-functions": "^1.0.4",
-    "forever": "^0.15.3",
     "graphql": "^0.13.2",
     "graphql-subscriptions": "^0.5.8",
-    "graphql-tools": "^3.0.2",
     "moment": "^2.22.1",
     "neo4j-driver": "^1.6.1",
     "node-uuid": "^1.4.8",
-    "raw-body": "^2.3.2",
     "subscriptions-transport-ws": "^0.9.9"
   },
   "devDependencies": {
+    "@types/graphql": "^0.13.1",
     "@types/node": "^10.12.9",
     "@types/ws": "^5.1.2",
     "tslint": "^5.8.0",
-    "typescript": "^2.5.3"
+    "typescript": "^3.1.6"
   },
   "private": true
 }

@@ -1,39 +1,51 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const functions = require('firebase-functions');
-const bodyParser = require('body-parser');
-const admin = require('firebase-admin');
-const Cors = require("cors");
+const bodyParser = require("body-parser");
 const express = require("express");
+const { createServer } = require("http");
 const schema_1 = require("./schema/schema");
-//import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
-const { graphiqlExpress, graphqlExpress } = require('apollo-server-express');
-const schemaPrinter_1 = require("graphql/utilities/schemaPrinter");
-const http_1 = require("http");
-const graphql_1 = require("graphql");
-const subscriptions_transport_ws_1 = require("subscriptions-transport-ws");
+const neo4j_1 = require("./db/neo4j");
+schema_1.default.listen().then(({ url }) => {
+    console.log(`Apollo Server ready at ${url}`);
+});
 const app = express();
-// The GraphQL endpoint
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema_1.default }));
-// GraphiQL, a visual editor for queries
-app.use('/graphiql', graphiqlExpress({
-    endpointURL: '/graphql/graphql',
-    subscriptionsEndpoint: 'ws://35.199.37.151:4000/subscriptions',
-}));
-app.use("/schema", (req, res) => {
-    res.set("Content-Type", "text/plain");
-    res.send(schemaPrinter_1.printSchema(schema_1.default));
+app.use("/coords", bodyParser.json(), (req, res) => {
+    const session = neo4j_1.driver.session();
+    // Ensure the request is valid
+    if (!req.body) {
+        console.log("invalid request body: ", req.body);
+        res.status(500);
+        return res.send("failed to updated coords. Invalided request body: ", req.body);
+    }
+    else if (!req.body.location) {
+        console.log("invalid request body: ", req.body);
+        res.status(500);
+        return res.send("failed to updated coords. Invalided request body: ", req.body);
+    }
+    else if (!req.body.location.coords) {
+        console.log("invalid request body: ", req.body);
+        res.status(500);
+        return res.send("failed to updated coords. Invalided request body: ", req.body);
+    }
+    const id = req.body.id;
+    const latitude = req.body.location.coords.latitude;
+    const longitude = req.body.location.coords.longitude;
+    return session
+        .run(`MATCH(n:User {id:'${id}'}) SET n.latitude=${latitude}, n.longitude=${longitude}`)
+        .then(() => {
+        console.log(`coords (${latitude},${longitude}) successfully updated for id ${id}`);
+        res.status(200);
+        return res.send(`coords (${latitude},${longitude}) successfully updated for id ${id}`);
+    })
+        .catch(e => {
+        console.log(`error updating coords (${latitude},${longitude}) for id ${id}: ${e}`);
+        res.status(500);
+        return res.send(`coords (${latitude},${longitude}) successfully updated for id ${id}`);
+    })
+        .finally(() => session.close());
 });
-const server = http_1.createServer(app);
-server.listen(4000, () => {
-    new subscriptions_transport_ws_1.SubscriptionServer({
-        execute: graphql_1.execute,
-        subscribe: graphql_1.subscribe,
-        schema: schema_1.default,
-    }, {
-        server,
-        path: '/subscriptions',
-    });
+const server = createServer(app);
+server.listen(4000, ({ url }) => {
+    console.log(`API ready at ready at ${url}`);
 });
-//app.listen(4000, () => console.log('GraphQL server running on port 4000.'))
 //# sourceMappingURL=index.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const graphql_tools_1 = require("graphql-tools");
+const { ApolloServer } = require("apollo-server");
 const typeDefs_1 = require("./typeDefs");
 const resolvers_1 = require("./resolvers");
-exports.default = graphql_tools_1.makeExecutableSchema({
+exports.default = new ApolloServer({
     typeDefs: typeDefs_1.default,
     resolvers: resolvers_1.default
 });

@@ -1,4 +1,4 @@
-import { ApolloServer } from "apollo-server";
+const { ApolloServer } = require("apollo-server");
 
 import typeDefs from "./typeDefs";
 import resolvers from "./resolvers";

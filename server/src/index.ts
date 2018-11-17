@@ -1,7 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
+const { createServer } = require("http");
 import serverApollo from "./schema/schema";
-import { createServer } from "http";
 import { driver } from "./db/neo4j";
 
 serverApollo.listen().then(({ url }) => {
