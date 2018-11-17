@@ -152,10 +152,10 @@ const resolvers = {
       return session
         .run(
           `MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) 
-                      WITH b,r,d, r.datetimeOfBid as order
-                      RETURN b,r
-                      ORDER BY order DESC
-                    `
+            WITH b,r,d, r.datetimeOfBid as order
+            RETURN b,r
+            ORDER BY order DESC
+          `
         )
         .then(result => result.records)
         .then(records => {
@@ -250,10 +250,11 @@ const resolvers = {
         cursor: newCursor
       };
     },
-    moreQueue: (_, args) => {
+    moreQueue: async (_, args) => {
       console.log("in Queue");
       console.log("args: ", args);
 
+      const { id } = args;
       let followQuery;
 
       switch (args.followerDisplay) {
@@ -267,10 +268,25 @@ const resolvers = {
           followQuery = ``;
       }
 
-      let objectionable = "";
+      let viewObjectionable;
 
-      if (!args.viewObjectionable) {
-        objectionable = "AND NOT objectionable";
+      try {
+        const viewObjectionableRaw = await session.run(
+          `MATCH(a:User{id:'${id}}) return a.viewObjectionable`
+        );
+        const viewObjectionableResult =
+          viewObjectionableRaw.records[0].fields[0];
+
+        if (viewObjectionableResult) {
+          viewObjectionable = `AND viewObjectionable`;
+        } else {
+          viewObjectionable = `AND NOT viewObjectionable`;
+        }
+      } catch (e) {
+        console.log(
+          "Not able to objection viewObjectionable preference. Defaulting to view non-objectionable content"
+        );
+        viewObjectionable = `AND NOT viewObjectionable`;
       }
 
       if (!args.cursor) {
@@ -280,27 +296,28 @@ const resolvers = {
         return {
           list: [],
           cursor: null,
-          id: `${args.id}q`
+          id: `${id}q`
         };
-      } else if (!args.id) {
+      } else if (!id) {
         console.error("Error! No id passed in!");
       }
 
       return session
         .run(
-          `MATCH(a:User{id:'${args.id}'}),(b:User) 
+          `MATCH(a:User{id:'${id}'}),(b:User) 
                 WITH a,b, size((b)<-[:FOLLOWING]-()) as num_likes,
                 ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
                 distance(point(a),point(b))*0.000621371 as distanceApart,
                 exists((a)-[:FOLLOWING]->(b)) as isFollowing,
                 exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
                 where
-                a.viewObjectionable=b.objectionable AND
+                NOT (b)-[:BLOCK]->(a) AND
                 NOT b.id=a.id AND
                 NOT b.gender=a.gender AND
                 distanceApart < a.distance AND
                 order > ${args.cursor}
                 ${followQuery}
+                ${viewObjectionable}
                 RETURN b, distanceApart, num_likes, order, isFollowing, hasDateOpen
                 ORDER BY order
                 LIMIT ${QUEUE_PAGE_LENGTH}`
@@ -324,7 +341,7 @@ const resolvers = {
             return {
               list: [],
               cursor: null,
-              id: `${args.id}q`
+              id: `${id}q`
             };
           }
 
@@ -336,7 +353,7 @@ const resolvers = {
           return {
             list,
             cursor: newCursor,
-            id: `${args.id}q`
+            id: `${id}q`
           };
         })
         .catch(e => console.log("moreQueue error: ", e));
@@ -365,9 +382,10 @@ const resolvers = {
       return session
         .run(
           `MATCH(a:User{id:'${parentValue.id}'})-[r:FOLLOWING]->(b:User) 
-                        WITH a,r,b, 
-                        exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
-                        RETURN b,hasDateOpen`
+            WITH a,r,b, 
+            exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
+            WHERE NOT (b)-[:BLOCK]->(a)
+            RETURN b,hasDateOpen`
         )
         .then(result => result.records)
         .then(records => {
@@ -468,11 +486,11 @@ const resolvers = {
       return session
         .run(
           `MATCH(a:User{id:'${parentValue.id}'})-[:CREATE]->(d:Date) 
-                    WITH a, d, size((d)<-[:BID]-(:User)) as num_bids, d.datetimeOfDate as order
-                    WHERE d.open=TRUE
-                    RETURN a,d,num_bids
-                    ORDER BY order DESC
-                  `
+            WITH a, d, size((d)<-[:BID]-(:User)) as num_bids, d.datetimeOfDate as order
+            WHERE d.open=TRUE
+            RETURN a,d,num_bids
+            ORDER BY order DESC
+          `
         )
         .then(result => result.records)
         .then(records => {

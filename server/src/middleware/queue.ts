@@ -30,7 +30,7 @@ export const getQueue = async ({ id, followerDisplay }) => {
   let viewObjectionable;
 
   try {
-    const viewObjectionableRaw = session.run(
+    const viewObjectionableRaw = await session.run(
       `MATCH(a:User{id:'${id}}) return a.viewObjectionable`
     );
     const viewObjectionableResult = viewObjectionableRaw.records[0].fields[0];
@@ -61,6 +61,7 @@ export const getQueue = async ({ id, followerDisplay }) => {
     NOT b.gender=a.gender AND
     distanceApart < a.distance
     ${followQuery}
+    ${viewObjectionable}
     RETURN b, distanceApart, num_likes, order, isFollowing, hasDateOpen
     ORDER BY order
     LIMIT ${QUEUE_PAGE_LENGTH}`;
