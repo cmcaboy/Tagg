@@ -1,4 +1,4 @@
-const moment = require('moment');
+const moment = require("moment");
 
 export const getCurrentDateNeo = () => moment().unix();
-export const getCurrentDateFirestore = () => new Date(); 
+export const getCurrentDateFirestore = () => new Date();

@@ -13,6 +13,7 @@ import {
   getCurrentDateFirestore,
   getCurrentDateNeo
 } from "../middleware/format";
+import { newUserDefaults } from "./defaults";
 
 const pubsub = new PubSub();
 const session = driver.session();
@@ -816,9 +817,13 @@ const resolvers = {
       }
       return result;
     },
-    newUser: (_, args) => {
+    newUser: (_, tempArgs) => {
+      console.log("tempArgs: ", tempArgs);
+      const args = { ...newUserDefaults, ...tempArgs };
       console.log("args: ", args);
+
       const isBoolean = val => "boolean" === typeof val;
+
       let query = `CREATE(a:User{
                 id: '${args.id}',
                 name: '${args.name}',
