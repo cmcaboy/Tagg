@@ -11,6 +11,7 @@
   "main": "dist/index.js",
   "dependencies": {
     "apollo-server": "^2.2.2",
+    "apollo-server-express": "^2.0.0-rc.12",
     "body-parser": "^1.18.2",
     "busboy": "^0.2.14",
     "content-type": "^1.0.4",
