@@ -68,6 +68,6 @@ app.use("/coords", bodyParser.json(), (req, res) => {
 
 const server = createServer(app);
 
-server.listen(4000, ({ url }) => {
-  console.log(`API ready at ready at ${url}`);
+server.listen(4000, () => {
+  console.log(`API ready at ready at port 4000`);
 });
