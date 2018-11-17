@@ -2,6 +2,7 @@ import { getCurrentDateNeo } from "../middleware/format";
 
 export const newUserDefaults = {
   active: true,
+  name: "",
   gender: "female",
   age: 25,
   description: "",

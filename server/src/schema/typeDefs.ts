@@ -165,9 +165,9 @@ const typeDefs = `
         ): Queue
         newUser (
             id: String!
-            name: String
+            name: String!
             active: Boolean
-            email: String
+            email: String!
             gender: String
             age: Int
             description: String

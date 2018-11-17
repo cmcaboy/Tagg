@@ -14,6 +14,7 @@ import {
   getCurrentDateNeo
 } from "../middleware/format";
 import { newUserDefaults } from "./defaults";
+import { PHOTO_HINT } from "../../../src/variables/index";
 
 const pubsub = new PubSub();
 const session = driver.session();
@@ -817,10 +818,23 @@ const resolvers = {
       }
       return result;
     },
-    newUser: (_, tempArgs) => {
+    newUser: async (_, tempArgs) => {
       console.log("tempArgs: ", tempArgs);
       const args = { ...newUserDefaults, ...tempArgs };
-      console.log("args: ", args);
+
+      let idAlreadyExist;
+      try {
+        idAlreadyExist = await session.run(
+          `MATCH (a:User{id: '${args.id}'}) return a.id`
+        );
+      } catch (e) {
+        console.log("Error checking if user already exists");
+        return false;
+      }
+      if (idAlreadyExist.records.length) {
+        console.log("Email already registered");
+        return false;
+      }
 
       const isBoolean = val => "boolean" === typeof val;
 

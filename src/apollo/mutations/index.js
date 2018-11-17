@@ -1,8 +1,16 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const NEW_DATE = gql`
-  mutation createDate($id: String!, $datetimeOfDate: String, $description: String) {
-    createDate(id: $id, datetimeOfDate: $datetimeOfDate, description: $description) {
+  mutation createDate(
+    $id: String!
+    $datetimeOfDate: String
+    $description: String
+  ) {
+    createDate(
+      id: $id
+      datetimeOfDate: $datetimeOfDate
+      description: $description
+    ) {
       id
       creationTime
       datetimeOfDate
@@ -12,8 +20,18 @@ export const NEW_DATE = gql`
 `;
 
 export const BID = gql`
-  mutation bid($id: String!, $dateId: String!, $bidPlace: String, $bidDescription: String) {
-    bid(id: $id, dateId: $dateId, bidPlace: $bidPlace, bidDescription: $bidDescription) {
+  mutation bid(
+    $id: String!
+    $dateId: String!
+    $bidPlace: String
+    $bidDescription: String
+  ) {
+    bid(
+      id: $id
+      dateId: $dateId
+      bidPlace: $bidPlace
+      bidDescription: $bidDescription
+    ) {
       id
       datetimeOfBid
       bidDescription
@@ -30,9 +48,9 @@ export const NEW_USER = gql`
   mutation newUser(
     $id: String!
     $name: String!
-    $active: Boolean!
+    $active: Boolean
     $email: String!
-    $gender: String!
+    $gender: String
     $description: String
     $school: String
     $work: String
@@ -177,8 +195,16 @@ export const SEND_MESSAGE = gql`
 `;
 
 export const SET_AGE_PREFERENCE = gql`
-  mutation editUser($id: String!, $minAgePreference: Int, $maxAgePreference: Int) {
-    editUser(id: $id, minAgePreference: $minAgePreference, maxAgePreference: $maxAgePreference) {
+  mutation editUser(
+    $id: String!
+    $minAgePreference: Int
+    $maxAgePreference: Int
+  ) {
+    editUser(
+      id: $id
+      minAgePreference: $minAgePreference
+      maxAgePreference: $maxAgePreference
+    ) {
       id
       minAgePreference
       maxAgePreference
