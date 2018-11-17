@@ -1,4 +1,5 @@
 import { PubSub, withFilter } from "graphql-subscriptions";
+// import { ApolloError } from 'apollo-server';
 const uuid = require("node-uuid");
 import { driver } from "../db/neo4j";
 import { db } from "../db/firestore";
@@ -14,7 +15,6 @@ import {
   getCurrentDateNeo
 } from "../middleware/format";
 import { newUserDefaults } from "./defaults";
-import { PHOTO_HINT } from "../../../src/variables/index";
 
 const pubsub = new PubSub();
 const session = driver.session();
@@ -829,11 +829,11 @@ const resolvers = {
         );
       } catch (e) {
         console.log("Error checking if user already exists");
-        return false;
+        return { id: null };
       }
       if (idAlreadyExist.records.length) {
         console.log("Email already registered");
-        return false;
+        return { id: false };
       }
 
       const isBoolean = val => "boolean" === typeof val;
