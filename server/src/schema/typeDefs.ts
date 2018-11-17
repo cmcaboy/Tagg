@@ -201,7 +201,7 @@ const typeDefs = `
         createDate(id: String!, datetimeOfDate: String, description: String): DateItem
         chooseWinner(id: String!, winnerId: String!, dateId: String!): DateItem
         flag(id: String!, flaggedId: String!, block: Boolean): User
-        block(id: String!, blockedId: String): User
+        block(id: String!, blockedId: String!): User
     }
     schema {
         query: Query
