@@ -5,10 +5,11 @@ const express = require("express");
 const { createServer } = require("http");
 const schema_1 = require("./schema/schema");
 const neo4j_1 = require("./db/neo4j");
-schema_1.default.listen().then(({ url }) => {
-    console.log(`Apollo Server ready at ${url}`);
-});
+// server.listen().then(({ url }) => {
+//   console.log(`Apollo Server ready at ${url}`);
+// });
 const app = express();
+const path = "/graphql";
 app.use("/coords", bodyParser.json(), (req, res) => {
     const session = neo4j_1.driver.session();
     // Ensure the request is valid
@@ -44,8 +45,12 @@ app.use("/coords", bodyParser.json(), (req, res) => {
     })
         .finally(() => session.close());
 });
-const server = createServer(app);
-server.listen(4000, ({ url }) => {
-    console.log(`API ready at ready at ${url}`);
+//  const server = createServer(app);
+schema_1.default.applyMiddware({
+    app,
+    path
+});
+app.listen(4000, () => {
+    console.log(`API ready at ready at port 4000`);
 });
 //# sourceMappingURL=index.js.map
