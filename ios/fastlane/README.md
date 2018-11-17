@@ -35,11 +35,6 @@ fastlane ios screenshots
 Capture ios screenshots
 
 Capture ios screenshots
-### ios pushNotification
-```
-fastlane ios pushNotification
-```
-
 
 ----
 

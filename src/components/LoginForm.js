@@ -147,7 +147,7 @@ class LoginForm extends Component {
                     scrollEnabled
                     enableOnAndroid
                     enableAutomaticScroll
-                    keyboardShouldPersistTaps
+                    keyboardShouldPersistTaps="always"
                   >
                     <MyAppModal
                       isVisible={this.state.modalDisplay}
