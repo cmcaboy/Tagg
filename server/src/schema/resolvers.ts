@@ -1108,8 +1108,8 @@ const resolvers = {
       return session
         .run(
           `MATCH (a:User{id:'${id}'}), (b:User{id:'${blockedId}'}) 
-                CREATE (a)-[r:BLOCK { active: true }]->(b)
-                return b`
+            CREATE (a)-[r:BLOCK { active: true }]->(b)
+            return b`
         )
         .then(result => {
           return result.records[0];
@@ -1124,8 +1124,8 @@ const resolvers = {
         session
           .run(
             `MATCH (a:User{id:'${id}'}), (b:User{id:'${flaggedId}'}) 
-                    CREATE (a)-[r:BLOCK { active: true }]->(b)
-                    return a`
+              CREATE (a)-[r:BLOCK { active: true }]->(b)
+              return a`
           )
           .then(result => {
             return result.records[0];
@@ -1143,7 +1143,9 @@ const resolvers = {
           return result.records[0];
         })
         .then(record => ({ ...record._fields[0].properties }))
-        .catch(e => console.log("Error blocking user: ", e));
+        .catch(e =>
+          console.log("Error flagging user for objectionable content: ", e)
+        );
     }
   }
 };
