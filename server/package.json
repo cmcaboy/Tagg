@@ -27,6 +27,7 @@
     "graphql-server-express": "^1.4.0",
     "graphql-subscriptions": "^0.5.8",
     "graphql-tools": "^4.0.3",
+    "lodash": "^4.17.11",
     "moment": "^2.22.1",
     "neo4j-driver": "^1.6.1",
     "node-uuid": "^1.4.8",

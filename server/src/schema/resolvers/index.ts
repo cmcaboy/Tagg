@@ -1,4 +1,5 @@
 import { Resolvers } from "../../types/generated";
+import { merge } from "lodash";
 
 import { Query } from "./Query";
 import { User } from "./User";
@@ -15,7 +16,7 @@ import { Message } from "./Message";
 import { MessageItem } from "./MessageItem";
 import { Queue } from "./Queue";
 
-export const resolvers: Resolvers = {
+export const resolvers: Resolvers = merge(
   DateBid,
   DateBidList,
   DateItem,
@@ -30,4 +31,4 @@ export const resolvers: Resolvers = {
   Queue,
   Subscription,
   User
-};
+);
