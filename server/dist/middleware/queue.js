@@ -13,13 +13,6 @@ const session = neo4j_1.driver.session();
 const QUEUE_PAGE_LENGTH = 5;
 exports.getQueue = ({ id, followerDisplay }) => __awaiter(this, void 0, void 0, function* () {
     console.log("id: ", id);
-    //console.log('args: ',args);
-    // for pagination, I would like to sort by the following algorithm
-    // order = [1/(# of likes)] x (distanceApart) x (time on platform)
-    // Priority is given by the lowest order number.
-    // I don't have 'time on platform' factored in yet, but I will add it soon.
-    // The query is sorted by smallest value first by default.
-    // let followerDisplay;
     let followQuery;
     switch (followerDisplay) {
         case "Following Only":
@@ -66,22 +59,15 @@ exports.getQueue = ({ id, followerDisplay }) => __awaiter(this, void 0, void 0, 
     console.log("query: ", query);
     return session
         .run(query)
-        .then(result => result.records)
-        .then(records => {
-        const list = records.map(record => {
+        .then((result) => result.records)
+        .then((records) => {
+        const list = records.map((record) => {
             console.log("queue record: ", record);
-            // console.log('field 0: ',record._fields[0]);
-            // console.log('field 1: ',record._fields[1]);
-            // console.log('field 2: ',record._fields[2]);
-            // console.log('field 3: ',record._fields[3]);
-            // console.log('field 4: ',record._fields[4]);
-            // console.log('field 5: ',record._fields[5]);
             return Object.assign({}, record._fields[0].properties, { distanceApart: record._fields[1], order: record._fields[3], profilePic: !!record._fields[0].properties.pics
                     ? record._fields[0].properties.pics[0]
                     : null, isFollowing: record._fields[4], hasDateOpen: record._fields[5] });
         });
         if (list.length === 0) {
-            // If the list is empty, return a blank list and a null cursor
             return {
                 list: [],
                 cursor: null,
@@ -95,7 +81,7 @@ exports.getQueue = ({ id, followerDisplay }) => __awaiter(this, void 0, void 0, 
             id: `${id}q`
         };
     })
-        .catch(e => {
+        .catch((e) => {
         console.log("queue error: ", e);
         return {
             list: [],

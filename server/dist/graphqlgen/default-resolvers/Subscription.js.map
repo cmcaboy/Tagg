@@ -1,0 +1,1 @@
+{"version":3,"file":"Subscription.js","sourceRoot":"","sources":["../../../src/graphqlgen/default-resolvers/Subscription.ts"],"names":[],"mappings":";;AAGA,qDAA8D;AAEjD,QAAA,YAAY,qBACpB,iCAAqB,CAAC,gBAAgB,IACzC,aAAa,EAAE;QACb,SAAS,EAAE,CAAC,MAAM,EAAE,IAAI,EAAE,GAAG,EAAE,EAAE;YAC/B,MAAM,IAAI,KAAK,CAAC,0BAA0B,CAAC,CAAC;QAC9C,CAAC;KACF,IACD"}

@@ -1,6 +1,7 @@
 import { getCurrentDateNeo } from "../middleware/format";
+import { User } from "../types/User";
 
-export const newUserDefaults = {
+export const newUserDefaults: User = {
   active: true,
   name: "",
   gender: "female",

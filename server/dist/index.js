@@ -2,31 +2,26 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const bodyParser = require("body-parser");
 const express = require("express");
-const { createServer } = require("http");
 const schema_1 = require("./schema/schema");
 const neo4j_1 = require("./db/neo4j");
-// server.listen().then(({ url }) => {
-//   console.log(`Apollo Server ready at ${url}`);
-// });
 const app = express();
 const path = "/graphql";
 app.use("/coords", bodyParser.json(), (req, res) => {
     const session = neo4j_1.driver.session();
-    // Ensure the request is valid
     if (!req.body) {
         console.log("invalid request body: ", req.body);
         res.status(500);
-        return res.send("failed to updated coords. Invalided request body: ", req.body);
+        return res.send(`failed to update coords. Invalided request body: ${req.body}`);
     }
     else if (!req.body.location) {
         console.log("invalid request body: ", req.body);
         res.status(500);
-        return res.send("failed to updated coords. Invalided request body: ", req.body);
+        return res.send(`failed to updated coords. Invalided request body: ${req.body}`);
     }
     else if (!req.body.location.coords) {
         console.log("invalid request body: ", req.body);
         res.status(500);
-        return res.send("failed to updated coords. Invalided request body: ", req.body);
+        return res.send(`failed to updated coords. Invalided request body: ${req.body}`);
     }
     const id = req.body.id;
     const latitude = req.body.location.coords.latitude;
@@ -38,15 +33,14 @@ app.use("/coords", bodyParser.json(), (req, res) => {
         res.status(200);
         return res.send(`coords (${latitude},${longitude}) successfully updated for id ${id}`);
     })
-        .catch(e => {
+        .catch((e) => {
         console.log(`error updating coords (${latitude},${longitude}) for id ${id}: ${e}`);
         res.status(500);
         return res.send(`coords (${latitude},${longitude}) successfully updated for id ${id}`);
     })
         .finally(() => session.close());
 });
-//  const server = createServer(app);
-schema_1.default.applyMiddware({
+schema_1.default.applyMiddleware({
     app,
     path
 });

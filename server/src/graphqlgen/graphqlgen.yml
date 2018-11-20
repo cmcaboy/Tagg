@@ -1,0 +1,11 @@
+language: typescript
+
+schema: ./typeDefs.graphql
+models:
+  files:
+    - ./testModel.ts
+
+output: ../types/generated.ts
+resolver-scaffolding:
+  output: ./default-resolvers/
+  layout: file-per-type

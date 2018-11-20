@@ -102,7 +102,7 @@ const typeDefs = `
     
     type Message {
         id: String 
-        cursor: String
+        cursor: Float
         list: [MessageItem]!
     }
 

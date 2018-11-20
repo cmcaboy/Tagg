@@ -1,14 +1,29 @@
 {
   "compilerOptions": {
+    "target": "es6",
     "lib": ["es6", "dom", "esnext", "es2017", "esnext.asynciterable"],
     "module": "commonjs",
+    "sourceMap": true,
+    "outDir": "dist",
     "moduleResolution": "node",
     "noImplicitReturns": true,
-    "outDir": "dist",
-    "sourceMap": true,
-    "target": "es6",
-    "esModuleInterop": false
+    "removeComments": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "compileOnSave": true,
+  "exclude": [
+    "node_modules",
+    "src/graphqlgen/default-resolvers/*",
+    "src/schema/old_resolvers.ts"
+  ],
   "include": ["src"]
 }

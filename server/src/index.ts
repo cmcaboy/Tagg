@@ -1,17 +1,17 @@
 const bodyParser = require("body-parser");
 const express = require("express");
-const { createServer } = require("http");
 import server from "./schema/schema";
 import { driver } from "./db/neo4j";
+import { Application, Request, Response } from "express";
 
 // server.listen().then(({ url }) => {
 //   console.log(`Apollo Server ready at ${url}`);
 // });
 
-const app = express();
-const path = "/graphql";
+const app: Application = express();
+const path: string = "/graphql";
 
-app.use("/coords", bodyParser.json(), (req, res) => {
+app.use("/coords", bodyParser.json(), (req: Request, res: Response) => {
   const session = driver.session();
 
   // Ensure the request is valid
@@ -19,28 +19,25 @@ app.use("/coords", bodyParser.json(), (req, res) => {
     console.log("invalid request body: ", req.body);
     res.status(500);
     return res.send(
-      "failed to updated coords. Invalided request body: ",
-      req.body
+      `failed to update coords. Invalided request body: ${req.body}`
     );
   } else if (!req.body.location) {
     console.log("invalid request body: ", req.body);
     res.status(500);
     return res.send(
-      "failed to updated coords. Invalided request body: ",
-      req.body
+      `failed to updated coords. Invalided request body: ${req.body}`
     );
   } else if (!req.body.location.coords) {
     console.log("invalid request body: ", req.body);
     res.status(500);
     return res.send(
-      "failed to updated coords. Invalided request body: ",
-      req.body
+      `failed to updated coords. Invalided request body: ${req.body}`
     );
   }
 
-  const id = req.body.id;
-  const latitude = req.body.location.coords.latitude;
-  const longitude = req.body.location.coords.longitude;
+  const id: string = req.body.id;
+  const latitude: number = req.body.location.coords.latitude;
+  const longitude: number = req.body.location.coords.longitude;
 
   return session
     .run(
@@ -55,7 +52,7 @@ app.use("/coords", bodyParser.json(), (req, res) => {
         `coords (${latitude},${longitude}) successfully updated for id ${id}`
       );
     })
-    .catch(e => {
+    .catch((e: string) => {
       console.log(
         `error updating coords (${latitude},${longitude}) for id ${id}: ${e}`
       );

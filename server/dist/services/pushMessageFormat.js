@@ -1,11 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const moment = require('moment');
-//import {moment} from 'moment';
+const moment = require("moment");
 exports.createDatePushTitle = (name) => `${name} is looking for a date!`;
-exports.createDatePushBody = (name, date) => `${name} is looking for a date at ${exports.formatDate(date.datetimeOfDate)}. Hurry and bid on this date!`;
-exports.formatDate = (date) => moment(date).format('MMM D, h:mm a');
-// export const formatDate = () => moment.unix(date).format('MMM D, h:mm a');
+exports.createDatePushBody = (name, datetimeOfDate) => `${name} is looking for a date at ${exports.formatDate(datetimeOfDate)}. Hurry and bid on this date!`;
+exports.formatDate = (date) => moment(date).format("MMM D, h:mm a");
 exports.chooseWinnerPushWinnerTitle = (name) => `Congrats! ${name} has accepted your date proposal!`;
 exports.chooseWinnerPushWinnerBody = (name, date) => `Congrats! ${name} has accepted your date proposal! Your date is scheduled for ${exports.formatDate(date)}. You can go ahead and send ${name} a message!`;
 exports.chooseWinnerPushLoserTitle = (name) => `Unfortunately, ${name} did not select you for her date.`;

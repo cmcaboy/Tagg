@@ -3,7 +3,13 @@ const session = driver.session();
 
 const QUEUE_PAGE_LENGTH = 5;
 
-export const getQueue = async ({ id, followerDisplay }) => {
+export const getQueue = async ({
+  id,
+  followerDisplay
+}: {
+  id: string;
+  followerDisplay: any;
+}) => {
   console.log("id: ", id);
   //console.log('args: ',args);
   // for pagination, I would like to sort by the following algorithm
@@ -70,9 +76,9 @@ export const getQueue = async ({ id, followerDisplay }) => {
 
   return session
     .run(query)
-    .then(result => result.records)
-    .then(records => {
-      const list = records.map(record => {
+    .then((result: any) => result.records)
+    .then((records: any[]) => {
+      const list = records.map((record: any) => {
         console.log("queue record: ", record);
         // console.log('field 0: ',record._fields[0]);
         // console.log('field 1: ',record._fields[1]);
@@ -109,7 +115,7 @@ export const getQueue = async ({ id, followerDisplay }) => {
         id: `${id}q`
       };
     })
-    .catch(e => {
+    .catch((e: string) => {
       console.log("queue error: ", e);
       return {
         list: [],

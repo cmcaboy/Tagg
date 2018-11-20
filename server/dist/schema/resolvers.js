@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const graphql_subscriptions_1 = require("graphql-subscriptions");
-// import { ApolloError } from 'apollo-server';
 const uuid = require("node-uuid");
 const neo4j_1 = require("../db/neo4j");
 const firestore_1 = require("../db/firestore");
@@ -24,14 +23,10 @@ const session = neo4j_1.driver.session();
 const NEW_MESSAGE = "NEW_MESSAGE";
 const MESSAGE_PAGE_LENGTH = 20;
 const QUEUE_PAGE_LENGTH = 5;
-const MATCH_PAGE_LENGTH = 5;
 const resolvers = {
     Subscription: {
         newMessageSub: {
-            // The resolve method is executed after the subscribe method w/ filter
             resolve: payload => payload.newMessageSub.message,
-            // For the withFilter function, the first argument is the tag that you are subscribing to.
-            // The second argument is the filter.
             subscribe: graphql_subscriptions_1.withFilter(() => pubsub.asyncIterator(NEW_MESSAGE), (payload, args) => {
                 console.log("payload: ", payload);
                 console.log("args: ", args);
@@ -47,8 +42,8 @@ const resolvers = {
                 console.log("args: ", args);
                 return session
                     .run(`Match (n:User {id: '${args.id}'}) RETURN n`)
-                    .then(result => result.records)
-                    .then(records => {
+                    .then((result) => result.records)
+                    .then((records) => {
                     console.log("records: ", records);
                     if (!records.length) {
                         return null;
@@ -56,14 +51,14 @@ const resolvers = {
                     const properties = records[0]._fields[0].properties;
                     return Object.assign({}, properties, { profilePic: !!properties.pics ? properties.pics[0] : null, hostId: !!args.hostId ? args.hostId : null });
                 })
-                    .catch(e => console.log("id lookup error: ", e));
+                    .catch((e) => console.log("id lookup error: ", e));
             }
             else {
                 console.log("args: ", args);
                 return session
                     .run(`Match (n:User {token: '${args.token}'}) RETURN n`)
-                    .then(result => result.records)
-                    .then(records => {
+                    .then((result) => result.records)
+                    .then((records) => {
                     console.log("records: ", records);
                     if (!records.length) {
                         return null;
@@ -71,7 +66,7 @@ const resolvers = {
                     const properties = records[0]._fields[0].properties;
                     return Object.assign({}, properties, { profilePic: !!properties.pics ? properties.pics[0] : null, hostId: !!args.hostId ? args.hostId : null });
                 })
-                    .catch(e => console.log("token lookup error: ", e));
+                    .catch((e) => console.log("token lookup error: ", e));
             }
         },
         messages: (_, args) => __awaiter(this, void 0, void 0, function* () {
@@ -93,7 +88,7 @@ const resolvers = {
                     cursor: null
                 };
             }
-            const messages = data.docs.map(doc => {
+            const messages = data.docs.map((doc) => {
                 const docData = doc.data();
                 return {
                     name: docData.name,
@@ -105,8 +100,6 @@ const resolvers = {
                     _id: docData._id
                 };
             });
-            // If there are no additional messages left, return an empty message array and
-            // don't change the cursor
             if (messages.length === 0) {
                 return {
                     id: args.id,
@@ -114,9 +107,6 @@ const resolvers = {
                     cursor: null
                 };
             }
-            // Set the new cursor to the last date in the message array
-            // Return a null cursor if the message array length is less than 20, indicating that their
-            // are no more messages left to retreive.
             const cursor = messages.length >= MESSAGE_PAGE_LENGTH
                 ? messages[messages.length - 1].order
                 : null;
@@ -129,9 +119,6 @@ const resolvers = {
             };
         }),
         otherBids: (_, args) => {
-            // dateID should be passed in as the id
-            // Need to factor in pagination
-            // Should sort by date?
             console.log("otherBids args: ", args);
             return session
                 .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${args.id}'}) 
@@ -139,9 +126,9 @@ const resolvers = {
             RETURN b,r
             ORDER BY order DESC
           `)
-                .then(result => result.records)
-                .then(records => {
-                const list = records.map(record => ({
+                .then((result) => result.records)
+                .then((records) => {
+                const list = records.map((record) => ({
                     id: record._fields[0].properties.id,
                     datetimeOfBid: record._fields[1].properties.datetimeOfBid,
                     bidDescription: record._fields[1].properties.bidDescription,
@@ -156,7 +143,7 @@ const resolvers = {
                     cursor: null
                 };
             })
-                .catch(e => console.log("bid error: ", e));
+                .catch((e) => console.log("bid error: ", e));
         },
         moreMessages: (_, args) => __awaiter(this, void 0, void 0, function* () {
             console.log("in moreMessages");
@@ -186,7 +173,7 @@ const resolvers = {
                     cursor
                 };
             }
-            const messages = data.docs.map(doc => {
+            const messages = data.docs.map((doc) => {
                 const docData = doc.data();
                 return {
                     name: docData.name,
@@ -198,8 +185,6 @@ const resolvers = {
                     _id: docData._id
                 };
             });
-            // If there are no additional messages left, return an empty message array and
-            // don't change the cursor
             if (messages.length === 0) {
                 return {
                     id: args.id,
@@ -207,9 +192,6 @@ const resolvers = {
                     cursor
                 };
             }
-            // Set the new cursor to the last date in the message array
-            // Return a null cursor if the message array length is less than 20, indicating that their
-            // are no more messages left to retreive.
             const newCursor = messages.length >= MESSAGE_PAGE_LENGTH
                 ? messages[messages.length - 1].order
                 : null;
@@ -280,15 +262,14 @@ const resolvers = {
                 RETURN b, distanceApart, num_likes, order, isFollowing, hasDateOpen
                 ORDER BY order
                 LIMIT ${QUEUE_PAGE_LENGTH}`)
-                .then(result => result.records)
-                .then(records => {
-                const list = records.map(record => {
+                .then((result) => result.records)
+                .then((records) => {
+                const list = records.map((record) => {
                     return Object.assign({}, record._fields[0].properties, { distanceApart: record._fields[1], order: record._fields[3], profilePic: !!record._fields[0].properties.pics
                             ? record._fields[0].properties.pics[0]
                             : null, isFollowing: record._fields[4], hasDateOpen: record._fields[5] });
                 });
                 if (list.length === 0) {
-                    // If the list is empty, return a blank list and a null cursor
                     return {
                         list: [],
                         cursor: null,
@@ -304,7 +285,7 @@ const resolvers = {
                     id: `${id}q`
                 };
             })
-                .catch(e => console.log("moreQueue error: ", e));
+                .catch((e) => console.log("moreQueue error: ", e));
         }),
         moreDates: (_, args) => { },
         moreDateBids: (_, args) => { },
@@ -313,9 +294,9 @@ const resolvers = {
             return session
                 .run(`MATCH(d:Date{id:'${args.id}'}) 
                 RETURN d`)
-                .then(result => result.records[0])
-                .then(record => record._fields[0].properties)
-                .catch(e => {
+                .then((result) => result.records[0])
+                .then((record) => record._fields[0].properties)
+                .catch((e) => {
                 console.log("date error: ", e);
                 return null;
             });
@@ -323,7 +304,6 @@ const resolvers = {
     },
     User: {
         following: (parentValue, _) => {
-            // Need to factor in pagination
             console.log("following parentValue: ", parentValue);
             return session
                 .run(`MATCH(a:User{id:'${parentValue.id}'})-[r:FOLLOWING]->(b:User) 
@@ -331,10 +311,10 @@ const resolvers = {
             exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
             WHERE NOT (b)-[:BLOCK]->(a)
             RETURN b,hasDateOpen`)
-                .then(result => result.records)
-                .then(records => {
+                .then((result) => result.records)
+                .then((records) => {
                 console.log("following records: ", records);
-                const list = records.map(record => (Object.assign({}, record._fields[0].properties, { hasDateOpen: record._fields[1] })));
+                const list = records.map((record) => (Object.assign({}, record._fields[0].properties, { hasDateOpen: record._fields[1] })));
                 console.log("following list: ", list);
                 return {
                     id: `${parentValue.id}f`,
@@ -342,7 +322,7 @@ const resolvers = {
                     cursor: null
                 };
             })
-                .catch(e => console.log("following error: ", e));
+                .catch((e) => console.log("following error: ", e));
         },
         hasDateOpen: (parentValue, _) => {
             console.log("following parentValue: ", parentValue);
@@ -351,46 +331,42 @@ const resolvers = {
                         WITH a, 
                         exists((a)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
                         RETURN hasDateOpen`)
-                .then(result => result.records)
-                .then(records => {
+                .then((result) => result.records)
+                .then((records) => {
                 const hasDateOpen = records[0]._fields[0];
                 console.log("hasDateOpen: ", hasDateOpen);
                 return hasDateOpen;
             })
-                .catch(e => console.log("hasDateOpen error: ", e));
+                .catch((e) => console.log("hasDateOpen error: ", e));
         },
         distanceApart: (parentValue, _) => {
-            // hostId is only used for UserProfile
             if (!parentValue.hostId)
                 return parentValue.distanceApart;
             return session
                 .run(`MATCH(a:User{id:'${parentValue.hostId}'}),(b:User{id:'${parentValue.id}'})
                 WITH  distance(point(a),point(b))*0.000621371 as distanceApart
                 RETURN distanceApart`)
-                .then(result => result.records[0])
-                .then(record => record._fields[0])
-                .catch(e => console.log("distanceApart error: ", e));
+                .then((result) => result.records[0])
+                .then((record) => record._fields[0])
+                .catch((e) => console.log("distanceApart error: ", e));
         },
-        isFollowing: (parentValue, args) => {
-            // Could pass in host user has an optional argument
-            // hostId is only used for UserProfile
+        isFollowing: (parentValue, _) => {
             if (!parentValue.hostId)
                 return parentValue.isFollowing;
             return session
                 .run(`MATCH(a:User{id:'${parentValue.hostId}'}),(b:User{id:'${parentValue.id}'})
                 WITH exists((a)-[:FOLLOWING]->(b)) as isFollowing
                 RETURN isFollowing`)
-                .then(result => result.records[0])
-                .then(record => record._fields[0])
-                .catch(e => console.log("isFollowing error: ", e));
+                .then((result) => result.records[0])
+                .then((record) => record._fields[0])
+                .catch((e) => console.log("isFollowing error: ", e));
         },
         bids: (parentValue, _) => {
             console.log("bids parentValue: ", parentValue);
-            // Need to factor in pagination
             return session
                 .run(`MATCH(a:User{id:'${parentValue.id}'})-[r:BID]->(d:Date)<-[:CREATE]-(b:User) RETURN b,d,r`)
-                .then(result => result.records)
-                .then(records => {
+                .then((result) => result.records)
+                .then((records) => {
                 console.log("bids records: ", records);
                 const list = records.map(record => (Object.assign({}, record._fields[2].properties, { id: record._fields[1].properties.id, user: record._fields[0].properties })));
                 console.log("bids list: ", list);
@@ -400,10 +376,9 @@ const resolvers = {
                     cursor: null
                 };
             })
-                .catch(e => console.log("bid error: ", e));
+                .catch((e) => console.log("bid error: ", e));
         },
         dateRequests: (parentValue, _) => {
-            // Need to factor in pagination
             console.log("dateRequests parentValue: ", parentValue);
             return session
                 .run(`MATCH(a:User{id:'${parentValue.id}'})-[:CREATE]->(d:Date) 
@@ -424,7 +399,6 @@ const resolvers = {
                     num_bids: record._fields[2],
                     open: record._fields[1].properties.open
                 }));
-                //console.log('dateRequests list: ',list);
                 return {
                     id: `${parentValue.id}d`,
                     list,
@@ -434,10 +408,6 @@ const resolvers = {
                 .catch(e => console.log("dateRequest error: ", e));
         },
         matchedDates: (parentValue, _) => {
-            // A potential performance improvement would be to query Firestore directly
-            // to get our list of matches
-            // These matches should be sorted as well.
-            //console.log('args: ',args);
             console.log("pareventValue.id: ", parentValue.id);
             const query = `MATCH(a:User{id:'${parentValue.id}'}),(b:User),(d:Date)
                 WHERE (
@@ -455,8 +425,6 @@ const resolvers = {
             })
                 .then(records => {
                 const list = records.map(record => {
-                    // console.log('record: ',record)
-                    // console.log('record field 1: ',record._fields[0])
                     return {
                         user: record._fields[0].properties,
                         matchId: record._fields[1],
@@ -466,14 +434,12 @@ const resolvers = {
                     };
                 });
                 if (list.length === 0) {
-                    // If the list is empty, return a blank list and a null cursor
                     return {
                         id: `${parentValue.id}m`,
                         list: [],
                         cursor: null
                     };
                 }
-                //const newCursor = list.length >= MATCH_PAGE_LENGTH ? list[list.length - 1].order : null;
                 const newCursor = null;
                 console.log("matchedDates list: ", list);
                 return {
@@ -536,14 +502,6 @@ const resolvers = {
                 .then(record => record._fields[0].properties)
                 .catch(e => console.log("winner error: ", e));
         },
-        // bidUser: (parentValue, _) => {
-        //     return session
-        //         .run(`MATCH(a:User)-[:CREATE]->(d:Date)<-[r:BID{id:'${parentValue.id}'}]-(b:User)
-        //             RETURN b`)
-        //             .then(result => result.records[0])
-        //             .then(record => record._fields[0].properties)
-        //             .catch(e => console.log('winner error: ',e))
-        // },
         date: (parentValue, _) => {
             return session
                 .run(`MATCH(a:User)-[:CREATE]->(d:Date)<-[r:BID{id:'${parentValue.id}'}]-(b:User)
@@ -596,8 +554,6 @@ const resolvers = {
                 return null;
             }
             try {
-                // Can use a desc option if orderBy if I need to get opposite order.
-                // citiesRef.orderBy("state").orderBy("population", "desc")
                 const data = yield firestore_1.db
                     .collection(`matches/${parentValue.matchId}/messages`)
                     .orderBy("createdAt", "desc")
@@ -618,7 +574,6 @@ const resolvers = {
                         _id: docData._id
                     };
                 });
-                // This array should only have 1 element, but I want to return just the element rather than a 1 length array.
                 return messages[0];
             }
             catch (e) {
@@ -766,8 +721,6 @@ const resolvers = {
                 .catch(e => console.log("newUser error: ", e));
         }),
         newMessage: (_, args) => __awaiter(this, void 0, void 0, function* () {
-            // console.log('in newMessage resolver');
-            // console.log('args: ',args);
             const message = {
                 _id: args._id,
                 name: args.name,
@@ -776,9 +729,7 @@ const resolvers = {
                 createdAt: format_1.getCurrentDateFirestore(),
                 order: args.order,
                 uid: args.uid
-                //createdAt: moment().format('MMMM Do YYYY, h:mm:ss a')
             };
-            // console.log('message: ',message);
             try {
                 yield firestore_1.db.collection(`matches/${args.matchId}/messages`).add(message);
             }
@@ -786,12 +737,8 @@ const resolvers = {
                 console.error(`error writing new message to ${args.matchId}: ${e}`);
                 return null;
             }
-            // Call our subscription asynchronously so we don't slow down our client.
             const asyncFunc = () => __awaiter(this, void 0, void 0, function* () {
                 console.log("in pubsub async");
-                // console.log('args.matchId: ',args.matchId);
-                // console.log('message: ',message);
-                // console.log('sub tag: ',NEW_MESSAGE);
                 pubsub.publish(NEW_MESSAGE, {
                     newMessageSub: { message, matchId: args.matchId }
                 });
@@ -809,7 +756,6 @@ const resolvers = {
             return message;
         }),
         bid: (_, args) => {
-            // Need to make sure client cannot input doublequote ("). It will break the query.
             const datetimeOfBid = format_1.getCurrentDateNeo();
             const bidId = uuid();
             let query = `MATCH (a:User {id:'${args.id}'}), (d:Date {id:'${args.dateId}'}) 
@@ -830,7 +776,6 @@ const resolvers = {
                 .catch(e => console.log("bid mutation error: ", e));
         },
         follow: (_, args) => {
-            // supports both follow and unfollow
             let query;
             const { isFollowing, id, followId } = args;
             console.log("follow start");
@@ -865,7 +810,6 @@ const resolvers = {
                 .catch(e => console.log("follow mutation error: ", e));
         },
         createDate: (_, args) => __awaiter(this, void 0, void 0, function* () {
-            // Currently, I am only creating the node field, but I also need to create the :CREATE relationship
             const creationTime = format_1.getCurrentDateNeo();
             const dateId = uuid();
             let query = `CREATE (d:Date {id:'${dateId}',creator:'${args.id}',creationTime:'${creationTime}',open:TRUE,`;
@@ -878,8 +822,6 @@ const resolvers = {
             console.log("query in createDate: ", query);
             let rawDate;
             let date;
-            // In order to create a new date, we need to create a date node and a :CREATE relationship between
-            // the date creator and the new date node.
             try {
                 rawDate = yield session.run(query);
                 date = rawDate.records[0]._fields[0].properties;
@@ -895,20 +837,13 @@ const resolvers = {
                 console.log("createDate mutation error relationship create: ", e);
                 return null;
             }
-            // Push Notification for new date
-            // -------------------------------
-            // For each user following the creator, send out a push notification
             createDatePush_1.createDatePush(args.id, date);
             return date;
         }),
         chooseWinner: (_, args) => __awaiter(this, void 0, void 0, function* () {
-            // In order to create a winner, we need to set winner=true on the bid, set open to FALSE on the date
-            // Then we need to create a new document in the Firestore database, which will store messages between the
-            // two.
             console.log("choosewinner args: ", args);
             const { id, winnerId, dateId } = args;
             let date;
-            // Update neo4j values
             try {
                 const data = yield session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'}) 
                     WITH d,a,b,r
@@ -923,7 +858,6 @@ const resolvers = {
                 console.error("Error updating winner value on choosewinner: ", e);
                 return null;
             }
-            // Create new document in Firestore for match
             try {
                 yield firestore_1.db
                     .collection(`matches`)
