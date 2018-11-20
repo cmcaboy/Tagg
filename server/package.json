@@ -6,7 +6,8 @@
     "start": "forever restart dist/index.js || forever start dist/index.js",
     "start2": "forever start dist/index.js",
     "stop": "forever stop dist/index.js",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "generate-types": "echo 'Make sure you update typeDefs.graphql with the latest schema updates!!!' && cd src/graphqlgen && gg"
   },
   "main": "dist/index.js",
   "dependencies": {
