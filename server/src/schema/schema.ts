@@ -13,11 +13,13 @@ const playground: any = {
   }
 };
 
+const dataSources = () => ({
+  neoAPI: new neoAPI({ driver })
+});
+
 export default new ApolloServer({
   typeDefs,
   resolvers,
   playground,
-  dataSources: () => ({
-    neoAPI: new neoAPI({ driver })
-  })
+  dataSources
 });
