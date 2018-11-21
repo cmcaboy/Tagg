@@ -716,7 +716,7 @@ apollo-datasource@0.1.0-rc.11:
     apollo-server-caching "0.1.0-rc.11"
     apollo-server-env "2.0.0-rc.11"
 
-apollo-datasource@0.2.0:
+apollo-datasource@0.2.0, apollo-datasource@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/apollo-datasource/-/apollo-datasource-0.2.0.tgz#ea28313689073150b18f0dbe35bedffc86a62b57"
   dependencies:

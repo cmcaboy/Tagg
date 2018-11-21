@@ -3,7 +3,9 @@ const { ApolloServer } = require("apollo-server-express");
 // const typeDefs = importSchema("./typeDefs.graphql");
 
 import typeDefs from "./typeDefs";
-import { resolvers } from "./resolvers";
+import { resolvers } from "./resolvers/index";
+const neoAPI = require("./datasources/index");
+import { driver } from "../db/neo4j";
 
 const playground: any = {
   settings: {
@@ -14,5 +16,8 @@ const playground: any = {
 export default new ApolloServer({
   typeDefs,
   resolvers,
-  playground
+  playground,
+  dataSources: () => ({
+    neoAPI: new neoAPI({ driver })
+  })
 });

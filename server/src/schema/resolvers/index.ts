@@ -16,7 +16,7 @@ import { Message } from "./Message";
 import { MessageItem } from "./MessageItem";
 import { Queue } from "./Queue";
 
-export const resolvers: Resolvers = merge(
+export const resolvers: Resolvers = {
   DateBid,
   DateBidList,
   DateItem,
@@ -31,4 +31,4 @@ export const resolvers: Resolvers = merge(
   Queue,
   Subscription,
   User
-);
+};
