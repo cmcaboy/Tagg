@@ -1,6 +1,6 @@
 const { DataSource } = require("apollo-datasource");
 
-class neoAPI extends DataSource {
+export default class neoAPI extends DataSource {
   constructor({ driver }: { driver: any }) {
     console.log("neoAPI constructor");
     super();
@@ -36,5 +36,3 @@ class neoAPI extends DataSource {
     }
   }
 }
-
-module.exports = neoAPI;
