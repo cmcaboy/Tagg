@@ -1,4 +1,4 @@
-const { DataSource } = require("apollol-datasource");
+const { DataSource } = require("apollo-datasource");
 
 class neoAPI extends DataSource {
   constructor({ driver }: { driver: any }) {
