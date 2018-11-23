@@ -1,42 +1,21 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const generated_1 = require("../../types/generated");
-const neo4j_1 = require("../../db/neo4j");
-const session = neo4j_1.driver.session();
-exports.DateItem = Object.assign({}, generated_1.DateItemResolvers.defaultResolvers, { creator: (parentValue, _) => {
-        return session
-            .run(`MATCH(a:User)-[:CREATE]->(d:Date{id:'${parentValue.id}'})
-                  RETURN a`)
-            .then((result) => result.records[0])
-            .then((record) => record._fields[0].properties)
-            .catch((e) => console.log("creator error: ", e));
-    }, num_bids: (parentValue, _) => {
-        return session
-            .run(`MATCH(d:Date{id:'${parentValue.id}'})
-                  WITH size((d)<-[:BID]-(:User)) as num_bids
-                  return num_bids`)
-            .then((result) => result.records[0])
-            .then((record) => record._fields[0])
-            .catch((e) => console.log("num_bids error: ", e));
-    }, winner: (parentValue, _) => {
-        return session
-            .run(`MATCH(d:Date{id:'${parentValue.id}'})<-[r:BID{winner:TRUE}]-(b:User)
-                  RETURN b`)
-            .then((result) => result.records[0])
-            .then((record) => record._fields[0].properties)
-            .catch((e) => console.log("winner error: ", e));
-    }, bids: (parentValue, _) => {
-        return session
-            .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${parentValue.id}'}) RETURN r`)
-            .then((result) => result.records)
-            .then((records) => {
-            const list = records.map(record => (Object.assign({}, record._fields[0].properties)));
-            return {
-                id: `${parentValue.id}b`,
-                list,
-                cursor: null
-            };
-        })
-            .catch((e) => console.log("bid error: ", e));
-    } });
+exports.DateItem = Object.assign({}, generated_1.DateItemResolvers.defaultResolvers, { creator: ({ id }, _, { datasources }) => __awaiter(this, void 0, void 0, function* () {
+        return yield datasources.neoAPI.findCreatorFromDate({ id });
+    }), num_bids: ({ id }, _, { datasources }) => __awaiter(this, void 0, void 0, function* () {
+        return yield datasources.neoAPI.findNumberOfBidsFromDate({ id });
+    }), winner: ({ id }, _, { datasources }) => __awaiter(this, void 0, void 0, function* () {
+        return yield datasources.neoAPI.findDateWinner({ id });
+    }), bids: ({ id }, _, { datasources }) => __awaiter(this, void 0, void 0, function* () {
+        return yield datasources.neoAPI.findBidsFromDate({ id });
+    }) });
 //# sourceMappingURL=DateItem.js.map

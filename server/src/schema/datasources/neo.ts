@@ -1,15 +1,11 @@
 import { QUEUE_PAGE_LENGTH } from "../resolvers/variables";
 import { getQueue } from "../../middleware/queue";
 import { newUserDefaults } from '../defaults';
-import { getCurrentDateFirestore } from "../../middleware/format";
-import { pubsub } from '../../pubsub/index';
-import { NEW_MESSAGE } from '../../pubsub/subscriptions';
-import { newMessagePush } from '../../middleware/newMessagePush';
 import { DateItem } from '../../types/DateItem';
 
 const { DataSource } = require("apollo-datasource");
 
-export default class neoAPI extends DataSource {
+export default class neoAPI extends ( DataSource as { new(): any; } ) {
   constructor({ session }: { session: any }) {
     super();
     console.log("neoAPI constructor");
@@ -91,7 +87,7 @@ export default class neoAPI extends DataSource {
       .catch((e: string) => console.log("bid error: ", e));
   };
 
-  getQueueMore = ({ id, cursor, followerDisplay }: id: string, cursor: number | null, followerDisplay: string ) => {
+  getQueueMore = async ({ id, cursor, followerDisplay }: { id: string, cursor: number | null, followerDisplay: string }) => {
 
     let followQuery!: string;
 
@@ -140,7 +136,7 @@ export default class neoAPI extends DataSource {
       console.error("Error! No id passed in!");
     }
 
-    return .thissession
+    return this.session
       .run(
         `MATCH(a:User{id:'${id}'}),(b:User) 
               WITH a,b, size((b)<-[:FOLLOWING]-()) as num_likes,
@@ -338,7 +334,7 @@ export default class neoAPI extends DataSource {
       .catch((e: string) => console.log("isFollowing error: ", e));
   };
 
-  getFollowersFromUser = ({ id, hostId, isFollowing }: {id: string, hostId: string | null, isFollowing: boolean }) => {
+  getFollowersFromUser = ({ id }: {id: string }) => {
     // Need to factor in pagination
     return this.session
       .run(
@@ -525,7 +521,7 @@ export default class neoAPI extends DataSource {
       .catch((e: string) => console.log("editUser error: ", e));
   };
 
-  setUserQueue = (args: any) => {
+  setUserQueue = async (args: any) => {
     const isBoolean = (val: any) => "boolean" === typeof val;
     console.log("args: ", args);
     let query = `MATCH(a:User{id: '${args.id}'}) SET `;
@@ -549,7 +545,7 @@ export default class neoAPI extends DataSource {
     };  
   }
 
-  createUser = (tempArgs: any) => {
+  createUser = async (tempArgs: any) => {
     const args = { ...newUserDefaults, ...tempArgs };
 
     let idAlreadyExist;
@@ -598,7 +594,7 @@ export default class neoAPI extends DataSource {
     isBoolean(args.objectionable) &&
       (query = query + `objectionable:${args.objectionable},`);
     !!args.pics &&
-      (query = query + `pics:[${args.pics.map(pic => `"${pic}"`)}],`);
+      (query = query + `pics:[${args.pics.map(( pic: any ) => `"${pic}"`)}],`);
 
     query = query.slice(-1) === "," ? query.slice(0, -1) : query;
 
@@ -686,7 +682,7 @@ export default class neoAPI extends DataSource {
       }))
       .catch((e: string) => console.log("bid mutation error: ", e));
   };
-  createDate = ({ id, dateId, creationTime, datetimeOfDate, description }: DateItem) => {
+  createDate = async ({ id, dateId, creationTime, datetimeOfDate, description }: DateItem) => {
     let query = `CREATE (d:Date {id:'${dateId}',creator:'${
       id
     }',creationTime:'${creationTime}',open:TRUE,`;
@@ -724,7 +720,7 @@ export default class neoAPI extends DataSource {
     }
     return date;
   };
-  createDateWinner = ({ id, winnerId, dateId }: { id: string, winnerId: string, dateId: string }) => {
+  createDateWinner = async ({ id, winnerId, dateId }: { id: string, winnerId: string, dateId: string }) => {
     let date;
 
     try {

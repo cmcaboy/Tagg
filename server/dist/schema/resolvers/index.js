@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const lodash_1 = require("lodash");
 const Query_1 = require("./Query");
 const User_1 = require("./User");
 const DateBid_1 = require("./DateBid");
@@ -15,5 +14,20 @@ const MatchList_1 = require("./MatchList");
 const Message_1 = require("./Message");
 const MessageItem_1 = require("./MessageItem");
 const Queue_1 = require("./Queue");
-exports.resolvers = lodash_1.merge(DateBid_1.DateBid, DateBidList_1.DateBidList, DateItem_1.DateItem, DateList_1.DateList, Following_1.Following, Match_1.Match, MatchList_1.MatchList, Message_1.Message, MessageItem_1.MessageItem, Mutation_1.Mutation, Query_1.Query, Queue_1.Queue, Subscription_1.Subscription, User_1.User);
+exports.resolvers = {
+    DateBid: DateBid_1.DateBid,
+    DateBidList: DateBidList_1.DateBidList,
+    DateItem: DateItem_1.DateItem,
+    DateList: DateList_1.DateList,
+    Following: Following_1.Following,
+    Match: Match_1.Match,
+    MatchList: MatchList_1.MatchList,
+    Message: Message_1.Message,
+    MessageItem: MessageItem_1.MessageItem,
+    Mutation: Mutation_1.Mutation,
+    Query: Query_1.Query,
+    Queue: Queue_1.Queue,
+    Subscription: Subscription_1.Subscription,
+    User: User_1.User
+};
 //# sourceMappingURL=index.js.map

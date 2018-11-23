@@ -1,12 +1,13 @@
-const { DataSource } = require("apollo-datasource");
-import { MESSAGE_PAGE_LENGTH } from "../resolvers/variables";
-import { DateItem } from "../../types/DateItem";
-import { getCurrentDateFirestore } from "../../middleware/format";
+import { MESSAGE_PAGE_LENGTH } from '../resolvers/variables';
+import { DateItem } from '../../types/DateItem';
+import { getCurrentDateFirestore } from '../../middleware/format';
 
-export default class firestoreAPI extends DataSource {
+const { DataSource } = require('apollo-datasource');
+
+export default class firestoreAPI extends (DataSource as { new (): any }) {
   constructor({ db }: { db: any }) {
     super();
-    console.log("firestore constructor");
+    console.log('firestore constructor');
 
     this.db = db;
   }
@@ -18,18 +19,18 @@ export default class firestoreAPI extends DataSource {
   getMessages = async ({ id }: { id: string }) => {
     const query: any = this.db
       .collection(`matches/${id}/messages`)
-      .orderBy("order")
+      .orderBy('order')
       .limit(MESSAGE_PAGE_LENGTH);
 
     let data!: any;
     try {
       data = await query.get();
     } catch (e) {
-      console.log("error fetching more messages from firestore: ", e);
+      console.log('error fetching more messages from firestore: ', e);
       return {
         id,
         list: [],
-        cursor: null
+        cursor: null,
       };
     }
 
@@ -42,7 +43,7 @@ export default class firestoreAPI extends DataSource {
         text: docData.text,
         createdAt: docData.createdAt,
         order: docData.order,
-        _id: docData._id
+        _id: docData._id,
       };
     });
 
@@ -52,45 +53,36 @@ export default class firestoreAPI extends DataSource {
       return {
         id,
         list: [],
-        cursor: null
+        cursor: null,
       };
     }
 
     // Set the new cursor to the last date in the message array
     // Return a null cursor if the message array length is less than 20, indicating that their
     // are no more messages left to retreive.
-    const cursor: number | null =
-      messages.length >= MESSAGE_PAGE_LENGTH
-        ? messages[messages.length - 1].order
-        : null;
+    const cursor: number | null = messages.length >= MESSAGE_PAGE_LENGTH ? messages[messages.length - 1].order : null;
 
-    console.log("messages in moreMessages: ", messages);
-    console.log("newCursor: ", cursor);
+    console.log('messages in moreMessages: ', messages);
+    console.log('newCursor: ', cursor);
 
     return {
       id,
       list: messages,
-      cursor
+      cursor,
     };
   };
 
-  getMessagesMatch = async ({
-    id,
-    matchId
-  }: {
-    id: string;
-    matchId: string | null;
-  }) => {
+  getMessagesMatch = async ({ id, matchId }: { id: string; matchId: string | null }) => {
     if (!matchId) {
       return {
         id,
         list: [],
-        cursor: null
+        cursor: null,
       };
     }
     const data = await this.db
       .collection(`matches/${matchId}/messages`)
-      .orderBy("createdAt", "desc")
+      .orderBy('createdAt', 'desc')
       .limit(MESSAGE_PAGE_LENGTH)
       .get();
 
@@ -103,19 +95,18 @@ export default class firestoreAPI extends DataSource {
         text: docData.text,
         createdAt: docData.createdAt,
         order: docData.order,
-        _id: docData._id
+        _id: docData._id,
       };
     });
 
-    const cursor =
-      messages.length > 0 ? messages[messages.length - 1].order : null;
+    const cursor = messages.length > 0 ? messages[messages.length - 1].order : null;
 
-    console.log("messages in messages: ", messages);
+    console.log('messages in messages: ', messages);
 
     return {
-      id: id,
+      id,
       cursor,
-      list: messages
+      list: messages,
     };
   };
 
@@ -129,7 +120,7 @@ export default class firestoreAPI extends DataSource {
       // citiesRef.orderBy("state").orderBy("population", "desc")
       const data = await this.db
         .collection(`matches/${matchId}/messages`)
-        .orderBy("createdAt", "desc")
+        .orderBy('createdAt', 'desc')
         .limit(1)
         .get();
 
@@ -146,37 +137,31 @@ export default class firestoreAPI extends DataSource {
           text: docData.text,
           createdAt: docData.createdAt,
           order: docData.order,
-          _id: docData._id
+          _id: docData._id,
         };
       });
 
       // This array should only have 1 element, but I want to return just the element rather than a 1 length array.
       return messages[0];
     } catch (e) {
-      console.log("error fetching last message: ", e);
+      console.log('error fetching last message: ', e);
       return null;
     }
   };
 
-  getMoreMessages = async ({
-    id,
-    cursor: cursorArg
-  }: {
-    id: string;
-    cursor: string | null;
-  }) => {
+  getMoreMessages = async ({ id, cursor: cursorArg }: { id: string; cursor: string | null }) => {
     if (!cursorArg) {
       return {
         id,
         list: [],
-        cursor: null
+        cursor: null,
       };
     }
 
-    let cursor = parseInt(cursorArg);
+    const cursor = parseInt(cursorArg);
     const query = this.db
       .collection(`matches/${id}/messages`)
-      .orderBy("order")
+      .orderBy('order')
       .startAfter(cursor)
       .limit(MESSAGE_PAGE_LENGTH);
 
@@ -184,11 +169,11 @@ export default class firestoreAPI extends DataSource {
     try {
       data = await query.get();
     } catch (e) {
-      console.log("error fetching more messages from firestore: ", e);
+      console.log('error fetching more messages from firestore: ', e);
       return {
         id,
         list: [],
-        cursor
+        cursor,
       };
     }
 
@@ -201,7 +186,7 @@ export default class firestoreAPI extends DataSource {
         text: docData.text,
         createdAt: docData.createdAt,
         order: docData.order,
-        _id: docData._id
+        _id: docData._id,
       };
     });
 
@@ -211,35 +196,26 @@ export default class firestoreAPI extends DataSource {
       return {
         id,
         list: [],
-        cursor
+        cursor,
       };
     }
 
     // Set the new cursor to the last date in the message array
     // Return a null cursor if the message array length is less than 20, indicating that their
     // are no more messages left to retreive.
-    const newCursor: number | null =
-      messages.length >= MESSAGE_PAGE_LENGTH
-        ? messages[messages.length - 1].order
-        : null;
+    const newCursor: number | null = messages.length >= MESSAGE_PAGE_LENGTH ? messages[messages.length - 1].order : null;
 
-    console.log("messages in moreMessages: ", messages);
-    console.log("newCursor: ", newCursor);
+    console.log('messages in moreMessages: ', messages);
+    console.log('newCursor: ', newCursor);
 
     return {
       id,
       list: messages,
-      cursor: newCursor
+      cursor: newCursor,
     };
   };
 
-  createMessage = async ({
-    matchId,
-    message
-  }: {
-    matchId: string;
-    message: any;
-  }) => {
+  createMessage = async ({ matchId, message }: { matchId: string; message: any }) => {
     try {
       await this.db.collection(`matches/${matchId}/messages`).add(message);
       return true;
@@ -253,23 +229,23 @@ export default class firestoreAPI extends DataSource {
     id,
     winnerId,
     dateId,
-    date
+    date,
   }: {
-    id: string;
-    winnerId: string;
-    dateId: string;
-    date: DateItem;
+  id: string;
+  winnerId: string;
+  dateId: string;
+  date: DateItem;
   }) => {
     try {
       await this.db
-        .collection(`matches`)
+        .collection('matches')
         .doc(dateId)
         .set({
           user1: id,
           user2: winnerId,
           matchTime: getCurrentDateFirestore(),
           datetimeOfDate: date.datetimeOfDate,
-          description: date.description
+          description: date.description,
         });
     } catch (e) {
       console.error(`chooseWinner error updating Firestore: ${e}`);
