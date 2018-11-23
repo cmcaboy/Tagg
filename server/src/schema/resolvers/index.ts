@@ -1,5 +1,4 @@
 import { Resolvers } from "../../types/generated";
-import { merge } from "lodash";
 
 import { Query } from "./Query";
 import { User } from "./User";

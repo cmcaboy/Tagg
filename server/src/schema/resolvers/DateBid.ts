@@ -1,45 +1,15 @@
 import { DateBidResolvers } from "../../types/generated";
-import { driver } from "../../db/neo4j";
-
-const session = driver.session();
 
 export const DateBid: DateBidResolvers.Type = {
   ...DateBidResolvers.defaultResolvers,
 
-  dateUser: (parentValue, _) => {
-    return session
-      .run(
-        `MATCH(a:User)-[:CREATE]->(d:Date)<-[r:BID{id:'${
-          parentValue.id
-        }'}]-(b:User)
-                  RETURN a`
-      )
-      .then((result: any) => result.records[0])
-      .then((record: any) => record._fields[0].properties)
-      .catch((e: string) => console.log("winner error: ", e));
+  dateUser: async ({ id }, _, { datasources }) => {
+    return await datasources.neoAPI.getDateCreator({ id });
   },
-  bidUser: (parentValue, _) => {
-    return session
-      .run(
-        `MATCH(a:User)-[:CREATE]->(d:Date)<-[r:BID{id:'${
-          parentValue.id
-        }'}]-(b:User)
-                  RETURN b`
-      )
-      .then((result: any) => result.records[0])
-      .then((record: any) => record._fields[0].properties)
-      .catch((e: string) => console.log("winner error: ", e));
+  bidUser: async ({ id }, _, { datasources }) => {
+    return await datasources.neoAPI.findDateBidder({ id });
   },
-  date: (parentValue, _) => {
-    return session
-      .run(
-        `MATCH(a:User)-[:CREATE]->(d:Date)<-[r:BID{id:'${
-          parentValue.id
-        }'}]-(b:User)
-                  RETURN d`
-      )
-      .then((result: any) => result.records[0])
-      .then((record: any) => record._fields[0].properties)
-      .catch((e: string) => console.log("winner error: ", e));
+  date: async ({ id }, _, { datasources }) => {
+    return await datasources.neoAPI.findDateFromBid({ id });
   }
 };
