@@ -23,10 +23,39 @@ const dataSources = () => ({
   firestoreAPI: new firestoreAPI({ db }),
 });
 
+const context = async ({ req }: { req: any }) => {
+  const auth = (req.headers && req.headers.authorization) || '';
+  console.log('auth: ', auth);
+  const email = new Buffer(auth, 'base64').toString('ascii');
+  console.log('email: ', email);
+
+  // I could check for email validity here
+
+  // Retrieve user from db
+  let neoRaw;
+  try {
+    neoRaw = await session.run(
+      `MATCH (a:User{id:'${email}'}) RETURN a.id, a.email, a.token, a.roles`,
+    );
+  } catch (e) {
+    console.log(`Error retreiving user ${email} from database: ${e}`);
+    return null;
+  }
+  const user = {
+    id: neoRaw.records[0]._fields[0],
+    email: neoRaw.records[0]._fields[1],
+    token: neoRaw.records[0]._fields[2],
+    roles: neoRaw.records[0]._fields[3],
+  };
+
+  return { user };
+};
+
 export default new ApolloServer({
   typeDefs,
   resolvers,
   playground,
+  context,
   dataSources,
   engine: {
     apiKey: 'service:cmcaboy-2497:fJtoyV5uQQfIQ0I11WiXqg',
