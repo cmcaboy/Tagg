@@ -13,6 +13,10 @@
     "@babel/plugin-external-helpers": "^7.0.0",
     "@babel/preset-env": "^7.0.0-beta.40",
     "@babel/runtime": "^7.1.2",
+    "@types/jest": "^23.3.9",
+    "@types/react": "^16.7.7",
+    "@types/react-native": "^0.57.13",
+    "@types/react-test-renderer": "^16.0.3",
     "apollo": "^2.1.3",
     "babel-eslint": "^8.2.6",
     "babel-plugin-transform-remove-console": "^6.9.4",
@@ -23,8 +27,11 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
     "metro-react-native-babel-preset": "^0.48.1",
+    "react-native-typescript-transformer": "^1.2.10",
     "react-test-renderer": "16.0.0",
-    "schedule": "0.4.0"
+    "schedule": "0.4.0",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.1.6"
   },
   "resolutions": {
     "@babel/core": "^7.0.0-beta.40",
@@ -45,7 +52,22 @@
     "build-funcs": "babel firebaseFunctions --out-dir functions --presets=es2015 --copy-files --ignore firebaseFunctions/node_modules"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testPathIgnorePatterns": [
+      "\\.snap$",
+      "<rootDir>/node_modules/"
+    ],
+    "cacheDirectory": ".jest/cache"
   },
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "^0.0.12",

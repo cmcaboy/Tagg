@@ -55,3 +55,6 @@ ios/sentry.properties
 */fastlane/Preview.html
 */fastlane/screenshots
 
+# Jest
+#
+.jest/

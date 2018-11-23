@@ -20,7 +20,7 @@ export namespace QueryResolvers {
   export const defaultResolvers = {};
 
   export interface ArgsUser {
-    id: string;
+    id: string | null;
     hostId: string | null;
   }
 
@@ -46,7 +46,6 @@ export namespace QueryResolvers {
   }
 
   export interface ArgsMoreQueue {
-    id: string;
     followerDisplay: string | null;
     cursor: number;
   }
@@ -211,7 +210,7 @@ export namespace QueryResolvers {
 
 export namespace UserResolvers {
   export const defaultResolvers = {
-    id: (parent: User) => parent.id,
+    id: (parent: User) => (parent.id === undefined ? null : parent.id),
     active: (parent: User) =>
       parent.active === undefined ? null : parent.active,
     name: (parent: User) => (parent.name === undefined ? null : parent.name),
@@ -263,7 +262,7 @@ export namespace UserResolvers {
     args: {},
     ctx: Context,
     info: GraphQLResolveInfo
-  ) => string | Promise<string>;
+  ) => string | null | Promise<string | null>;
 
   export type ActiveResolver = (
     parent: User,
@@ -488,7 +487,7 @@ export namespace UserResolvers {
       args: {},
       ctx: Context,
       info: GraphQLResolveInfo
-    ) => string | Promise<string>;
+    ) => string | null | Promise<string | null>;
 
     active: (
       parent: User,

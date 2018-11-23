@@ -7,7 +7,7 @@ var QueryResolvers;
 var UserResolvers;
 (function (UserResolvers) {
     UserResolvers.defaultResolvers = {
-        id: (parent) => parent.id,
+        id: (parent) => (parent.id === undefined ? null : parent.id),
         active: (parent) => parent.active === undefined ? null : parent.active,
         name: (parent) => (parent.name === undefined ? null : parent.name),
         email: (parent) => (parent.email === undefined ? null : parent.email),

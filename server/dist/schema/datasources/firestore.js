@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const variables_1 = require("../resolvers/variables");
 const format_1 = require("../../middleware/format");
 const { DataSource } = require('apollo-datasource');
-class firestoreAPI extends DataSource {
+class FirestoreAPI extends DataSource {
     constructor({ db }) {
         super();
         this.getMessages = ({ id }) => __awaiter(this, void 0, void 0, function* () {
@@ -214,5 +214,5 @@ class firestoreAPI extends DataSource {
         this.context = config.context;
     }
 }
-exports.default = firestoreAPI;
+exports.default = FirestoreAPI;
 //# sourceMappingURL=firestore.js.map

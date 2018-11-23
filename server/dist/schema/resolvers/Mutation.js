@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const uuid = require("node-uuid");
 const generated_1 = require("../../types/generated");
 const format_1 = require("../../middleware/format");
 const index_1 = require("../../pubsub/index");
@@ -16,13 +15,8 @@ const subscriptions_1 = require("../../pubsub/subscriptions");
 const newMessagePush_1 = require("../../middleware/newMessagePush");
 const createDatePush_1 = require("../../middleware/createDatePush");
 const chooseWinnerPush_1 = require("../../middleware/chooseWinnerPush");
-exports.Mutation = Object.assign({}, generated_1.MutationResolvers.defaultResolvers, { editUser: (_, args, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.setUser(args);
-    }), editUserQueue: (_, args, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.setUserQueue(args);
-    }), newUser: (_, tempArgs, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.createUser(tempArgs);
-    }), newMessage: (_, args, { datasoures }) => __awaiter(this, void 0, void 0, function* () {
+const uuid = require('node-uuid');
+exports.Mutation = Object.assign({}, generated_1.MutationResolvers.defaultResolvers, { editUser: (_, args, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.setUser(args); }), editUserQueue: (_, args, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.setUserQueue(args); }), newUser: (_, tempArgs, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.createUser(tempArgs); }), newMessage: (_, args, { datasoures }) => __awaiter(this, void 0, void 0, function* () {
         const message = {
             _id: args._id,
             name: args.name,
@@ -30,11 +24,11 @@ exports.Mutation = Object.assign({}, generated_1.MutationResolvers.defaultResolv
             avatar: args.avatar,
             createdAt: format_1.getCurrentDateFirestore(),
             order: args.order,
-            uid: args.uid
+            uid: args.uid,
         };
         const asyncFunc = () => __awaiter(this, void 0, void 0, function* () {
             index_1.pubsub.publish(subscriptions_1.NEW_MESSAGE, {
-                newMessageSub: { message, matchId: args.matchId }
+                newMessageSub: { message, matchId: args.matchId },
             });
             newMessagePush_1.newMessagePush({
                 matchId: args.matchId,
@@ -42,7 +36,7 @@ exports.Mutation = Object.assign({}, generated_1.MutationResolvers.defaultResolv
                 otherName: args.name,
                 otherPic: args.avatar,
                 text: args.text,
-                id: args.receiverId
+                id: args.receiverId,
             });
         });
         asyncFunc();
@@ -52,33 +46,28 @@ exports.Mutation = Object.assign({}, generated_1.MutationResolvers.defaultResolv
         }
         console.log(`${args.name} posted message to matchId ${args.matchId}`);
         return message;
-    }), follow: (_, { id, followId, isFollowing }, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.followUser({ id, followId, isFollowing });
-    }), unFollow: (_, { id, unFollowId }, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.unFollowUser({ id, unFollowId });
-    }), bid: (_, args, { datasources }) => __awaiter(this, void 0, void 0, function* () {
+    }), follow: (_, { followId, isFollowing }, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.followUser({ followId, isFollowing }); }), unFollow: (_, { unFollowId }, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.unFollowUser({ unFollowId }); }), bid: (_, args, { datasources }) => __awaiter(this, void 0, void 0, function* () {
         const datetimeOfBid = format_1.getCurrentDateNeo();
         const bidId = uuid();
         return yield datasources.neoAPI.createbid(Object.assign({}, args, { bidId,
             datetimeOfBid }));
-    }), createDate: (_, args, { datasources }) => __awaiter(this, void 0, void 0, function* () {
+    }), createDate: (_, args, { datasources, user: { id } }) => __awaiter(this, void 0, void 0, function* () {
         const creationTime = format_1.getCurrentDateNeo();
         const dateId = uuid();
         const date = yield datasources.neoAPI.createDate(Object.assign({}, args, { creationTime,
             dateId }));
-        createDatePush_1.createDatePush(args.id, date);
+        createDatePush_1.createDatePush(id, date);
         return date;
-    }), chooseWinner: (_, { id, winnerId, dateId }, { datasources }) => __awaiter(this, void 0, void 0, function* () {
+    }), chooseWinner: (_, { winnerId, dateId }, { datasources, user: { id } }) => __awaiter(this, void 0, void 0, function* () {
         const date = yield datasources.neoAPI.createDateWinner({
-            id,
             winnerId,
-            dateId
+            dateId,
         });
         const firestoreCreation = yield datasources.firestoreAPI.createDateChat({
             id,
             winnerId,
             dateId,
-            date
+            date,
         });
         if (!firestoreCreation) {
             console.log(`Failed to create date ${dateId} in firestore!`);
@@ -86,9 +75,5 @@ exports.Mutation = Object.assign({}, generated_1.MutationResolvers.defaultResolv
         chooseWinnerPush_1.chooseWinnerPushWinner(date);
         chooseWinnerPush_1.chooseWinnerPushLoser(date);
         return date;
-    }), flag: (_, { id, flaggedId, block }, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.setFlagUser({ id, flaggedId, block });
-    }), block: (_, { id, blockedId }, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.setUserBlock({ id, blockedId });
-    }) });
+    }), flag: (_, { flaggedId, block }, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.setFlagUser({ flaggedId, block }); }), block: (_, { blockedId }, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.setUserBlock({ blockedId }); }) });
 //# sourceMappingURL=Mutation.js.map

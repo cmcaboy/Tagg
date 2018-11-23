@@ -4,7 +4,7 @@ import { getCurrentDateFirestore } from '../../middleware/format';
 
 const { DataSource } = require('apollo-datasource');
 
-export default class firestoreAPI extends (DataSource as { new (): any }) {
+export default class FirestoreAPI extends (DataSource as { new (): any }) {
   constructor({ db }: { db: any }) {
     super();
     console.log('firestore constructor');

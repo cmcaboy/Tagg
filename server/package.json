@@ -2,6 +2,7 @@
   "name": "server",
   "scripts": {
     "lint": "tslint --project tsconfig.json",
+    "test": "jest",
     "build": "tsc",
     "start": "forever restart dist/index.js || forever start dist/index.js",
     "start2": "forever start dist/index.js",
@@ -11,8 +12,6 @@
   },
   "main": "dist/index.js",
   "dependencies": {
-    "@types/express": "^4.16.0",
-    "@types/neo4j": "^2.0.2",
     "apollo-datasource": "^0.2.0",
     "apollo-server": "^2.2.2",
     "apollo-server-express": "^2.0.0-rc.12",
@@ -34,12 +33,26 @@
     "subscriptions-transport-ws": "^0.9.9"
   },
   "devDependencies": {
+    "@types/express": "^4.16.0",
     "@types/graphql": "^0.13.1",
+    "@types/jest": "^23.3.9",
+    "@types/neo4j": "^2.0.2",
     "@types/node": "^10.12.9",
     "@types/ws": "^5.1.2",
     "apollo": "^2.1.2",
+    "apollo-server-testing": "^2.2.2",
+    "babel-jest": "^23.6.0",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "regenerator-runtime": "^0.13.1",
+    "ts-jest": "^23.10.5",
     "tslint": "^5.8.0",
     "typescript": "^3.1.6"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "private": true
 }

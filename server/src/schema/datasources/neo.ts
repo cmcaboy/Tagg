@@ -5,7 +5,7 @@ import { DateItem } from '../../types/DateItem';
 
 const { DataSource } = require("apollo-datasource");
 
-export default class neoAPI extends ( DataSource as { new(): any; } ) {
+export default class NeoAPI extends ( DataSource as { new(): any; } ) {
   constructor({ session }: { session: any }) {
     super();
     console.log("neoAPI constructor");
@@ -17,12 +17,7 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
     this.context = config.context;
   }
 
-  findUser({ hostId }: { hostId: string }) {
-    if (!this.context || !this.context.user || !this.context.user.id) {
-      return false;
-    }
-    const id = this.context.user.id;
-
+  findUser({ id, hostId }: { id: string, hostId: string }) {
     if (id) {
       return this.session
         .run(`Match (n:User {id: '${id}'}) RETURN n`)
@@ -92,7 +87,9 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
       .catch((e: string) => console.log("bid error: ", e));
   };
 
-  getQueueMore = async ({ id, cursor, followerDisplay }: { id: string, cursor: number | null, followerDisplay: string }) => {
+  getQueueMore = async ({ cursor, followerDisplay }: { cursor: number | null, followerDisplay: string }) => {
+
+    const id = this.context.user.id;
 
     let followQuery!: string;
 
@@ -303,7 +300,8 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
       )
       .catch((e: string) => console.log("hasDateOpen error: ", e));
   };
-  userDistanceApart = ({ id, hostId, distanceApart }: {id: string, hostId: string | null, distanceApart: number | null }) => {
+  userDistanceApart = ({ id, distanceApart }: { id: string, distanceApart: number | null }) => {
+    const hostId = this.context.user.id;
     // hostId is only used for UserProfile
     if (!hostId) return distanceApart;
 
@@ -320,8 +318,8 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
       .catch((e: string) => console.log("distanceApart error: ", e));
   };
 
-  userIsFollowing = ({ id, hostId, isFollowing }: {id: string, hostId: string | null, isFollowing: number | null }) => {
-    // Could pass in host user has an optional argument
+  userIsFollowing = ({ id, isFollowing }: { id: string, isFollowing: number | null }) => {
+    const hostId = this.context.user.id;
 
     // hostId is only used for UserProfile
     if (!hostId) return isFollowing;
@@ -339,7 +337,8 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
       .catch((e: string) => console.log("isFollowing error: ", e));
   };
 
-  getFollowersFromUser = ({ id }: {id: string }) => {
+  getFollowersFromUser = () => {
+    const id = this.context.user.id;
     // Need to factor in pagination
     return this.session
       .run(
@@ -393,7 +392,8 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
       )
       .catch((e: string) => console.log("bid error: ", e));
   };
-  findDateRequests = ({ id }: { id: string }) => {
+  findDateRequests = () => {
+    const id = this.context.user.id;
     return this.session
       .run(
         `MATCH(a:User{id:'${id}'})-[:CREATE]->(d:Date) 
@@ -424,11 +424,15 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
       })
       .catch((e: string) => console.log("dateRequest error: ", e));
   };
-  getUserQueue = ({ id, followerDisplay }: { id: string, followerDisplay: string | null }) => getQueue({ id, followerDisplay });
-  getMatchedDates = ({ id }: { id: string }) => {
+  getUserQueue = ({ followerDisplay }: { followerDisplay: string | null }) => {
+    const id = this.context.user.id;
+    getQueue({ id, followerDisplay });
+  };
+  getMatchedDates = () => {
     // A potential performance improvement would be to query Firestore directly
     // to get our list of matches
     // These matches should be sorted as well.
+    const id = this.context.user.id;
 
     const query = `MATCH(a:User{id:'${id}'}),(b:User),(d:Date)
               WHERE (
@@ -563,6 +567,7 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
       return { id: null };
     }
     if (idAlreadyExist.records.length) {
+      // I could throw an apollo error here
       console.log("Email already registered");
       return { id: false };
     }
@@ -615,7 +620,8 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
       .catch((e: string) => console.log("newUser error: ", e));
   };
 
-  followUser = ({ id, followId, isFollowing }: { id: string, followId: string, isFollowing: boolean }) => {
+  followUser = ({ followId, isFollowing }: { followId: string, isFollowing: boolean }) => {
+    const id = this.context.user.id;
     // supports both follow and unfollow
     let query;
 
@@ -637,7 +643,8 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
       .catch((e: string) => console.log("follow mutation error: ", e));
   };
 
-  unFollowUser = ({ id, unFollowId }: { id: string, unFollowId: string }) => {
+  unFollowUser = ({ unFollowId }: { unFollowId: string }) => {
+    const id = this.context.user.id;
     const query = `MATCH (a:User {id:'${
       id
     }'})-[r:FOLLOWING]->(b:User {id:'${unFollowId}'}) DELETE r RETURN b`;
@@ -654,14 +661,15 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
       .catch((e: string) => console.log("follow mutation error: ", e));
   };
 
-  createBid = async ({ id, dateId, bidId, bidPlace, bidDescription, datetimeOfBid }: {
-    id: string;
+  createBid = async ({ dateId, bidId, bidPlace, bidDescription, datetimeOfBid }: {
     dateId: string;
     bidId: string;
     bidPlace: string;
     bidDescription: string;
     datetimeOfBid: string;
   }) => {
+    // grab id from context
+    const id = this.context.user.id;
     let query = `MATCH (a:User {id:'${id}'}), (d:Date {id:'${
       dateId
     }'}) 
@@ -687,7 +695,8 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
       }))
       .catch((e: string) => console.log("bid mutation error: ", e));
   };
-  createDate = async ({ id, dateId, creationTime, datetimeOfDate, description }: DateItem) => {
+  createDate = async ({ dateId, creationTime, datetimeOfDate, description }: DateItem) => {
+    const id = this.context.user.id;
     let query = `CREATE (d:Date {id:'${dateId}',creator:'${
       id
     }',creationTime:'${creationTime}',open:TRUE,`;
@@ -725,7 +734,8 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
     }
     return date;
   };
-  createDateWinner = async ({ id, winnerId, dateId }: { id: string, winnerId: string, dateId: string }) => {
+  createDateWinner = async ({ winnerId, dateId }: { winnerId: string, dateId: string }) => {
+    const id = this.context.user.id;
     let date;
 
     try {
@@ -748,7 +758,8 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
     }
     return date;
   };
-  setFlagUser = ({ id, flaggedId, block }: { id: string, flaggedId: string, block: boolean | null }) => {
+  setFlagUser = ({ flaggedId, block }: { flaggedId: string, block: boolean | null }) => {
+    const id = this.context.user.id;
 
     if (block) {
       this.session
@@ -777,7 +788,8 @@ export default class neoAPI extends ( DataSource as { new(): any; } ) {
         console.log("Error flagging user for objectionable content: ", e)
       );
   };
-  setBlockUser = ({ id, blockedId }: { id: string, blockedId: string }) => {
+  setBlockUser = ({ blockedId }: { blockedId: string }) => {
+    const id = this.context.user.id;
     return this.session
       .run(
         `MATCH (a:User{id:'${id}'}), (b:User{id:'${blockedId}'}) 

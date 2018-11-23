@@ -28,25 +28,25 @@ const dataSources = () => ({
 const context = ({ req }) => __awaiter(this, void 0, void 0, function* () {
     const auth = (req.headers && req.headers.authorization) || '';
     console.log('auth: ', auth);
-    const email = new Buffer(auth, 'base64').toString('ascii');
-    console.log('email: ', email);
+    const email = auth;
     let neoRaw;
+    let user;
     try {
         neoRaw = yield session.run(`MATCH (a:User{id:'${email}'}) RETURN a.id, a.email, a.token, a.roles`);
+        user = {
+            id: neoRaw.records[0]._fields[0],
+            email: neoRaw.records[0]._fields[1],
+            token: neoRaw.records[0]._fields[2],
+            roles: neoRaw.records[0]._fields[3],
+        };
     }
     catch (e) {
         console.log(`Error retreiving user ${email} from database: ${e}`);
         return null;
     }
-    const user = {
-        id: neoRaw.records[0]._fields[0],
-        email: neoRaw.records[0]._fields[1],
-        token: neoRaw.records[0]._fields[2],
-        roles: neoRaw.records[0]._fields[3],
-    };
     return { user };
 });
-exports.default = new ApolloServer({
+exports.server = {
     typeDefs: typeDefs_1.default,
     resolvers: index_1.resolvers,
     playground,
@@ -55,5 +55,6 @@ exports.default = new ApolloServer({
     engine: {
         apiKey: 'service:cmcaboy-2497:fJtoyV5uQQfIQ0I11WiXqg',
     },
-});
+};
+exports.default = new ApolloServer(exports.server);
 //# sourceMappingURL=schema.js.map

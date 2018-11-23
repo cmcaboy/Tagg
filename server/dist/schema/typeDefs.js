@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeDefs = `
     type User {
-        id: String!
+        id: String
         active: Boolean
         name: String
         email: String
@@ -117,13 +117,13 @@ const typeDefs = `
     }
 
     type Query {
-        user(id: String!, hostId: String): User
+        user(id: String, hostId: String): User
         messages(id: String!): Message
         date(id: String!): DateItem
         dates(id: String!): DateList
         otherBids(id: String!): DateBidList
         moreMessages(id: String!, cursor: String!): Message
-        moreQueue(id: String!, followerDisplay: String, cursor: Float!): Queue
+        moreQueue(followerDisplay: String, cursor: Float!): Queue
         moreDates(id: String!, cursor: Float!): DateList
         moreDateBids(id:String!, cursor: Float!): DateBidList
         moreFollowing(id: String!, cursor: Float!): Following

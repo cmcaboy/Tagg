@@ -12,7 +12,7 @@ const variables_1 = require("../resolvers/variables");
 const queue_1 = require("../../middleware/queue");
 const defaults_1 = require("../defaults");
 const { DataSource } = require("apollo-datasource");
-class neoAPI extends DataSource {
+class NeoAPI extends DataSource {
     constructor({ session }) {
         super();
         this.findDate = ({ id }) => {
@@ -52,7 +52,8 @@ class neoAPI extends DataSource {
             })
                 .catch((e) => console.log("bid error: ", e));
         };
-        this.getQueueMore = ({ id, cursor, followerDisplay }) => __awaiter(this, void 0, void 0, function* () {
+        this.getQueueMore = ({ cursor, followerDisplay }) => __awaiter(this, void 0, void 0, function* () {
+            const id = this.context.user.id;
             let followQuery;
             switch (followerDisplay) {
                 case "Following Only":
@@ -208,7 +209,8 @@ class neoAPI extends DataSource {
             })
                 .catch((e) => console.log("hasDateOpen error: ", e));
         };
-        this.userDistanceApart = ({ id, hostId, distanceApart }) => {
+        this.userDistanceApart = ({ id, distanceApart }) => {
+            const hostId = this.context.user.id;
             if (!hostId)
                 return distanceApart;
             return this.session
@@ -219,7 +221,8 @@ class neoAPI extends DataSource {
                 .then((record) => record._fields[0])
                 .catch((e) => console.log("distanceApart error: ", e));
         };
-        this.userIsFollowing = ({ id, hostId, isFollowing }) => {
+        this.userIsFollowing = ({ id, isFollowing }) => {
+            const hostId = this.context.user.id;
             if (!hostId)
                 return isFollowing;
             return this.session
@@ -230,7 +233,8 @@ class neoAPI extends DataSource {
                 .then((record) => record._fields[0])
                 .catch((e) => console.log("isFollowing error: ", e));
         };
-        this.getFollowersFromUser = ({ id }) => {
+        this.getFollowersFromUser = () => {
+            const id = this.context.user.id;
             return this.session
                 .run(`MATCH(a:User{id:'${id}'})-[r:FOLLOWING]->(b:User) 
           WITH a,r,b, 
@@ -266,7 +270,8 @@ class neoAPI extends DataSource {
             })
                 .catch((e) => console.log("bid error: ", e));
         };
-        this.findDateRequests = ({ id }) => {
+        this.findDateRequests = () => {
+            const id = this.context.user.id;
             return this.session
                 .run(`MATCH(a:User{id:'${id}'})-[:CREATE]->(d:Date) 
           WITH a, d, size((d)<-[:BID]-(:User)) as num_bids, d.datetimeOfDate as order
@@ -294,8 +299,12 @@ class neoAPI extends DataSource {
             })
                 .catch((e) => console.log("dateRequest error: ", e));
         };
-        this.getUserQueue = ({ id, followerDisplay }) => queue_1.getQueue({ id, followerDisplay });
-        this.getMatchedDates = ({ id }) => {
+        this.getUserQueue = ({ followerDisplay }) => {
+            const id = this.context.user.id;
+            queue_1.getQueue({ id, followerDisplay });
+        };
+        this.getMatchedDates = () => {
+            const id = this.context.user.id;
             const query = `MATCH(a:User{id:'${id}'}),(b:User),(d:Date)
               WHERE (
                 (a)-[:CREATE]->(d)<-[:BID{winner:TRUE}]-(b) OR
@@ -462,7 +471,8 @@ class neoAPI extends DataSource {
                 .then((records) => records[0]._fields[0].properties)
                 .catch((e) => console.log("newUser error: ", e));
         });
-        this.followUser = ({ id, followId, isFollowing }) => {
+        this.followUser = ({ followId, isFollowing }) => {
+            const id = this.context.user.id;
             let query;
             if (isFollowing) {
                 query = `MATCH (a:User {id:'${id}'}), (b:User {id:'${followId}'}) MERGE (a)-[r:FOLLOWING]->(b) RETURN b`;
@@ -481,7 +491,8 @@ class neoAPI extends DataSource {
                 .then((record) => (Object.assign({}, record._fields[0].properties, { isFollowing })))
                 .catch((e) => console.log("follow mutation error: ", e));
         };
-        this.unFollowUser = ({ id, unFollowId }) => {
+        this.unFollowUser = ({ unFollowId }) => {
+            const id = this.context.user.id;
             const query = `MATCH (a:User {id:'${id}'})-[r:FOLLOWING]->(b:User {id:'${unFollowId}'}) DELETE r RETURN b`;
             return this.session
                 .run(query)
@@ -491,7 +502,8 @@ class neoAPI extends DataSource {
                 .then((record) => (Object.assign({}, record._fields[0].properties, { isFollowing: false })))
                 .catch((e) => console.log("follow mutation error: ", e));
         };
-        this.createBid = ({ id, dateId, bidId, bidPlace, bidDescription, datetimeOfBid }) => __awaiter(this, void 0, void 0, function* () {
+        this.createBid = ({ dateId, bidId, bidPlace, bidDescription, datetimeOfBid }) => __awaiter(this, void 0, void 0, function* () {
+            const id = this.context.user.id;
             let query = `MATCH (a:User {id:'${id}'}), (d:Date {id:'${dateId}'}) 
               MERGE (a)-[r:BID{id: '${bidId}',datetimeOfBid: '${datetimeOfBid}',`;
             !!bidPlace &&
@@ -509,7 +521,8 @@ class neoAPI extends DataSource {
                 .then((record) => (Object.assign({}, record._fields[0].properties)))
                 .catch((e) => console.log("bid mutation error: ", e));
         });
-        this.createDate = ({ id, dateId, creationTime, datetimeOfDate, description }) => __awaiter(this, void 0, void 0, function* () {
+        this.createDate = ({ dateId, creationTime, datetimeOfDate, description }) => __awaiter(this, void 0, void 0, function* () {
+            const id = this.context.user.id;
             let query = `CREATE (d:Date {id:'${dateId}',creator:'${id}',creationTime:'${creationTime}',open:TRUE,`;
             !!datetimeOfDate &&
                 (query = query + `datetimeOfDate:"${datetimeOfDate}",`) +
@@ -537,7 +550,8 @@ class neoAPI extends DataSource {
             }
             return date;
         });
-        this.createDateWinner = ({ id, winnerId, dateId }) => __awaiter(this, void 0, void 0, function* () {
+        this.createDateWinner = ({ winnerId, dateId }) => __awaiter(this, void 0, void 0, function* () {
+            const id = this.context.user.id;
             let date;
             try {
                 const data = yield this.session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'}) 
@@ -555,7 +569,8 @@ class neoAPI extends DataSource {
             }
             return date;
         });
-        this.setFlagUser = ({ id, flaggedId, block }) => {
+        this.setFlagUser = ({ flaggedId, block }) => {
+            const id = this.context.user.id;
             if (block) {
                 this.session
                     .run(`MATCH (a:User{id:'${id}'}), (b:User{id:'${flaggedId}'}) 
@@ -576,7 +591,8 @@ class neoAPI extends DataSource {
                 .then((record) => (Object.assign({}, record._fields[0].properties)))
                 .catch((e) => console.log("Error flagging user for objectionable content: ", e));
         };
-        this.setBlockUser = ({ id, blockedId }) => {
+        this.setBlockUser = ({ blockedId }) => {
+            const id = this.context.user.id;
             return this.session
                 .run(`MATCH (a:User{id:'${id}'}), (b:User{id:'${blockedId}'}) 
           CREATE (a)-[r:BLOCK { active: true }]->(b)
@@ -614,5 +630,5 @@ class neoAPI extends DataSource {
         }
     }
 }
-exports.default = neoAPI;
+exports.default = NeoAPI;
 //# sourceMappingURL=neo.js.map
