@@ -23,11 +23,19 @@ const dataSources = () => ({
   firestoreAPI: new firestoreAPI({ db }),
 });
 
+// context is information shared with all resolvers.
+// Here, I will pull out the header info from the request
+// and make sure the user is a valid user. Later, I will
+// use the roles parameter to validate the user has permission
+// to execute a specific query
 const context = async ({ req }: { req: any }) => {
   const auth = (req.headers && req.headers.authorization) || '';
   console.log('auth: ', auth);
-  const email = new Buffer(auth, 'base64').toString('ascii');
-  console.log('email: ', email);
+  // const email = new Buffer(auth, 'base64').toString('ascii');
+  // console.log('email: ', email);
+
+  // I am not doing any type of encryption at the moment;
+  const email = auth;
 
   // I could check for email validity here
 
@@ -38,6 +46,7 @@ const context = async ({ req }: { req: any }) => {
       `MATCH (a:User{id:'${email}'}) RETURN a.id, a.email, a.token, a.roles`,
     );
   } catch (e) {
+    // I could throw a real error here
     console.log(`Error retreiving user ${email} from database: ${e}`);
     return null;
   }
