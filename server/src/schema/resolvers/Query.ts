@@ -2,10 +2,7 @@ import { QueryResolvers } from '../../types/generated';
 
 export const Query: QueryResolvers.Type = {
   ...QueryResolvers.defaultResolvers,
-  user: async (_, { id, hostId }, { dataSources, user }) => {
-    console.log('user: ', user);
-    return await dataSources.neoAPI.findUser({ id: user.id, hostId });
-  },
+  user: async (_, { hostId }, { dataSources }) => await dataSources.neoAPI.findUser({ hostId }),
   messages: async (_, { id }, { datasources }) => await datasources.firestoreAPI.getMessages({ id }),
   date: async (_, { id }, { datasources }) => await datasources.neoAPI.findDate({ id }),
   dates: (_, __) => {
