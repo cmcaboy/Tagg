@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { ReactNode, SFC } from 'react';
 import { Button } from './index';
 
-const SmallButton = ({ props, props: { children } }) => <Button props={props}>{children}</Button>;
+interface Props {
+  children: ReactNode;
+}
+
+const SmallButton: SFC<Props> = ({ children, ...rest }) => <Button props={rest}>{children}</Button>;
 
 export { SmallButton };

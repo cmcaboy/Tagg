@@ -8,6 +8,8 @@ import {
   LayoutAnimation,
   UIManager,
   Platform,
+  ViewStyle,
+  TextStyle,
 } from 'react-native';
 import { Button } from 'native-base';
 import { Mutation } from 'react-apollo';
@@ -21,8 +23,33 @@ import toastMessage from '../services/toastMessage';
 import emailValidation from '../services/emailValidation';
 import emailSignup from '../services/emailSignup';
 
-export default class NewUserModal extends Component {
-  constructor(props) {
+interface Props {
+  closeModal: () => void;
+  startSetId: (id: string | number) => void;
+}
+
+interface genderItem {
+  label: 'female' | 'male';
+  selected: boolean;
+}
+
+interface State {
+  pics: string[],
+  gender: genderItem[];
+  name: string;
+  email: string;
+  age: string;
+  school: string;
+  work: string;
+  description: string;
+  loading: boolean;
+  error: string;
+  password: string;
+  validatePassword: string;
+}
+
+export default class NewUserModal extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -53,25 +80,25 @@ export default class NewUserModal extends Component {
     };
   }
 
-  passwordInput = password => this.setState({ password });
+  passwordInput = ( password: string ) => this.setState({ password });
 
-  validatePasswordInput = validatePassword => this.setState({ validatePassword });
+  validatePasswordInput = ( validatePassword: string ) => this.setState({ validatePassword });
 
-  changeName = name => this.setState({ name });
+  changeName = ( name: string ) => this.setState({ name });
 
-  changeEmail = email => this.setState({ email });
+  changeEmail = ( email: string ) => this.setState({ email });
 
-  changeAge = age => this.setState({ age });
+  changeAge = (age: string) => this.setState({ age });
 
-  changeSchool = school => this.setState({ school });
+  changeSchool = ( school: string ) => this.setState({ school });
 
-  changeWork = work => this.setState({ work });
+  changeWork = ( work: string ) => this.setState({ work });
 
-  changeDescription = description => this.setState({ description });
+  changeDescription = ( description: string ) => this.setState({ description });
 
-  changePics = pics => this.setState({ pics });
+  changePics = (pics: string[]) => this.setState({ pics });
 
-  changeGender = gender => this.setState({ gender });
+  changeGender = ( gender: genderItem[] ) => this.setState({ gender });
 
   validatePassword = () => {
     const { password, validatePassword } = this.state;
@@ -115,7 +142,7 @@ export default class NewUserModal extends Component {
     return true;
   }
 
-  submitNewUser = (newUser) => {
+  submitNewUser = (newUser: (user: any) => void) => {
     this.setState({ loading: true, error: '' });
     const { name, age, school, work, description, gender, pics, password } = this.state;
     let { email } = this.state;
@@ -145,7 +172,7 @@ export default class NewUserModal extends Component {
         gender: gender.filter(g => g.selected)[0].label,
         ...settingDefaults,
       },
-      update: async (store, data) => {
+      update: async (_: any, data: any) => {
         console.log('newUser udpate function');
         console.log('data: ', data);
         // check for an error
@@ -224,7 +251,7 @@ export default class NewUserModal extends Component {
           { 'New Profile Setup' }
         </MyTitleText>
         <Card style={{ padding: 2, marginTop: 15 }}>
-          <CardSection style={sectionTitle}>
+          <CardSection style={sectionTitle as ViewStyle}>
             <MyAppText style={{ fontWeight: 'bold', color: '#FFF' }}>
               { 'First, Upload a few pictures. Click on a plus image to upload a new image.' }
             </MyAppText>
@@ -238,7 +265,7 @@ export default class NewUserModal extends Component {
           </Text>
         </Card>
         <Card style={{ padding: 0 }}>
-          <CardSection style={sectionTitle}>
+          <CardSection style={sectionTitle as ViewStyle}>
             <MyAppText style={{ fontWeight: 'bold', color: '#FFF' }}>
               { 'Next, tell us about yourself...' }
             </MyAppText>
@@ -290,7 +317,7 @@ export default class NewUserModal extends Component {
           </CardSection>
         </Card>
         <Card style={{ padding: 0 }}>
-          <CardSection style={sectionTitle}>
+          <CardSection style={sectionTitle as TextStyle}>
             <MyAppText style={{ fontWeight: 'bold', color: '#FFF' }}>
               { 'Finally, create a password.' }
             </MyAppText>
@@ -349,7 +376,18 @@ export default class NewUserModal extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  settingsContainer: ViewStyle;
+  textInputStyle: ViewStyle;
+  hint: TextStyle;
+  sectionTitle: ViewStyle;
+  cancelButton: TextStyle;
+  submitButton: TextStyle;
+  errorText: TextStyle;
+  blankView: ViewStyle;
+}
+
+const styles = StyleSheet.create<Style>({
   settingsContainer: {
     padding: 10,
   },

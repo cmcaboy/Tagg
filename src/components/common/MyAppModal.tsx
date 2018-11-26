@@ -1,8 +1,19 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { SFC, ReactNode } from 'react';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import Modal from 'react-native-modalbox';
 
-const MyAppModal = ({
+interface Props {
+  isVisible: boolean;
+  close: () => any;
+  children: ReactNode;
+  swipeToClose?: boolean;
+}
+
+interface Style {
+  container: ViewStyle;
+}
+
+const MyAppModal: SFC<Props> = ({
   isVisible, close, children, swipeToClose = true,
 }) => (
   // <Modal
@@ -29,7 +40,7 @@ const MyAppModal = ({
   </Modal>
 );
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   container: {
     flex: 1,
     backgroundColor: 'white',

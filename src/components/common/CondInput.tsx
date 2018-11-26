@@ -1,19 +1,39 @@
 import React, { Component } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity, TextInput,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  TextInputProps,
+  ViewStyle,
+  TextStyle,
 } from 'react-native';
 import { CardSection, ActionIcon } from './index';
 
-class CondInput extends Component {
-  constructor(props) {
+interface Props {
+  lowerCaseOnly?: boolean;
+  updateValue: (any: any) => any;
+  value: string | number | string[];
+  multiline?: boolean;
+  secureTextEntry?: boolean;
+  field: string;
+}
+interface State {
+  isEdit: boolean;
+  value: string | number | string[];
+  lowerCaseOnly: boolean;
+}
+
+class CondInput extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
-    const { value, lowerCaseOnly } = this.props;
+    const { value, lowerCaseOnly = false } = this.props;
     this.state = {
       isEdit: false,
       value,
+      lowerCaseOnly,
     };
-
-    this.lowerCaseOnly = lowerCaseOnly;
   }
 
   confirmUpdate = () => {
@@ -24,7 +44,7 @@ class CondInput extends Component {
   };
 
   onChangeText = (v) => {
-    if (this.lowerCaseOnly) {
+    if (this.state.lowerCaseOnly) {
       this.setState({ value: v.toLowerCase() });
     } else {
       this.setState({ value: v });
@@ -40,12 +60,12 @@ class CondInput extends Component {
       <View style={styles.container}>
         {!isEdit ? (
           <TouchableOpacity onPress={this.enableEditMode}>
-            <CardSection style={styles.cardSection}>
+            <CardSection style={styles.cardSection as ViewStyle}>
               <Text style={value ? styles.field : styles.blankField}>{value || field}</Text>
             </CardSection>
           </TouchableOpacity>
         ) : (
-          <CardSection style={styles.cardSection}>
+          <CardSection style={styles.cardSection as ViewStyle}>
             <View style={styles.editView}>
               <TextInput
                 secureTextEntry={secureTextEntry}
@@ -62,7 +82,7 @@ class CondInput extends Component {
                 name="done"
                 size={32}
                 color="green"
-                style={styles.checkMarker}
+                style={styles.checkMarker as ViewStyle}
               />
               {/*
                 <Button
@@ -77,7 +97,16 @@ class CondInput extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  container: ViewStyle;
+  blankField: TextStyle;
+  field: TextStyle;
+  editView: ViewStyle;
+  textInputStyle: TextStyle;
+  checkMarker: ViewStyle;
+  cardSection: ViewStyle;
+}
+const styles = StyleSheet.create<Style>({
   container: {
     flex: 1,
   },

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet, View, TouchableOpacity, ViewStyle, TextStyle,
+} from 'react-native';
 import { Mutation } from 'react-apollo';
 import { LoginManager } from 'react-native-fbsdk';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,15 +10,20 @@ import { SET_ID_LOCAL } from '../apollo/local/mutations';
 import { ICON_SIZE, ICON_OPACITY } from '../variables';
 import { MyAppText, Spinner } from './common';
 
-export default class LogoutButton extends Component {
-  constructor(props) {
+interface Props {}
+
+interface State {
+  loading: boolean;
+}
+export default class LogoutButton extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       loading: false,
     };
   }
 
-  startLogout = (setId) => {
+  startLogout = (setId: ({}) => void) => {
     // Render Spinner
     this.setState({ loading: true });
     // sign out of Firebase auth
@@ -29,7 +36,7 @@ export default class LogoutButton extends Component {
     this.setState({ loading: false });
   };
 
-  renderLogoutButton = (setId) => {
+  renderLogoutButton = (setId: ({}) => void) => {
     const { optionsText, buttons } = styles;
     const { loading } = this.state;
     if (loading) {
@@ -58,7 +65,12 @@ export default class LogoutButton extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  buttons: ViewStyle;
+  optionsText: TextStyle;
+}
+
+const styles = StyleSheet.create<Style>({
   buttons: {
     justifyContent: 'center',
     alignItems: 'center',

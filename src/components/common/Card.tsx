@@ -1,11 +1,22 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { SFC, ReactNode } from 'react';
+import { View, ViewStyle, StyleSheet } from 'react-native';
 
-const Card = ({ style, children }) => <View style={[styles.containerStyle, style]}>{children}</View>;
+interface Props {
+  style?: ViewStyle;
+  children: ReactNode;
+}
+
+interface Style {
+  containerStyle: ViewStyle;
+}
+
+const Card: SFC<Props> = ({ style, children }) => (
+  <View style={[styles.containerStyle, style]}>{children}</View>
+);
 
 // We put the styles in the component
 
-const styles = {
+const styles = StyleSheet.create<Style>({
   containerStyle: {
     borderWidth: 1,
     borderRadius: 7,
@@ -26,6 +37,6 @@ const styles = {
     backgroundColor: '#FFFFFF',
     marginBottom: 10,
   },
-};
+});
 
 export { Card };

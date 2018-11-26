@@ -1,8 +1,23 @@
-import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { SFC } from 'react';
+import {
+  View, TouchableOpacity, StyleSheet, ViewStyle, TextStyle,
+} from 'react-native';
 import { CirclePicture, MyAppText } from './common';
 
-const MatchListItem = ({
+interface Props {
+  name: string;
+  picture: string;
+  onPress: () => any;
+  lastMessage?: string;
+}
+
+interface Style {
+  itemContainer: ViewStyle;
+  textContainer: ViewStyle;
+  lastMessage: TextStyle;
+}
+
+const MatchListItem: SFC<Props> = ({
   name, picture, onPress, lastMessage = 'test',
 }) => {
   console.log('last message');
@@ -19,7 +34,7 @@ const MatchListItem = ({
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   itemContainer: {
     flex: 1,
     display: 'flex',

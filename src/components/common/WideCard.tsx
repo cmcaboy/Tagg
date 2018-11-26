@@ -1,14 +1,22 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { SFC, ReactNode } from 'react';
+import { View, StyleSheet, ViewStyle } from 'react-native';
 import { CARD_HEIGHT, CARD_FOOTER_HEIGHT, CARD_MARGIN } from '../../variables';
 
-const WideCard = ({ footer, children }) => {
+interface Props {
+  footer?: boolean;
+  children: ReactNode;
+}
+interface Style {
+  containerStyle: ViewStyle;
+}
+
+const WideCard: SFC<Props> = ({ footer, children }) => {
   const HEIGHT = footer ? CARD_HEIGHT + CARD_FOOTER_HEIGHT : CARD_HEIGHT;
   return <View style={[styles.containerStyle, { height: HEIGHT }]}>{children}</View>;
 };
 
 // We put the styles in the component
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   containerStyle: {
     borderWidth: 1,
 

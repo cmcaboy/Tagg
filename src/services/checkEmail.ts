@@ -1,6 +1,6 @@
 import { CHECK_EMAIL } from '../apollo/queries';
 
-export default async ({ email, client }) => {
+export default async ({ email, client }: { email: string; client: any }) => {
   // returns true if email exists in our database, false if it doesn't
   console.log('Attempting to Signup');
   console.log('email: ', email);

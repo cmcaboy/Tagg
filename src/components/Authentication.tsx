@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, StatusBar } from 'react-native';
+import {
+  StyleSheet, View, StatusBar, ViewStyle, StatusBarProps,
+} from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 // import { Root } from 'native-base';
 import { Spinner } from './common';
@@ -8,7 +10,22 @@ import MainNavigator from '../navigator';
 import { firebase } from '../firebase';
 import { STATUS_BAR_COLOR } from '../variables';
 
-function UdaciStatusBar({ backgroundColor, ...props }) {
+interface State {
+  loggedIn: boolean;
+}
+
+interface Props {}
+
+interface Style {
+  container: ViewStyle;
+  spinnerStyle: ViewStyle;
+}
+
+interface UdaciStatusBarProps extends StatusBarProps {
+  backgroundColor: string;
+}
+
+function UdaciStatusBar({ backgroundColor, ...props }: UdaciStatusBarProps) {
   return (
     <View style={{ backgroundColor, height: getStatusBarHeight() }}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
@@ -16,14 +33,14 @@ function UdaciStatusBar({ backgroundColor, ...props }) {
   );
 }
 
-class Authentication extends React.Component {
+class Authentication extends React.Component<Props, State> {
   state = {
     loggedIn: false,
   };
 
   componentWillMount() {
     // Firebase authentication details gathered from my firebase account.
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user: string) => {
       console.log('user: ', user);
       // console.log('firebase auth: ',firebase.auth());
       // console.log('firebase uid: ',firebase.auth().currentUser);
@@ -74,7 +91,7 @@ class Authentication extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   container: {
     flex: 1,
     backgroundColor: '#fff',

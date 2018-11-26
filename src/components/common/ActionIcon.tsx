@@ -1,8 +1,20 @@
-import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import React, { SFC } from 'react';
+import { TouchableOpacity, StyleSheet, ViewStyle } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const ActionIcon = ({
+interface Props {
+  onPress: () => void; // required
+  style?: ViewStyle;
+  name?: string;
+  color?: string;
+  size?: number;
+}
+
+interface Style {
+  iconStyle: ViewStyle;
+}
+
+const ActionIcon: SFC<Props> = ({
   onPress, style, name = 'done', color = 'green', size = 14,
 }) => {
   const { iconStyle } = styles;
@@ -13,7 +25,7 @@ const ActionIcon = ({
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   iconStyle: {
     alignSelf: 'center',
     paddingVertical: 10,

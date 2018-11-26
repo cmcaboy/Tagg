@@ -2,10 +2,20 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import gql from 'graphql-tag';
+import { ApolloClient } from 'apollo-client';
 import { firebase } from '../firebase';
 import uploadImage from '../firebase/uploadImage';
 import { DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from '../variables';
 import { Spinner } from '../components/common';
+
+interface Props {
+  startNewUser: (user: any) => void;
+  startSetId: (id: string | number) => void;
+  client: ApolloClient<any>;
+}
+interface State {
+  loading: boolean;
+}
 
 const GET_EMAIL_BY_TOKEN = gql`
   query user($id: String!) {
@@ -15,8 +25,8 @@ const GET_EMAIL_BY_TOKEN = gql`
   }
 `;
 
-class FBLoginButton extends Component {
-  constructor(props) {
+class FBLoginButton extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -41,7 +51,7 @@ class FBLoginButton extends Component {
             console.log('error: ', error);
             console.log('result: ', result);
             if (error) {
-              console.log('Login failed with error: ', error.message);
+              console.log('Login failed with error: ', error);
             } else if (result.isCancelled) {
               console.log('Login was cancelled');
             } else {
@@ -75,13 +85,13 @@ class FBLoginButton extends Component {
 
                 console.log('email: ', email);
 
-                const { data, error } = await query({
+                const { data, errors }: { data: any; errors?: any } = await query({
                   query: GET_EMAIL_BY_TOKEN,
                   variables: { id: email },
                   fetchPolicy: 'no-cache',
                 });
                 console.log('data: ', data);
-                console.log('error: ', error);
+                console.log('errors: ', errors);
                 isRegistered = data.user ? !!data.user.email : false;
                 console.log('isRegistered: ', isRegistered);
               } catch (e) {
@@ -110,7 +120,7 @@ class FBLoginButton extends Component {
 
                 const profilePic = await uploadImage(response.picture.data.url);
                 const ancillaryPics = await Promise.all(
-                  photos.data.map(async datum => await uploadImage(datum.source)),
+                  photos.data.map(async (datum: any) => await uploadImage(datum.source)),
                 );
 
                 // const ancillaryPics = [];

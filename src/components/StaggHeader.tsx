@@ -1,8 +1,22 @@
-import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { SFC } from 'react';
+import {
+  View, TouchableOpacity, StyleSheet, ViewStyle, TextStyle,
+} from 'react-native';
 import { MyAppText, HeaderCard } from './common';
 
-const StaggHeader = ({ flipNewDateModal, flipFilterModal }) => {
+interface Props {
+  flipNewDateModal: () => void;
+  flipFilterModal: () => void;
+}
+
+interface Style {
+  header: ViewStyle;
+  textStyle: TextStyle;
+  overRide: ViewStyle;
+  headerItem: ViewStyle;
+}
+
+const StaggHeader: SFC<Props> = ({ flipNewDateModal, flipFilterModal }) => {
   // Takes the following props
   // -------------------------
   // onFollow() = function executed when user clicks follow button
@@ -22,25 +36,21 @@ const StaggHeader = ({ flipNewDateModal, flipFilterModal }) => {
       <View style={styles.header}>
         <TouchableOpacity onPress={newDate} style={{ flex: 1 }} accessible={false}>
           <View style={[styles.headerItem]}>
-            <MyAppText style={styles.textStyle}>
-              {'New Date'}
-            </MyAppText>
+            <MyAppText style={styles.textStyle}>New Date</MyAppText>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={showFilter} style={{ flex: 1 }} accessible={false}>
           <View style={[styles.headerItem, { borderLeftWidth: 1, borderLeftColor: 'black' }]}>
-            <MyAppText style={styles.textStyle}>
-              {'Filter'}
-            </MyAppText>
+            <MyAppText style={styles.textStyle}>Filter</MyAppText>
           </View>
         </TouchableOpacity>
       </View>
     </HeaderCard>
   );
-}
+};
 
 // We put the styles in the component
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   header: {
     flex: 1,
     flexDirection: 'row',

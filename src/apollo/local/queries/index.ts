@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const GET_ID = gql`
-  query {
+  query getId {
     user @client {
       id
     }
@@ -9,7 +9,7 @@ export const GET_ID = gql`
 `;
 
 export const GET_AGE_PREFERENCE_LOCAL = gql`
-  query {
+  query getAgePreferenceLocal {
     user @client {
       minAgePreference
       maxAgePreference
@@ -17,14 +17,14 @@ export const GET_AGE_PREFERENCE_LOCAL = gql`
   }
 `;
 export const GET_DISTANCE_LOCAL = gql`
-  query {
+  query getDistanceLocal {
     user @client {
       distance
     }
   }
 `;
 export const GET_NOTIFICATIONS_LOCAL = gql`
-  query {
+  query getNotificationsLocal {
     user @client {
       sendNotifications
     }

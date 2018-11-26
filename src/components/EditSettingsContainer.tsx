@@ -6,8 +6,19 @@ import EditSettings from './EditSettings';
 import { GET_SETTINGS } from '../apollo/queries';
 import { GET_ID } from '../apollo/local/queries';
 import { PRIMARY_COLOR } from '../variables';
+import { getSettings, getSettingsVariables } from '../apollo/queries/__generated__/getSettings';
+import { getId } from '../apollo/queries/__generated__/getId';
 
-class EditSettingsContainer extends Component {
+interface Props {
+  hideNotifications: boolean;
+  refetchQueue?: () => any;
+}
+interface State {}
+
+class GetSettings extends Query<getSettings, getSettingsVariables> {}
+class GetID extends Query<getId, {}> {}
+
+class EditSettingsContainer extends Component<Props, State> {
   static navigationOptions = () => ({
     title: 'Settings',
     headerRight: <View />,
@@ -24,7 +35,7 @@ class EditSettingsContainer extends Component {
     const { hideNotifications, refetchQueue } = this.props;
 
     return (
-      <Query query={GET_ID}>
+      <GetID query={GET_ID}>
         {({ loading, error, data }) => {
           // console.log('local data: ',data);
           // console.log('local error: ',error);
@@ -34,7 +45,7 @@ class EditSettingsContainer extends Component {
           const { id } = data.user;
 
           return (
-            <Query query={GET_SETTINGS} variables={{ id }}>
+            <GetSettings query={GET_SETTINGS} variables={{ id }}>
               {({
                 loading, error, data, refetch,
               }) => {
@@ -63,10 +74,10 @@ class EditSettingsContainer extends Component {
                   />
                 );
               }}
-            </Query>
+            </GetSettings>
           );
         }}
-      </Query>
+      </GetID>
     );
   }
 }

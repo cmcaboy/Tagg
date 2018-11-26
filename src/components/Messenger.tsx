@@ -1,10 +1,40 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import {
+  View, StyleSheet, ViewStyle, TextStyle,
+} from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import { GET_MESSAGES } from '../apollo/queries';
 import { getCurrentTime } from '../format';
 
-class Messenger extends Component {
+interface Params {}
+
+interface Props {
+  subscribeToNewMessages: () => void;
+  newMessage: any;
+  pic: string;
+  name: string;
+  matchId: string;
+  otherId: string;
+  fetchMoreMessages: () => void;
+  id: string;
+  messages: any[];
+  cursor: number;
+  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
+}
+
+interface State {
+  unsubscribe: () => void;
+}
+
+class Messenger extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      unsubscribe: () => null,
+    };
+  }
+
   // While in the chat window, listen for chat updates
   componentDidMount = () => {
     const { subscribeToNewMessages } = this.props;
@@ -15,7 +45,7 @@ class Messenger extends Component {
   componentWillUnmount = () => this.unsubscribe();
 
   // This function is called when a new message is sent.
-  sendNewMessage = (messages) => {
+  sendNewMessage = (messages: any[]) => {
     console.log('in sendNewMessage');
     console.log('messages: ', messages);
 
@@ -59,7 +89,7 @@ class Messenger extends Component {
         },
       },
       // function is used to update our cache with the mutation response
-      update: (store, data) => {
+      update: (store: any, data: any) => {
         // Read the cache
         const storeData = store.readQuery({
           query: GET_MESSAGES,
@@ -98,14 +128,22 @@ class Messenger extends Component {
           // The following 3 variables relate to pagination.
           loadEarlier={!!cursor}
           onLoadEarlier={() => fetchMoreMessages()}
-          isLoadEarlier
+          isLoadingEarlier
+          imageStyle={styles.imageStyle as ViewStyle}
         />
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  messengerContainer: ViewStyle;
+  textHeader: TextStyle;
+  headerViewStyle: ViewStyle;
+  imageStyle: ViewStyle;
+}
+
+const styles = StyleSheet.create<Style>({
   messengerContainer: {
     flex: 1,
     alignItems: 'stretch',
@@ -125,6 +163,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 5,
   },
+  imageStyle: {},
 });
 
 export default Messenger;

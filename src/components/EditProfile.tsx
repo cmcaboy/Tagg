@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, KeyboardAvoidingView,
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  KeyboardAvoidingView,
+  ViewStyle,
+  TextStyle,
+  ImageStyle,
 } from 'react-native';
 import { Query, Mutation } from 'react-apollo';
 import {
@@ -23,8 +30,41 @@ import {
   SET_EMAIL,
 } from '../apollo/mutations';
 import FakeButton from './FakeButton';
+import { setPicsVariables, setPics } from '../apollo/mutations/__generated__/setPics';
+import { setEmailVariables, setEmail } from '../apollo/mutations/__generated__/setEmail';
+import { setAge, setAgeVariables } from '../apollo/mutations/__generated__/setAge';
+import { setSchool, setSchoolVariables } from '../apollo/mutations/__generated__/setSchool';
+import { setWork, setWorkVariables } from '../apollo/mutations/__generated__/setWork';
+import { setDescriptionVariables, setDescription } from '../apollo/mutations/__generated__/setDescription';
+import { getEditProfile, getEditProfileVariables, getEditProfile_user } from '../apollo/queries/__generated__/getEditProfile';
+import { setName, setNameVariables } from '../apollo/mutations/__generated__/setName';
 
-class EditProfile extends Component {
+
+// setPics
+class SetPics extends Mutation<setPics, setPicsVariables> {};
+class SetName extends Mutation<setName, setNameVariables> {};
+class SetEmail extends Mutation<setEmail, setEmailVariables> {};
+class SetAge extends Mutation<setAge, setAgeVariables> {};
+class SetSchool extends Mutation<setSchool, setSchoolVariables> {};
+class SetWork extends Mutation<setWork, setWorkVariables> {};
+class SetDescription extends Mutation<setDescription, setDescriptionVariables> {};
+class GetEditProfile extends Query<getEditProfile, getEditProfileVariables> {};
+
+interface UserEditProfile extends getEditProfile_user {
+  id: string | null;
+  pics: (string | null)[] | null;
+  name: string | null;
+  age: number | null;
+  school: string | null;
+  work: string | null;
+  description: string | null;
+  email: string | null;
+}
+
+interface State {};
+interface Props {};
+
+class EditProfile extends Component<Props, State> {
   static navigationOptions = () => ({
     title: 'Edit Profile',
     headerRight: <View />,
@@ -45,30 +85,30 @@ class EditProfile extends Component {
 
   renderContent = ({
     name, age, school, work, description, pics = [], id, email,
-  }) => {
+  }: UserEditProfile)  => {
     console.log('get profile component');
     return (
       <ScrollView contentContainerStyle={styles.settingsContainer}>
         <KeyboardAvoidingView behavior="position">
           <Card style={{ padding: 2 }}>
-            <Mutation mutation={SET_PICS}>
+            <SetPics mutation={SET_PICS}>
               {(changePics) => {
-                const startChangePics = newPics => changePics({ variables: { id, pics: newPics } });
+                const startChangePics = ( newPics: string[] ) => changePics({ variables: { id, pics: newPics } });
                 return <PhotoSelector urlList={pics} startChangePics={startChangePics} />;
               }}
-            </Mutation>
+            </SetPics>
           </Card>
           <Text style={styles.hint}>{PHOTO_HINT}</Text>
           <Card style={{ padding: 0 }}>
-            <Mutation mutation={SET_NAME}>
+            <SetName mutation={SET_NAME}>
               {(changeName) => {
-                const startChangeName = newName => changeName({ variables: { id, name: newName } });
+                const startChangeName = ( newName: string ) => changeName({ variables: { id, name: newName } });
                 return <CondInput field="Name" value={name} updateValue={startChangeName} />;
               }}
-            </Mutation>
-            <Mutation mutation={SET_EMAIL}>
+            </SetName>
+            <SetEmail mutation={SET_EMAIL}>
               {(changeEmail) => {
-                const startChangeEmail = newEmail => changeEmail({ variables: { id, email: newEmail } });
+                const startChangeEmail = ( newEmail: string ) => changeEmail({ variables: { id, email: newEmail } });
                 return (
                   <CondInput
                     field="Email"
@@ -78,13 +118,13 @@ class EditProfile extends Component {
                   />
                 );
               }}
-            </Mutation>
-            <Mutation mutation={SET_AGE}>
+            </SetEmail>
+            <SetAge mutation={SET_AGE}>
               {(changeAge) => {
-                const startChangeAge = newAge => changeAge({ variables: { id, age: newAge } });
+                const startChangeAge = ( newAge: number ) => changeAge({ variables: { id, age: newAge } });
                 return <CondInput field="Age" value={age} updateValue={startChangeAge} />;
               }}
-            </Mutation>
+            </SetAge>
             {/*
             <CondInput
               field="Gender"
@@ -92,23 +132,23 @@ class EditProfile extends Component {
               updateValue={this.props.startChangeGender}
             />
             */}
-            <Mutation mutation={SET_SCHOOL}>
+            <SetSchool mutation={SET_SCHOOL}>
               {(changeSchool) => {
-                const startChangeSchool = newSchool => changeSchool({ variables: { id, school: newSchool } });
+                const startChangeSchool = ( newSchool: string ) => changeSchool({ variables: { id, school: newSchool } });
                 return (
                   <CondInput field="Education" value={school} updateValue={startChangeSchool} />
                 );
               }}
-            </Mutation>
-            <Mutation mutation={SET_WORK}>
+            </SetSchool>
+            <SetWork mutation={SET_WORK}>
               {(changeWork) => {
-                const startChangeWork = newWork => changeWork({ variables: { id, work: newWork } });
+                const startChangeWork = ( newWork: string ) => changeWork({ variables: { id, work: newWork } });
                 return <CondInput field="Work" value={work} updateValue={startChangeWork} />;
               }}
-            </Mutation>
-            <Mutation mutation={SET_DESCRIPTION}>
+            </SetWork>
+            <SetDescription mutation={SET_DESCRIPTION}>
               {(changeDescription) => {
-                const startChangeDescription = newDescription => changeDescription({
+                const startChangeDescription = ( newDescription: string ) => changeDescription({
                   variables: { id, description: newDescription },
                 });
                 return (
@@ -120,7 +160,7 @@ class EditProfile extends Component {
                   />
                 );
               }}
-            </Mutation>
+            </SetDescription>
           </Card>
 
           {/*
@@ -149,7 +189,7 @@ class EditProfile extends Component {
           const { id } = data.user;
 
           return (
-            <Query query={GET_EDIT_PROFILE} variables={{ id }}>
+            <GetEditProfile query={GET_EDIT_PROFILE} variables={{ id }}>
               {({ loading, error, data }) => {
                 // console.log('data: ',data);
                 // console.log('error: ',error);
@@ -158,7 +198,7 @@ class EditProfile extends Component {
                 if (error) return <ErrorMessage error={error.message} />;
                 return this.renderContent(data.user);
               }}
-            </Query>
+            </GetEditProfile>
           );
         }}
       </Query>
@@ -166,7 +206,17 @@ class EditProfile extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  settingsContainer: ViewStyle;
+  textInputStyle: TextStyle;
+  cardContainer: ViewStyle;
+  cardSection: ViewStyle;
+  editView: ViewStyle;
+  img: ImageStyle;
+  spinner: ImageStyle;
+  hint: TextStyle;
+}
+const styles = StyleSheet.create<Style>({
   settingsContainer: {
     // justifyContent: 'space-between',
     // alignItems: 'center',

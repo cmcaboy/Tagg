@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const GET_DATES = gql`
-  query user($id: String!) {
+  query getDates($id: String) {
     user(id: $id) {
       id
       dateRequests {
@@ -40,7 +40,7 @@ export const GET_BIDS = gql`
 `;
 
 export const GET_PROFILE = gql`
-  query user($id: String!) {
+  query getProfile($id: String) {
     user(id: $id) {
       id
       name
@@ -52,7 +52,7 @@ export const GET_PROFILE = gql`
 `;
 
 export const GET_USER_PROFILE = gql`
-  query user($id: String!, $hostId: String) {
+  query getUserProfile($id: String, $hostId: String) {
     user(id: $id, hostId: $hostId) {
       id
       name
@@ -69,7 +69,7 @@ export const GET_USER_PROFILE = gql`
 
 // I may expand this later to include date requests for queue users
 export const GET_QUEUE = gql`
-  query user($id: String!) {
+  query getQueue($id: String) {
     user(id: $id) {
       id
       token
@@ -97,8 +97,8 @@ export const GET_QUEUE = gql`
 
 // Should I return an id here?
 export const MORE_QUEUE = gql`
-  query moreQueue($id: String!, $followerDisplay: String, $cursor: Float!) {
-    moreQueue(id: $id, followerDisplay: $followerDisplay, cursor: $cursor) {
+  query moreQueue($followerDisplay: String, $cursor: Float!) {
+    moreQueue(followerDisplay: $followerDisplay, cursor: $cursor) {
       id
       cursor
       list {
@@ -120,7 +120,7 @@ export const MORE_QUEUE = gql`
 `;
 
 export const GET_MATCHES = gql`
-  query user($id: String!) {
+  query getMatches($id: String) {
     user(id: $id) {
       id
       name
@@ -159,7 +159,7 @@ export const GET_MATCHES = gql`
 `;
 
 export const GET_MESSAGES = gql`
-  query messages($id: String!) {
+  query getMessages($id: String!) {
     messages(id: $id) {
       id
       cursor
@@ -171,32 +171,6 @@ export const GET_MESSAGES = gql`
         avatar
         order
         uid
-      }
-    }
-  }
-`;
-
-export const GET_MESSAGES_OLD = gql`
-  query user($id: String!, $otherId: String) {
-    user(id: $id) {
-      id
-      name
-      work
-      school
-      pics
-      matches(otherId: $otherId) {
-        messages {
-          cursor
-          list {
-            name
-            text
-            createdAt
-            avatar
-            order
-            uid
-            _id
-          }
-        }
       }
     }
   }
@@ -221,7 +195,7 @@ export const MORE_MESSAGES = gql`
 `;
 
 export const GET_SETTINGS = gql`
-  query user($id: String!) {
+  query getSettings($id: String) {
     user(id: $id) {
       id
       minAgePreference
@@ -234,7 +208,7 @@ export const GET_SETTINGS = gql`
 `;
 
 export const GET_EDIT_PROFILE = gql`
-  query user($id: String!) {
+  query getEditProfile($id: String) {
     user(id: $id) {
       id
       pics
@@ -249,7 +223,7 @@ export const GET_EDIT_PROFILE = gql`
 `;
 
 export const CHECK_EMAIL = gql`
-  query user($id: String!) {
+  query checkEmail($id: String) {
     user(id: $id) {
       id
       email

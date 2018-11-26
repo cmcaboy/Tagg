@@ -5,13 +5,15 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  ViewStyle,
+  ImageStyle,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import uploadImage from '../firebase/uploadImage';
 import { Spinner } from './common';
 import { NUM_PHOTOS, PHOTO_ADD_URL } from '../variables';
 
-const fillBlanks = (u) => {
+const fillBlanks = (u: string[]) => {
   const ul = [];
   for (let i = 0; i < NUM_PHOTOS; i += 1) {
     if (u[i]) {
@@ -23,8 +25,19 @@ const fillBlanks = (u) => {
   return ul;
 };
 
-class PhotoSelector extends React.Component {
-  constructor(props) {
+interface Props {
+  urlList: string[];
+  startChangePics: (pics: string[]) => any;
+}
+
+interface State {
+  isLoading: boolean[];
+  isSelected: boolean[];
+  urlList: string[];
+}
+
+class PhotoSelector extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     const urlList = fillBlanks(this.props.urlList);
@@ -36,7 +49,7 @@ class PhotoSelector extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: any) {
     // console.log('willReceiveProps: ',nextProps);
     const urlList = fillBlanks(nextProps.urlList);
     if (urlList) {
@@ -45,7 +58,7 @@ class PhotoSelector extends React.Component {
     }
   }
 
-  switchPicPosition = (a, b) => {
+  switchPicPosition = (a: number, b: number) => {
     const { urlList } = this.state;
     const { startChangePics } = this.props;
     const temp = urlList.map((item, i) => {
@@ -61,7 +74,7 @@ class PhotoSelector extends React.Component {
     startChangePics(temp);
   }
 
-  pickImage = (i) => {
+  pickImage = (i: number) => {
     console.log('pickImage i: ', i);
     this.setState(prevState => ({
       isLoading: prevState.isLoading.map((item, index) => (
@@ -133,8 +146,7 @@ class PhotoSelector extends React.Component {
     this.setState({ isLoading: urlList.map(item => false) });
   }
 
-  async selectImage(index) {
-    const { isSelected } = this.state;
+  async selectImage(index: number) {
     await this.setState(prevState => ({ 
       isSelected: prevState.isSelected.map((k, i) => (i === index ? !k : k)),
     }));
@@ -142,7 +154,7 @@ class PhotoSelector extends React.Component {
     // console.log('num selected: ', this.state.isSelected.filter(item => item === true))
     if (this.state.isSelected.filter(item => item === true).length > 1) {
       // console.log('both selected');
-      const a = [];
+      const a: any[] = [];
       this.state.isSelected.forEach((item, ind) => {
         if (item === true) {
           a.push(ind);
@@ -170,7 +182,7 @@ class PhotoSelector extends React.Component {
         {urlList.map((item, index) => {
           // console.log('item: ', item);
           return isLoading[index] ? (
-            <Spinner key={index} size="small" style={styles.photo} />
+            <Spinner key={index} size="small" style={styles.photo as ViewStyle} />
           ) : (
             <TouchableOpacity
               key={index}
@@ -183,7 +195,7 @@ class PhotoSelector extends React.Component {
             >
               {console.log('item: ', item)}
               <Image
-                style={[styles.photo, isSelected[index] ? styles.highlighted : styles.notHightlighted]}
+                style={[styles.photo, isSelected[index] ? styles.highlighted : styles.notHighlighted]}
                 source={{ uri: item || PHOTO_ADD_URL }}
               />
             </TouchableOpacity>
@@ -194,7 +206,14 @@ class PhotoSelector extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  container: ViewStyle;
+  photo: ImageStyle;
+  highlighted: ImageStyle;
+  notHighlighted: ImageStyle;
+}
+
+const styles = StyleSheet.create<Style>({
   container: {
     flex: 1,
     flexDirection: 'row',

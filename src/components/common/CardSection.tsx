@@ -1,9 +1,19 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { SFC, ReactNode } from 'react';
+import { View, ViewStyle, StyleSheet } from 'react-native';
 
-const CardSection = ({ style, children }) => <View style={[styles.containerStyle, style]}>{children}</View>;
+interface Props {
+  style?: ViewStyle;
+  children: ReactNode;
+}
 
-const styles = {
+interface Style {
+  containerStyle: ViewStyle;
+}
+const CardSection: SFC<Props> = ({ style, children }) => (
+  <View style={[styles.containerStyle, style]}>{children}</View>
+);
+
+const styles = StyleSheet.create<Style>({
   containerStyle: {
     borderBottomWidth: 1,
     padding: 5,
@@ -13,6 +23,6 @@ const styles = {
     borderColor: '#ddd',
     position: 'relative',
   },
-};
+});
 
 export { CardSection };

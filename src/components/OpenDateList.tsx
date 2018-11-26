@@ -1,16 +1,35 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View, TouchableOpacity, StyleSheet, TextStyle, ViewStyle,
+} from 'react-native';
 import {
   List, ListItem, Container, Content,
 } from 'native-base';
 import { Query } from 'react-apollo';
+import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import { formatDate, formatDescription } from '../format';
 import {
   MyAppText, CirclePicture, Spinner, ErrorMessage,
 } from './common';
 import { GET_DATES } from '../apollo/queries';
+import { getDates, getDatesVariables } from '../apollo/queries/__generated__/getDates';
 
-class OpenDateList extends React.Component {
+interface Params {
+  otherId: string;
+  otherName: string;
+  id: string;
+  otherPic: string;
+}
+
+class GetDates extends Query<getDates, getDatesVariables> {}
+
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
+}
+
+interface State {}
+
+class OpenDateList extends React.Component<Props, State> {
   static navigationOptions = ({
     navigation: {
       navigate,
@@ -20,6 +39,8 @@ class OpenDateList extends React.Component {
         },
       },
     },
+  }: {
+  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
   }) => ({
     // title: `${otherName}`,
     headerTitle: (
@@ -62,30 +83,32 @@ class OpenDateList extends React.Component {
       <Container>
         <Content>
           <List>
-            <Query query={GET_DATES} variables={{ id: otherId }}>
+            <GetDates query={GET_DATES} variables={{ id: otherId }}>
               {({
                 data, loading, error, refetch,
               }) => {
                 if (loading) return <Spinner />;
                 if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
                 console.log('data.user.dateRequests.list: ', data.user.dateRequests.list);
-                return data.user.dateRequests.list.filter(date => date.open).map(date => (
-                  <ListItem
-                    key={date.id}
-                    onPress={() => navigate('BidDate', {
-                      date,
-                      ...params,
-                    })
-                    }
-                  >
-                    <View style={styles.listItemText}>
-                      <MyAppText>{formatDate(date.datetimeOfDate)}</MyAppText>
-                      <MyAppText>{formatDescription(date.description)}</MyAppText>
-                    </View>
-                  </ListItem>
-                ));
+                return data.user.dateRequests.list
+                  .filter((date: any) => date.open)
+                  .map((date: any) => (
+                    <ListItem
+                      key={date.id}
+                      onPress={() => navigate('BidDate', {
+                        date,
+                        ...params,
+                      })
+                      }
+                    >
+                      <View style={styles.listItemText}>
+                        <MyAppText>{formatDate(date.datetimeOfDate)}</MyAppText>
+                        <MyAppText>{formatDescription(date.description)}</MyAppText>
+                      </View>
+                    </ListItem>
+                  ));
               }}
-            </Query>
+            </GetDates>
           </List>
         </Content>
       </Container>
@@ -93,8 +116,14 @@ class OpenDateList extends React.Component {
   }
 }
 
+interface Style {
+  textHeader: TextStyle;
+  headerViewStyle: ViewStyle;
+  listItemText: TextStyle;
+}
+
 // We put the styles in the component
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   textHeader: {
     alignSelf: 'center',
     textAlign: 'center',

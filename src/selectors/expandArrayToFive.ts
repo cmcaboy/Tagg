@@ -1,6 +1,6 @@
 import { NUM_PHOTOS, PHOTO_ADD_URL } from '../variables';
 
-export default (a) => {
+export default (a: string[]) => {
   const b = [];
   if (a.length >= NUM_PHOTOS) {
     return a;

@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import {
+  View, StyleSheet, ViewStyle, TextStyle,
+} from 'react-native';
 import {
   List,
   ListItem,
@@ -14,20 +16,27 @@ import {
 } from 'native-base';
 import { Mutation, Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import { NavigationScreenProps } from 'react-navigation';
 import EmptyList from './EmptyList';
 import { MyAppText, Spinner, ErrorMessage } from './common';
 import { CHOOSE_WINNER } from '../apollo/mutations';
 import { GET_BIDS } from '../apollo/queries';
 import { formatDate, formatDescription } from '../format';
+import { otherBids, otherBidsVariables } from '../apollo/queries/__generated__/otherBids';
 
-class BidList extends React.Component {
-  static navigationOptions = ({
-    navigation: {
-      state: {
-        params: { datetimeOfDate },
-      },
-    },
-  }) => ({
+interface State {}
+
+interface Props extends NavigationScreenProps<Params> {}
+
+interface Params {
+  dateId: string;
+  id: string;
+}
+
+class GetBids extends Query<otherBids, otherBidsVariables> {};
+
+class BidList extends React.Component<Props, State> {
+  static navigationOptions = () => ({
     // title: `${formatDate(datetimeOfDate)}`,
     headerTitle: (
       <View style={styles.headerViewStyle}>
@@ -57,7 +66,7 @@ class BidList extends React.Component {
     return (
       <Container>
         <Content>
-          <Query query={GET_BIDS} variables={{ id: dateId }}>
+          <GetBids query={GET_BIDS} variables={{ id: dateId }}>
             {({
               data, loading, error, refetch,
             }) => {
@@ -223,15 +232,20 @@ class BidList extends React.Component {
                 </List>
               ));
             }}
-          </Query>
+          </GetBids>
         </Content>
       </Container>
     );
   }
 }
 
+interface Style {
+  textHeader: TextStyle;
+  headerViewStyle: ViewStyle;
+}
+
 // We put the styles in the component
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   textHeader: {
     alignSelf: 'center',
     textAlign: 'center',

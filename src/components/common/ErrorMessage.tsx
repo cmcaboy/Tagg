@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import {
+  View, StyleSheet, Dimensions, ViewStyle, TextStyle,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, Text } from 'native-base';
 import { MyAppText } from './MyAppText';
@@ -8,8 +10,16 @@ import LogoutButton from '../LogoutButton';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-class ErrorMessage extends React.Component {
-  constructor(props) {
+interface Props {
+  refetch?: () => any | null;
+  error: string;
+}
+interface State {
+  loading: boolean;
+}
+
+class ErrorMessage extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       loading: false,
@@ -30,7 +40,7 @@ class ErrorMessage extends React.Component {
       return <Spinner />;
     }
     return (
-      <Button block onPress={this.attemptRefresh} style={styles.refreshButton}>
+      <Button block onPress={this.attemptRefresh} style={styles.refreshButton as ViewStyle}>
         <Text>Refresh</Text>
       </Button>
     );
@@ -51,7 +61,13 @@ class ErrorMessage extends React.Component {
 }
 // const ErrorMessage = ({ error, refetch = null }) => (
 
-const styles = StyleSheet.create({
+interface Style {
+  errorStyle: ViewStyle;
+  refreshButton: ViewStyle;
+  noProspectsButton: ViewStyle;
+  noProspectsText: TextStyle;
+}
+const styles = StyleSheet.create<Style>({
   errorStyle: {
     flex: 1,
     justifyContent: 'center',

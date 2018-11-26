@@ -1,10 +1,21 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { ReactNode, SFC } from 'react';
+import { View, StyleSheet, ViewStyle } from 'react-native';
 
-const HeaderCard = ({ style, children }) => <View style={[styles.containerStyle, style]}>{children}</View>;
+interface Props {
+  style: ViewStyle;
+  children: ReactNode;
+}
+
+interface Style {
+  containerStyle: ViewStyle;
+}
+
+const HeaderCard: SFC<Props> = ({ style, children }) => (
+  <View style={[styles.containerStyle, style]}>{children}</View>
+);
 
 // We put the styles in the component
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   containerStyle: {
     borderWidth: 1,
     borderRadius: 7,

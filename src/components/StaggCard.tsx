@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { SFC } from 'react';
 import {
-  View, Image, TouchableOpacity, StyleSheet,
+  View, Image, TouchableOpacity, StyleSheet, ViewStyle, TextStyle,
 } from 'react-native';
+import { NavigationScreenProp } from 'react-navigation';
 import DateOpenButton from './DateOpenButton';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -11,7 +12,26 @@ import {
 import { WideCard, MyAppText, FollowButton } from './common';
 import { PICTURE_WIDTH } from '../variables';
 
-const StaggCard = ({
+interface Props {
+  hostId: string;
+  navigation: NavigationScreenProp<any, any>;
+  user: any;
+}
+
+interface Style {
+  bodyStyle: ViewStyle;
+  rightCard: ViewStyle;
+  description: ViewStyle;
+  userInfo: ViewStyle;
+  subHeading: ViewStyle;
+  nameText: TextStyle;
+  ageText: TextStyle;
+  distance: TextStyle;
+  iconText: TextStyle;
+  schoolText: TextStyle;
+}
+
+const StaggCard: SFC<Props> = ({
   hostId,
   navigation,
   user: {
@@ -79,7 +99,7 @@ const StaggCard = ({
 };
 
 // We put the styles in the component
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   bodyStyle: {
     flexDirection: 'row',
     justifyContent: 'flex-start',

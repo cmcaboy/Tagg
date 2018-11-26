@@ -1,9 +1,25 @@
-import React from 'react';
-import { Image, StyleSheet, Dimensions } from 'react-native';
+import React, { SFC } from 'react';
+import {
+  Image, StyleSheet, Dimensions, ViewStyle,
+} from 'react-native';
 import { PLACEHOLDER_PHOTO } from '../../variables';
 
+interface Props {
+  imageURL?: string;
+  picSize?: string;
+  auto?: boolean;
+}
+
+interface Style {
+  pictureStyle: ViewStyle;
+}
+
 // picSize can be 'large', 'small', or 'mini'
-const CirclePicture = ({ imageURL = PLACEHOLDER_PHOTO, picSize = 'large', auto = false }) => {
+const CirclePicture: SFC<Props> = ({
+  imageURL = PLACEHOLDER_PHOTO,
+  picSize = 'large',
+  auto = false,
+}) => {
   // pic
   let HEIGHT = 0;
   let BORDER_RADIUS = 0;
@@ -43,7 +59,7 @@ const CirclePicture = ({ imageURL = PLACEHOLDER_PHOTO, picSize = 'large', auto =
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   pictureStyle: {
     // borderColor: 'black',
     // borderWidth: 2

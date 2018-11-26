@@ -13,10 +13,19 @@
     "@babel/plugin-external-helpers": "^7.0.0",
     "@babel/preset-env": "^7.0.0-beta.40",
     "@babel/runtime": "^7.1.2",
+    "@types/faker": "^4.1.4",
     "@types/jest": "^23.3.9",
+    "@types/ptomasroos__react-native-multi-slider": "^0.0.1",
     "@types/react": "^16.7.7",
     "@types/react-native": "^0.57.13",
+    "@types/react-native-datepicker": "^1.6.6",
+    "@types/react-native-fbsdk": "^0.6.2",
+    "@types/react-native-modalbox": "^1.4.7",
+    "@types/react-native-status-bar-height": "^2.1.0",
+    "@types/react-native-vector-icons": "^4.6.4",
+    "@types/react-navigation": "^2.13.4",
     "@types/react-test-renderer": "^16.0.3",
+    "@types/uuid": "^3.4.4",
     "apollo": "^2.1.3",
     "babel-eslint": "^8.2.6",
     "babel-plugin-transform-remove-console": "^6.9.4",
@@ -27,15 +36,22 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
     "metro-react-native-babel-preset": "^0.48.1",
+    "react-addons-test-utils": "^15.6.2",
     "react-native-typescript-transformer": "^1.2.10",
     "react-test-renderer": "16.0.0",
     "schedule": "0.4.0",
     "ts-jest": "^23.10.5",
+    "tslint": "^5.11.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^3.6.0",
+    "tslint-react-recommended": "^1.0.15",
     "typescript": "^3.1.6"
   },
   "resolutions": {
     "@babel/core": "^7.0.0-beta.40",
-    "babel-core": "7.0.0-bridge.0"
+    "babel-core": "7.0.0-bridge.0",
+    "apollo": "^2.1.3",
+    "graphql": "14.0.0"
   },
   "scripts": {
     "build-android-prod": "export ENVFILE=.env.prod && cd android && ./gradlew assembleRelease && cd ..",
@@ -49,7 +65,15 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "test": "node node_modules/jest/bin/jest.js --watch",
-    "build-funcs": "babel firebaseFunctions --out-dir functions --presets=es2015 --copy-files --ignore firebaseFunctions/node_modules"
+    "build-funcs": "babel firebaseFunctions --out-dir functions --presets=es2015 --copy-files --ignore firebaseFunctions/node_modules",
+    "lint": "tslint -p \".\" -t stylish",
+    "gql:local": "node server/dist/index.js",
+    "fetch:schema": "apollo service:download --endpoint=http://localhost:4000/graphql",
+    "gentypes:local": "apollo client:codegen --target=typescript --localSchemaFile=\"./schema.json\" --queries=\"./src/apollo/local/**/*.ts\"",
+    "gentypes:queries": "apollo client:codegen --target=typescript --localSchemaFile=\"./schema.json\" --queries=\"./src/apollo/queries/*.ts\"",
+    "gentypes:mutations": "apollo client:codegen --target=typescript --localSchemaFile=\"./schema.json\" --queries=\"./src/apollo/mutations/index.ts\"",
+    "gentypes:subscriptions": "apollo client:codegen --target=typescript --localSchemaFile=\"./schema.json\" --queries=\"./src/apollo/subscriptions/index.ts\"",
+    "gentypes:apollo": "echo 'Make sure you have your local graphql server running!' && yarn run fetch:schema && yarn run gentypes:queries && yarn run gentypes:mutations && yarn run gentypes:subscriptions"
   },
   "jest": {
     "preset": "react-native",
@@ -60,7 +84,8 @@
     ],
     "transform": {
       "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
-      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js",
+      "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "testPathIgnorePatterns": [
@@ -86,7 +111,7 @@
     "firebase": "^4.9.0",
     "firebase-admin": "^5.9.0",
     "fs": "^0.0.1-security",
-    "graphql": "^0.13.2",
+    "graphql": "14.0.0",
     "graphql-tag": "^2.9.2",
     "hawk": "^7.0.7",
     "moment": "^2.22.1",
@@ -105,7 +130,7 @@
     "react-native-fast-image": "^4.0.14",
     "react-native-fbsdk": "^0.8.0",
     "react-native-firebase": "5.1.0",
-    "react-native-gifted-chat": "^0.3.0",
+    "react-native-gifted-chat": "0.5.0",
     "react-native-image-picker": "^0.26.10",
     "react-native-keyboard-aware-scroll-view": "^0.7.4",
     "react-native-keyboard-spacer": "^0.4.1",

@@ -1,70 +1,98 @@
 import React from 'react';
 import {
-  View, TouchableOpacity, StyleSheet, KeyboardAvoidingView,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  KeyboardAvoidingView,
+  TextStyle,
+  ViewStyle,
 } from 'react-native';
 import { Mutation } from 'react-apollo';
 import {
-  Container, Content, Form, Input, Label, Item, Button,
+  Container, Content, Form, Input, Label, Item, Button, NativeBase,
 } from 'native-base';
+import { NavigationScreenProps } from 'react-navigation';
 import { MyAppText, CirclePicture } from './common';
 import toastMessage from '../services/toastMessage';
 import { formatDate } from '../format';
 import { BID } from '../apollo/mutations';
+import { bid, bidVariables } from '../apollo/mutations/__generated__/bid';
 
-// const GET_DATE = gql`
-// query date($id: String!) {
-//     date(id: $id) {
-//         id
-//         datetimeOfDate
-//         description
-//     }
-//   }
-// `;
+// Steps to incorporate types
+// 1) Define State and Props interfaces
+// 2) define class for query or mutation
+//    extend mutation/query class with query/mutation types
+// 3) replace Query or Mutation component with new class
+// 4) Make Params interface with navigation params
+// 5) Change navigation destructuring variables
+// 6) Make Style interface and inserted it into StyleSheet
 
-class BidDate extends React.Component {
+interface State {
+  location: string;
+  description: string;
+}
+
+interface Params {
+  otherName: string;
+  otherId: string;
+  id: string;
+  otherPic: string;
+  datetimeOfDate?: string;
+  description?: string;
+  date?: any;
+}
+
+class BidMutation extends Mutation<bid, bidVariables> {}
+
+interface Props extends NavigationScreenProps<Params> {
+  date: any;
+}
+
+class BidDate extends React.Component<Props, State> {
   static navigationOptions = ({
-    navigation: {
-      navigate,
-      state: {
-        params: {
-          otherName, otherId, id, otherPic,
-        },
+    navigation,
+    navigation: { navigate },
+  }: NavigationScreenProps<Params>) => {
+    // typings for react navigation do not work unless I use this format
+    const otherName = navigation.state.params ? navigation.state.params.otherName : '';
+    const otherId = navigation.state.params ? navigation.state.params.otherId : '';
+    const id = navigation.state.params ? navigation.state.params.id : '';
+    const otherPic = navigation.state.params ? navigation.state.params.otherPic : '';
+    return {
+      // title: `${otherName}`,
+      headerTitle: (
+        <View style={styles.headerViewStyle}>
+          <TouchableOpacity
+            onPress={() => navigate('UserProfile', {
+              id: otherId,
+              name: otherName,
+              hostId: id,
+            })
+            }
+          >
+            <CirclePicture imageURL={otherPic} picSize="mini" />
+          </TouchableOpacity>
+          <MyAppText style={styles.textHeader}>{`Ask ${otherName} out!`}</MyAppText>
+          <View style={{ width: 30 }} />
+        </View>
+      ),
+      // header: {
+      //   style: {
+      //     paddingTop: 0,
+      //     height: 40,
+      //   },
+      // },
+      headerTitleStyle: {
+        alignSelf: 'center',
+        textAlign: 'center',
+        fontWeight: 'normal',
+        fontSize: 22,
+        color: 'black',
       },
-    },
-  }) => ({
-    // title: `${otherName}`,
-    headerTitle: (
-      <View style={styles.headerViewStyle}>
-        <TouchableOpacity
-          onPress={() => navigate('UserProfile', {
-            id: otherId,
-            name: otherName,
-            hostId: id,
-          })
-          }
-        >
-          <CirclePicture imageURL={otherPic} picSize="mini" />
-        </TouchableOpacity>
-        <MyAppText style={styles.textHeader}>{`Ask ${otherName} out!`}</MyAppText>
-        <View style={{ width: 30 }} />
-      </View>
-    ),
-    // header: {
-    //   style: {
-    //     paddingTop: 0,
-    //     height: 40,
-    //   },
-    // },
-    headerTitleStyle: {
-      alignSelf: 'center',
-      textAlign: 'center',
-      fontWeight: 'normal',
-      fontSize: 22,
-      color: 'black',
-    },
-  });
+    };
+  };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.state = {
       location: '',
@@ -72,15 +100,17 @@ class BidDate extends React.Component {
     };
   }
 
-  bid = (bid) => {
+  bid = (bid: ({}) => any) => {
     const {
-      navigation: {
-        goBack,
-        state: {
-          params: { id, date, otherName },
-        },
-      },
+      navigation,
+      navigation: { goBack },
     } = this.props;
+
+    // typings for react navigation do not work unless I use this format
+    const id = navigation.state.params ? navigation.state.params.id : '';
+    const otherName = navigation.state.params ? navigation.state.params.otherName : '';
+    const date = navigation.state.params ? navigation.state.params.date : '';
+
     const { location, description } = this.state;
     bid({
       variables: {
@@ -89,7 +119,7 @@ class BidDate extends React.Component {
         bidPlace: location,
         bidDescription: description,
       },
-      update: (store, data) => {
+      update: (store: any, data: any) => {
         console.log('data: ', data);
         console.log('store: ', store);
         toastMessage({ text: `Thank you for bidding on ${otherName}'s date!` });
@@ -99,19 +129,15 @@ class BidDate extends React.Component {
   };
 
   render() {
-    const {
-      navigation: {
-        state: {
-          params: {
-            date: { datetimeOfDate, description },
-          },
-        },
-      },
-    } = this.props;
+    const { navigation } = this.props;
+
+    // typings for react navigation do not work unless I use this format
+    const date = navigation.state.params.date ? navigation.state.params.date : '';
+    const { datetimeOfDate, description } = date;
 
     // const { datetimeOfDate, description, otherName} = this.props.navigation.state.params;
     return (
-      <Container style={styles.container}>
+      <Container style={styles.container as ViewStyle}>
         <Content>
           <KeyboardAvoidingView>
             <MyAppText style={styles.title}>Date/Time</MyAppText>
@@ -127,7 +153,7 @@ class BidDate extends React.Component {
                 <Label>Date Description</Label>
                 <Input onChangeText={desc => this.setState({ description: desc })} />
               </Item>
-              <Mutation mutation={BID}>
+              <BidMutation mutation={BID}>
                 {bid => (
                   <Button block style={{ marginTop: 10 }} onPress={() => this.bid(bid)}>
                     <MyAppText style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>
@@ -135,7 +161,7 @@ class BidDate extends React.Component {
                     </MyAppText>
                   </Button>
                 )}
-              </Mutation>
+              </BidMutation>
             </Form>
           </KeyboardAvoidingView>
         </Content>
@@ -144,8 +170,16 @@ class BidDate extends React.Component {
   }
 }
 
+interface Style {
+  textHeader: TextStyle;
+  headerViewStyle: ViewStyle;
+  container: ViewStyle;
+  title: TextStyle;
+  description: TextStyle;
+}
+
 // We put the styles in the component
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   textHeader: {
     alignSelf: 'center',
     textAlign: 'center',

@@ -1,7 +1,20 @@
-import React from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import React, { SFC } from 'react';
+import {
+  View,
+  ActivityIndicator,
+  ViewStyle,
+  StyleSheet,
+  ActivityIndicatorProps,
+} from 'react-native';
 
-const Spinner = ({ size, style = styles.spinnerStyle }) => (
+interface Props extends ActivityIndicatorProps {
+  style?: ViewStyle;
+}
+interface Style {
+  spinnerStyle: ViewStyle;
+}
+
+const Spinner: SFC<Props> = ({ size, style = styles.spinnerStyle }) => (
   <View style={style}>
     {/*
       you can pass in a size parameter. In this example,
@@ -12,12 +25,12 @@ const Spinner = ({ size, style = styles.spinnerStyle }) => (
   </View>
 );
 
-const styles = {
+const styles = StyleSheet.create<Style>({
   spinnerStyle: {
     // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-};
+});
 
 export { Spinner };

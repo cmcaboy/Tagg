@@ -1,6 +1,6 @@
 import { auth } from '../firebase';
 
-export default async ({ email, password }) => {
+export default async ({ email, password }: { email: string; password: string }) => {
   console.log('Attempting to Signup');
   console.log('email: ', email);
 

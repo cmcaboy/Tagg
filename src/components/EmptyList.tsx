@@ -1,12 +1,20 @@
 import React from 'react';
 import {
-  View, StyleSheet, ScrollView, RefreshControl,
+  View, StyleSheet, ScrollView, RefreshControl, ViewStyle,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { MyAppText } from './common';
 
-class EmptyList extends React.Component {
-  constructor(props) {
+interface Props {
+  refetch?: () => any;
+  text?: string;
+  subText?: string;
+}
+interface State {
+  loading: boolean;
+}
+class EmptyList extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       loading: false,
@@ -40,8 +48,12 @@ class EmptyList extends React.Component {
   }
 }
 
+interface Style {
+  noBidders: ViewStyle;
+}
+
 // We put the styles in the component
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   noBidders: {
     flex: 1,
     justifyContent: 'center',

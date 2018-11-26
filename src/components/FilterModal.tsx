@@ -1,21 +1,34 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { Button } from 'native-base';
 import { MyAppText, MyAppModal } from './common';
 import EditSettingsContainer from './EditSettingsContainer';
 
-class FilterModal extends React.Component {
-  constructor(props) {
+interface Props {
+  isVisible: boolean;
+  flipFilterModal: () => any;
+  refetchQueue: () => any;
+}
+
+interface State {
+  time: string;
+  date: string;
+  location: string;
+  description: string;
+}
+
+const blankState = {
+  time: '',
+  date: '',
+  location: '',
+  description: '',
+};
+
+class FilterModal extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
-    this.blankState = {
-      time: '',
-      date: '',
-      location: '',
-      description: '',
-    };
-
-    this.state = this.blankState;
+    this.state = blankState;
   }
 
   closeModal = () => {
@@ -24,7 +37,7 @@ class FilterModal extends React.Component {
     if (isVisible) {
       flipFilterModal();
     }
-    this.setState(this.blankState);
+    this.setState(blankState);
     if (refetchQueue) {
       refetchQueue();
     }
@@ -35,7 +48,12 @@ class FilterModal extends React.Component {
     return (
       <MyAppModal isVisible={isVisible} close={this.closeModal}>
         <EditSettingsContainer hideNotifications />
-        <Button accessible={false} block style={styles.buttonStyle} onPress={this.closeModal}>
+        <Button
+          accessible={false}
+          block
+          style={styles.buttonStyle as ViewStyle}
+          onPress={this.closeModal}
+        >
           <MyAppText style={styles.textStyle}>Done</MyAppText>
         </Button>
       </MyAppModal>
@@ -43,7 +61,12 @@ class FilterModal extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  buttonStyle: ViewStyle;
+  textStyle: TextStyle;
+}
+
+const styles = StyleSheet.create<Style>({
   buttonStyle: {
     marginTop: 10,
   },

@@ -1,9 +1,16 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { SFC } from 'react';
+import { View, StyleSheet, ViewStyle } from 'react-native';
 
-const HorizontalLine = ({ style }) => <View style={[styles.horizontalLine, style]} />;
+interface Props {
+  style: ViewStyle;
+}
+interface Style {
+  horizontalLine: ViewStyle;
+}
 
-const styles = StyleSheet.create({
+const HorizontalLine: SFC<Props> = ({ style }) => <View style={[styles.horizontalLine, style]} />;
+
+const styles = StyleSheet.create<Style>({
   horizontalLine: {
     borderBottomColor: 'grey',
     borderBottomWidth: 1,

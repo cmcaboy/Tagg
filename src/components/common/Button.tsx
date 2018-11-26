@@ -1,9 +1,30 @@
-import React from 'react';
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { SFC, ReactNode } from 'react';
+import {
+  Text, TouchableOpacity, StyleSheet, ViewStyle, TextStyle,
+} from 'react-native';
 import { PRIMARY_COLOR } from '../../variables/index';
 
-const Button = ({
-  onPress, children, buttonStyle, textStyle, invertColors = false,
+interface Props {
+  onPress: () => any;
+  children: ReactNode;
+  buttonStyle?: ViewStyle;
+  textStyle?: TextStyle;
+  invertColors?: boolean;
+}
+
+interface Style {
+  textStyleDefault: TextStyle;
+  buttonStyleDefault: ViewStyle;
+  invertedColorsButton: ViewStyle;
+  invertedColorsText: TextStyle;
+}
+
+const Button: SFC<Props> = ({
+  onPress,
+  children,
+  buttonStyle,
+  textStyle,
+  invertColors = false,
 }) => {
   const {
     buttonStyleDefault, textStyleDefault, invertedColorsButton, invertedColorsText,
@@ -20,7 +41,7 @@ const Button = ({
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   textStyleDefault: {
     alignSelf: 'center',
     color: PRIMARY_COLOR,

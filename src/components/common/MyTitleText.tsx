@@ -1,13 +1,22 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { SFC, ReactNode } from 'react';
+import { StyleSheet, TextStyle } from 'react-native';
 import { MyAppText } from './index';
 import { PRIMARY_COLOR } from '../../variables';
 
-const MyTitleText = ({ style, children }) => (
+interface Props {
+  style: TextStyle;
+  children: ReactNode;
+}
+
+interface Style {
+  title: TextStyle;
+}
+
+const MyTitleText: SFC<Props> = ({ style, children }) => (
   <MyAppText style={[styles.title, style]}>{children}</MyAppText>
 );
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   title: {
     fontSize: 20,
     fontWeight: '400',

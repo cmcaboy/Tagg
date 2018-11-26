@@ -1,14 +1,25 @@
-import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import React, { SFC } from 'react';
+import {
+  TouchableOpacity, StyleSheet, ViewStyle, TextStyle,
+} from 'react-native';
 import { MyAppText } from './index';
 
-const AskButton = ({ onPress }) => (
+interface Props {
+  onPress: () => void;
+}
+
+interface Style {
+  buttonStyle: ViewStyle;
+  textStyle: TextStyle;
+}
+
+const AskButton: SFC<Props> = ({ onPress }) => (
   <TouchableOpacity onPress={onPress} style={styles.buttonStyle}>
     <MyAppText style={styles.textStyle}>Ask!</MyAppText>
   </TouchableOpacity>
 );
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   buttonStyle: {
     borderRadius: 10,
     paddingVertical: 4,

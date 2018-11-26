@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View, TouchableOpacity, StyleSheet, ScrollView,
+  View, TouchableOpacity, StyleSheet, ScrollView, ViewStyle, TextStyle,
 } from 'react-native';
 import {
   List, ListItem, Text, Right, Body,
@@ -16,8 +16,22 @@ import { GET_ID } from '../apollo/local/queries';
 import {
   formatDescription, formatDate, formatBids, formatDay, formatName,
 } from '../format';
+import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
+import { getId } from '../apollo/queries/__generated__/getId';
+import { getMatches, getMatchesVariables } from '../apollo/queries/__generated__/getMatches';
 
-class Matches extends Component {
+interface Params {};
+
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
+}
+
+interface State {};
+
+class GetId extends Query<getId, {}> {};
+class GetMatches extends Query<getMatches, getMatchesVariables> {};
+
+class Matches extends Component<Props, State> {
   noMatches = () => (
     <View style={styles.noMatches}>
       <Ionicons name="md-sad" size={100} color="black" />
@@ -28,6 +42,13 @@ class Matches extends Component {
 
   renderContent({
     matches, dateRequests, id, name, pic, refetch,
+  }: {
+    matches: any[];
+    dateRequests: any[];
+    id: string;
+    name: string;
+    pic: string;
+    refetch: () => void;
   }) {
     const {
       navigation: { navigate },
@@ -49,7 +70,7 @@ class Matches extends Component {
                 <MyAppText>{formatName('No matches')}</MyAppText>
               </View>
             )}
-            {matches.map(match => (
+            {matches.map(( match: any ) => (
               <TouchableOpacity
                 accessible={false}
                 onPress={() => navigate('MessengerContainer', {
@@ -84,7 +105,7 @@ class Matches extends Component {
                   <MyAppText>{formatName('You havent created a date yet')}</MyAppText>
                 </View>
               )}
-              {dateRequests.map(date => (
+              {dateRequests.map(( date: any ) => (
                 <ListItem
                   accessible={false}
                   key={date.id}
@@ -117,7 +138,7 @@ class Matches extends Component {
 
   render() {
     return (
-      <Query query={GET_ID}>
+      <GetId query={GET_ID}>
         {({ loading, error, data }) => {
           console.log('local data: ',data);
           // console.log('local error: ',error);
@@ -126,9 +147,9 @@ class Matches extends Component {
           if (error) return <ErrorMessage error={error.message} />;
           const { id } = data.user;
           return (
-            <Query query={GET_MATCHES} variables={{ id }} fetchPolicy="network-only">
+            <GetMatches query={GET_MATCHES} variables={{ id }} fetchPolicy="network-only">
               {({
-                loading, error, data, networkStatus, refetch,
+                loading, error, data, refetch,
               }) => {
                 console.log('data in matches: ', data);
                 // console.log('error: ',error);
@@ -150,15 +171,23 @@ class Matches extends Component {
                   refetch,
                 });
               }}
-            </Query>
+            </GetMatches>
           );
         }}
-      </Query>
+      </GetId>
     );
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  matchContainer: ViewStyle;
+  newMatchesContainer: ViewStyle;
+  messagesContainer: ViewStyle;
+  newMatch: ViewStyle;
+  noMatches: ViewStyle;
+  heading: TextStyle;
+};
+const styles = StyleSheet.create<Style>({
   matchContainer: {
     flex: 1,
     paddingLeft: 10,

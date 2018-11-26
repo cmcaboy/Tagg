@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import firebase from 'firebase';
 import {
-  View, TouchableOpacity, LayoutAnimation, UIManager,
+  View, TouchableOpacity, LayoutAnimation, UIManager, ViewStyle, TextStyle, StyleSheet,
 } from 'react-native';
 import { ApolloConsumer, Mutation } from 'react-apollo';
 import {
@@ -15,7 +15,7 @@ import {
 import {
   PRIMARY_COLOR, BACKGROUND_COLOR, DEFAULT_LATITUDE, DEFAULT_LONGITUDE,
 } from '../variables';
-import { getCurrentTime } from '../format';
+// import { getCurrentTime } from '../format';
 import FBLoginButton from '../services/FBLoginButton';
 import { NEW_USER } from '../apollo/mutations';
 import { SET_ID_LOCAL } from '../apollo/local/mutations';
@@ -23,9 +23,26 @@ import emailLogin from '../services/emailLogin';
 import checkEmail from '../services/checkEmail';
 import NewUserModal from './NewUserModal';
 import emailValidation from '../services/emailValidation';
+import { newUser, newUserVariables } from '../apollo/mutations/__generated__/newUser';
+import { setId, setIdVariables } from '../apollo/local/mutations/__generated__/setId';
 
-class LoginForm extends Component {
-  constructor(props) {
+interface Props {};
+
+interface State {
+  email: string;
+  password: string;
+  error: string;
+  emailError: string;
+  loading: boolean;
+  showEmail: boolean;
+  modalDisplay: boolean;
+}
+
+class NewUser extends Mutation<newUser, newUserVariables> {};
+class SetId extends Mutation<setId, setIdVariables> {};
+
+class LoginForm extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -45,15 +62,15 @@ class LoginForm extends Component {
 
   toggleEmail = () => this.setState(prev => ({ showEmail: !prev.showEmail }));
 
-  emailInput = email => this.setState({ email });
+  emailInput = ( email: string ) => this.setState({ email });
 
-  passwordInput = password => this.setState({ password });
+  passwordInput = ( password: string ) => this.setState({ password });
 
-  setError = e => this.setState({ emailError: e });
+  setError = ( e: string ) => this.setState({ emailError: e });
 
   modalClose = () => this.setState({ modalDisplay: false });
 
-  emailLogin = async ({ startSetId, client }) => {
+  emailLogin = async ({ startSetId, client }: { startSetId: (id: string) => void; client: any }) => {
     const { email, password } = this.state;
 
     // Display a loading spinner and remove error display
@@ -84,7 +101,6 @@ class LoginForm extends Component {
     emailLogin({
       email: email.toLowerCase(),
       password,
-      client,
       startSetId,
     })
       .then(error => this.setState({ loading: false, error }))
@@ -110,9 +126,9 @@ class LoginForm extends Component {
     const { error, emailError } = this.state;
     const { signUp, signContainer } = styles;
     return (
-      <Mutation mutation={NEW_USER}>
+      <NewUser mutation={NEW_USER}>
         {(newUser) => {
-          const startNewUser = user => newUser({
+          const startNewUser = ( user: any ) => newUser({
             variables: {
               id: user.id,
               name: user.name,
@@ -130,20 +146,20 @@ class LoginForm extends Component {
               minAgePreference: user.minAgePreference,
               maxAgePreference: user.maxAgePreference,
               pics: user.pics,
-              registerDateTime: getCurrentTime(),
+              // registerDateTime: getCurrentTime(),
               followerDisplay: 'Both', // default
             },
           });
           return (
-            <Mutation mutation={SET_ID_LOCAL}>
+            <SetId mutation={SET_ID_LOCAL}>
               {(setId) => {
-                const startSetId = (id) => {
+                const startSetId = (id: string | number) => {
                   console.log('set id: ', id);
                   setId({ variables: { id } });
                 };
                 return (
                   <KeyboardAwareScrollView
-                    contentContainerStyle={styles.loginContainer}
+                    contentContainerStyle={styles.loginContainer as ViewStyle}
                     scrollEnabled
                     enableOnAndroid
                     enableAutomaticScroll
@@ -204,19 +220,14 @@ class LoginForm extends Component {
                                 return (
                                   <View style={signContainer}>
                                     <Button
-                                      style={styles.signInButton}
+                                      style={styles.signInButton as ViewStyle}
                                       block
                                       onPress={() => this.emailLogin({ client, startSetId })}
                                     >
                                       <Text>Sign in</Text>
                                     </Button>
                                     <TouchableOpacity
-                                      onPress={() => this.emailSignup({
-                                        client,
-                                        startSetId,
-                                        startNewUser,
-                                      })
-                                      }
+                                      onPress={() => this.emailSignup()}
                                     >
                                       <MyAppText style={signUp}>Sign up with Email</MyAppText>
                                     </TouchableOpacity>
@@ -231,15 +242,31 @@ class LoginForm extends Component {
                   </KeyboardAwareScrollView>
                 );
               }}
-            </Mutation>
+            </SetId>
           );
         }}
-      </Mutation>
+      </NewUser>
     );
   }
 }
 
-const styles = {
+interface Style {
+  errorTextStyle: TextStyle;
+  emailContainer: ViewStyle;
+  emailForm: ViewStyle;
+  emailFormTitleText: TextStyle;
+  buttonFBStyle: ViewStyle;
+  buttonTextFBStyle: TextStyle;
+  loginContainer: ViewStyle;
+  title: TextStyle;
+  subTitle: TextStyle;
+  content: ViewStyle;
+  signInButton: ViewStyle;
+  signUp: TextStyle;
+  signContainer: ViewStyle;
+}
+
+const styles = StyleSheet.create<Style>({
   errorTextStyle: {
     fontSize: 16,
     alignSelf: 'center',
@@ -297,6 +324,6 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-};
+});
 
 export default LoginForm;

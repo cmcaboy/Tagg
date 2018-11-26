@@ -3,4 +3,4 @@
 
 import { EMAIL_REGEX } from '../variables';
 
-export default email => EMAIL_REGEX.test(email);
+export default (email: string) => EMAIL_REGEX.test(email);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { Query, Mutation } from 'react-apollo';
 import {
   CirclePicture, MyAppText, Spinner, ErrorMessage,
@@ -8,9 +8,31 @@ import Messenger from './Messenger';
 import { GET_NEW_MESSAGES } from '../apollo/subscriptions';
 import { SEND_MESSAGE } from '../apollo/mutations';
 import { GET_MESSAGES, MORE_MESSAGES } from '../apollo/queries';
+import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
+import { sendMessage, sendMessageVariables } from '../apollo/mutations/__generated__/sendMessage';
+import { getMessages, getMessagesVariables } from '../apollo/queries/__generated__/getMessages';
 
-class MessengerContainer extends Component {
-  static navigationOptions = ({ navigation }) => ({
+class GetMessages extends Query<getMessages, getMessagesVariables> {};
+class SendMessage extends Mutation<sendMessage, sendMessageVariables> {};
+
+interface Params {
+  otherId: string;
+  otherName: string;
+  otherPic: string;
+  id: string;
+  matchId: string;
+  name: string;
+  pic: string;
+}
+
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
+}
+
+interface State {};
+
+class MessengerContainer extends Component<Props, State> {
+  static navigationOptions = ({ navigation }: { navigation: NavigationScreenProp<NavigationRoute<Params>, Params>}) => ({
     // title: `${navigation.state.params.otherName}`,
     headerTitle: (
       <View style={styles.headerViewStyle}>
@@ -51,7 +73,7 @@ class MessengerContainer extends Component {
     } = this.props;
 
     return (
-      <Query
+      <GetMessages
         query={GET_MESSAGES}
         // fetchPolicy can be set to no-cache or network-only if we want to force a refetch
         // each time when entering a chat.
@@ -68,7 +90,7 @@ class MessengerContainer extends Component {
           console.log('messages container data: ', data);
 
           // We have to change the format of our messages in order to satisfy RN Gifted Chat
-          const messages = data.messages.list.map(message => ({
+          const messages = data.messages.list.map(( message: any ) => ({
             _id: message._id,
             text: message.text,
             createdAt: message.createdAt,
@@ -81,7 +103,7 @@ class MessengerContainer extends Component {
           }));
 
           return (
-            <Mutation mutation={SEND_MESSAGE} ignoreResults={false}>
+            <SendMessage mutation={SEND_MESSAGE} ignoreResults={false}>
               {newMessage => (
                 <Messenger
                   messages={messages}
@@ -156,15 +178,20 @@ class MessengerContainer extends Component {
                   }}
                 />
               )}
-            </Mutation>
+            </SendMessage>
           );
         }}
-      </Query>
+      </GetMessages>
     );
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  textHeader: TextStyle;
+  headerViewStyle: ViewStyle;
+}
+
+const styles = StyleSheet.create<Style>({
   textHeader: {
     alignSelf: 'center',
     textAlign: 'center',

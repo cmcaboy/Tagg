@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { SFC } from 'react';
 import {
-  TextInput, View, Text, StyleSheet,
+  TextInput, View, Text, StyleSheet, ViewStyle, TextStyle,
 } from 'react-native';
 
-const Input = ({
-  label, value, onChangeText, placeholder, secureTextEntry,
+interface Props {
+  label?: string;
+  value: string;
+  onChangeText: () => any;
+  placeholder?: string;
+  secureTextEntry?: boolean;
+}
+
+interface Style {
+  inputStyle: TextStyle;
+  labelStyle: TextStyle;
+  containerStyle: ViewStyle;
+}
+
+const Input: SFC<Props> = ({
+  label = '',
+  value,
+  onChangeText,
+  placeholder = '',
+  secureTextEntry = false,
 }) => {
   const { inputStyle, labelStyle, containerStyle } = styles;
 
@@ -24,7 +42,7 @@ const Input = ({
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   inputStyle: {
     color: '#000',
     paddingRight: 5,

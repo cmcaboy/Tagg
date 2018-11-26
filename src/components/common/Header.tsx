@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { SFC } from 'react';
 import {
-  View, Text, Platform, StyleSheet,
+  View, Text, Platform, StyleSheet, ViewStyle, TextStyle,
 } from 'react-native';
 
-const Header = ({ headerText }) => (
+interface Props {
+  headerText: string;
+}
+
+interface Style {
+  viewStyle: ViewStyle;
+  textStyle: TextStyle;
+}
+
+const Header: SFC<Props> = ({ headerText }) => (
   <View style={styles.viewStyle}>
     <Text style={styles.textStyle}>{headerText}</Text>
   </View>
 );
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   viewStyle: {
     backgroundColor: '#F8F8F8',
 

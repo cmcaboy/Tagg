@@ -1,12 +1,22 @@
-import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import React, { ReactNode, SFC } from 'react';
+import {
+  Text, StyleSheet, TextStyle, TextProps,
+} from 'react-native';
 import { Fonts } from '../../utils/Fonts';
 
-const MyAppText = ({ style, children }) => (
+interface Props extends TextProps {
+  children: ReactNode;
+}
+
+interface Style {
+  textStyle: TextStyle;
+}
+
+const MyAppText: SFC<Props> = ({ style, children }) => (
   <Text style={[styles.textStyle, style]}>{children}</Text>
 );
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   textStyle: {
     fontFamily: Fonts.Oxygen,
   },

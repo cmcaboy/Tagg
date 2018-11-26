@@ -1,7 +1,18 @@
-import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import React, { SFC, ReactNode } from 'react';
+import { StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
 
-const FloatingActionButton = ({
+interface Props {
+  children?: ReactNode;
+  style?: ViewStyle;
+  onPress: () => any;
+  position?: string;
+}
+
+interface Style {
+  floatingAction: ViewStyle;
+}
+
+const FloatingActionButton: SFC<Props> = ({
   children,
   style = {},
   onPress = () => {},
@@ -34,7 +45,7 @@ const FloatingActionButton = ({
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<Style>({
   floatingAction: {
     position: 'absolute',
     backgroundColor: '#000',

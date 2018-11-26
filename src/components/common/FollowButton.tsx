@@ -1,15 +1,25 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Button } from './Button';
 import { FOLLOW } from '../../apollo/mutations';
+import { follow, followVariables } from '../../apollo/mutations/__generated__/follow';
 
-// const FollowButton = ({ id, followId, isFollowing }) => (
-// );
+class Follow extends Mutation<follow, followVariables> {}
 
-class FollowButton extends React.Component {
-  constructor(props) {
+interface State {
+  isFollowing: boolean;
+}
+
+interface Props {
+  id: string;
+  followId: string;
+  isFollowing: boolean;
+}
+
+class FollowButton extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       isFollowing: this.props.isFollowing,
@@ -21,9 +31,9 @@ class FollowButton extends React.Component {
     const { id, followId } = this.props;
 
     return (
-      <Mutation mutation={FOLLOW} ignoreResults>
+      <Follow mutation={FOLLOW} ignoreResults>
         {(follow, _) => {
-          const updateFollow = (isFollowingParam) => {
+          const updateFollow = (isFollowingParam: boolean) => {
             console.log('isFollowing: ', isFollowing);
             follow({
               variables: {
@@ -73,27 +83,32 @@ class FollowButton extends React.Component {
           return isFollowing ? (
             <Button
               invertColors
-              textStyle={styles.buttonText}
+              textStyle={styles.buttonText as TextStyle}
               onPress={() => updateFollow(!isFollowing)}
             >
               {'Following'}
             </Button>
           ) : (
             <Button
-              buttonStyle={styles.buttonStyle}
-              textStyle={styles.buttonText}
+              buttonStyle={styles.buttonStyle as ViewStyle}
+              textStyle={styles.buttonText as TextStyle}
               onPress={() => updateFollow(!isFollowing)}
             >
               {'Follow'}
             </Button>
           );
         }}
-      </Mutation>
+      </Follow>
     );
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  buttonStyle: ViewStyle;
+  buttonText: TextStyle;
+}
+
+const styles = StyleSheet.create<Style>({
   buttonStyle: {
     borderRadius: 10,
     minWidth: 70,
