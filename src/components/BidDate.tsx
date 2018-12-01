@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Mutation } from 'react-apollo';
 import {
-  Container, Content, Form, Input, Label, Item, Button, NativeBase,
+  Container, Content, Form, Input, Label, Item, Button,
 } from 'native-base';
 import { NavigationScreenProps } from 'react-navigation';
 import { MyAppText, CirclePicture } from './common';

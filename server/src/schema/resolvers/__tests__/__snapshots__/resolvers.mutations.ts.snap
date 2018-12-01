@@ -1,0 +1,353 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Mutation  BID 1`] = `
+Object {
+  "bidDescription": "Looking for a walk of the beach",
+  "bidPlace": "Harrys pub",
+  "date": Object {
+    "id": Any<String>,
+    "num_bids": Any<Number>,
+  },
+  "datetimeOfBid": Any<String>,
+  "id": Any<String>,
+}
+`;
+
+exports[`Mutation  CHOOSE_WINNER 1`] = `
+Object {
+  "id": Any<String>,
+  "open": false,
+}
+`;
+
+exports[`Mutation  FOLLOW 1`] = `
+Object {
+  "data": Object {
+    "follow": Object {
+      "id": "cory.mcaboy@gmail.com",
+      "isFollowing": true,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  NEW_DATE 1`] = `
+Object {
+  "creationTime": Any<String>,
+  "datetimeOfDate": "May 7, 2019 10:00:00",
+  "description": "Looking for a walk of the beach",
+  "id": Any<String>,
+}
+`;
+
+exports[`Mutation  NEW_USER 1`] = `
+Object {
+  "data": Object {
+    "newUser": Object {
+      "email": "testuser@test.com",
+      "id": "testuser@test.com",
+      "name": "John Smith",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  REMOVE_USER 1`] = `
+Object {
+  "data": Object {
+    "removeUser": Object {
+      "id": "testuser@test.com",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SEND_MESSAGE 1`] = `
+Object {
+  "_id": "3429048jfksdjlk342",
+  "avatar": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+  "createdAt": Any<String>,
+  "name": "Cory McAboy",
+  "order": 189342789,
+  "text": "Hey, how are you?",
+  "uid": "testUser@test.com",
+}
+`;
+
+exports[`Mutation  SET_AGE 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "age": 33,
+      "id": "testuser@test.com",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SET_AGE_PREFERENCE 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "id": "testuser@test.com",
+      "maxAgePreference": 28,
+      "minAgePreference": 24,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SET_COORDS 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "id": "testuser@test.com",
+      "latitude": 85,
+      "longitude": -35,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SET_DESCRIPTION 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "description": "Looking for something special",
+      "id": "testuser@test.com",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SET_DISTANCE 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "distance": 45,
+      "id": "testuser@test.com",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SET_EMAIL 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "email": "test2@test.com",
+      "id": "testuser@test.com",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SET_FOLLOWER_DISPLAY 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "followerDisplay": "Both",
+      "id": "testuser@test.com",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SET_NAME 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "id": "testuser@test.com",
+      "name": "Michael Smith",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SET_NOTIFICATIONS 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "id": "testuser@test.com",
+      "sendNotifications": true,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SET_PICS 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "id": "testuser@test.com",
+      "pics": Array [
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+      ],
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SET_PUSH_TOKEN 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "id": "testuser@test.com",
+      "token": "12345",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SET_SCHOOL 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "id": "testuser@test.com",
+      "school": "Shawnee High School",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  SET_WORK 1`] = `
+Object {
+  "data": Object {
+    "editUser": Object {
+      "id": "testuser@test.com",
+      "work": "Poppa Johns",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Mutation  UNFOLLOW 1`] = `
+Object {
+  "data": Object {
+    "unFollow": Object {
+      "id": "cory.mcaboy@gmail.com",
+      "isFollowing": false,
+      "name": "Jeff Smith",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

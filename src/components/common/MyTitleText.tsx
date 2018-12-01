@@ -4,7 +4,7 @@ import { MyAppText } from './index';
 import { PRIMARY_COLOR } from '../../variables';
 
 interface Props {
-  style: TextStyle;
+  style?: TextStyle;
   children: ReactNode;
 }
 

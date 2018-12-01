@@ -1156,7 +1156,8 @@ export namespace QueueResolvers {
   export const defaultResolvers = {
     id: (parent: Queue) => (parent.id === undefined ? null : parent.id),
     cursor: (parent: Queue) =>
-      parent.cursor === undefined ? null : parent.cursor
+      parent.cursor === undefined ? null : parent.cursor,
+    list: (parent: Queue) => (parent.list === undefined ? null : parent.list)
   };
 
   export type IdResolver = (
@@ -1651,6 +1652,10 @@ export namespace MutationResolvers {
     blockedId: string;
   }
 
+  export interface ArgsRemoveUser {
+    id: string | null;
+  }
+
   export type EditUserResolver = (
     parent: undefined,
     args: ArgsEditUser,
@@ -1724,6 +1729,13 @@ export namespace MutationResolvers {
   export type BlockResolver = (
     parent: undefined,
     args: ArgsBlock,
+    ctx: Context,
+    info: GraphQLResolveInfo
+  ) => User | null | Promise<User | null>;
+
+  export type RemoveUserResolver = (
+    parent: undefined,
+    args: ArgsRemoveUser,
     ctx: Context,
     info: GraphQLResolveInfo
   ) => User | null | Promise<User | null>;
@@ -1802,6 +1814,13 @@ export namespace MutationResolvers {
     block: (
       parent: undefined,
       args: ArgsBlock,
+      ctx: Context,
+      info: GraphQLResolveInfo
+    ) => User | null | Promise<User | null>;
+
+    removeUser: (
+      parent: undefined,
+      args: ArgsRemoveUser,
       ctx: Context,
       info: GraphQLResolveInfo
     ) => User | null | Promise<User | null>;

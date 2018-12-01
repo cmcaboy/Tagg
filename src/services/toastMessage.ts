@@ -1,5 +1,12 @@
 import { Toast } from 'native-base';
 
+interface Params {
+  text: string;
+  duration: number;
+  buttonText: string;
+  position?: 'bottom' | 'top' | 'center';
+}
+
 // First parameter: object containing details about the test message including
 // text, button text, position, and duration
 // The second parameter is a callback that is executed when the toast button is pressed

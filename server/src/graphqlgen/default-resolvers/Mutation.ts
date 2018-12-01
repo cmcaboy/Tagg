@@ -37,5 +37,8 @@ export const Mutation: MutationResolvers.Type = {
   },
   block: (parent, args, ctx) => {
     throw new Error("Resolver not implemented");
+  },
+  removeUser: (parent, args, ctx) => {
+    throw new Error("Resolver not implemented");
   }
 };

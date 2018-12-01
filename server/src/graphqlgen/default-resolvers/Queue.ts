@@ -4,9 +4,5 @@
 import { QueueResolvers } from "../../types/generated";
 
 export const Queue: QueueResolvers.Type = {
-  ...QueueResolvers.defaultResolvers,
-
-  list: (parent, args, ctx) => {
-    throw new Error("Resolver not implemented");
-  }
+  ...QueueResolvers.defaultResolvers
 };

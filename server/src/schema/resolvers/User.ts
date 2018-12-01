@@ -3,36 +3,37 @@ import { UserResolvers } from '../../types/generated';
 export const User: UserResolvers.Type = {
   ...UserResolvers.defaultResolvers,
 
-  hasDateOpen: async ({ id }, _, { datasources }): Promise<boolean> => await datasources.neoAPI.userHasDateOpen({ id }),
-  distanceApart: async ({ id, distanceApart }, _, { datasources }) => await datasources.neoAPI.userDistanceApart({
+  hasDateOpen: async ({ id }, _, { dataSources }): Promise<boolean> => await dataSources.neoAPI.userHasDateOpen({ id }),
+  distanceApart: async ({ id, distanceApart }, _, { dataSources }) => await dataSources.neoAPI.userDistanceApart({
     id,
     distanceApart,
   }),
-  isFollowing: async ({ id, isFollowing }, _, { datasources }) => await datasources.neoAPI.userIsFollowing({
+  isFollowing: async ({ id, isFollowing }, _, { dataSources }) => await dataSources.neoAPI.userIsFollowing({
     id,
     isFollowing,
   }),
-  following: async ({ id: idParent }, _, { datasources, user }): Promise<any> => {
+  following: async ({ id: idParent }, _, { dataSources, user }): Promise<any> => {
     const id = idParent || user.id;
-    return await datasources.neoAPI.getFollowersFromUser({
+    return await dataSources.neoAPI.getFollowersFromUser({
       id,
     });
   },
-  bids: async ({ id: idParent }, _, { datasources, user }) => {
+  bids: async ({ id: idParent }, _, { dataSources, user }) => {
     // If an id is passed in, use that; If not, use id in context
     const id = idParent || user.id;
-    return await datasources.neoAPI.findBidsFromUser({ id });
+    return await dataSources.neoAPI.findBidsFromUser({ id });
   },
-  dateRequests: async ({ id: idParent }, _, { datasources, user }) => {
+  dateRequests: async ({ id: idParent }, _, { dataSources, user }) => {
     const id = idParent || user.id;
-    return await datasources.neoAPI.findDateRequests({ id });
+    return await dataSources.neoAPI.findDateRequests({ id });
   },
-  queue: async ({ id: idParent, followerDisplay }, _, { datasources, user }) => {
+  queue: async ({ id: idParent, followerDisplay }, _, { dataSources, user }) => {
     const id = idParent || user.id;
-    return await datasources.neoAPI.getUserQueue({ id, followerDisplay });
+    // console.log('queue id: ', id);
+    return await dataSources.neoAPI.getUserQueue({ id, followerDisplay });
   },
-  matchedDates: async ({ id: idParent }, _, { datasources, user }) => {
+  matchedDates: async ({ id: idParent }, _, { dataSources, user }) => {
     const id = idParent || user.id;
-    return await datasources.neoAPI.getMatchedDates({ id });
+    return await dataSources.neoAPI.getMatchedDates({ id });
   },
 };

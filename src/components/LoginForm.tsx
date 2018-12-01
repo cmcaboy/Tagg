@@ -84,8 +84,8 @@ class LoginForm extends Component<Props, State> {
 
     // Check to see if email is already on file
     const isEmailAlreadyRegistered = await checkEmail({
-      email: email.toLowerCase(),
       client,
+      email: email.toLowerCase(),
     });
     console.log('isEmailAlreadyRegistered: ', isEmailAlreadyRegistered);
     if (!isEmailAlreadyRegistered) {
@@ -99,11 +99,11 @@ class LoginForm extends Component<Props, State> {
     // Attempt login
     // If login is successful, the user is automatically routed to the functioning app (Stagg component)
     emailLogin({
-      email: email.toLowerCase(),
       password,
       startSetId,
+      email: email.toLowerCase(),
     })
-      .then(error => this.setState({ loading: false, error }))
+      .then(error => this.setState({ error, loading: false }))
       .catch((e) => {
         console.log('email login error: ', e);
         this.setState({ loading: false, error: e });

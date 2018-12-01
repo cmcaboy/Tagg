@@ -28,14 +28,14 @@ interface Props {
   startSetId: (id: string | number) => void;
 }
 
-interface genderItem {
+interface GenderItem {
   label: 'female' | 'male';
   selected: boolean;
 }
 
 interface State {
   pics: string[],
-  gender: genderItem[];
+  gender: GenderItem[];
   name: string;
   email: string;
   age: string;
@@ -98,7 +98,7 @@ export default class NewUserModal extends Component<Props, State> {
 
   changePics = (pics: string[]) => this.setState({ pics });
 
-  changeGender = ( gender: genderItem[] ) => this.setState({ gender });
+  changeGender = ( gender: GenderItem[] ) => this.setState({ gender });
 
   validatePassword = () => {
     const { password, validatePassword } = this.state;
@@ -160,8 +160,6 @@ export default class NewUserModal extends Component<Props, State> {
 
     return newUser({
       variables: {
-        id: email.toLowerCase(),
-        active: true,
         name,
         email,
         age,
@@ -169,6 +167,8 @@ export default class NewUserModal extends Component<Props, State> {
         work,
         description,
         pics,
+        id: email.toLowerCase(),
+        active: true,
         gender: gender.filter(g => g.selected)[0].label,
         ...settingDefaults,
       },

@@ -59,6 +59,7 @@ export interface DateList {
 export interface Queue {
   id: string | null;
   cursor: number | null;
+  list: any | null;
 }
 export interface MatchList {
   id: string | null;

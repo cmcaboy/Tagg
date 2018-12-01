@@ -10,10 +10,11 @@ const uuid = require('node-uuid');
 
 export const Mutation: MutationResolvers.Type = {
   ...MutationResolvers.defaultResolvers,
-  editUser: async (_, args, { datasources }) => await datasources.neoAPI.setUser(args),
-  editUserQueue: async (_, args, { datasources }) => await datasources.neoAPI.setUserQueue(args),
-  newUser: async (_, tempArgs, { datasources }) => await datasources.neoAPI.createUser(tempArgs),
-  newMessage: async (_, args, { datasoures }) => {
+  editUser: async (_, args, { dataSources }) => await dataSources.neoAPI.setUser(args),
+  removeUser: async (_, args, { dataSources }) => await dataSources.neoAPI.removeUser(args),
+  editUserQueue: async (_, args, { dataSources }) => await dataSources.neoAPI.setUserQueue(args),
+  newUser: async (_, tempArgs, { dataSources }) => await dataSources.neoAPI.createUser(tempArgs),
+  newMessage: async (_, args, { dataSources }) => {
     const message = {
       _id: args._id,
       name: args.name,
@@ -40,34 +41,37 @@ export const Mutation: MutationResolvers.Type = {
     };
     asyncFunc();
 
-    const sendMessage = await datasoures.firestoreAPI.createMessage(args);
+    const sendMessage = await dataSources.firestoreAPI.createMessage({
+      message,
+      dateId: args.matchId,
+    });
     if (!sendMessage) {
       return null;
     }
-    console.log(`${args.name} posted message to matchId ${args.matchId}`);
+    // console.log(`${args.name} posted message to matchId ${args.matchId}`);
 
     return message;
   },
-  follow: async (_, { followId, isFollowing }, { datasources }) => await datasources.neoAPI.followUser({ followId, isFollowing }),
-  unFollow: async (_, { unFollowId }, { datasources }) => await datasources.neoAPI.unFollowUser({ unFollowId }),
-  bid: async (_, args, { datasources }) => {
+  follow: async (_, { followId, isFollowing }, { dataSources }) => await dataSources.neoAPI.followUser({ followId, isFollowing }),
+  unFollow: async (_, { unFollowId }, { dataSources }) => await dataSources.neoAPI.unFollowUser({ unFollowId }),
+  bid: async (_, args, { dataSources }) => {
     // Need to make sure client cannot input doublequote ("). It will break the query.
     const datetimeOfBid = getCurrentDateNeo();
     const bidId = uuid();
 
-    return await datasources.neoAPI.createbid({
+    return await dataSources.neoAPI.createBid({
       ...args,
       bidId,
       datetimeOfBid,
     });
   },
-  createDate: async (_, args, { datasources, user: { id } }) => {
+  createDate: async (_, args, { dataSources, user: { id } }) => {
     // Currently, I am only creating the node field, but I also need to create the :CREATE relationship
 
     const creationTime = getCurrentDateNeo();
     const dateId = uuid();
 
-    const date = await datasources.neoAPI.createDate({
+    const date = await dataSources.neoAPI.createDate({
       ...args,
       creationTime,
       dateId,
@@ -81,18 +85,18 @@ export const Mutation: MutationResolvers.Type = {
     createDatePush(id, date);
     return date;
   },
-  chooseWinner: async (_, { winnerId, dateId }, { datasources, user: { id } }) => {
+  chooseWinner: async (_, { winnerId, dateId }, { dataSources, user: { id } }) => {
     // In order to create a winner, we need to set winner=true on the bid, set open to FALSE on the date
     // Then we need to create a new document in the Firestore database, which will store messages between the
     // two.
 
-    const date = await datasources.neoAPI.createDateWinner({
+    const date = await dataSources.neoAPI.createDateWinner({
       winnerId,
       dateId,
     });
     // Create new document in Firestore for match
 
-    const firestoreCreation = await datasources.firestoreAPI.createDateChat({
+    const firestoreCreation = await dataSources.firestoreAPI.createDateChat({
       id,
       winnerId,
       dateId,
@@ -107,6 +111,6 @@ export const Mutation: MutationResolvers.Type = {
     chooseWinnerPushLoser(date);
     return date;
   },
-  flag: async (_, { flaggedId, block }, { datasources }) => await datasources.neoAPI.setFlagUser({ flaggedId, block }),
-  block: async (_, { blockedId }, { datasources }) => await datasources.neoAPI.setUserBlock({ blockedId }),
+  flag: async (_, { flaggedId, block }, { dataSources }) => await dataSources.neoAPI.setFlagUser({ flaggedId, block }),
+  block: async (_, { blockedId }, { dataSources }) => await dataSources.neoAPI.setUserBlock({ blockedId }),
 };

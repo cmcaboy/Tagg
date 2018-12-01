@@ -7,7 +7,7 @@ const { DataSource } = require('apollo-datasource');
 export default class FirestoreAPI extends (DataSource as { new (): any }) {
   constructor({ db }: { db: any }) {
     super();
-    console.log('firestore constructor');
+    // console.log('firestore constructor');
 
     this.db = db;
   }
@@ -62,8 +62,8 @@ export default class FirestoreAPI extends (DataSource as { new (): any }) {
     // are no more messages left to retreive.
     const cursor: number | null = messages.length >= MESSAGE_PAGE_LENGTH ? messages[messages.length - 1].order : null;
 
-    console.log('messages in moreMessages: ', messages);
-    console.log('newCursor: ', cursor);
+    // console.log('messages in moreMessages: ', messages);
+    // console.log('newCursor: ', cursor);
 
     return {
       id,
@@ -101,7 +101,7 @@ export default class FirestoreAPI extends (DataSource as { new (): any }) {
 
     const cursor = messages.length > 0 ? messages[messages.length - 1].order : null;
 
-    console.log('messages in messages: ', messages);
+    // console.log('messages in messages: ', messages);
 
     return {
       id,
@@ -205,8 +205,8 @@ export default class FirestoreAPI extends (DataSource as { new (): any }) {
     // are no more messages left to retreive.
     const newCursor: number | null = messages.length >= MESSAGE_PAGE_LENGTH ? messages[messages.length - 1].order : null;
 
-    console.log('messages in moreMessages: ', messages);
-    console.log('newCursor: ', newCursor);
+    // console.log('messages in moreMessages: ', messages);
+    // console.log('newCursor: ', newCursor);
 
     return {
       id,
@@ -216,6 +216,7 @@ export default class FirestoreAPI extends (DataSource as { new (): any }) {
   };
 
   createMessage = async ({ matchId, message }: { matchId: string; message: any }) => {
+    console.log('createMessage message: ', message);
     try {
       await this.db.collection(`matches/${matchId}/messages`).add(message);
       return true;

@@ -252,3 +252,11 @@ export const SET_EMAIL = gql`
     }
   }
 `;
+
+export const REMOVE_USER = gql`
+  mutation removeUser($id: String) {
+    removeUser(id: $id) {
+      id
+    }
+  }
+`;

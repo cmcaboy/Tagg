@@ -1,0 +1,636 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Query.otherBids GET_BIDS id: cory.mcaboy@gmail.com 1`] = `
+Object {
+  "data": Object {
+    "otherBids": Object {
+      "cursor": null,
+      "id": "cory.mcaboy@gmail.comb",
+      "list": null,
+    },
+  },
+  "errors": Array [
+    [GraphQLError: Resolver not implemented],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.otherBids GET_BIDS no params 1`] = `
+Object {
+  "data": undefined,
+  "errors": Array [
+    [GraphQLError: Variable "$id" of required type "String!" was not provided.],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user CHECK_EMAIL id: cory.mcaboy@gmail.com 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "email": "cory.mcaboy@gmail.com",
+      "id": "cory.mcaboy@gmail.com",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user CHECK_EMAIL no params 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "email": "cory.mcaboy@gmail.com",
+      "id": "cory.mcaboy@gmail.com",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_BIDS id: cory.mcaboy@gmail.com 1`] = `
+Object {
+  "data": Object {
+    "otherBids": Object {
+      "cursor": null,
+      "id": "cory.mcaboy@gmail.comb",
+      "list": null,
+    },
+  },
+  "errors": Array [
+    [GraphQLError: Resolver not implemented],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_BIDS no params 1`] = `
+Object {
+  "data": undefined,
+  "errors": Array [
+    [GraphQLError: Variable "$id" of required type "String!" was not provided.],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_DATES 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "dateRequests": Object {
+        "id": "cory.mcaboy@gmail.comd",
+        "list": null,
+      },
+      "id": "cory.mcaboy@gmail.com",
+    },
+  },
+  "errors": Array [
+    [GraphQLError: Resolver not implemented],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_DATES id: cory.mcaboy@gmail.com 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "dateRequests": Object {
+        "id": "cory.mcaboy@gmail.comd",
+        "list": null,
+      },
+      "id": "cory.mcaboy@gmail.com",
+    },
+  },
+  "errors": Array [
+    [GraphQLError: Resolver not implemented],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_EDIT_PROFILE id: cory.mcaboy@gmail.com 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "distance": 50,
+      "followerDisplay": "Both",
+      "id": "cory.mcaboy@gmail.com",
+      "maxAgePreference": 35,
+      "minAgePreference": 22,
+      "sendNotifications": true,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_EDIT_PROFILE no params 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "age": null,
+      "description": "Just getting by",
+      "email": "cory.mcaboy@gmail.com",
+      "id": "cory.mcaboy@gmail.com",
+      "name": "Jeff Smith",
+      "pics": Array [
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+      ],
+      "school": "Will Rogers School",
+      "work": "Chicago Street Deli",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_MATCHES id: cory.mcaboy@gmail.com 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "dateRequests": Object {
+        "cursor": null,
+        "id": "cory.mcaboy@gmail.comd",
+        "list": null,
+      },
+      "id": "cory.mcaboy@gmail.com",
+      "matchedDates": Object {
+        "id": "cory.mcaboy@gmail.comm",
+        "list": null,
+      },
+      "name": "Jeff Smith",
+      "profilePic": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+    },
+  },
+  "errors": Array [
+    [GraphQLError: Resolver not implemented],
+    [GraphQLError: Resolver not implemented],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_MATCHES no params 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "dateRequests": Object {
+        "cursor": null,
+        "id": "cory.mcaboy@gmail.comd",
+        "list": null,
+      },
+      "id": "cory.mcaboy@gmail.com",
+      "matchedDates": Object {
+        "id": "cory.mcaboy@gmail.comm",
+        "list": null,
+      },
+      "name": "Jeff Smith",
+      "profilePic": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+    },
+  },
+  "errors": Array [
+    [GraphQLError: Resolver not implemented],
+    [GraphQLError: Resolver not implemented],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_QUEUE id: cory.mcaboy@gmail.com 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "id": "cory.mcaboy@gmail.com",
+      "queue": Object {
+        "cursor": 0,
+        "id": "cory.mcaboy@gmail.comq",
+        "list": Array [
+          Object {
+            "age": 25,
+            "description": null,
+            "distanceApart": 0,
+            "hasDateOpen": false,
+            "id": "testgirl1@test.com",
+            "isFollowing": false,
+            "name": "testgirl1",
+            "order": 0,
+            "pics": Array [
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            ],
+            "profilePic": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            "school": null,
+            "work": null,
+          },
+          Object {
+            "age": 25,
+            "description": null,
+            "distanceApart": 0,
+            "hasDateOpen": false,
+            "id": "testgirl2@test.com",
+            "isFollowing": false,
+            "name": "testgirl2",
+            "order": 0,
+            "pics": Array [
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            ],
+            "profilePic": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            "school": null,
+            "work": null,
+          },
+          Object {
+            "age": 25,
+            "description": null,
+            "distanceApart": 0,
+            "hasDateOpen": false,
+            "id": "testgirl3@test.com",
+            "isFollowing": false,
+            "name": "testgirl3",
+            "order": 0,
+            "pics": Array [
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            ],
+            "profilePic": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            "school": null,
+            "work": null,
+          },
+          Object {
+            "age": 25,
+            "description": null,
+            "distanceApart": 0,
+            "hasDateOpen": false,
+            "id": "testgirl4@test.com",
+            "isFollowing": false,
+            "name": "testgirl4",
+            "order": 0,
+            "pics": Array [
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            ],
+            "profilePic": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            "school": null,
+            "work": null,
+          },
+          Object {
+            "age": 25,
+            "description": null,
+            "distanceApart": 0,
+            "hasDateOpen": false,
+            "id": "testgirl5@test.com",
+            "isFollowing": false,
+            "name": "testgirl5",
+            "order": 0,
+            "pics": Array [
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            ],
+            "profilePic": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            "school": null,
+            "work": null,
+          },
+        ],
+      },
+      "token": "f42aUhP0foM:APA91bEZt8hAGzvS7MnchWjrAT_V3sbEDREOpximGbYKnY18spTWQAkA89itsn41EVLrPWVlIL3cAUDGAu16CSGPMFeBWPssHqrhoFl8hNtTY_GvDrWArO_7D_bPOr11wQivkuTLif3P",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_QUEUE no params 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "id": "cory.mcaboy@gmail.com",
+      "queue": Object {
+        "cursor": 0,
+        "id": "cory.mcaboy@gmail.comq",
+        "list": Array [
+          Object {
+            "age": 25,
+            "description": null,
+            "distanceApart": 0,
+            "hasDateOpen": false,
+            "id": "testgirl1@test.com",
+            "isFollowing": false,
+            "name": "testgirl1",
+            "order": 0,
+            "pics": Array [
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            ],
+            "profilePic": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            "school": null,
+            "work": null,
+          },
+          Object {
+            "age": 25,
+            "description": null,
+            "distanceApart": 0,
+            "hasDateOpen": false,
+            "id": "testgirl2@test.com",
+            "isFollowing": false,
+            "name": "testgirl2",
+            "order": 0,
+            "pics": Array [
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            ],
+            "profilePic": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            "school": null,
+            "work": null,
+          },
+          Object {
+            "age": 25,
+            "description": null,
+            "distanceApart": 0,
+            "hasDateOpen": false,
+            "id": "testgirl3@test.com",
+            "isFollowing": false,
+            "name": "testgirl3",
+            "order": 0,
+            "pics": Array [
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            ],
+            "profilePic": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            "school": null,
+            "work": null,
+          },
+          Object {
+            "age": 25,
+            "description": null,
+            "distanceApart": 0,
+            "hasDateOpen": false,
+            "id": "testgirl4@test.com",
+            "isFollowing": false,
+            "name": "testgirl4",
+            "order": 0,
+            "pics": Array [
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            ],
+            "profilePic": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            "school": null,
+            "work": null,
+          },
+          Object {
+            "age": 25,
+            "description": null,
+            "distanceApart": 0,
+            "hasDateOpen": false,
+            "id": "testgirl5@test.com",
+            "isFollowing": false,
+            "name": "testgirl5",
+            "order": 0,
+            "pics": Array [
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+              "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            ],
+            "profilePic": "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+            "school": null,
+            "work": null,
+          },
+        ],
+      },
+      "token": "f42aUhP0foM:APA91bEZt8hAGzvS7MnchWjrAT_V3sbEDREOpximGbYKnY18spTWQAkA89itsn41EVLrPWVlIL3cAUDGAu16CSGPMFeBWPssHqrhoFl8hNtTY_GvDrWArO_7D_bPOr11wQivkuTLif3P",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_SETTINGS id: cory.mcaboy@gmail.com 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "distance": 50,
+      "followerDisplay": "Both",
+      "id": "cory.mcaboy@gmail.com",
+      "maxAgePreference": 35,
+      "minAgePreference": 22,
+      "sendNotifications": true,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_SETTINGS no params 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "distance": 50,
+      "followerDisplay": "Both",
+      "id": "cory.mcaboy@gmail.com",
+      "maxAgePreference": 35,
+      "minAgePreference": 22,
+      "sendNotifications": true,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_USER_PROFILE id: cory.mcaboy@gmail.com 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "description": "Just getting by",
+      "distanceApart": 0,
+      "hasDateOpen": true,
+      "id": "cory.mcaboy@gmail.com",
+      "isFollowing": false,
+      "name": "Jeff Smith",
+      "pics": Array [
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+      ],
+      "school": "Will Rogers School",
+      "work": "Chicago Street Deli",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Query.user GET_USER_PROFILE no params 1`] = `
+Object {
+  "data": Object {
+    "user": Object {
+      "description": "Just getting by",
+      "distanceApart": 0,
+      "hasDateOpen": true,
+      "id": "cory.mcaboy@gmail.com",
+      "isFollowing": false,
+      "name": "Jeff Smith",
+      "pics": Array [
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/04f85f3e-63f5-4231-89dd-a45f94e96fa7?alt=media&token=6de58f19-1b2d-4041-8451-beff7287bf38",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0522af5a-8f39-42b1-a1ca-6e7b3e5eaf87?alt=media&token=e9bfda10-0600-41d2-a848-35a19cc26ec8",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0415e065-c80c-44b5-b469-4c6370804423?alt=media&token=86cf1038-8d6e-425c-90ef-b80ee999d29b",
+        "https://firebasestorage.googleapis.com/v0/b/manhattanmatch-9f9fe.appspot.com/o/0a7a7fdb-39d9-484d-9b24-80fa0ef66240?alt=media&token=a79482d1-44f5-46be-87a2-56bce9340b89",
+      ],
+      "school": "Will Rogers School",
+      "work": "Chicago Street Deli",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

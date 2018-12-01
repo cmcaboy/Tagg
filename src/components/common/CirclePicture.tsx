@@ -1,17 +1,17 @@
 import React, { SFC } from 'react';
 import {
-  Image, StyleSheet, Dimensions, ViewStyle,
+  Image, StyleSheet, Dimensions, ImageStyle,
 } from 'react-native';
 import { PLACEHOLDER_PHOTO } from '../../variables';
 
 interface Props {
-  imageURL?: string;
+  imageURL?: 'large' | 'small' | 'xlarge' | 'mini';
   picSize?: string;
   auto?: boolean;
 }
 
 interface Style {
-  pictureStyle: ViewStyle;
+  pictureStyle: ImageStyle;
 }
 
 // picSize can be 'large', 'small', or 'mini'
@@ -47,14 +47,16 @@ const CirclePicture: SFC<Props> = ({
   return (
     <Image
       source={{ uri: imageURL }}
-      style={[
-        styles.pictureStyle,
-        {
-          height: HEIGHT,
-          width: HEIGHT,
-          borderRadius: BORDER_RADIUS,
-        },
-      ]}
+      style={
+        [
+          styles.pictureStyle,
+          {
+            height: HEIGHT,
+            width: HEIGHT,
+            borderRadius: BORDER_RADIUS,
+          },
+        ] as ImageStyle
+      }
     />
   );
 };

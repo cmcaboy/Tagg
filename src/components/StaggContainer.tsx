@@ -8,14 +8,28 @@ import { GET_ID } from '../apollo/local/queries';
 import { SET_COORDS, SET_PUSH_TOKEN } from '../apollo/mutations';
 import Stagg from './Stagg';
 import EmptyList from './EmptyList';
+import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
+import { getId } from '../apollo/queries/__generated__/getId';
+import { getQueue, getQueueVariables } from '../apollo/queries/__generated__/getQueue';
 
-class StaggContainer extends Component {
+interface Params {};
+
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
+}
+
+interface State {};
+
+class GetID extends Query<getId, {}> {};
+class GetQueue extends Query<getQueue, getQueueVariables> {};
+
+class StaggContainer extends Component<Props, State> {
   componentDidMount = () => SplashScreen.hide();
 
   render() {
     const { navigation } = this.props;
     return (
-      <Query query={GET_ID}>
+      <GetID query={GET_ID}>
         {({ loading, error, data }) => {
           console.log('local data stagg: ', data);
           // console.log('local error stagg: ',error);
@@ -26,7 +40,7 @@ class StaggContainer extends Component {
           if (id === 0) return <Spinner />;
           // if (id === 0) return <LoginButton onLogoutFinished={async () => firebase.auth().signOut()} />;
           return (
-            <Query query={GET_QUEUE} variables={{ id }} fetchPolicy="network-only">
+            <GetQueue query={GET_QUEUE} variables={{ id }} fetchPolicy="network-only">
               {({ loading, error, data, fetchMore, networkStatus, refetch }) => {
                 console.log('data stagg: ', data);
                 // console.log('error stagg: ',error);
@@ -105,8 +119,8 @@ class StaggContainer extends Component {
                     ]}
                   >
                     {([setCoords, setPushToken]) => {
-                      const startSetCoords = (lat, lon) => setCoords({ variables: { id, lat, lon } });
-                      const startSetPushToken = token => setPushToken({ variables: { id, token } });
+                      const startSetCoords = (lat: number, lon: number) => setCoords({ variables: { id, lat, lon } });
+                      const startSetPushToken = ( token: string ) => setPushToken({ variables: { id, token } });
                       console.log('above stagg');
                       return (
                         <Stagg
@@ -124,10 +138,10 @@ class StaggContainer extends Component {
                   </Composer>
                 );
               }}
-            </Query>
+            </GetQueue>
           );
         }}
-      </Query>
+      </GetID>
     );
   }
 }

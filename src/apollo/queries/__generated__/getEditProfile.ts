@@ -6,7 +6,7 @@
 // ====================================================
 
 export interface getEditProfile_user {
-  __typename: 'User';
+  __typename: "User";
   id: string | null;
   pics: (string | null)[] | null;
   name: string | null;

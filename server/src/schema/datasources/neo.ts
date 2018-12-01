@@ -8,7 +8,7 @@ const { DataSource } = require("apollo-datasource");
 export default class NeoAPI extends ( DataSource as { new(): any; } ) {
   constructor({ session }: { session: any }) {
     super();
-    console.log("neoAPI constructor");
+    // console.log("neoAPI constructor");
 
     this.session = session;
   }
@@ -23,7 +23,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
         .run(`Match (n:User {id: '${id}'}) RETURN n`)
         .then((result: any) => result.records)
         .then((records: any) => {
-          console.log("records: ", records);
+          // console.log("records: ", records);
           if (!records.length) {
             return null;
           }
@@ -39,6 +39,21 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       console.log("Error, no id inputted!");
       return null;
     }
+  }
+
+  removeUser = ({ id }: { id: string }) => {
+    return this.session
+      .run(`MATCH(a:User{id:'${id}'}) DETACH DELETE a`)
+      .then(() => {
+        // console.log('res: ', res);
+        // console.log(' returning id: ', id);
+        return { id };
+      })
+      .catch((e: string) => {
+        // I can throw an Apollo Error here
+        console.log('Error Removing user: ', e);
+        return null
+      })
   }
 
   findDate = ({ id }: { id: string }) => {
@@ -350,12 +365,12 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       )
       .then((result: any) => result.records)
       .then((records: any[]) => {
-        console.log("following records: ", records);
+        // console.log("following records: ", records);
         const list = records.map((record: any) => ({
           ...record._fields[0].properties,
           hasDateOpen: record._fields[1]
         }));
-        console.log("following list: ", list);
+        // console.log("following list: ", list);
         return {
           id: `${id}f`,
           list,
@@ -376,13 +391,13 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       .then((result: any): any[] => result.records)
       .then(
         (records: any[]): any => {
-          console.log("bids records: ", records);
+          // console.log("bids records: ", records);
           const list = records.map(record => ({
             ...record._fields[2].properties,
             id: record._fields[1].properties.id,
             user: record._fields[0].properties
           }));
-          console.log("bids list: ", list);
+          // console.log("bids list: ", list);
           return {
             id: `${id}b`,
             list,
@@ -405,7 +420,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       )
       .then((result: any) => result.records)
       .then((records: any) => {
-        console.log("dateRequests records: ", records);
+        // console.log("dateRequests records: ", records);
         const list = records.map((record: any) => ({
           id: record._fields[1].properties.id,
           creator: record._fields[0].properties,
@@ -424,9 +439,9 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       })
       .catch((e: string) => console.log("dateRequest error: ", e));
   };
-  getUserQueue = ({ followerDisplay }: { followerDisplay: string | null }) => {
+  getUserQueue = ({ followerDisplay }: { followerDisplay: string | null }): Object => {
     const id = this.context.user.id;
-    getQueue({ id, followerDisplay });
+    return getQueue({ id, followerDisplay });
   };
   getMatchedDates = () => {
     // A potential performance improvement would be to query Firestore directly
@@ -443,7 +458,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
               RETURN b, d.id, d.description, d.datetimeOfDate
               ORDER BY d.datetimeOfDate`;
 
-    console.log("query: ", query);
+    // console.log("query: ", query);
     return this.session
       .run(query)
       .then((result: any) => {
@@ -472,7 +487,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
 
         //const newCursor = list.length >= MATCH_PAGE_LENGTH ? list[list.length - 1].order : null;
         const newCursor = null;
-        console.log("matchedDates list: ", list);
+        // console.log("matchedDates list: ", list);
 
         return {
           id: `${id}m`,
@@ -485,7 +500,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
 
   setUser = (args: any) => {
     const isBoolean = (val: any) => "boolean" === typeof val;
-    console.log("args: ", args);
+    // console.log("args: ", args);
     let query = `MATCH(a:User{id: '${args.id}'}) SET `;
     !!args.name && (query = query + `a.name='${args.name}',`);
     isBoolean(args.active) && (query = query + `a.active=${args.active},`);
@@ -523,16 +538,16 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     return this.session
       .run(query)
       .then((result: any) => {
-        console.log("result: ", result);
+        // console.log("result: ", result);
         return result.records;
       })
       .then((records: any) => records[0]._fields[0].properties)
-      .catch((e: string) => console.log("editUser error: ", e));
+      .catch((e: string) => console.log(`editUser error: ${e} from query ${query}`));
   };
 
   setUserQueue = async (args: any) => {
     const isBoolean = (val: any) => "boolean" === typeof val;
-    console.log("args: ", args);
+    // console.log("args: ", args);
     let query = `MATCH(a:User{id: '${args.id}'}) SET `;
     isBoolean(args.sendNotifications) &&
       (query = query + `a.sendNotifications=${args.sendNotifications},`);
@@ -544,7 +559,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
 
     query = query.slice(-1) === "," ? query.slice(0, -1) : query;
     query = query + ` RETURN a`;
-    console.log("query: ", query);
+    // console.log("query: ", query);
 
     try {
       return await this.session.run(query);
@@ -609,11 +624,11 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     query = query.slice(-1) === "," ? query.slice(0, -1) : query;
 
     query = query + `}) RETURN a`;
-    console.log("query: ", query);
+    // console.log("query: ", query);
     return this.session
       .run(query)
       .then((result: any) => {
-        console.log("result: ", result);
+        // console.log("result: ", result);
         return result.records;
       })
       .then((records: any) => records[0]._fields[0].properties)
@@ -631,12 +646,12 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       query = `MATCH (a:User {id:'${id}'})-[r:FOLLOWING]->(b:User {id:'${followId}'}) DELETE r RETURN b`;
     };
 
-    console.log("query: ", query);
+    // console.log("query: ", query);
 
     return this.session
       .run(query)
       .then((result: any) => {
-        console.log("result: ", result);
+        // console.log("result: ", result);
         return result.records[0];
       })
       .then((record: any) => ({ ...record._fields[0].properties, isFollowing }))
@@ -683,7 +698,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
 
     query = query + `}]->(d) RETURN r`;
 
-    console.log("query in bid: ", query);
+    // console.log("query in bid: ", query);
 
     return this.session
       .run(query)
@@ -708,7 +723,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     query = query.slice(-1) === "," ? query.slice(0, -1) : query;
     query = query + `}) RETURN d`;
 
-    console.log("query in createDate: ", query);
+    // console.log("query in createDate: ", query);
 
     let rawDate;
     let date;
@@ -734,9 +749,13 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     }
     return date;
   };
-  createDateWinner = async ({ winnerId, dateId }: { winnerId: string, dateId: string }) => {
-    const id = this.context.user.id;
+  createDateWinner = async ({ id: argsID, winnerId, dateId }: { id: string, winnerId: string, dateId: string }) => {
+    // console.log('dateId: ', dateId);
+    // console.log('winnerId: ', winnerId);
+
+    const id = argsID ? argsID : this.context.user.id;
     let date;
+    // console.log('id: ', id);
 
     try {
       const data = await this.session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'}) 
@@ -745,7 +764,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
                   d.winner='${winnerId}',
                   d.open=FALSE
                   return d,a,b`);
-      console.log("data: ", data);
+      // console.log("data: ", data);
       date = {
         ...data.records[0]._fields[0].properties,
         creator: data.records[0]._fields[1].properties,

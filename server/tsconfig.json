@@ -6,6 +6,7 @@
     "sourceMap": true,
     "outDir": "dist",
     "moduleResolution": "node",
+    "types": ["express", "graphql", "jest", "neo4j", "node", "ws"],
     "noImplicitReturns": true,
     "removeComments": true,
     "noImplicitAny": true,

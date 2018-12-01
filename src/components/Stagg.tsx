@@ -29,8 +29,6 @@ class Stagg extends Component {
   constructor(props) {
     super(props);
 
-    this.locationTracker = null;
-
     const { queue } = this.props;
 
     this.state = {

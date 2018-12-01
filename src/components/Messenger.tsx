@@ -10,7 +10,7 @@ import { getCurrentTime } from '../format';
 interface Params {}
 
 interface Props {
-  subscribeToNewMessages: () => void;
+  subscribeToNewMessages: () => () => void;
   newMessage: any;
   pic: string;
   name: string;
@@ -23,16 +23,14 @@ interface Props {
   navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
 }
 
-interface State {
-  unsubscribe: () => void;
-}
+interface State {}
 
 class Messenger extends Component<Props, State> {
+  unsubscribe: () => void;
+
   constructor(props: Props) {
     super(props);
-    this.state = {
-      unsubscribe: () => null,
-    };
+    this.state = {};
   }
 
   // While in the chat window, listen for chat updates
@@ -59,11 +57,11 @@ class Messenger extends Component<Props, State> {
     // array, we process it using a forEac method
     messages.forEach(message => newMessage({
       variables: {
-        avatar: pic,
         name,
+        matchId,
+        avatar: pic,
         uid: message.user._id,
         // id: now,
-        matchId,
         // The message object returns an array.
         text: message.text,
         _id: message._id,
@@ -77,10 +75,10 @@ class Messenger extends Component<Props, State> {
       optimisticResponse: {
         __typename: 'Mutation',
         newMessage: {
-          avatar: pic,
           name,
-          uid: message.user._id,
           matchId,
+          avatar: pic,
+          uid: message.user._id,
           text: message.text,
           order: -1 * now,
           _id: message._id,
@@ -121,7 +119,7 @@ class Messenger extends Component<Props, State> {
         <GiftedChat
           messages={messages}
           onSend={message => this.sendNewMessage(message)}
-          user={{ _id: `${id}`, name, avatar: pic }}
+          user={{ name, _id: `${id}`, avatar: pic }}
           showUserAvatar={false}
           onPressAvatar={user => navigate('UserProfile', { id: user._id, name: user.name, hostId: id })
           }

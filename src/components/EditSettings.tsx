@@ -56,9 +56,9 @@ class EditSettings extends Component<Props, State> {
     } = this.props;
 
     this.state = {
-      ageValues: [minAgePreference, maxAgePreference],
       distance,
       sendNotifications,
+      ageValues: [minAgePreference, maxAgePreference],
       followerDisplay: followerDisplay || 'Both',
     };
   }
@@ -112,13 +112,13 @@ class EditSettings extends Component<Props, State> {
                             }
                           `;
                         const storeData = store.readFragment({
-                          id: data.data.editUser.id,
                           fragment,
+                          id: data.data.editUser.id,
                         });
 
                         store.writeFragment({
-                          id: data.data.editUser.id,
                           fragment,
+                          id: data.data.editUser.id,
                           data: {
                             ...storeData,
                             minAgePreference: data.data.editUser.minAgePreference,
@@ -170,14 +170,14 @@ class EditSettings extends Component<Props, State> {
                             }
                           `;
                         const storeData = store.readFragment({
-                          id: data.data.editUser.id,
                           fragment,
+                          id: data.data.editUser.id,
                         });
 
                         console.log('storeData: ', storeData);
                         store.writeFragment({
-                          id: data.data.editUser.id,
                           fragment,
+                          id: data.data.editUser.id,
                           data: {
                             ...storeData,
                             distance: data.data.editUser.distance,
@@ -221,13 +221,13 @@ class EditSettings extends Component<Props, State> {
                             }
                           `;
                           const storeData = store.readFragment({
-                            id: data.data.editUser.id,
                             fragment,
+                            id: data.data.editUser.id,
                           });
 
                           store.writeFragment({
-                            id: data.data.editUser.id,
                             fragment,
+                            id: data.data.editUser.id,
                             data: {
                               ...storeData,
                               sendNotifications: data.data.editUser.sendNotifications,
@@ -277,14 +277,14 @@ class EditSettings extends Component<Props, State> {
                           }
                         `;
                         const storeData = store.readFragment({
-                          id: data.data.editUser.id,
                           fragment,
+                          id: data.data.editUser.id,
                         });
 
                         console.log('storeData: ', storeData);
                         store.writeFragment({
-                          id: data.data.editUser.id,
                           fragment,
+                          id: data.data.editUser.id,
                           data: {
                             ...storeData,
                             followerDisplay: data.data.editUser.followerDisplay,

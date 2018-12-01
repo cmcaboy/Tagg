@@ -11,7 +11,7 @@ import { getId } from '../apollo/queries/__generated__/getId';
 
 interface Props {
   hideNotifications: boolean;
-  refetchQueue?: () => any;
+  // refetchQueue?: () => any;
 }
 interface State {}
 
@@ -32,7 +32,7 @@ class EditSettingsContainer extends Component<Props, State> {
   });
 
   render() {
-    const { hideNotifications, refetchQueue } = this.props;
+    const { hideNotifications } = this.props;
 
     return (
       <GetID query={GET_ID}>
@@ -70,7 +70,7 @@ class EditSettingsContainer extends Component<Props, State> {
                     sendNotifications={sendNotifications}
                     followerDisplay={followerDisplay}
                     hideNotifications={hideNotifications}
-                    refetchQueue={refetchQueue}
+                    // refetchQueue={refetchQueue}
                   />
                 );
               }}

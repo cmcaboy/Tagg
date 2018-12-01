@@ -2,7 +2,7 @@ import React, { SFC } from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
 
 interface Props {
-  style: ViewStyle;
+  style?: ViewStyle;
 }
 interface Style {
   horizontalLine: ViewStyle;

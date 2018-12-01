@@ -47,7 +47,8 @@ class Matches extends Component<Props, State> {
     dateRequests: any[];
     id: string;
     name: string;
-    pic: string;
+    pic: string,
+    
     refetch: () => void;
   }) {
     const {
@@ -74,12 +75,12 @@ class Matches extends Component<Props, State> {
               <TouchableOpacity
                 accessible={false}
                 onPress={() => navigate('MessengerContainer', {
-                  matchId: match.matchId,
                   id,
-                  otherId: match.user.id,
                   name,
-                  otherName: match.user.name,
                   pic,
+                  matchId: match.matchId,
+                  otherId: match.user.id,
+                  otherName: match.user.name,
                   otherPic: match.user.pics[0],
                 })
                 }
@@ -111,10 +112,10 @@ class Matches extends Component<Props, State> {
                   key={date.id}
                   style={{ marginLeft: 0 }}
                   onPress={() => navigate('BidList', {
-                    dateId: date.id,
-                    datetimeOfDate: date.datetimeOfDate,
                     id,
                     refetch,
+                    dateId: date.id,
+                    datetimeOfDate: date.datetimeOfDate,
                   })
                   }
                 >
@@ -139,13 +140,13 @@ class Matches extends Component<Props, State> {
   render() {
     return (
       <GetId query={GET_ID}>
-        {({ loading, error, data }) => {
-          console.log('local data: ',data);
-          // console.log('local error: ',error);
-          // console.log('local loading: ',loading);
-          if (loading) return <Spinner />;
-          if (error) return <ErrorMessage error={error.message} />;
-          const { id } = data.user;
+        {({ loading: loadingLocal, error: errorLocal, data: dataLocal }) => {
+          console.log('local data: ',dataLocal);
+          // console.log('local error: ',errorLocal);
+          // console.log('local loading: ',loadingLocal);
+          if (loadingLocal) return <Spinner />;
+          if (errorLocal) return <ErrorMessage error={errorLocal.message} />;
+          const { id } = dataLocal.user;
           return (
             <GetMatches query={GET_MATCHES} variables={{ id }} fetchPolicy="network-only">
               {({
@@ -163,12 +164,12 @@ class Matches extends Component<Props, State> {
                   return this.noMatches();
                 }
                 return this.renderContent({
+                  id,
+                  refetch,
                   matches: data.user.matchedDates.list,
                   dateRequests: data.user.dateRequests.list,
-                  id,
                   name: data.user.name,
                   pic: data.user.profilePic,
-                  refetch,
                 });
               }}
             </GetMatches>

@@ -2,7 +2,7 @@ import uuid from 'uuid';
 import { firebase } from './index';
 import { FUNCTION_PATH } from '../variables/functions';
 
-export default async (uri, name = uuid()) => {
+export default async (uri: string, name = uuid()) => {
   console.log('uri: ', uri);
   const body = new FormData();
   body.append('picture', {

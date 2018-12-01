@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, TouchableOpacity, StyleSheet, TextInput,
+  View, TouchableOpacity, StyleSheet, TextInput, TextStyle, ViewStyle,
 } from 'react-native';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 // import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -13,18 +13,35 @@ import {
 import { DATE_FORMAT, convertDateToEpoch } from '../format';
 import toastMessage from '../services/toastMessage';
 import { NEW_DATE } from '../apollo/mutations';
+import { createDate, createDateVariables } from '../apollo/mutations/__generated__/createDate';
 
-class NewDateModal extends React.Component {
-  constructor(props) {
+interface Props {
+  isVisible: boolean;
+  flipNewDateModal: () => void;
+  id: string;
+}
+
+interface State {
+  time: string;
+  date: string;
+  location: string;
+  description: string;
+  datetime: string;
+}
+
+class NewDate extends Mutation<createDate, createDateVariables> {};
+
+class NewDateModal extends React.Component<Props, State> {
+  public blankState: State = {
+    time: '',
+    date: '',
+    location: '',
+    description: '',
+    datetime: '',
+  };
+
+  constructor(props: Props) {
     super(props);
-
-    this.blankState = {
-      time: '',
-      date: '',
-      location: '',
-      description: '',
-      datetime: '',
-    };
 
     this.state = this.blankState;
   }
@@ -64,7 +81,7 @@ class NewDateModal extends React.Component {
             maxLength={300}
           />
           <View style={styles.buttonView}>
-            <Mutation mutation={NEW_DATE}>
+            <NewDate mutation={NEW_DATE}>
               {newDate => (
                 <Button
                   accessible={false}
@@ -76,8 +93,8 @@ class NewDateModal extends React.Component {
                     return newDate({
                       variables: {
                         id,
-                        datetimeOfDate: convertDateToEpoch(datetime),
                         description,
+                        datetimeOfDate: convertDateToEpoch(datetime),
                       },
                       update: (store, data) => {
                         console.log('data from newDate mutation: ', data);
@@ -94,7 +111,7 @@ class NewDateModal extends React.Component {
                   </MyAppText>
                 </Button>
               )}
-            </Mutation>
+            </NewDate>
             <TouchableOpacity style={styles.cancelButton} onPress={this.closeModal}>
               <MyAppText style={styles.cancelText}>Cancel</MyAppText>
             </TouchableOpacity>
@@ -105,7 +122,15 @@ class NewDateModal extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  textInput: TextStyle;
+  dateInput: TextStyle;
+  buttonView: ViewStyle;
+  cancelText: TextStyle;
+  cancelButton: ViewStyle;
+}
+
+const styles = StyleSheet.create<Style>({
   textInput: {
     borderWidth: 1,
     height: 75,

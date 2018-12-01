@@ -14,7 +14,7 @@
   "dependencies": {
     "apollo-datasource": "^0.2.0",
     "apollo-server": "^2.2.2",
-    "apollo-server-express": "^2.0.0-rc.12",
+    "apollo-server-express": "^2.2.2",
     "body-parser": "^1.18.2",
     "busboy": "^0.2.14",
     "content-type": "^1.0.4",
@@ -41,6 +41,7 @@
     "@types/ws": "^5.1.2",
     "apollo": "^2.1.2",
     "apollo-server-testing": "^2.2.2",
+    "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",
     "jest": "^23.6.0",
     "jest-cli": "^23.6.0",

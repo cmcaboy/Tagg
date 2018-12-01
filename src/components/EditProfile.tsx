@@ -29,7 +29,6 @@ import {
   SET_PICS,
   SET_EMAIL,
 } from '../apollo/mutations';
-import FakeButton from './FakeButton';
 import { setPicsVariables, setPics } from '../apollo/mutations/__generated__/setPics';
 import { setEmailVariables, setEmail } from '../apollo/mutations/__generated__/setEmail';
 import { setAge, setAgeVariables } from '../apollo/mutations/__generated__/setAge';
@@ -40,7 +39,6 @@ import { getEditProfile, getEditProfileVariables, getEditProfile_user } from '..
 import { setName, setNameVariables } from '../apollo/mutations/__generated__/setName';
 
 
-// setPics
 class SetPics extends Mutation<setPics, setPicsVariables> {};
 class SetName extends Mutation<setName, setNameVariables> {};
 class SetEmail extends Mutation<setEmail, setEmailVariables> {};
@@ -52,7 +50,7 @@ class GetEditProfile extends Query<getEditProfile, getEditProfileVariables> {};
 
 interface UserEditProfile extends getEditProfile_user {
   id: string | null;
-  pics: (string | null)[] | null;
+  pics: string[] | null[] | null;
   name: string | null;
   age: number | null;
   school: string | null;

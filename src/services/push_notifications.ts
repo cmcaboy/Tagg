@@ -1,3 +1,4 @@
+import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import { firebase } from '../firebase';
 
 export const checkPermissions = async () => {
@@ -21,7 +22,11 @@ export const checkPermissions = async () => {
 
 export const onReceiveNotification = () => {};
 
-export const pushNotificationHandler = (id, data, navigation) => {
+export const pushNotificationHandler = (
+  id: string,
+  data: any,
+  navigation: NavigationScreenProp<NavigationRoute<{}>, {}>,
+) => {
   // Reads in a notification and optionally acts on it.
   console.log('pushNotificationHandler data: ', data);
   switch (data.type) {

@@ -1,0 +1,27 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-airbnb",
+    "tslint:latest",
+    "tslint-config-prettier"
+  ],
+  "jsRules": {},
+  "rules": {
+    "no-console": false,
+    "no-empty-interface": false,
+    "max-classes-per-file": false,
+    "ordered-imports": false,
+    "interface-name": false,
+    "member-access": false,
+    "import-name": false,
+    "no-submodule-imports": false,
+    "object-literal-sort-keys": false,
+    "curly": false,
+    "function-name": false,
+    "no-shadowed-variable": false,
+    "no-empty": false,
+    "no-unused-expression": false
+  },
+  "rulesDirectory": []
+}

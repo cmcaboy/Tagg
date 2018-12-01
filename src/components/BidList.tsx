@@ -21,7 +21,7 @@ import EmptyList from './EmptyList';
 import { MyAppText, Spinner, ErrorMessage } from './common';
 import { CHOOSE_WINNER } from '../apollo/mutations';
 import { GET_BIDS } from '../apollo/queries';
-import { formatDate, formatDescription } from '../format';
+import { formatDescription } from '../format';
 import { otherBids, otherBidsVariables } from '../apollo/queries/__generated__/otherBids';
 
 interface State {}
@@ -115,9 +115,9 @@ class BidList extends React.Component<Props, State> {
                               console.log('winnerId: ', date.bidUser.id);
                               chooseWinner({
                                 variables: {
-                                  winnerId: date.bidUser.id,
                                   dateId,
                                   id,
+                                  winnerId: date.bidUser.id,
                                 },
                                 optimisticResponse: {
                                   chooseWinner: {
@@ -135,13 +135,13 @@ class BidList extends React.Component<Props, State> {
                                       open
                                     }
                                   `;
-                                  let storeData = store.readFragment({
-                                    id: newData.data.chooseWinner.id,
+                                  let storeData: any = store.readFragment({
                                     fragment,
+                                    id: newData.data.chooseWinner.id,
                                   });
                                   store.writeFragment({
-                                    id: newData.data.chooseWinner.id,
                                     fragment,
+                                    id: newData.data.chooseWinner.id,
                                     data: {
                                       ...storeData,
                                       open: newData.data.chooseWinner.open,
@@ -171,7 +171,7 @@ class BidList extends React.Component<Props, State> {
                                     data: {
                                       ...storeData,
                                       list: storeData.list.filter(
-                                        d => d.id !== newData.data.chooseWinner.id,
+                                        ( d: any ) => d.id !== newData.data.chooseWinner.id,
                                       ),
                                     },
                                   });

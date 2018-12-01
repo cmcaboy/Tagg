@@ -43,9 +43,9 @@ class PhotoSelector extends React.Component<Props, State> {
     const urlList = fillBlanks(this.props.urlList);
 
     this.state = {
+      urlList,
       isLoading: urlList.map(item => false),
       isSelected: urlList.map(item => false),
-      urlList,
     };
   }
 

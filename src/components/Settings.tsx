@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, TouchableOpacity, StyleSheet,
+  View, TouchableOpacity, StyleSheet, ViewStyle, TextStyle,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -19,9 +19,22 @@ import {
 import { GET_PROFILE } from '../apollo/queries';
 import { GET_ID } from '../apollo/local/queries';
 import LogoutButton from './LogoutButton';
+import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
+import { getId } from '../apollo/queries/__generated__/getId';
+import { getProfile, getProfileVariables } from '../apollo/queries/__generated__/getProfile';
 
-class Settings extends React.Component {
-  renderSubheading = (work, school) => {
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute<{}>, {}>;
+}
+
+interface State {};
+
+class GetID extends Query<getId, {}> {};
+
+class GetProfile extends Query<getProfile, getProfileVariables> {};
+
+class Settings extends React.Component<Props, State> {
+  renderSubheading = (work: string, school: string): JSX.Element => {
     if (work || school) {
       if (school) {
         return (
@@ -43,7 +56,7 @@ class Settings extends React.Component {
 
   renderContent({
     work, school, name, pics,
-  }) {
+  }:{ work: string; school: string; name: string; pics: string[]}) {
     const {
       navigation: { navigate },
     } = this.props;
@@ -51,7 +64,7 @@ class Settings extends React.Component {
     return (
       <View style={styles.settingsContainer}>
         <View style={styles.miniProfile}>
-          <CirclePicture size="large" imageURL={profilePic} auto />
+          <CirclePicture picSize="large" imageURL={profilePic} auto />
           <View style={styles.profileText}>
             <MyAppText style={styles.nameText}>{name}</MyAppText>
             {this.renderSubheading(work, school)}
@@ -88,18 +101,18 @@ class Settings extends React.Component {
 
   render() {
     return (
-      <Query query={GET_ID}>
-        {({ loading, error, data }) => {
+      <GetID query={GET_ID}>
+        {({ loading: loadingLocal, error: errorLocal, data: dataLocal }) => {
           // console.log('local data: ',data);
           // console.log('local error: ',error);
           // console.log('local loading: ',loading);
-          if (loading) return <Spinner />;
-          if (error) return <ErrorMessage error={error.message} />;
+          if (loadingLocal) return <Spinner />;
+          if (errorLocal) return <ErrorMessage error={errorLocal.message} />;
 
-          const { id } = data.user;
+          const { id } = dataLocal.user;
 
           return (
-            <Query query={GET_PROFILE} variables={{ id }}>
+            <GetProfile query={GET_PROFILE} variables={{ id }}>
               {({
                 loading, error, data, refetch,
               }) => {
@@ -111,76 +124,89 @@ class Settings extends React.Component {
                 if (!data.user) return <ErrorMessage error={PROFILE_NOT_FOUND} refetch={refetch} />;
                 return this.renderContent(data.user);
               }}
-            </Query>
+            </GetProfile>
           );
         }}
-      </Query>
+      </GetID>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  settingsContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
+interface Style {
+  settingsContainer: ViewStyle;
+  miniProfile: ViewStyle;
+  profileText: TextStyle;
+  options: ViewStyle;
+  optionText: TextStyle;
+  nameText: TextStyle;
+  schoolText: TextStyle;
+  buttons: ViewStyle;
+  subHeading: ViewStyle;
+  horizontalLine: ViewStyle;
+}
+
+const styles = StyleSheet.create<Style>({
+  buttons: {
     alignItems: 'center',
-    paddingBottom: 20,
-    backgroundColor: '#FFFFFF',
-    margin: 10,
-    borderColor: '#ddd',
-    borderWidth: 1,
-    borderBottomWidth: 0,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 2,
-    shadowOpacity: 0.5,
-    borderRadius: 10,
+    justifyContent: 'center',
+  },
+  horizontalLine: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    flex: 1,
+    marginBottom: 10,
+    paddingVertical: 10,
   },
   miniProfile: {
+    alignItems: 'center',
     flex: 2,
     justifyContent: 'flex-start',
-    alignItems: 'center',
     marginTop: 20,
     minHeight: 100,
   },
-  profileText: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  options: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '100%',
+  nameText: {
+    color: PRIMARY_COLOR,
+    fontSize: 30,
+    textAlign: 'center',
+    // fontFamily:'oxygen-regular'
   },
   optionText: {
     opacity: 0.7,
   },
-  nameText: {
-    fontSize: 30,
-    color: PRIMARY_COLOR,
-    textAlign: 'center',
-    // fontFamily:'oxygen-regular'
+  options: {
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  },
+  profileText: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
   },
   schoolText: {
     fontSize: 14,
     opacity: 0.7,
   },
-  buttons: {
-    justifyContent: 'center',
+  settingsContainer: {
     alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 0,
+    borderColor: '#ddd',
+    borderRadius: 10,
+    borderWidth: 1,
+    flex: 1,
+    justifyContent: 'space-between',
+    margin: 10,
+    paddingBottom: 20,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
   },
   subHeading: {
     flexDirection: 'row',
     marginTop: 2,
-  },
-  horizontalLine: {
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    paddingVertical: 10,
-    marginBottom: 10,
-    flex: 1,
   },
 });
 
