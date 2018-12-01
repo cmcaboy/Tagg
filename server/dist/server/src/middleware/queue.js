@@ -54,7 +54,6 @@ exports.getQueue = ({ id, followerDisplay }) => __awaiter(this, void 0, void 0, 
     RETURN b, distanceApart, num_likes, order, isFollowing, hasDateOpen
     ORDER BY order
     LIMIT ${QUEUE_PAGE_LENGTH}`;
-    console.log('query: ', query);
     return session
         .run(query)
         .then((result) => result.records)
@@ -68,7 +67,6 @@ exports.getQueue = ({ id, followerDisplay }) => __awaiter(this, void 0, void 0, 
             };
         }
         const newCursor = list.length >= QUEUE_PAGE_LENGTH ? list[list.length - 1].order : null;
-        console.log('newCursor: ', newCursor);
         return {
             list,
             cursor: newCursor,

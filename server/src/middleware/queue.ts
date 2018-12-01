@@ -67,7 +67,7 @@ export const getQueue = async ({ id, followerDisplay }: { id: string; followerDi
     ORDER BY order
     LIMIT ${QUEUE_PAGE_LENGTH}`;
 
-  console.log('query: ', query);
+  // console.log('query: ', query);
 
   return session
     .run(query)
@@ -81,7 +81,6 @@ export const getQueue = async ({ id, followerDisplay }: { id: string; followerDi
         isFollowing: record._fields[4],
         hasDateOpen: record._fields[5],
       }));
-      // console.log('queue list: ', list);
       if (list.length === 0) {
         // If the list is empty, return a blank list and a null cursor
         return {
@@ -92,8 +91,9 @@ export const getQueue = async ({ id, followerDisplay }: { id: string; followerDi
       }
 
       const newCursor = list.length >= QUEUE_PAGE_LENGTH ? list[list.length - 1].order : null;
-      console.log('newCursor: ', newCursor);
+      // console.log('newCursor: ', newCursor);
 
+      // console.log('queue list: ', list);
       return {
         list,
         cursor: newCursor,

@@ -83,7 +83,8 @@ var QueueResolvers;
 (function (QueueResolvers) {
     QueueResolvers.defaultResolvers = {
         id: (parent) => (parent.id === undefined ? null : parent.id),
-        cursor: (parent) => parent.cursor === undefined ? null : parent.cursor
+        cursor: (parent) => parent.cursor === undefined ? null : parent.cursor,
+        list: (parent) => (parent.list === undefined ? null : parent.list)
     };
 })(QueueResolvers = exports.QueueResolvers || (exports.QueueResolvers = {}));
 var MatchListResolvers;

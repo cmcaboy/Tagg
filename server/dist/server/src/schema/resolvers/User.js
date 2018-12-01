@@ -32,10 +32,7 @@ exports.User = Object.assign({}, generated_1.UserResolvers.defaultResolvers, { h
         return yield dataSources.neoAPI.findDateRequests({ id });
     }), queue: ({ id: idParent, followerDisplay }, _, { dataSources, user }) => __awaiter(this, void 0, void 0, function* () {
         const id = idParent || user.id;
-        console.log('queue id: ', id);
-        const queue = yield dataSources.neoAPI.getUserQueue({ id, followerDisplay });
-        console.log('queue: ', queue);
-        return queue;
+        return yield dataSources.neoAPI.getUserQueue({ id, followerDisplay });
     }), matchedDates: ({ id: idParent }, _, { dataSources, user }) => __awaiter(this, void 0, void 0, function* () {
         const id = idParent || user.id;
         return yield dataSources.neoAPI.getMatchedDates({ id });
