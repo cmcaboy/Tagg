@@ -10,6 +10,7 @@ import {
   Platform,
   ViewStyle,
   TextStyle,
+  AsyncStorage,
 } from 'react-native';
 import { Button } from 'native-base';
 import { Mutation } from 'react-apollo';
@@ -26,7 +27,7 @@ import { newUser, newUserVariables } from '../apollo/mutations/__generated__/new
 
 interface Props {
   closeModal: () => void;
-  startSetId: (id: string | number) => void;
+  // startSetId: (id: string | number) => void;
 }
 
 // Need to check how to overload typescript intefaces
@@ -153,7 +154,7 @@ export default class NewUserModal extends Component<Props, State> {
     let { email } = this.state;
     email = email.toLowerCase();
 
-    const { closeModal, startSetId } = this.props;
+    const { closeModal } = this.props;
 
     // validate fields
     if (!this.validateFields()) {
@@ -187,14 +188,16 @@ export default class NewUserModal extends Component<Props, State> {
         }
         // This method can return an error. I need to check for an error before closing the modal
         // and showing the user a sucess confirmation. Consider making this function async
-        startSetId(email);
-
+        // startSetId(email); // replaced with asyncstorage
+        await AsyncStorage.setItem("TaggToken", email);
+        
         const checkAuthentication = await emailSignup({ email, password });
         console.log('Check Authentication: ', checkAuthentication);
         if (checkAuthentication) {
           // If the authentication system update fails, remove the user from our records
           this.setState({ loading: false, error: checkAuthentication });
-          startSetId(0);
+          await AsyncStorage.setItem("TaggToken", email);
+          // startSetId(0); // replace with AsyncStorage
           // Need to add a function to remove the user in the event of a failure here
           return null;
         }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import gql from 'graphql-tag';
 import { ApolloClient } from 'apollo-client';
@@ -10,7 +10,7 @@ import { Spinner } from '../components/common';
 
 interface Props {
   startNewUser: (user: any) => void;
-  startSetId: (id: string | number) => void;
+  // startSetId: (id: string | number) => void; // replaced with asyncstorage
   client: ApolloClient<any>;
 }
 interface State {
@@ -37,7 +37,7 @@ class FBLoginButton extends Component<Props, State> {
   render() {
     const {
       startNewUser,
-      startSetId,
+      // startSetId, // replace with asyncstoarge
       client: { query },
     } = this.props;
     const { loading } = this.state;
@@ -158,7 +158,8 @@ class FBLoginButton extends Component<Props, State> {
                 await startNewUser(newUser);
               }
 
-              await startSetId(email);
+              // await startSetId(email);
+              await AsyncStorage.setItem('TaggToken', email);
 
               this.setState({ loading: false });
               console.log('fb login complete');
@@ -166,7 +167,8 @@ class FBLoginButton extends Component<Props, State> {
           }}
           onLogoutFinished={async () => {
             firebase.auth().signOut();
-            await startSetId(0);
+            // await startSetId(0);
+            await AsyncStorage.setItem('TaggToken', '0');
           }}
         />
       </View>

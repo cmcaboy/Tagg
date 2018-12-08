@@ -18,13 +18,13 @@ import {
 // import { getCurrentTime } from '../format';
 import FBLoginButton from '../services/FBLoginButton';
 import { NEW_USER } from '../apollo/mutations';
-import { SET_ID_LOCAL } from '../apollo/local/mutations';
+// import { SET_ID_LOCAL } from '../apollo/local/mutations';
 import emailLogin from '../services/emailLogin';
 import checkEmail from '../services/checkEmail';
 import NewUserModal from './NewUserModal';
 import emailValidation from '../services/emailValidation';
 import { newUser, newUserVariables } from '../apollo/mutations/__generated__/newUser';
-import { setId, setIdVariables } from '../apollo/local/mutations/__generated__/setId';
+// import { setId, setIdVariables } from '../apollo/local/mutations/__generated__/setId';
 
 interface Props {};
 
@@ -39,7 +39,7 @@ interface State {
 }
 
 class NewUser extends Mutation<newUser, newUserVariables> {};
-class SetId extends Mutation<setId, setIdVariables> {};
+// class SetId extends Mutation<setId, setIdVariables> {};
 
 class LoginForm extends Component<Props, State> {
   constructor(props: Props) {
@@ -70,7 +70,7 @@ class LoginForm extends Component<Props, State> {
 
   modalClose = () => this.setState({ modalDisplay: false });
 
-  emailLogin = async ({ startSetId, client }: { startSetId: (id: string) => void; client: any }) => {
+  emailLogin = async ({ client }: { client: any }) => {
     const { email, password } = this.state;
 
     // Display a loading spinner and remove error display
@@ -100,7 +100,7 @@ class LoginForm extends Component<Props, State> {
     // If login is successful, the user is automatically routed to the functioning app (Stagg component)
     emailLogin({
       password,
-      startSetId,
+      // startSetId, // replaced with asyncstorage
       email: email.toLowerCase(),
     })
       .then(error => this.setState({ error, loading: false }))
@@ -151,98 +151,88 @@ class LoginForm extends Component<Props, State> {
             },
           });
           return (
-            <SetId mutation={SET_ID_LOCAL}>
-              {(setId) => {
-                const startSetId = (id: string | number) => {
-                  console.log('set id: ', id);
-                  setId({ variables: { id } });
-                };
-                return (
-                  <KeyboardAwareScrollView
-                    contentContainerStyle={styles.loginContainer as ViewStyle}
-                    scrollEnabled
-                    enableOnAndroid
-                    enableAutomaticScroll
-                    keyboardShouldPersistTaps="always"
-                  >
-                    <MyAppModal
-                      isVisible={this.state.modalDisplay}
-                      close={this.modalClose}
-                      swipeToClose={false}
-                    >
-                      <NewUserModal closeModal={this.modalClose} startSetId={startSetId} />
-                    </MyAppModal>
-                    <View style={styles.content}>
-                      <MyAppText style={styles.title}>Tagg</MyAppText>
-                      <MyAppText style={styles.subTitle}>Find a date...... Fast!</MyAppText>
-                      <MyAppText style={styles.errorTextStyle}>{error}</MyAppText>
-                      <CardSection style={{ borderBottomWidth: 0 }}>
-                        <ApolloConsumer>
-                          {client => (
-                            <FBLoginButton
-                              client={client}
-                              startNewUser={startNewUser}
-                              startSetId={startSetId}
-                            />
-                          )}
-                        </ApolloConsumer>
-                      </CardSection>
-                    </View>
-                    <View style={styles.emailContainer}>
-                      <TouchableOpacity onPress={this.toggleEmail}>
-                        <Text style={styles.emailFormTitleText}>Use Email Instead</Text>
-                      </TouchableOpacity>
-                      {this.state.showEmail && (
-                        <View style={styles.emailForm}>
-                          <MyAppText style={styles.errorTextStyle}>{emailError}</MyAppText>
-                          <Form>
-                            <Item>
-                              <Input
-                                autoCapitalize="none"
-                                placeholder="Email"
-                                value={this.state.email}
-                                onChangeText={this.emailInput}
-                              />
-                            </Item>
-                            <Item>
-                              <Input
-                                secureTextEntry
-                                placeholder="Password"
-                                value={this.state.password}
-                                onChangeText={this.passwordInput}
-                              />
-                            </Item>
-                            <ApolloConsumer>
-                              {(client) => {
-                                if (this.state.loading) {
-                                  return <Spinner />;
-                                }
-                                return (
-                                  <View style={signContainer}>
-                                    <Button
-                                      style={styles.signInButton as ViewStyle}
-                                      block
-                                      onPress={() => this.emailLogin({ client, startSetId })}
-                                    >
-                                      <Text>Sign in</Text>
-                                    </Button>
-                                    <TouchableOpacity
-                                      onPress={() => this.emailSignup()}
-                                    >
-                                      <MyAppText style={signUp}>Sign up with Email</MyAppText>
-                                    </TouchableOpacity>
-                                  </View>
-                                );
-                              }}
-                            </ApolloConsumer>
-                          </Form>
-                        </View>
-                      )}
-                    </View>
-                  </KeyboardAwareScrollView>
-                );
-              }}
-            </SetId>
+            <KeyboardAwareScrollView
+              contentContainerStyle={styles.loginContainer as ViewStyle}
+              scrollEnabled
+              enableOnAndroid
+              enableAutomaticScroll
+              keyboardShouldPersistTaps="always"
+            >
+              <MyAppModal
+                isVisible={this.state.modalDisplay}
+                close={this.modalClose}
+                swipeToClose={false}
+              >
+                <NewUserModal closeModal={this.modalClose}/>
+              </MyAppModal>
+              <View style={styles.content}>
+                <MyAppText style={styles.title}>Tagg</MyAppText>
+                <MyAppText style={styles.subTitle}>Find a date...... Fast!</MyAppText>
+                <MyAppText style={styles.errorTextStyle}>{error}</MyAppText>
+                <CardSection style={{ borderBottomWidth: 0 }}>
+                  <ApolloConsumer>
+                    {client => (
+                      <FBLoginButton
+                        client={client}
+                        startNewUser={startNewUser}
+                        // startSetId={startSetId} // switched to asyncstorage
+                      />
+                    )}
+                  </ApolloConsumer>
+                </CardSection>
+              </View>
+              <View style={styles.emailContainer}>
+                <TouchableOpacity onPress={this.toggleEmail}>
+                  <Text style={styles.emailFormTitleText}>Use Email Instead</Text>
+                </TouchableOpacity>
+                {this.state.showEmail && (
+                  <View style={styles.emailForm}>
+                    <MyAppText style={styles.errorTextStyle}>{emailError}</MyAppText>
+                    <Form>
+                      <Item>
+                        <Input
+                          autoCapitalize="none"
+                          placeholder="Email"
+                          value={this.state.email}
+                          onChangeText={this.emailInput}
+                        />
+                      </Item>
+                      <Item>
+                        <Input
+                          secureTextEntry
+                          placeholder="Password"
+                          value={this.state.password}
+                          onChangeText={this.passwordInput}
+                        />
+                      </Item>
+                      <ApolloConsumer>
+                        {(client) => {
+                          if (this.state.loading) {
+                            return <Spinner />;
+                          }
+                          return (
+                            <View style={signContainer}>
+                              <Button
+                                style={styles.signInButton as ViewStyle}
+                                block
+                                onPress={() => this.emailLogin({ client })}
+                              >
+                                <Text>Sign in</Text>
+                              </Button>
+                              <TouchableOpacity
+                                onPress={() => this.emailSignup()}
+                              >
+                                <MyAppText style={signUp}>Sign up with Email</MyAppText>
+                              </TouchableOpacity>
+                            </View>
+                          );
+                        }}
+                      </ApolloConsumer>
+                    </Form>
+                  </View>
+                )}
+              </View>
+            </KeyboardAwareScrollView>
           );
         }}
       </NewUser>

@@ -12,12 +12,12 @@ import {
   CirclePicture, MyAppText, Spinner, ErrorMessage,
 } from './common';
 import { GET_MATCHES } from '../apollo/queries';
-import { GET_ID } from '../apollo/local/queries';
+// import { GET_ID } from '../apollo/local/queries';
 import {
   formatDescription, formatDate, formatBids, formatDay, formatName,
 } from '../format';
 import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
-import { getId } from '../apollo/queries/__generated__/getId';
+// import { getId } from '../apollo/queries/__generated__/getId';
 import { getMatches, getMatchesVariables } from '../apollo/queries/__generated__/getMatches';
 
 interface Params {};
@@ -28,7 +28,7 @@ interface Props {
 
 interface State {};
 
-class GetId extends Query<getId, {}> {};
+// class GetId extends Query<getId, {}> {};
 class GetMatches extends Query<getMatches, getMatchesVariables> {};
 
 class Matches extends Component<Props, State> {
@@ -138,17 +138,17 @@ class Matches extends Component<Props, State> {
   }
 
   render() {
-    return (
-      <GetId query={GET_ID}>
-        {({ loading: loadingLocal, error: errorLocal, data: dataLocal }) => {
-          console.log('local data: ',dataLocal);
-          // console.log('local error: ',errorLocal);
-          // console.log('local loading: ',loadingLocal);
-          if (loadingLocal) return <Spinner />;
-          if (errorLocal) return <ErrorMessage error={errorLocal.message} />;
-          const { id } = dataLocal.user;
+    // return (
+    //   <GetId query={GET_ID}>
+    //     {({ loading: loadingLocal, error: errorLocal, data: dataLocal }) => {
+    //       console.log('local data: ',dataLocal);
+    //       // console.log('local error: ',errorLocal);
+    //       // console.log('local loading: ',loadingLocal);
+    //       if (loadingLocal) return <Spinner />;
+    //       if (errorLocal) return <ErrorMessage error={errorLocal.message} />;
+    //       const { id } = dataLocal.user;
           return (
-            <GetMatches query={GET_MATCHES} variables={{ id }} fetchPolicy="network-only">
+            <GetMatches query={GET_MATCHES} fetchPolicy="network-only">
               {({
                 loading, error, data, refetch,
               }) => {
@@ -163,6 +163,7 @@ class Matches extends Component<Props, State> {
                   console.log('noMatches');
                   return this.noMatches();
                 }
+                const { id } = data.user;
                 return this.renderContent({
                   id,
                   refetch,
@@ -174,9 +175,9 @@ class Matches extends Component<Props, State> {
               }}
             </GetMatches>
           );
-        }}
-      </GetId>
-    );
+    //     }}
+    //   </GetId>
+    // );
   }
 }
 
