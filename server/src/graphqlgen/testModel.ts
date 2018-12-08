@@ -35,6 +35,7 @@ export interface Following {
 export interface DateBidList {
   id: string | null;
   cursor: number | null;
+  list: any | null;
 }
 export interface DateBid {
   id: string | null;
@@ -55,6 +56,7 @@ export interface DateItem {
 export interface DateList {
   id: string | null;
   cursor: number | null;
+  list: any | null;
 }
 export interface Queue {
   id: string | null;
@@ -64,6 +66,7 @@ export interface Queue {
 export interface MatchList {
   id: string | null;
   cursor: number | null;
+  list: any | null;
 }
 export interface Match {
   id: string | null;

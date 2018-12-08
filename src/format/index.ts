@@ -19,4 +19,6 @@ export const formatDistanceApart = (d: number) => `${Math.round(d)} ${Math.round
 export const getCurrentTime = () => moment().unix(); // returns seconds since epoch
 export const formatDate = (date: number) => moment.unix(date).format(DATE_FORMAT);
 export const formatDay = (date: any) => moment.unix(date).format(DAY_FORMAT);
-export const convertDateToEpoch = (date: any) => moment().unix(date);
+export const convertDateToEpoch = (date: any) => date.moment().unix();
+// export const convertDateToEpoch = (date: any) => moment().unix(date);
+

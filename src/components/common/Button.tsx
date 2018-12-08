@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { PRIMARY_COLOR } from '../../variables/index';
 
-interface Props {
+export interface ButtonProps {
   onPress: () => any;
   children: ReactNode;
   buttonStyle?: ViewStyle;
@@ -19,7 +19,7 @@ interface Style {
   invertedColorsText: TextStyle;
 }
 
-const Button: SFC<Props> = ({
+const Button: SFC<ButtonProps> = ({
   onPress,
   children,
   buttonStyle,

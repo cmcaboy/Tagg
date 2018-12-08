@@ -11,7 +11,16 @@ const uuid = require('node-uuid');
 export const Mutation: MutationResolvers.Type = {
   ...MutationResolvers.defaultResolvers,
   editUser: async (_, args, { dataSources }) => await dataSources.neoAPI.setUser(args),
-  removeUser: async (_, args, { dataSources }) => await dataSources.neoAPI.removeUser(args),
+  removeUser: async (_, args, { dataSources }) => {
+    // Get users's dateId's
+    const { list: dateList } = await dataSources.neoAPI.getMatchedDates();
+    // Remove user from neo db
+    const user = await dataSources.neoAPI.removeUser(args);
+    // Remove user's matched dates from firestore
+    dateList.map(({ matchId }: { matchId: string }) => dataSources.firestoreAPI.removeMatch(matchId));
+    // Return user object
+    return user;
+  },
   editUserQueue: async (_, args, { dataSources }) => await dataSources.neoAPI.setUserQueue(args),
   newUser: async (_, tempArgs, { dataSources }) => await dataSources.neoAPI.createUser(tempArgs),
   newMessage: async (_, args, { dataSources }) => {
@@ -85,17 +94,25 @@ export const Mutation: MutationResolvers.Type = {
     createDatePush(id, date);
     return date;
   },
-  chooseWinner: async (_, { winnerId, dateId }, { dataSources, user: { id } }) => {
+  chooseWinner: async (
+    _,
+    { id: argsId, winnerId, dateId },
+    { dataSources, user: { id: contextId } },
+  ) => {
     // In order to create a winner, we need to set winner=true on the bid, set open to FALSE on the date
     // Then we need to create a new document in the Firestore database, which will store messages between the
     // two.
 
+    const id = argsId || contextId || null;
+
     const date = await dataSources.neoAPI.createDateWinner({
+      id,
       winnerId,
       dateId,
     });
-    // Create new document in Firestore for match
+    console.log('date: ', date);
 
+    // Create new document in Firestore for match
     const firestoreCreation = await dataSources.firestoreAPI.createDateChat({
       id,
       winnerId,

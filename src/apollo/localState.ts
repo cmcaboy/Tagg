@@ -2,7 +2,14 @@ import gql from 'graphql-tag';
 
 export const resolvers = {
   Mutation: {
-    updateAgePreferenceLocal: (_, { minAgePreference, maxAgePreference }, { cache }) => {
+    updateAgePreferenceLocal: (
+      _: null,
+      {
+        minAgePreference,
+        maxAgePreference,
+      }: { minAgePreference: number; maxAgePreference: number },
+      { cache }: { cache: any },
+    ): any => {
       const query = gql`
         query getAgePreferenceLocal {
           id
@@ -27,7 +34,11 @@ export const resolvers = {
       cache.writeQuery({ query, data });
       return null;
     },
-    updateDistanceLocal: (_, { distance }, { cache }) => {
+    updateDistanceLocal: (
+      _: null,
+      { distance }: { distance: number },
+      { cache }: { cache: any },
+    ): any => {
       const query = gql`
         query getDistanceLocal {
           user @client {
@@ -52,7 +63,7 @@ export const resolvers = {
       cache.writeQuery({ query, data });
       return null;
     },
-    updateIdLocal: (_, { id }, { cache }) => {
+    updateIdLocal: (_: any, { id }: { id: any }, { cache }: { cache: any }): any => {
       const query = gql`
         query getIdLocal {
           user @client {
@@ -74,7 +85,11 @@ export const resolvers = {
 
       return null;
     },
-    updateSendNotificationsLocal: (_, { sendNotifications }, { cache }) => {
+    updateSendNotificationsLocal: (
+      _: null,
+      { sendNotifications }: { sendNotifications: boolean },
+      { cache }: { cache: any },
+    ): any => {
       const query = gql`
         query getSendNotificationsLocal {
           user @client {

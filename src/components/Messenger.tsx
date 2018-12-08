@@ -7,8 +7,6 @@ import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import { GET_MESSAGES } from '../apollo/queries';
 import { getCurrentTime } from '../format';
 
-interface Params {}
-
 interface Props {
   subscribeToNewMessages: () => () => void;
   newMessage: any;
@@ -20,7 +18,8 @@ interface Props {
   id: string;
   messages: any[];
   cursor: number;
-  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
+  navigation?: NavigationScreenProp<NavigationRoute<any>, any>;
+  // navigation?: any;
 }
 
 interface State {}

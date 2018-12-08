@@ -9,12 +9,16 @@ import { auth } from '../firebase';
 import { SET_ID_LOCAL } from '../apollo/local/mutations';
 import { ICON_SIZE, ICON_OPACITY } from '../variables';
 import { MyAppText, Spinner } from './common';
+import { setId, setIdVariables } from '../apollo/local/mutations/__generated__/setId';
 
 interface Props {}
 
 interface State {
   loading: boolean;
 }
+
+class SetID extends Mutation<setId, setIdVariables> {}
+
 export default class LogoutButton extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -23,7 +27,7 @@ export default class LogoutButton extends Component<Props, State> {
     };
   }
 
-  startLogout = (setId: ({}) => void) => {
+  startLogout = (setId: (obj: any) => void) => {
     // Render Spinner
     this.setState({ loading: true });
     // sign out of Firebase auth
@@ -36,7 +40,7 @@ export default class LogoutButton extends Component<Props, State> {
     this.setState({ loading: false });
   };
 
-  renderLogoutButton = (setId: ({}) => void) => {
+  renderLogoutButton = (setId: (obj: any) => void) => {
     const { optionsText, buttons } = styles;
     const { loading } = this.state;
     if (loading) {
@@ -58,9 +62,9 @@ export default class LogoutButton extends Component<Props, State> {
 
   render() {
     return (
-      <Mutation mutation={SET_ID_LOCAL}>
+      <SetID mutation={SET_ID_LOCAL}>
         {setId => <View>{this.renderLogoutButton(setId)}</View>}
-      </Mutation>
+      </SetID>
     );
   }
 }

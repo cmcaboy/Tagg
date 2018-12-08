@@ -9,7 +9,7 @@ import {
   GET_SETTINGS,
   GET_EDIT_PROFILE,
   CHECK_EMAIL,
-} from '../../../../../src/apollo/queries/index';
+} from '../../../clientGQL/queries';
 
 const { createTestClient } = require('apollo-server-testing');
 
@@ -29,6 +29,8 @@ describe('Query.user', () => {
     engine: null,
   });
   const { query } = createTestClient(testServer);
+
+  jest.setTimeout(10000); // Set timeout to 10 seconds
 
   it('GET_QUEUE no params', async () => {
     const res = await query({ query: GET_QUEUE });

@@ -32,7 +32,7 @@ const StaggHeader: SFC<Props> = ({ flipNewDateModal, flipFilterModal }) => {
   const showFilter = () => flipFilterModal();
 
   return (
-    <HeaderCard style={styles.overRide}>
+    <HeaderCard style={styles.overRide as ViewStyle}>
       <View style={styles.header}>
         <TouchableOpacity onPress={newDate} style={{ flex: 1 }} accessible={false}>
           <View style={[styles.headerItem]}>

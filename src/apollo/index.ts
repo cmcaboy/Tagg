@@ -1,12 +1,13 @@
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { withClientState } from 'apollo-link-state';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
 import { ApolloLink, split } from 'apollo-link';
 import { persistCache } from 'apollo-cache-persist';
 import { AsyncStorage } from 'react-native';
+import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types';
 import { GRAPHQL_SERVER, GRAPHQL_SERVER_WS } from '../variables';
 import { resolvers, defaults } from './localState';
 
@@ -25,7 +26,7 @@ const cache = new InMemoryCache({ dataIdFromObject: object => object.id });
 // This works similar to redux-persist.
 persistCache({
   cache,
-  storage: AsyncStorage,
+  storage: AsyncStorage as PersistentStorage<PersistedData<NormalizedCacheObject>>,
 });
 
 // stateLink is the local graphql engine for state management
@@ -52,8 +53,8 @@ const wsLink = new WebSocketLink({
 // the web sockets link. If false, it uses the http link.
 const link = split(
   ({ query }) => {
-    const { kind, operation } = getMainDefinition(query);
-    return kind === 'OperationDefinition' && operation === 'subscription';
+    const definition = getMainDefinition(query);
+    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
   },
   wsLink,
   httpLink,
@@ -66,14 +67,14 @@ export const client = new ApolloClient({
   cache,
   connectToDevTools: true,
   // experimental
-  dataIdFromObject: (object) => {
-    switch (object.__typename) {
-      case 'Match':
-        return object.matchId;
-      default:
-        return object.id;
-    }
-  },
+  // dataIdFromObject: (object) => {
+  //   switch (object.__typename) {
+  //     case 'Match':
+  //       return object.matchId;
+  //     default:
+  //       return object.id;
+  //   }
+  // },
 });
 
 // enable remote debugging

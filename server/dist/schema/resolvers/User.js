@@ -9,32 +9,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const generated_1 = require("../../types/generated");
-exports.User = Object.assign({}, generated_1.UserResolvers.defaultResolvers, { hasDateOpen: ({ id }, _, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.userHasDateOpen({ id }); }), distanceApart: ({ id, distanceApart }, _, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.userDistanceApart({
+exports.User = Object.assign({}, generated_1.UserResolvers.defaultResolvers, { hasDateOpen: ({ id }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.userHasDateOpen({ id }); }), distanceApart: ({ id, distanceApart }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () {
+        return yield dataSources.neoAPI.userDistanceApart({
             id,
             distanceApart,
         });
-    }), isFollowing: ({ id, isFollowing }, _, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.userIsFollowing({
+    }), isFollowing: ({ id, isFollowing }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () {
+        return yield dataSources.neoAPI.userIsFollowing({
             id,
             isFollowing,
         });
-    }), following: ({ id: idParent }, _, { datasources, user }) => __awaiter(this, void 0, void 0, function* () {
+    }), following: ({ id: idParent }, _, { dataSources, user }) => __awaiter(this, void 0, void 0, function* () {
         const id = idParent || user.id;
-        return yield datasources.neoAPI.getFollowersFromUser({
+        return yield dataSources.neoAPI.getFollowersFromUser({
             id,
         });
-    }), bids: ({ id: idParent }, _, { datasources, user }) => __awaiter(this, void 0, void 0, function* () {
+    }), bids: ({ id: idParent }, _, { dataSources, user }) => __awaiter(this, void 0, void 0, function* () {
         const id = idParent || user.id;
-        return yield datasources.neoAPI.findBidsFromUser({ id });
-    }), dateRequests: ({ id: idParent }, _, { datasources, user }) => __awaiter(this, void 0, void 0, function* () {
+        return yield dataSources.neoAPI.findBidsFromUser({ id });
+    }), dateRequests: ({ id: idParent }, _, { dataSources, user }) => __awaiter(this, void 0, void 0, function* () {
         const id = idParent || user.id;
-        return yield datasources.neoAPI.findDateRequests({ id });
-    }), queue: ({ id: idParent, followerDisplay }, _, { datasources, user }) => __awaiter(this, void 0, void 0, function* () {
+        return yield dataSources.neoAPI.findDateRequests({ id });
+    }), queue: ({ id: idParent, followerDisplay }, _, { dataSources, user }) => __awaiter(this, void 0, void 0, function* () {
         const id = idParent || user.id;
-        return yield datasources.neoAPI.getUserQueue({ id, followerDisplay });
-    }), matchedDates: ({ id: idParent }, _, { datasources, user }) => __awaiter(this, void 0, void 0, function* () {
+        return yield dataSources.neoAPI.getUserQueue({ id, followerDisplay });
+    }), matchedDates: ({ id: idParent }, _, { dataSources, user }) => __awaiter(this, void 0, void 0, function* () {
         const id = idParent || user.id;
-        return yield datasources.neoAPI.getMatchedDates({ id });
+        return yield dataSources.neoAPI.getMatchedDates({ id });
     }) });
 //# sourceMappingURL=User.js.map

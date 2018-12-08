@@ -2,13 +2,14 @@
   "name": "server",
   "scripts": {
     "lint": "tslint --project tsconfig.json",
-    "test": "jest",
+    "test": "jest --runInBand --detectOpenHandles",
     "build": "tsc",
     "start": "forever restart dist/index.js || forever start dist/index.js",
     "start2": "forever start dist/index.js",
     "stop": "forever stop dist/index.js",
     "tsc": "tsc",
-    "generate-types": "echo 'Make sure you update typeDefs.graphql with the latest schema updates!!!' && cd src/graphqlgen && gg"
+    "generate-types": "echo 'Make sure you update typeDefs.graphql with the latest schema updates!!!' && cd src/graphqlgen && gg",
+    "client:copy": "cp ../src/apollo/queries/index.ts src/clientGQL/queries.ts && cp ../src/apollo/mutations/index.ts src/clientGQL/mutation.ts"
   },
   "main": "dist/index.js",
   "dependencies": {
@@ -47,7 +48,8 @@
     "jest-cli": "^23.6.0",
     "regenerator-runtime": "^0.13.1",
     "ts-jest": "^23.10.5",
-    "tslint": "^5.8.0"
+    "tslint": "^5.8.0",
+    "typescript": "^3.2.1"
   },
   "jest": {
     "testPathIgnorePatterns": [

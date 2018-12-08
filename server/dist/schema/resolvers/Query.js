@@ -17,14 +17,21 @@ exports.Query = Object.assign({}, generated_1.QueryResolvers.defaultResolvers, {
         }
         const id = argsId || user.id;
         return yield dataSources.neoAPI.findUser({ id, hostId });
-    }), messages: (_, { id }, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.firestoreAPI.getMessages({ id }); }), date: (_, { id }, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.findDate({ id }); }), dates: (_, __) => {
+    }), messages: (_, { id }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.firestoreAPI.getMessages({ id }); }), date: (_, { id }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.findDate({ id }); }), dates: (_, __) => {
         throw new Error('Resolver not implemented');
-    }, otherBids: (_, { id }, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.findOtherBids({ id }); }), moreMessages: (_, { id, cursor }, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.firestoreAPI.getMoreMessages({ id, cursor }); }), moreQueue: (_, { cursor, followerDisplay }, { datasources, user }) => __awaiter(this, void 0, void 0, function* () {
+    }, otherBids: (_, { id: argsId }, { dataSources, user }) => __awaiter(this, void 0, void 0, function* () {
         if (!user || !user.id) {
             console.log('User not authenticated');
             throw new AuthenticationError('User not authenticated');
         }
-        return yield datasources.neoAPI.getQueueMore({
+        const id = argsId || user.id;
+        return yield dataSources.neoAPI.findOtherBids({ id });
+    }), moreMessages: (_, { id, cursor }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.firestoreAPI.getMoreMessages({ id, cursor }); }), moreQueue: (_, { cursor, followerDisplay }, { dataSources, user }) => __awaiter(this, void 0, void 0, function* () {
+        if (!user || !user.id) {
+            console.log('User not authenticated');
+            throw new AuthenticationError('User not authenticated');
+        }
+        return yield dataSources.neoAPI.getQueueMore({
             cursor,
             followerDisplay,
         });

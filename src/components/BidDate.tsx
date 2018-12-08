@@ -98,9 +98,10 @@ class BidDate extends React.Component<Props, State> {
       location: '',
       description: '',
     };
+    console.log('dummy');
   }
 
-  bid = (bid: ({}) => any) => {
+  bid = (bid: (obj: any) => any) => {
     const {
       navigation,
       navigation: { goBack },

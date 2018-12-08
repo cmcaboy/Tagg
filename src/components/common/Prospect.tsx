@@ -1,6 +1,6 @@
 import React, { SFC } from 'react';
 import {
-  View, Image, StyleSheet, ViewStyle, TextStyle,
+  View, Image, StyleSheet, ViewStyle, TextStyle, ImageStyle,
 } from 'react-native';
 import { MyAppText } from './index';
 import { ProspectCard } from './ProspectCard';
@@ -12,7 +12,7 @@ interface Props {
 
 interface Style {
   containerStyle: ViewStyle;
-  imageStyle: ViewStyle;
+  imageStyle: ImageStyle;
   textStyle: TextStyle;
 }
 

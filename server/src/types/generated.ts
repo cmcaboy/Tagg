@@ -764,7 +764,9 @@ export namespace DateBidListResolvers {
   export const defaultResolvers = {
     id: (parent: DateBidList) => (parent.id === undefined ? null : parent.id),
     cursor: (parent: DateBidList) =>
-      parent.cursor === undefined ? null : parent.cursor
+      parent.cursor === undefined ? null : parent.cursor,
+    list: (parent: DateBidList) =>
+      parent.list === undefined ? null : parent.list
   };
 
   export type IdResolver = (
@@ -1104,7 +1106,8 @@ export namespace DateListResolvers {
   export const defaultResolvers = {
     id: (parent: DateList) => (parent.id === undefined ? null : parent.id),
     cursor: (parent: DateList) =>
-      parent.cursor === undefined ? null : parent.cursor
+      parent.cursor === undefined ? null : parent.cursor,
+    list: (parent: DateList) => (parent.list === undefined ? null : parent.list)
   };
 
   export type IdResolver = (
@@ -1209,7 +1212,9 @@ export namespace MatchListResolvers {
   export const defaultResolvers = {
     id: (parent: MatchList) => (parent.id === undefined ? null : parent.id),
     cursor: (parent: MatchList) =>
-      parent.cursor === undefined ? null : parent.cursor
+      parent.cursor === undefined ? null : parent.cursor,
+    list: (parent: MatchList) =>
+      parent.list === undefined ? null : parent.list
   };
 
   export type IdResolver = (

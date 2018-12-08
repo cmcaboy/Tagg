@@ -22,7 +22,7 @@ import {
   SET_DESCRIPTION,
   SET_PICS,
   SET_EMAIL,
-} from '../../../../../src/apollo/mutations/index';
+} from '../../../clientGQL/mutation';
 
 const { createTestClient } = require('apollo-server-testing');
 
@@ -96,6 +96,7 @@ describe('Mutation ', () => {
       description,
       id: expect.any(String),
     });
+    console.log('DATE_ID NEW_DATE: ', res.data.createDate.id);
   });
   it('BID', async () => {
     const bidDescription = 'Looking for a walk of the beach';
@@ -104,7 +105,7 @@ describe('Mutation ', () => {
     const res = await mutate({
       mutation: BID,
       variables: {
-        id: TEST_USER.id,
+        id: TEST_ID,
         dateId: DATE_ID,
         bidPlace,
         bidDescription,
@@ -369,6 +370,7 @@ describe('Mutation ', () => {
       },
     });
     expect(res).toMatchSnapshot();
+    console.log('res: ', res);
     expect(res.data.removeUser.id).toEqual(TEST_USER.id);
   });
 });

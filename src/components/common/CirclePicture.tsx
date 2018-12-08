@@ -5,8 +5,8 @@ import {
 import { PLACEHOLDER_PHOTO } from '../../variables';
 
 interface Props {
-  imageURL?: 'large' | 'small' | 'xlarge' | 'mini';
-  picSize?: string;
+  imageURL?: string;
+  picSize?: 'large' | 'small' | 'xlarge' | 'mini';
   auto?: boolean;
 }
 

@@ -37,6 +37,7 @@ import { setWork, setWorkVariables } from '../apollo/mutations/__generated__/set
 import { setDescriptionVariables, setDescription } from '../apollo/mutations/__generated__/setDescription';
 import { getEditProfile, getEditProfileVariables, getEditProfile_user } from '../apollo/queries/__generated__/getEditProfile';
 import { setName, setNameVariables } from '../apollo/mutations/__generated__/setName';
+import { getId } from '../apollo/queries/__generated__/getId';
 
 
 class SetPics extends Mutation<setPics, setPicsVariables> {};
@@ -47,6 +48,7 @@ class SetSchool extends Mutation<setSchool, setSchoolVariables> {};
 class SetWork extends Mutation<setWork, setWorkVariables> {};
 class SetDescription extends Mutation<setDescription, setDescriptionVariables> {};
 class GetEditProfile extends Query<getEditProfile, getEditProfileVariables> {};
+class GetID extends Query<getId, {}> {};
 
 interface UserEditProfile extends getEditProfile_user {
   id: string | null;
@@ -176,7 +178,7 @@ class EditProfile extends Component<Props, State> {
 
   render() {
     return (
-      <Query query={GET_ID}>
+      <GetID query={GET_ID}>
         {({ loading, error, data }) => {
           // console.log('local data: ',data);
           // console.log('local error: ',error);
@@ -199,7 +201,7 @@ class EditProfile extends Component<Props, State> {
             </GetEditProfile>
           );
         }}
-      </Query>
+      </GetID>
     );
   }
 }

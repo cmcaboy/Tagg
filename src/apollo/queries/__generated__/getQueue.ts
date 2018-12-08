@@ -32,6 +32,7 @@ export interface getQueue_user {
   __typename: "User";
   id: string | null;
   token: string | null;
+  followerDisplay: string | null;
   queue: getQueue_user_queue | null;
 }
 

@@ -29,6 +29,7 @@ const dataSources = () => ({
 // use the roles parameter to validate the user has permission
 // to execute a specific query
 const context = async ({ req }: { req: any }) => {
+  console.log('req: ', req);
   const auth = (req.headers && req.headers.authorization) || '';
   console.log('auth: ', auth);
   // const email = new Buffer(auth, 'base64').toString('ascii');

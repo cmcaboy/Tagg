@@ -2,19 +2,20 @@ import { Toast } from 'native-base';
 
 interface Params {
   text: string;
-  duration: number;
-  buttonText: string;
+  duration?: number;
+  buttonText?: string;
   position?: 'bottom' | 'top' | 'center';
+  // position?: string;
 }
 
 // First parameter: object containing details about the test message including
 // text, button text, position, and duration
 // The second parameter is a callback that is executed when the toast button is pressed
 
-export default (
+const ToastMessage = (
   {
     text, duration = 6000, buttonText = 'Okay', position = 'bottom',
-  },
+  }: Params,
   onClose = () => {},
 ) => Toast.show({
   text,
@@ -29,3 +30,5 @@ export default (
     }
   },
 });
+
+export default ToastMessage;

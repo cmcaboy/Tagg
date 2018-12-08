@@ -3,14 +3,24 @@ import { getCurrentTime, convertDateToEpoch } from '../format';
 
 const TEST_CASE_SIZE = 100;
 
-const rand = r => Math.round(Math.random() * r);
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const rand = (r: number) => Math.round(Math.random() * r);
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export default async ({
-  newUser, follow, bid, createDate, chooseWinner,
+const FakeFunction = async ({
+  newUser,
+  follow,
+  bid,
+  createDate,
+  chooseWinner,
+}: {
+newUser: any;
+follow: any;
+bid: any;
+createDate: any;
+chooseWinner: any;
 }) => {
   // Generate fake user data
-  const users = [];
+  const users: any[] = [];
   for (let i = 0; i < TEST_CASE_SIZE; i += 1) {
     const user = {
       id: faker.internet.email(),
@@ -40,8 +50,8 @@ export default async ({
     };
     users.push(user);
   }
-  const dates = [];
-  const bids = [];
+  const dates: any[] = [];
+  const bids: any[] = [];
 
   // Create new users
   users.forEach((u) => {
@@ -78,7 +88,7 @@ export default async ({
           datetimeOfDate: convertDateToEpoch(faker.date.future(14)),
           description: faker.random.words(5),
         },
-        update: (store, data) => {
+        update: (store: any, data: any) => {
           dates.push({
             ...data.data.createDate,
             creator: u.id,
@@ -101,7 +111,7 @@ export default async ({
           bidPlace: faker.random.words(2),
           bidDescription: faker.random.words(10),
         },
-        update: (store, data) => {
+        update: (store: any, data: any) => {
           bids.push({
             ...data.data.bid,
             bidder: users[k].id,
@@ -140,3 +150,5 @@ export default async ({
     });
   });
 };
+
+export default FakeFunction;

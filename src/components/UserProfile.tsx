@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import {
+  View, StyleSheet, ScrollView, ViewStyle, TextStyle,
+} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 // import getUserProfile from '../selectors/getUserProfile';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Query } from 'react-apollo';
+import { NavigationRoute, NavigationScreenProp } from 'react-navigation';
 import UserProfilePhotos from './UserProfilePhotos';
 import DateOpenButton from './DateOpenButton';
 import {
@@ -13,9 +16,28 @@ import {
 import { PRIMARY_COLOR } from '../variables';
 import { formatDistanceApart, formatName } from '../format';
 import { GET_USER_PROFILE } from '../apollo/queries';
+import { getUserProfile, getUserProfileVariables } from '../apollo/queries/__generated__/getUserProfile';
 
-class UserProfile extends Component {
-  static navigationOptions = ({ navigation }) => ({
+interface Params {
+  name: string;
+  id: string;
+  hostId: string;
+}
+
+interface Props {
+  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
+}
+
+interface State {}
+
+class GetUserProfile extends Query<getUserProfile, getUserProfileVariables> {};
+
+class UserProfile extends Component<Props, State> {
+  static navigationOptions = ({
+    navigation,
+  }: {
+  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
+  }) => ({
     // title: `${navigation.state.params.name}`,
     headerRight: <View />,
     headerTitle: (
@@ -60,7 +82,7 @@ class UserProfile extends Component {
     } = this.props;
 
     return (
-      <Query query={GET_USER_PROFILE} variables={{ id, hostId }}>
+      <GetUserProfile query={GET_USER_PROFILE} variables={{ id, hostId }}>
         {({
           loading, error, data, refetch,
         }) => {
@@ -123,12 +145,28 @@ class UserProfile extends Component {
             </View>
           );
         }}
-      </Query>
+      </GetUserProfile>
     );
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  userProfileContainer: ViewStyle;
+  headerViewStyle: ViewStyle;
+  textHeader: TextStyle;
+  userInfo: ViewStyle;
+  userInfoRight: ViewStyle;
+  userInfoLeft: ViewStyle;
+  schoolText: TextStyle;
+  iconText: TextStyle;
+  distance: TextStyle;
+  nameText: TextStyle;
+  userDescription: TextStyle;
+  subHeading: ViewStyle;
+  horizontalLine: ViewStyle;
+}
+
+const styles = StyleSheet.create<Style>({
   userProfileContainer: {
     flex: 1,
     justifyContent: 'flex-start',

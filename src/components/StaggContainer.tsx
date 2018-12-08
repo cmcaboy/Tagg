@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Query, Mutation } from 'react-apollo';
-import Composer from 'react-composer';
 import SplashScreen from 'react-native-splash-screen';
 import { Spinner, ErrorMessage } from './common';
 import { GET_QUEUE, MORE_QUEUE } from '../apollo/queries';
@@ -10,7 +9,10 @@ import Stagg from './Stagg';
 import EmptyList from './EmptyList';
 import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import { getId } from '../apollo/queries/__generated__/getId';
-import { getQueue, getQueueVariables } from '../apollo/queries/__generated__/getQueue';
+import { setCoords, setCoordsVariables } from '../apollo/mutations/__generated__/setCoords';
+import { setPushToken, setPushTokenVariables } from '../apollo/mutations/__generated__/setPushToken';
+// import { getQueue, getQueueVariables } from '../apollo/queries/__generated__/getQueue';
+// import { moreQueue, moreQueueVariables } from '../apollo/queries/__generated__/moreQueue';
 
 interface Params {};
 
@@ -21,7 +23,13 @@ interface Props {
 interface State {};
 
 class GetID extends Query<getId, {}> {};
-class GetQueue extends Query<getQueue, getQueueVariables> {};
+// class GetQueue extends Query<getQueue | moreQueue, getQueueVariables | moreQueueVariables> {};
+class GetQueue extends Query<any, any> {};
+// set coords
+class SetCoords extends Mutation<setCoords, setCoordsVariables> {};
+// set push token
+class SetPushToken extends Mutation<setPushToken, setPushTokenVariables> {};
+
 
 class StaggContainer extends Component<Props, State> {
   componentDidMount = () => SplashScreen.hide();
@@ -36,15 +44,15 @@ class StaggContainer extends Component<Props, State> {
           // console.log('local loading stagg: ',loading);
           if (loading) return <Spinner />;
           if (error) return <ErrorMessage error={error.message} />;
-          const { id } = data.user;
+          const { id }: { id: any } = data.user;
           if (id === 0) return <Spinner />;
           // if (id === 0) return <LoginButton onLogoutFinished={async () => firebase.auth().signOut()} />;
           return (
-            <GetQueue query={GET_QUEUE} variables={{ id }} fetchPolicy="network-only">
-              {({ loading, error, data, fetchMore, networkStatus, refetch }) => {
+            <GetQueue query={GET_QUEUE} variables={{ id }} fetchPolicy="network-only" context={{ headers: { authorization: id }}}>
+              {({ error, data, fetchMore, networkStatus, refetch }) => {
                 console.log('data stagg: ', data);
-                // console.log('error stagg: ',error);
-                // console.log('loading stagg: ',loading);
+                console.log('error stagg: ',error);
+                console.log('loading stagg: ',loading);
                 console.log('networkStatus: ', networkStatus);
                 switch (networkStatus) {
                   case 1: return <Spinner />;
@@ -64,7 +72,6 @@ class StaggContainer extends Component<Props, State> {
                 };
                 if (!data.user) return <EmptyList refetch={refetchQueue} text="There is no one new in your area." subText="Try again later." />;
                 const { followerDisplay } = data.user;
-                // console.log('followerDisplay: ',followerDisplay);
                 const fetchMoreQueue = () => {
                   console.log('in fetchMoreQueue');
                   if (!data.user.queue) {
@@ -112,30 +119,31 @@ class StaggContainer extends Component<Props, State> {
                   });
                 };
                 return (
-                  <Composer
-                    components={[
-                      <Mutation mutation={SET_COORDS} />,
-                      <Mutation mutation={SET_PUSH_TOKEN} />,
-                    ]}
-                  >
-                    {([setCoords, setPushToken]) => {
-                      const startSetCoords = (lat: number, lon: number) => setCoords({ variables: { id, lat, lon } });
-                      const startSetPushToken = ( token: string ) => setPushToken({ variables: { id, token } });
-                      console.log('above stagg');
+                  <SetCoords mutation={SET_COORDS} context={{ headers: { authorization: id }}}>
+                    {(setCoords) => {
                       return (
-                        <Stagg
-                          id={id}
-                          queue={data.user.queue ? data.user.queue.list : []}
-                          startSetCoords={startSetCoords}
-                          startSetPushToken={startSetPushToken}
-                          navigation={navigation}
-                          fetchMoreQueue={fetchMoreQueue}
-                          refetchQueue={refetchQueue}
-                          pushToken={data.user.token}
-                        />
-                      );
+                        <SetPushToken mutation={SET_PUSH_TOKEN} context={{ headers: { authorization: id }}}>
+                          { ( setPushToken ) => {
+                              const startSetCoords = (latitude: number, longitude: number) => setCoords({ variables: { id, latitude, longitude } });
+                              const startSetPushToken = ( token: string ) => setPushToken({ variables: { id, token } });
+                              console.log('above stagg');
+                              return (
+                                <Stagg
+                                  id={id}
+                                  queue={data.user.queue ? data.user.queue.list : []}
+                                  startSetCoords={startSetCoords}
+                                  startSetPushToken={startSetPushToken}
+                                  navigation={navigation}
+                                  fetchMoreQueue={fetchMoreQueue}
+                                  refetchQueue={refetchQueue}
+                                  pushToken={data.user.token}
+                                />
+                              );
+                          } }
+                          </SetPushToken>
+                      )
                     }}
-                  </Composer>
+                    </SetCoords>
                 );
               }}
             </GetQueue>

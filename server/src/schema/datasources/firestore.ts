@@ -256,4 +256,18 @@ export default class FirestoreAPI extends (DataSource as { new (): any }) {
     // return true
     return true;
   };
+
+  removeMatch = async (matchId: string) => {
+    try {
+      await this.db
+        .collection('matches')
+        .doc(matchId)
+        .delete();
+    } catch (e) {
+      console.log(`Could not remove match ${matchId}`);
+      return false;
+    }
+    console.log(`match ${matchId} removed from Firestore`);
+    return true;
+  };
 }

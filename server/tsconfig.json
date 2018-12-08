@@ -26,5 +26,5 @@
     "src/graphqlgen/default-resolvers/*",
     "src/schema/old_resolvers.ts"
   ],
-  "include": ["src"]
+  "include": ["src/**/*"]
 }

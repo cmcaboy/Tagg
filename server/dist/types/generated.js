@@ -47,7 +47,8 @@ var DateBidListResolvers;
 (function (DateBidListResolvers) {
     DateBidListResolvers.defaultResolvers = {
         id: (parent) => (parent.id === undefined ? null : parent.id),
-        cursor: (parent) => parent.cursor === undefined ? null : parent.cursor
+        cursor: (parent) => parent.cursor === undefined ? null : parent.cursor,
+        list: (parent) => parent.list === undefined ? null : parent.list
     };
 })(DateBidListResolvers = exports.DateBidListResolvers || (exports.DateBidListResolvers = {}));
 var DateBidResolvers;
@@ -76,21 +77,24 @@ var DateListResolvers;
 (function (DateListResolvers) {
     DateListResolvers.defaultResolvers = {
         id: (parent) => (parent.id === undefined ? null : parent.id),
-        cursor: (parent) => parent.cursor === undefined ? null : parent.cursor
+        cursor: (parent) => parent.cursor === undefined ? null : parent.cursor,
+        list: (parent) => (parent.list === undefined ? null : parent.list)
     };
 })(DateListResolvers = exports.DateListResolvers || (exports.DateListResolvers = {}));
 var QueueResolvers;
 (function (QueueResolvers) {
     QueueResolvers.defaultResolvers = {
         id: (parent) => (parent.id === undefined ? null : parent.id),
-        cursor: (parent) => parent.cursor === undefined ? null : parent.cursor
+        cursor: (parent) => parent.cursor === undefined ? null : parent.cursor,
+        list: (parent) => (parent.list === undefined ? null : parent.list)
     };
 })(QueueResolvers = exports.QueueResolvers || (exports.QueueResolvers = {}));
 var MatchListResolvers;
 (function (MatchListResolvers) {
     MatchListResolvers.defaultResolvers = {
         id: (parent) => (parent.id === undefined ? null : parent.id),
-        cursor: (parent) => parent.cursor === undefined ? null : parent.cursor
+        cursor: (parent) => parent.cursor === undefined ? null : parent.cursor,
+        list: (parent) => parent.list === undefined ? null : parent.list
     };
 })(MatchListResolvers = exports.MatchListResolvers || (exports.MatchListResolvers = {}));
 var MatchResolvers;

@@ -73,6 +73,7 @@ export const GET_QUEUE = gql`
     user(id: $id) {
       id
       token
+      followerDisplay
       queue {
         id
         cursor

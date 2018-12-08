@@ -635,8 +635,8 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       .catch((e: string) => console.log("newUser error: ", e));
   };
 
-  followUser = ({ followId, isFollowing }: { followId: string, isFollowing: boolean }) => {
-    const id = this.context.user.id;
+  followUser = ({ id: argsId, followId, isFollowing }: { id: String; followId: string, isFollowing: boolean }) => {
+    const id = argsId || this.context.user.id;
     // supports both follow and unfollow
     let query;
 
@@ -658,8 +658,8 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       .catch((e: string) => console.log("follow mutation error: ", e));
   };
 
-  unFollowUser = ({ unFollowId }: { unFollowId: string }) => {
-    const id = this.context.user.id;
+  unFollowUser = ({ id: argsId, unFollowId }: { id: String; unFollowId: String }) => {
+    const id = argsId || this.context.user.id;
     const query = `MATCH (a:User {id:'${
       id
     }'})-[r:FOLLOWING]->(b:User {id:'${unFollowId}'}) DELETE r RETURN b`;
@@ -676,15 +676,16 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       .catch((e: string) => console.log("follow mutation error: ", e));
   };
 
-  createBid = async ({ dateId, bidId, bidPlace, bidDescription, datetimeOfBid }: {
-    dateId: string;
-    bidId: string;
-    bidPlace: string;
-    bidDescription: string;
-    datetimeOfBid: string;
+  createBid = async ({ id: argsId, dateId, bidId, bidPlace, bidDescription, datetimeOfBid }: {
+    id: String;
+    dateId: String;
+    bidId: String;
+    bidPlace: String;
+    bidDescription: String;
+    datetimeOfBid: String;
   }) => {
     // grab id from context
-    const id = this.context.user.id;
+    const id = argsId || this.context.user.id;
     let query = `MATCH (a:User {id:'${id}'}), (d:Date {id:'${
       dateId
     }'}) 
@@ -710,8 +711,8 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       }))
       .catch((e: string) => console.log("bid mutation error: ", e));
   };
-  createDate = async ({ dateId, creationTime, datetimeOfDate, description }: DateItem) => {
-    const id = this.context.user.id;
+  createDate = async ({ id: argsId, dateId, creationTime, datetimeOfDate, description }: DateItem) => {
+    const id = argsId || this.context.user.id;
     let query = `CREATE (d:Date {id:'${dateId}',creator:'${
       id
     }',creationTime:'${creationTime}',open:TRUE,`;
@@ -749,13 +750,12 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     }
     return date;
   };
-  createDateWinner = async ({ id: argsID, winnerId, dateId }: { id: string, winnerId: string, dateId: string }) => {
+  createDateWinner = async ({ id: argsID, winnerId, dateId }: { id: String, winnerId: String, dateId: String }) => {
     // console.log('dateId: ', dateId);
     // console.log('winnerId: ', winnerId);
 
-    const id = argsID ? argsID : this.context.user.id;
+    const id = argsID || this.context.user.id;
     let date;
-    // console.log('id: ', id);
 
     try {
       const data = await this.session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'}) 
@@ -764,7 +764,6 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
                   d.winner='${winnerId}',
                   d.open=FALSE
                   return d,a,b`);
-      // console.log("data: ", data);
       date = {
         ...data.records[0]._fields[0].properties,
         creator: data.records[0]._fields[1].properties,
@@ -777,8 +776,8 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     }
     return date;
   };
-  setFlagUser = ({ flaggedId, block }: { flaggedId: string, block: boolean | null }) => {
-    const id = this.context.user.id;
+  setFlagUser = ({ id: argsId, flaggedId, block }: { id: String, flaggedId: String, block: Boolean | null }) => {
+    const id = argsId || this.context.user.id;
 
     if (block) {
       this.session
@@ -793,7 +792,9 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
         .then((record: any) => ({ ...record._fields[0].properties }))
         .then((b: string) => console.log("Blocked user: ", b))
         .catch((e: string) => console.log("Error blocking user: ", e));
+
     }
+
 
     return this.session
       .run(

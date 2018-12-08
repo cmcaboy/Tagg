@@ -6,8 +6,9 @@ import {
   TouchableWithoutFeedback,
   Animated,
   PanResponder,
+  ViewStyle,
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
+import FastImage, { ImageStyle } from 'react-native-fast-image';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { PHOTO_ADD_URL } from '../variables';
 
@@ -18,8 +19,19 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 // const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SWIPE_THRESHOLD = 0.05 * SCREEN_WIDTH;
 
-class UserProfilePhotos extends Component {
-  constructor(props) {
+interface Props {
+  pics: string[];
+  cacheImages: boolean;
+}
+
+interface State {
+  currentImage: number;
+  pics: string[];
+  panResponder: any;
+}
+
+class UserProfilePhotos extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     const panResponder = PanResponder.create({
@@ -39,9 +51,9 @@ class UserProfilePhotos extends Component {
 
     this.state = {
       // loaded: false,
+      panResponder,
       currentImage: 0,
       pics: pics.filter(pic => pic !== PHOTO_ADD_URL),
-      panResponder,
     };
   }
 
@@ -79,13 +91,8 @@ class UserProfilePhotos extends Component {
     const {
       userPics, userPhoto, touchablePics, leftClicker, rightClicker, picIndicator,
     } = styles;
-    const {
-      picHeight = SCREEN_WIDTH,
-      picWidth = SCREEN_WIDTH,
-      customPicStyle,
-      borderRadius,
-      children,
-    } = this.props;
+    const picHeight: number = SCREEN_WIDTH;
+    const picWidth: number = SCREEN_WIDTH;
     const {
       pics,
       currentImage,
@@ -106,31 +113,29 @@ class UserProfilePhotos extends Component {
               { display: i === currentImage ? 'flex' : 'none' },
               { height: picHeight },
               { width: picWidth },
-              customPicStyle,
-              { borderRadius },
+              // customPicStyle,
+              // { borderRadius },
             ]}
-            imageStyle={{ borderRadius }}
+            // imageStyle={{ borderRadius }}
           >
             <View style={picIndicator}>
-              {pics.map(
-                (uri, i2) => (i2 === currentImage ? (
-                  <FontAwesome
-                    key={uri}
-                    name="circle"
-                    size={12}
-                    color="white"
-                    style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }}
-                  />
-                ) : (
-                  <FontAwesome
-                    key={uri}
-                    name="circle-o"
-                    size={12}
-                    color="white"
-                    style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }}
-                  />
-                )),
-              )}
+              {pics.map((uri, i2) => (i2 === currentImage ? (
+                <FontAwesome
+                  key={uri}
+                  name="circle"
+                  size={12}
+                  color="white"
+                  style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }}
+                />
+              ) : (
+                <FontAwesome
+                  key={uri}
+                  name="circle-o"
+                  size={12}
+                  color="white"
+                  style={{ backgroundColor: 'transparent', paddingHorizontal: 2 }}
+                />
+              )))}
             </View>
 
             <View style={touchablePics}>
@@ -143,13 +148,21 @@ class UserProfilePhotos extends Component {
             </View>
           </FastImage>
         ))}
-        {children}
       </Animated.View>
     );
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  userPics: ViewStyle;
+  userPhoto: ImageStyle;
+  leftClicker: ViewStyle;
+  rightClicker: ViewStyle;
+  touchablePics: ViewStyle;
+  picIndicator: ViewStyle;
+}
+
+const styles = StyleSheet.create<Style>({
   userPics: {
     // flex: 2,
   },

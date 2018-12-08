@@ -10,13 +10,14 @@ import { SEND_MESSAGE } from '../apollo/mutations';
 import { GET_MESSAGES, MORE_MESSAGES } from '../apollo/queries';
 import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import { sendMessage, sendMessageVariables } from '../apollo/mutations/__generated__/sendMessage';
-import { getMessages, getMessagesVariables } from '../apollo/queries/__generated__/getMessages';
+// import { getMessages, getMessagesVariables } from '../apollo/queries/__generated__/getMessages';
 
-class GetMessages extends Query<getMessages, getMessagesVariables> {};
+// class GetMessages extends Query<getMessages, getMessagesVariables> {};
+class GetMessages extends Query<any, any> {};
 class SendMessage extends Mutation<sendMessage, sendMessageVariables> {};
 
 interface Params {
-  otherId: string;
+  otherId?: string;
   otherName: string;
   otherPic: string;
   id: string;

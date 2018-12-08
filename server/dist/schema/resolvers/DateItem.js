@@ -9,13 +9,5 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const generated_1 = require("../../types/generated");
-exports.DateItem = Object.assign({}, generated_1.DateItemResolvers.defaultResolvers, { creator: ({ id }, _, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.findCreatorFromDate({ id });
-    }), num_bids: ({ id }, _, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.findNumberOfBidsFromDate({ id });
-    }), winner: ({ id }, _, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.findDateWinner({ id });
-    }), bids: ({ id }, _, { datasources }) => __awaiter(this, void 0, void 0, function* () {
-        return yield datasources.neoAPI.findBidsFromDate({ id });
-    }) });
+exports.DateItem = Object.assign({}, generated_1.DateItemResolvers.defaultResolvers, { creator: ({ id }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.findCreatorFromDate({ id }); }), num_bids: ({ id }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.findNumberOfBidsFromDate({ id }); }), winner: ({ id }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.findDateWinner({ id }); }), bids: ({ id }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.findBidsFromDate({ id }); }) });
 //# sourceMappingURL=DateItem.js.map

@@ -16,7 +16,12 @@ const newMessagePush_1 = require("../../middleware/newMessagePush");
 const createDatePush_1 = require("../../middleware/createDatePush");
 const chooseWinnerPush_1 = require("../../middleware/chooseWinnerPush");
 const uuid = require('node-uuid');
-exports.Mutation = Object.assign({}, generated_1.MutationResolvers.defaultResolvers, { editUser: (_, args, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.setUser(args); }), editUserQueue: (_, args, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.setUserQueue(args); }), newUser: (_, tempArgs, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.createUser(tempArgs); }), newMessage: (_, args, { datasoures }) => __awaiter(this, void 0, void 0, function* () {
+exports.Mutation = Object.assign({}, generated_1.MutationResolvers.defaultResolvers, { editUser: (_, args, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.setUser(args); }), removeUser: (_, args, { dataSources }) => __awaiter(this, void 0, void 0, function* () {
+        const { list: dateList } = yield dataSources.neoAPI.getMatchedDates();
+        const user = yield dataSources.neoAPI.removeUser(args);
+        dateList.map(({ matchId }) => dataSources.firestoreAPI.removeMatch(matchId));
+        return user;
+    }), editUserQueue: (_, args, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.setUserQueue(args); }), newUser: (_, tempArgs, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.createUser(tempArgs); }), newMessage: (_, args, { dataSources }) => __awaiter(this, void 0, void 0, function* () {
         const message = {
             _id: args._id,
             name: args.name,
@@ -40,30 +45,35 @@ exports.Mutation = Object.assign({}, generated_1.MutationResolvers.defaultResolv
             });
         });
         asyncFunc();
-        const sendMessage = yield datasoures.firestoreAPI.createMessage(args);
+        const sendMessage = yield dataSources.firestoreAPI.createMessage({
+            message,
+            dateId: args.matchId,
+        });
         if (!sendMessage) {
             return null;
         }
-        console.log(`${args.name} posted message to matchId ${args.matchId}`);
         return message;
-    }), follow: (_, { followId, isFollowing }, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.followUser({ followId, isFollowing }); }), unFollow: (_, { unFollowId }, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.unFollowUser({ unFollowId }); }), bid: (_, args, { datasources }) => __awaiter(this, void 0, void 0, function* () {
+    }), follow: (_, { followId, isFollowing }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.followUser({ followId, isFollowing }); }), unFollow: (_, { unFollowId }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.unFollowUser({ unFollowId }); }), bid: (_, args, { dataSources }) => __awaiter(this, void 0, void 0, function* () {
         const datetimeOfBid = format_1.getCurrentDateNeo();
         const bidId = uuid();
-        return yield datasources.neoAPI.createbid(Object.assign({}, args, { bidId,
+        return yield dataSources.neoAPI.createBid(Object.assign({}, args, { bidId,
             datetimeOfBid }));
-    }), createDate: (_, args, { datasources, user: { id } }) => __awaiter(this, void 0, void 0, function* () {
+    }), createDate: (_, args, { dataSources, user: { id } }) => __awaiter(this, void 0, void 0, function* () {
         const creationTime = format_1.getCurrentDateNeo();
         const dateId = uuid();
-        const date = yield datasources.neoAPI.createDate(Object.assign({}, args, { creationTime,
+        const date = yield dataSources.neoAPI.createDate(Object.assign({}, args, { creationTime,
             dateId }));
         createDatePush_1.createDatePush(id, date);
         return date;
-    }), chooseWinner: (_, { winnerId, dateId }, { datasources, user: { id } }) => __awaiter(this, void 0, void 0, function* () {
-        const date = yield datasources.neoAPI.createDateWinner({
+    }), chooseWinner: (_, { id: argsId, winnerId, dateId }, { dataSources, user: { id: contextId } }) => __awaiter(this, void 0, void 0, function* () {
+        const id = argsId || contextId || null;
+        const date = yield dataSources.neoAPI.createDateWinner({
+            id,
             winnerId,
             dateId,
         });
-        const firestoreCreation = yield datasources.firestoreAPI.createDateChat({
+        console.log('date: ', date);
+        const firestoreCreation = yield dataSources.firestoreAPI.createDateChat({
             id,
             winnerId,
             dateId,
@@ -75,5 +85,5 @@ exports.Mutation = Object.assign({}, generated_1.MutationResolvers.defaultResolv
         chooseWinnerPush_1.chooseWinnerPushWinner(date);
         chooseWinnerPush_1.chooseWinnerPushLoser(date);
         return date;
-    }), flag: (_, { flaggedId, block }, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.setFlagUser({ flaggedId, block }); }), block: (_, { blockedId }, { datasources }) => __awaiter(this, void 0, void 0, function* () { return yield datasources.neoAPI.setUserBlock({ blockedId }); }) });
+    }), flag: (_, { flaggedId, block }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.setFlagUser({ flaggedId, block }); }), block: (_, { blockedId }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.setUserBlock({ blockedId }); }) });
 //# sourceMappingURL=Mutation.js.map

@@ -1,1 +1,1 @@
-{"version":3,"file":"MatchList.js","sourceRoot":"","sources":["../../../src/schema/resolvers/MatchList.ts"],"names":[],"mappings":";;AAAA,qDAA2D;AAE9C,QAAA,SAAS,qBACjB,8BAAkB,CAAC,gBAAgB,IAEtC,IAAI,EAAE,CAAC,CAAC,EAAE,EAAE,EAAE,EAAE;QACd,MAAM,IAAI,KAAK,CAAC,0BAA0B,CAAC,CAAC;IAC9C,CAAC,IACD"}
+{"version":3,"file":"MatchList.js","sourceRoot":"","sources":["../../../src/schema/resolvers/MatchList.ts"],"names":[],"mappings":";;AAAA,qDAA2D;AAE9C,QAAA,SAAS,qBACjB,8BAAkB,CAAC,gBAAgB,EAKtC"}

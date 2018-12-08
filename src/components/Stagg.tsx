@@ -6,8 +6,10 @@ import {
   LayoutAnimation,
   UIManager,
   RefreshControl,
+  ViewStyle,
+  TextStyle,
 } from 'react-native';
-import BackgroundGeolocation from 'react-native-background-geolocation';
+import BackgroundGeolocation, { Location } from 'react-native-background-geolocation';
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -21,12 +23,38 @@ import { checkPermissions, pushNotificationHandler } from '../services/push_noti
 import toastMessage from '../services/toastMessage';
 import { CARD_HEIGHT, CARD_FOOTER_HEIGHT, CARD_MARGIN, GEO_LOCATION_URL, SECONDARY_COLOR, PRIMARY_COLOR } from '../variables';
 import { firebase } from '../firebase';
+import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-class Stagg extends Component {
-  constructor(props) {
+interface Params {};
+
+interface Props {
+  id: string;
+  queue: any;
+  startSetCoords: (lat: number, lon: number) => void;
+  startSetPushToken: (token: string) => void;
+  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
+  fetchMoreQueue: () => void;
+  refetchQueue: () => void;
+  pushToken: string;
+}
+
+interface State {
+  loading?: boolean;
+  newDateModal?: boolean;
+  filterModal?: boolean;
+  queue?: any;
+}
+
+class Stagg extends Component<Props, State> {
+  layoutProvider: LayoutProvider;
+  onTokenRefreshListener: () => void | null;
+  notificationListener: () => void | null;
+  notificationOpenedListener: () => void | null;
+
+  constructor(props: Props) {
     super(props);
 
     const { queue } = this.props;
@@ -36,14 +64,15 @@ class Stagg extends Component {
       newDateModal: false,
       filterModal: false,
       queue: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(
-        queue.map(user => ({
-          type: user.hasDateOpen ? 'WITH_FOOTER' : 'NORMAL',
+        queue.map(( user: any ) => ({
           user,
+          type: user.hasDateOpen ? 'WITH_FOOTER' : 'NORMAL',
         })),
+        undefined, // second parameter will be optional in future release
       ),
     };
 
-    this._layoutProvider = new LayoutProvider((i) => {
+    this.layoutProvider = new LayoutProvider((i) => {
       const { queue } = this.state;
       return queue.getDataForIndex(i).type;
     }, (type, dim) => {
@@ -89,7 +118,7 @@ class Stagg extends Component {
     if (notificationOpen) {
       console.log('notificationOpen');
       // action prop also available from notificationOpen
-      const { notification } = notificationOpen;
+      const { notification }: { notification: any } = notificationOpen;
       pushNotificationHandler(id, notification._data, navigation);
     }
     console.log('CheckPermissions: ', checkPermissions());
@@ -98,15 +127,16 @@ class Stagg extends Component {
     }
   }
 
-  componentWillReceiveProps = (nextProps) => {
+  componentWillReceiveProps = (nextProps: Props) => {
     const { queue } = this.state;
     if (nextProps.queue !== queue) {
       this.setState({
         queue: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(
-          nextProps.queue.map(user => ({
-            type: user.hasDateOpen ? 'WITH_FOOTER' : 'NORMAL',
+          nextProps.queue.map(( user: any ) => ({
             user,
+            type: user.hasDateOpen ? 'WITH_FOOTER' : 'NORMAL',
           })),
+          undefined, // second parameter will be optional in future release
         ),
       });
     }
@@ -118,9 +148,9 @@ class Stagg extends Component {
     LayoutAnimation.spring();
   }
 
-  onLocation = location => console.log(' - [event] location: ', location);
+  onLocation = ( location: Location ) => console.log(' - [event] location: ', location);
 
-  onError = e => console.log(' - [error] location: ', e);
+  onError = (e: string) => console.log(' - [error] location: ', e);
 
   ComponentWillUnmount = () => {
     !!this.onTokenRefreshListener && this.onTokenRefreshListener();
@@ -147,14 +177,14 @@ class Stagg extends Component {
     this.onTokenRefreshListener = firebase.messaging().onTokenRefresh(newFcmToken => startSetPushToken(newFcmToken));
 
     // Listen for Notification in the foreground
-    this.notificationListener = firebase.notifications().onNotification(notification => toastMessage({ text: notification._title },
+    this.notificationListener = firebase.notifications().onNotification(( notification: any ) => toastMessage({ text: notification._title },
       () => {
         console.log('notification: ', notification);
         return pushNotificationHandler(id, notification._data, navigation);
       }));
 
     // Listen for notification press while app is in the background
-    this.notificationOpenedListener = firebase.notifications().onNotificationOpened(notificationOpen => pushNotificationHandler(id, notificationOpen.notification._data, navigation));
+    this.notificationOpenedListener = firebase.notifications().onNotificationOpened(( notificationOpen: any ) => pushNotificationHandler(id, notificationOpen.notification._data, navigation));
     // const notificationOpen = await firebase.notifications().getInitialNotification();
 }
 
@@ -179,7 +209,7 @@ class Stagg extends Component {
       stopTimeout: 5,
       // Application config
       debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
-      logLevel: BackgroundGeolocation.LOG_LEVEL_NONE,
+      logLevel: BackgroundGeolocation.LOG_LEVEL_OFF,
       stopOnTerminate: false,   // <-- [Default: true] Allow the background-service to continue tracking when user closes the app.
       startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
       // HTTP / SQLite config
@@ -210,9 +240,9 @@ class Stagg extends Component {
     });
   }
 
-  rowRenderer = (type, data) => this.renderCard(data.user);
+  rowRenderer = (_: any, data: any) => this.renderCard(data.user);
 
-  renderCard = (prospect) => {
+  renderCard = (prospect: any) => {
     // Instead of rendering a card, I could render an ImageBackground
     // console.log('stagg ancillary: ',prospect.ancillaryPics);
 
@@ -229,7 +259,7 @@ class Stagg extends Component {
   }
 
   render() {
-    const { navigation, id, refetchQueue, fetchMoreQueue  } = this.props;
+    const { id, refetchQueue, fetchMoreQueue  } = this.props;
     const { queue, newDateModal, filterModal, loading } = this.state;
     console.log('queue: ', queue);
     console.log('queue.length: ', queue._data.length);
@@ -263,15 +293,12 @@ class Stagg extends Component {
         <FilterModal
           isVisible={filterModal}
           flipFilterModal={this.flipFilterModal}
-          refetchQueue={() => {
-            refetchQueue();
-            this.setState(prev => ({ refreshQueue: !prev.refreshQueue }));
-          }}
+          refetchQueue={() => refetchQueue()}
         />
 
         {queue._data.length ? (
           <RecyclerListView
-            style={{ flex: 1 }}
+            // style={{ flex: 1 } as ViewStyle}
             onEndReached={() => {
               console.log('end reached');
               fetchMoreQueue();
@@ -279,17 +306,19 @@ class Stagg extends Component {
             onEndReachedThreshold={400}
             rowRenderer={this.rowRenderer}
             dataProvider={queue}
-            layoutProvider={this._layoutProvider}
-            refreshControl={(
-              <RefreshControl
-                refreshing={loading}
-                onRefresh={async () => {
-                  this.setState({ loading: true });
-                  await refetchQueue();
-                  this.setState({ loading: false });
-                }}
-              />
-            )}
+            layoutProvider={this.layoutProvider}
+            scrollViewProps={{
+              refreshControl: (
+                <RefreshControl
+                  refreshing={loading}
+                  onRefresh={async () => {
+                    this.setState({ loading: true });
+                    await refetchQueue();
+                    this.setState({ loading: false });
+                  }}
+                />
+              )
+            }}
           />
         ) : (
           <EmptyList refetch={refetchQueue} text="There is no one new in your area." subText="Try again later." />
@@ -299,7 +328,20 @@ class Stagg extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+interface Style {
+  staggContainer: ViewStyle;
+  header: ViewStyle;
+  cardStyle: ViewStyle;
+  undeterminedContainer: ViewStyle;
+  center: ViewStyle;
+  button: ViewStyle;
+  buttonText: TextStyle;
+  prospectText: TextStyle;
+  prospectView: ViewStyle;
+  prospectImage: ViewStyle;
+}
+
+const styles = StyleSheet.create<Style>({
   staggContainer: {
     flex: 1,
     // justifyContent: 'flex-start',

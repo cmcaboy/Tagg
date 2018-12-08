@@ -51,8 +51,6 @@ class FirestoreAPI extends DataSource {
                 };
             }
             const cursor = messages.length >= variables_1.MESSAGE_PAGE_LENGTH ? messages[messages.length - 1].order : null;
-            console.log('messages in moreMessages: ', messages);
-            console.log('newCursor: ', cursor);
             return {
                 id,
                 list: messages,
@@ -85,7 +83,6 @@ class FirestoreAPI extends DataSource {
                 };
             });
             const cursor = messages.length > 0 ? messages[messages.length - 1].order : null;
-            console.log('messages in messages: ', messages);
             return {
                 id,
                 cursor,
@@ -170,8 +167,6 @@ class FirestoreAPI extends DataSource {
                 };
             }
             const newCursor = messages.length >= variables_1.MESSAGE_PAGE_LENGTH ? messages[messages.length - 1].order : null;
-            console.log('messages in moreMessages: ', messages);
-            console.log('newCursor: ', newCursor);
             return {
                 id,
                 list: messages,
@@ -179,6 +174,7 @@ class FirestoreAPI extends DataSource {
             };
         });
         this.createMessage = ({ matchId, message }) => __awaiter(this, void 0, void 0, function* () {
+            console.log('createMessage message: ', message);
             try {
                 yield this.db.collection(`matches/${matchId}/messages`).add(message);
                 return true;
@@ -207,7 +203,20 @@ class FirestoreAPI extends DataSource {
             }
             return true;
         });
-        console.log('firestore constructor');
+        this.removeMatch = (matchId) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.db
+                    .collection('matches')
+                    .doc(matchId)
+                    .delete();
+            }
+            catch (e) {
+                console.log(`Could not remove match ${matchId}`);
+                return false;
+            }
+            console.log(`match ${matchId} removed from Firestore`);
+            return true;
+        });
         this.db = db;
     }
     initialize(config) {

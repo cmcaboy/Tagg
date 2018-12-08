@@ -19,12 +19,10 @@ exports.createDatePush = (id, date) => __awaiter(this, void 0, void 0, function*
     try {
         const result = yield session.run(`MATCH (a:User{id:'${id}'}) return a.name, a.pics`);
         name = result.records[0]._fields[0];
-        profilePic = !!result.records[0]._fields[1]
-            ? result.records[0]._fields[1][0]
-            : null;
+        profilePic = result.records[0]._fields[1] ? result.records[0]._fields[1][0] : null;
     }
     catch (e) {
-        console.log("createDate push notification - Failed to fetch token and name: ", e);
+        console.log('createDate push notification - Failed to fetch token and name: ', e);
         return null;
     }
     try {
@@ -32,7 +30,7 @@ exports.createDatePush = (id, date) => __awaiter(this, void 0, void 0, function*
         list = result.records;
     }
     catch (e) {
-        console.log("createDate push notification - Failed to get list of followers: ", e);
+        console.log('createDate push notification - Failed to get list of followers: ', e);
         return null;
     }
     return list.forEach((record) => {
@@ -45,8 +43,8 @@ exports.createDatePush = (id, date) => __awaiter(this, void 0, void 0, function*
             sendNotifications = record._fields[2];
         }
         catch (e) {
-            console.log(`Error sending push notification to user: `, e);
-            console.log(`record at fault: `, record);
+            console.log('Error sending push notification to user: ', e);
+            console.log('record at fault: ', record);
             return null;
         }
         if (!sendNotifications) {
@@ -56,28 +54,27 @@ exports.createDatePush = (id, date) => __awaiter(this, void 0, void 0, function*
         const message = {
             notification: {
                 title: pushMessageFormat_1.createDatePushTitle(name),
-                body: pushMessageFormat_1.createDatePushBody(name, date.datetimeOfDate)
+                body: pushMessageFormat_1.createDatePushBody(name, date.datetimeOfDate),
             },
             apns: {
                 payload: {
                     aps: {
-                        "content-available": 1,
-                        badge: 1
-                    }
-                }
+                        'content-available': 1,
+                        badge: 1,
+                    },
+                },
             },
             token,
             data: {
                 id,
-                type: `CREATE_DATE`,
+                type: 'CREATE_DATE',
                 name,
                 profilePic,
                 description: date.description,
                 dateId: date.id,
-                datetimeOfDate: date.datetimeOfDate
-            }
+                datetimeOfDate: date.datetimeOfDate,
+            },
         };
-        console.log("message: ", message);
         return firestore_1.messaging
             .send(message)
             .then((response) => console.log(`Push Notification Sent to ${followerId}: `, response))

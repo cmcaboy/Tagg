@@ -4,9 +4,5 @@
 import { MatchListResolvers } from "../../types/generated";
 
 export const MatchList: MatchListResolvers.Type = {
-  ...MatchListResolvers.defaultResolvers,
-
-  list: (parent, args, ctx) => {
-    throw new Error("Resolver not implemented");
-  }
+  ...MatchListResolvers.defaultResolvers
 };

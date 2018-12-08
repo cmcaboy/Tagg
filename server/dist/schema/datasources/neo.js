@@ -15,6 +15,17 @@ const { DataSource } = require("apollo-datasource");
 class NeoAPI extends DataSource {
     constructor({ session }) {
         super();
+        this.removeUser = ({ id }) => {
+            return this.session
+                .run(`MATCH(a:User{id:'${id}'}) DETACH DELETE a`)
+                .then(() => {
+                return { id };
+            })
+                .catch((e) => {
+                console.log('Error Removing user: ', e);
+                return null;
+            });
+        };
         this.findDate = ({ id }) => {
             return this.session
                 .run(`MATCH(d:Date{id:'${id}'}) 
@@ -243,9 +254,7 @@ class NeoAPI extends DataSource {
           RETURN b,hasDateOpen`)
                 .then((result) => result.records)
                 .then((records) => {
-                console.log("following records: ", records);
                 const list = records.map((record) => (Object.assign({}, record._fields[0].properties, { hasDateOpen: record._fields[1] })));
-                console.log("following list: ", list);
                 return {
                     id: `${id}f`,
                     list,
@@ -259,9 +268,7 @@ class NeoAPI extends DataSource {
                 .run(`MATCH(a:User{id:'${id}'})-[r:BID]->(d:Date)<-[:CREATE]-(b:User) RETURN b,d,r`)
                 .then((result) => result.records)
                 .then((records) => {
-                console.log("bids records: ", records);
                 const list = records.map(record => (Object.assign({}, record._fields[2].properties, { id: record._fields[1].properties.id, user: record._fields[0].properties })));
-                console.log("bids list: ", list);
                 return {
                     id: `${id}b`,
                     list,
@@ -281,7 +288,6 @@ class NeoAPI extends DataSource {
         `)
                 .then((result) => result.records)
                 .then((records) => {
-                console.log("dateRequests records: ", records);
                 const list = records.map((record) => ({
                     id: record._fields[1].properties.id,
                     creator: record._fields[0].properties,
@@ -301,7 +307,7 @@ class NeoAPI extends DataSource {
         };
         this.getUserQueue = ({ followerDisplay }) => {
             const id = this.context.user.id;
-            queue_1.getQueue({ id, followerDisplay });
+            return queue_1.getQueue({ id, followerDisplay });
         };
         this.getMatchedDates = () => {
             const id = this.context.user.id;
@@ -313,7 +319,6 @@ class NeoAPI extends DataSource {
                 NOT (a)-[:BLOCK]->(b)
               RETURN b, d.id, d.description, d.datetimeOfDate
               ORDER BY d.datetimeOfDate`;
-            console.log("query: ", query);
             return this.session
                 .run(query)
                 .then((result) => {
@@ -337,7 +342,6 @@ class NeoAPI extends DataSource {
                     };
                 }
                 const newCursor = null;
-                console.log("matchedDates list: ", list);
                 return {
                     id: `${id}m`,
                     list,
@@ -348,7 +352,6 @@ class NeoAPI extends DataSource {
         };
         this.setUser = (args) => {
             const isBoolean = (val) => "boolean" === typeof val;
-            console.log("args: ", args);
             let query = `MATCH(a:User{id: '${args.id}'}) SET `;
             !!args.name && (query = query + `a.name='${args.name}',`);
             isBoolean(args.active) && (query = query + `a.active=${args.active},`);
@@ -384,15 +387,13 @@ class NeoAPI extends DataSource {
             return this.session
                 .run(query)
                 .then((result) => {
-                console.log("result: ", result);
                 return result.records;
             })
                 .then((records) => records[0]._fields[0].properties)
-                .catch((e) => console.log("editUser error: ", e));
+                .catch((e) => console.log(`editUser error: ${e} from query ${query}`));
         };
         this.setUserQueue = (args) => __awaiter(this, void 0, void 0, function* () {
             const isBoolean = (val) => "boolean" === typeof val;
-            console.log("args: ", args);
             let query = `MATCH(a:User{id: '${args.id}'}) SET `;
             isBoolean(args.sendNotifications) &&
                 (query = query + `a.sendNotifications=${args.sendNotifications},`);
@@ -403,7 +404,6 @@ class NeoAPI extends DataSource {
                 (query = query + `a.maxAgePreference=${args.maxAgePreference},`);
             query = query.slice(-1) === "," ? query.slice(0, -1) : query;
             query = query + ` RETURN a`;
-            console.log("query: ", query);
             try {
                 return yield this.session.run(query);
             }
@@ -461,18 +461,16 @@ class NeoAPI extends DataSource {
                 (query = query + `pics:[${args.pics.map((pic) => `"${pic}"`)}],`);
             query = query.slice(-1) === "," ? query.slice(0, -1) : query;
             query = query + `}) RETURN a`;
-            console.log("query: ", query);
             return this.session
                 .run(query)
                 .then((result) => {
-                console.log("result: ", result);
                 return result.records;
             })
                 .then((records) => records[0]._fields[0].properties)
                 .catch((e) => console.log("newUser error: ", e));
         });
-        this.followUser = ({ followId, isFollowing }) => {
-            const id = this.context.user.id;
+        this.followUser = ({ id: argsId, followId, isFollowing }) => {
+            const id = argsId || this.context.user.id;
             let query;
             if (isFollowing) {
                 query = `MATCH (a:User {id:'${id}'}), (b:User {id:'${followId}'}) MERGE (a)-[r:FOLLOWING]->(b) RETURN b`;
@@ -481,18 +479,16 @@ class NeoAPI extends DataSource {
                 query = `MATCH (a:User {id:'${id}'})-[r:FOLLOWING]->(b:User {id:'${followId}'}) DELETE r RETURN b`;
             }
             ;
-            console.log("query: ", query);
             return this.session
                 .run(query)
                 .then((result) => {
-                console.log("result: ", result);
                 return result.records[0];
             })
                 .then((record) => (Object.assign({}, record._fields[0].properties, { isFollowing })))
                 .catch((e) => console.log("follow mutation error: ", e));
         };
-        this.unFollowUser = ({ unFollowId }) => {
-            const id = this.context.user.id;
+        this.unFollowUser = ({ id: argsId, unFollowId }) => {
+            const id = argsId || this.context.user.id;
             const query = `MATCH (a:User {id:'${id}'})-[r:FOLLOWING]->(b:User {id:'${unFollowId}'}) DELETE r RETURN b`;
             return this.session
                 .run(query)
@@ -502,8 +498,8 @@ class NeoAPI extends DataSource {
                 .then((record) => (Object.assign({}, record._fields[0].properties, { isFollowing: false })))
                 .catch((e) => console.log("follow mutation error: ", e));
         };
-        this.createBid = ({ dateId, bidId, bidPlace, bidDescription, datetimeOfBid }) => __awaiter(this, void 0, void 0, function* () {
-            const id = this.context.user.id;
+        this.createBid = ({ id: argsId, dateId, bidId, bidPlace, bidDescription, datetimeOfBid }) => __awaiter(this, void 0, void 0, function* () {
+            const id = argsId || this.context.user.id;
             let query = `MATCH (a:User {id:'${id}'}), (d:Date {id:'${dateId}'}) 
               MERGE (a)-[r:BID{id: '${bidId}',datetimeOfBid: '${datetimeOfBid}',`;
             !!bidPlace &&
@@ -512,7 +508,6 @@ class NeoAPI extends DataSource {
                 (query = query + `bidDescription:"${bidDescription}",`);
             query = query.slice(-1) === "," ? query.slice(0, -1) : query;
             query = query + `}]->(d) RETURN r`;
-            console.log("query in bid: ", query);
             return this.session
                 .run(query)
                 .then((result) => {
@@ -521,8 +516,8 @@ class NeoAPI extends DataSource {
                 .then((record) => (Object.assign({}, record._fields[0].properties)))
                 .catch((e) => console.log("bid mutation error: ", e));
         });
-        this.createDate = ({ dateId, creationTime, datetimeOfDate, description }) => __awaiter(this, void 0, void 0, function* () {
-            const id = this.context.user.id;
+        this.createDate = ({ id: argsId, dateId, creationTime, datetimeOfDate, description }) => __awaiter(this, void 0, void 0, function* () {
+            const id = argsId || this.context.user.id;
             let query = `CREATE (d:Date {id:'${dateId}',creator:'${id}',creationTime:'${creationTime}',open:TRUE,`;
             !!datetimeOfDate &&
                 (query = query + `datetimeOfDate:"${datetimeOfDate}",`) +
@@ -530,7 +525,6 @@ class NeoAPI extends DataSource {
                 (query = query + `description:"${description}",`);
             query = query.slice(-1) === "," ? query.slice(0, -1) : query;
             query = query + `}) RETURN d`;
-            console.log("query in createDate: ", query);
             let rawDate;
             let date;
             try {
@@ -550,9 +544,39 @@ class NeoAPI extends DataSource {
             }
             return date;
         });
-        this.createDateWinner = ({ winnerId, dateId }) => __awaiter(this, void 0, void 0, function* () {
-            const id = this.context.user.id;
+        this.createDateWinner = ({ id: argsID, winnerId, dateId }) => __awaiter(this, void 0, void 0, function* () {
+            const id = argsID || this.context.user.id;
             let date;
+            console.log('id: ', id);
+            console.log('dateId: ', dateId);
+            console.log('winnerId: ', winnerId);
+            const data2 = yield this.session.run(`MATCH (a:User{id:'${id}'}) RETURN a`);
+            console.log('data2: ', data2.records[0]._fields[0]);
+            const data3 = yield this.session.run(`MATCH (b:User{id:'${winnerId}'}) RETURN b`);
+            console.log('data3: ', data3.records[0]._fields[0]);
+            const data4 = yield this.session.run(`MATCH (d:Date{id:'${dateId}'}) RETURN d`);
+            console.log('data4: ', data4.records[0]._fields[0]);
+            try {
+                const data5 = yield this.session.run(`MATCH (a:User)-[r:CREATE]->(d:Date{id:'${dateId}'}) RETURN r,d,a`);
+                console.log('data5: ', data5);
+                console.log('data5a: ', data5.records[0]._fields[0]);
+                console.log('data5b: ', data5.records[0]._fields[1]);
+                console.log('data5c: ', data5.records[0]._fields[2]);
+            }
+            catch (e) {
+                console.log('Error data5: ', e);
+            }
+            try {
+                const data6 = yield this.session.run(`MATCH (d:Date{id:'${dateId}'})<-[r:BID]-(b:User) RETURN d, r, b`);
+                console.log('data6: ', data6);
+                console.log('data6a: ', data6.records[0]._fields[0]);
+                console.log('data6b: ', data6.records[0]._fields[1]);
+                console.log('data6c: ', data6.records[0]._fields[2]);
+                console.log('data6c length: ', data6.records.length);
+            }
+            catch (e) {
+                console.log('Error data6: ', e);
+            }
             try {
                 const data = yield this.session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'}) 
                   WITH d,a,b,r
@@ -569,8 +593,8 @@ class NeoAPI extends DataSource {
             }
             return date;
         });
-        this.setFlagUser = ({ flaggedId, block }) => {
-            const id = this.context.user.id;
+        this.setFlagUser = ({ id: argsId, flaggedId, block }) => {
+            const id = argsId || this.context.user.id;
             if (block) {
                 this.session
                     .run(`MATCH (a:User{id:'${id}'}), (b:User{id:'${flaggedId}'}) 
@@ -603,7 +627,6 @@ class NeoAPI extends DataSource {
                 .then((record) => (Object.assign({}, record._fields[0].properties)))
                 .catch((e) => console.log("Error blocking user: ", e));
         };
-        console.log("neoAPI constructor");
         this.session = session;
     }
     initialize(config) {
@@ -615,7 +638,6 @@ class NeoAPI extends DataSource {
                 .run(`Match (n:User {id: '${id}'}) RETURN n`)
                 .then((result) => result.records)
                 .then((records) => {
-                console.log("records: ", records);
                 if (!records.length) {
                     return null;
                 }

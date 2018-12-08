@@ -12,7 +12,7 @@ const firestore_1 = require("../db/firestore");
 const neo4j_1 = require("../db/neo4j");
 const pushMessageFormat_1 = require("../services/pushMessageFormat");
 const session = neo4j_1.driver.session();
-exports.chooseWinnerPushWinner = ({ id, datetimeOfDate, creator, winner }) => __awaiter(this, void 0, void 0, function* () {
+exports.chooseWinnerPushWinner = ({ id, datetimeOfDate, creator, winner, }) => __awaiter(this, void 0, void 0, function* () {
     if (!winner.sendNotifications) {
         console.log(`User ${winner.id} does not currently have notifications turned on.`);
         return null;
@@ -20,35 +20,34 @@ exports.chooseWinnerPushWinner = ({ id, datetimeOfDate, creator, winner }) => __
     const message = {
         notification: {
             title: pushMessageFormat_1.chooseWinnerPushWinnerTitle(creator.name),
-            body: pushMessageFormat_1.chooseWinnerPushWinnerBody(creator.name, datetimeOfDate)
+            body: pushMessageFormat_1.chooseWinnerPushWinnerBody(creator.name, datetimeOfDate),
         },
         apns: {
             payload: {
                 aps: {
-                    "content-available": 1,
-                    badge: 1
-                }
-            }
+                    'content-available': 1,
+                    badge: 1,
+                },
+            },
         },
         token: winner.token,
         data: {
-            type: `CHOOSE_WINNER_WINNER`,
+            type: 'CHOOSE_WINNER_WINNER',
             matchId: id,
             id: winner.id,
             name: winner.name,
-            pic: !!winner.pics ? winner.pics[0] : "",
+            pic: winner.pics ? winner.pics[0] : '',
             otherId: creator.id,
             otherName: creator.name,
-            otherPic: !!creator.pics ? creator.pics[0] : ""
-        }
+            otherPic: creator.pics ? creator.pics[0] : '',
+        },
     };
-    console.log("message: ", message);
     return firestore_1.messaging
         .send(message)
         .then((response) => console.log(`Push Notification Sent to ${winner.id}: `, response))
         .catch((e) => console.log(`Error sending push notification to ${winner.id}: `, e));
 });
-exports.chooseWinnerPushLoser = ({ id, creator, datetimeOfDate }) => __awaiter(this, void 0, void 0, function* () {
+exports.chooseWinnerPushLoser = ({ id, creator, datetimeOfDate, }) => __awaiter(this, void 0, void 0, function* () {
     let list;
     try {
         const result = yield session.run(`MATCH (a:User)-[r:BID]->(d:Date{id:'${id}'})
@@ -61,7 +60,7 @@ exports.chooseWinnerPushLoser = ({ id, creator, datetimeOfDate }) => __awaiter(t
     }
     return list
         .filter(record => !record._fields[2])
-        .forEach(record => {
+        .forEach((record) => {
         let token;
         let loserId;
         let sendNotifications;
@@ -80,22 +79,22 @@ exports.chooseWinnerPushLoser = ({ id, creator, datetimeOfDate }) => __awaiter(t
         const message = {
             notification: {
                 title: pushMessageFormat_1.chooseWinnerPushLoserTitle(creator.name),
-                body: pushMessageFormat_1.chooseWinnerPushLoserBody(creator.name, datetimeOfDate)
+                body: pushMessageFormat_1.chooseWinnerPushLoserBody(creator.name, datetimeOfDate),
             },
             apns: {
                 payload: {
                     aps: {
-                        "content-available": 1,
-                        badge: 1
-                    }
-                }
+                        'content-available': 1,
+                        badge: 1,
+                    },
+                },
             },
             token,
             data: {
-                type: `CHOOSE_WINNER_LOSER`
-            }
+                type: 'CHOOSE_WINNER_LOSER',
+            },
         };
-        console.log("message: ", message);
+        console.log('message: ', message);
         return firestore_1.messaging
             .send(message)
             .then((response) => console.log(`Push Notification Sent to ${loserId}: `, response))

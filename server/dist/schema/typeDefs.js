@@ -121,7 +121,7 @@ const typeDefs = `
         messages(id: String!): Message
         date(id: String!): DateItem
         dates(id: String!): DateList
-        otherBids(id: String!): DateBidList
+        otherBids(id: String): DateBidList
         moreMessages(id: String!, cursor: String!): Message
         moreQueue(followerDisplay: String, cursor: Float!): Queue
         moreDates(id: String!, cursor: Float!): DateList
@@ -206,6 +206,7 @@ const typeDefs = `
         chooseWinner(id: String!, winnerId: String!, dateId: String!): DateItem
         flag(id: String!, flaggedId: String!, block: Boolean): User
         block(id: String!, blockedId: String!): User
+        removeUser(id: String): User
     }
     schema {
         query: Query

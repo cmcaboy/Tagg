@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Button } from 'native-base';
 import { Mutation } from 'react-apollo';
-import RadioGroup from 'react-native-radio-buttons-group';
+import RadioGroup, { GroupItem } from 'react-native-radio-buttons-group';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { PHOTO_HINT, settingDefaults, PRIMARY_COLOR } from '../variables/index';
 import { Card, MyAppText, Spinner, MyTitleText, CardSection } from './common';
@@ -22,20 +22,23 @@ import { NEW_USER } from '../apollo/mutations';
 import toastMessage from '../services/toastMessage';
 import emailValidation from '../services/emailValidation';
 import emailSignup from '../services/emailSignup';
+import { newUser, newUserVariables } from '../apollo/mutations/__generated__/newUser';
 
 interface Props {
   closeModal: () => void;
   startSetId: (id: string | number) => void;
 }
 
-interface GenderItem {
-  label: 'female' | 'male';
-  selected: boolean;
-}
+// Need to check how to overload typescript intefaces
+// ---------------------------------
+// interface GenderItem extends GroupItem {
+//   label: 'female' | 'male';
+//   selected: boolean;
+// }
 
 interface State {
   pics: string[],
-  gender: GenderItem[];
+  gender: GroupItem[];
   name: string;
   email: string;
   age: string;
@@ -47,6 +50,8 @@ interface State {
   password: string;
   validatePassword: string;
 }
+
+class NewUser extends Mutation<newUser, newUserVariables> {};
 
 export default class NewUserModal extends Component<Props, State> {
   constructor(props: Props) {
@@ -98,7 +103,7 @@ export default class NewUserModal extends Component<Props, State> {
 
   changePics = (pics: string[]) => this.setState({ pics });
 
-  changeGender = ( gender: GenderItem[] ) => this.setState({ gender });
+  changeGender = ( gender: GroupItem[] ) => this.setState({ gender });
 
   validatePassword = () => {
     const { password, validatePassword } = this.state;
@@ -344,7 +349,7 @@ export default class NewUserModal extends Component<Props, State> {
             { error }
           </MyAppText>
         )}
-        <Mutation mutation={NEW_USER}>
+        <NewUser mutation={NEW_USER}>
           {(newUser) => {
             if (loading) {
               return <Spinner />;
@@ -369,7 +374,7 @@ export default class NewUserModal extends Component<Props, State> {
               </View>
             );
           }}
-        </Mutation>
+        </NewUser>
         <View style={blankView} />
       </KeyboardAwareScrollView>
     );

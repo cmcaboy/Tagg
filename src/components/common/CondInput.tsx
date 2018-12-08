@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  TextInputProps,
   ViewStyle,
   TextStyle,
 } from 'react-native';
@@ -43,7 +42,7 @@ class CondInput extends Component<Props, State> {
     this.setState({ isEdit: false });
   };
 
-  onChangeText = (v) => {
+  onChangeText = (v: string) => {
     if (this.state.lowerCaseOnly) {
       this.setState({ value: v.toLowerCase() });
     } else {

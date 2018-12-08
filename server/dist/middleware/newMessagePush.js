@@ -12,7 +12,7 @@ const firestore_1 = require("../db/firestore");
 const neo4j_1 = require("../db/neo4j");
 const pushMessageFormat_1 = require("../services/pushMessageFormat");
 const session = neo4j_1.driver.session();
-exports.newMessagePush = ({ matchId, otherId, otherName, otherPic, text, id }) => __awaiter(this, void 0, void 0, function* () {
+exports.newMessagePush = ({ matchId, otherId, otherName, otherPic, text, id, }) => __awaiter(this, void 0, void 0, function* () {
     let name;
     let pics;
     let token;
@@ -35,29 +35,28 @@ exports.newMessagePush = ({ matchId, otherId, otherName, otherPic, text, id }) =
     const message = {
         notification: {
             title: pushMessageFormat_1.newMessagePushTitle(name),
-            body: pushMessageFormat_1.newMessagePushBody(text)
+            body: pushMessageFormat_1.newMessagePushBody(text),
         },
         token,
         apns: {
             payload: {
                 aps: {
-                    "content-available": 1,
-                    badge: 1
-                }
-            }
+                    'content-available': 1,
+                    badge: 1,
+                },
+            },
         },
         data: {
-            type: `NEW_MESSAGE`,
+            type: 'NEW_MESSAGE',
             matchId,
             id,
             name,
-            pic: !!pics ? pics[0] : "",
+            pic: pics ? pics[0] : '',
             otherId,
             otherName,
-            otherPic
-        }
+            otherPic,
+        },
     };
-    console.log("message: ", message);
     return firestore_1.messaging
         .send(message)
         .then((response) => console.log(`newMessage push notification sent to ${id} from ${otherId}: ${response}`))
