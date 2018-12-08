@@ -1,6 +1,7 @@
 import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { withClientState } from 'apollo-link-state';
+import { setContext } from 'apollo-link-context';
 import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
 import { WebSocketLink } from 'apollo-link-ws';
 import { getMainDefinition } from 'apollo-utilities';
@@ -43,9 +44,9 @@ const httpLink = ApolloLink.from([
   stateLink,
   new HttpLink({
     uri: `${GRAPHQL_SERVER}/graphql`,
-    headers: {
-      authorization: AsyncStorage.getItem('TaggToken'),
-    },
+    // headers: {
+    //   authorization: AsyncStorage.getItem('TaggToken'),
+    // },
   }),
 ]);
 
@@ -68,10 +69,20 @@ const link = split(
   httpLink,
 );
 
+const authLink = setContext(async (_, { headers }) => {
+  const token = await AsyncStorage.getItem('TaggToken');
+  return {
+    headers: {
+      ...headers,
+      authorization: token,
+    },
+  };
+});
+
 // At this point, the link encapsulates logic to determine if the application is trying
 // to access a subscription, graphql server, or state management.
 export const client = new ApolloClient({
-  link,
+  link: authLink.concat(link),
   cache,
   connectToDevTools: true,
   // experimental

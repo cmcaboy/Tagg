@@ -11,6 +11,7 @@ import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 // import { getId } from '../apollo/queries/__generated__/getId';
 import { setCoords, setCoordsVariables } from '../apollo/mutations/__generated__/setCoords';
 import { setPushToken, setPushTokenVariables } from '../apollo/mutations/__generated__/setPushToken';
+import { AsyncStorage } from 'react-native';
 // import { getQueue, getQueueVariables } from '../apollo/queries/__generated__/getQueue';
 // import { moreQueue, moreQueueVariables } from '../apollo/queries/__generated__/moreQueue';
 
@@ -32,10 +33,15 @@ class SetPushToken extends Mutation<setPushToken, setPushTokenVariables> {};
 
 
 class StaggContainer extends Component<Props, State> {
-  componentDidMount = () => SplashScreen.hide();
+  componentDidMount = () => {
+    const tempId = AsyncStorage.getItem("TaggToken");
+    console.log('tempId: ', tempId);
+    return SplashScreen.hide();
+  }
 
   render() {
     const { navigation } = this.props;
+
     // return (
       // <GetID query={GET_ID}>
       //   {({ loading, error, data }) => {
