@@ -430,20 +430,17 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       .then((records: any) => {
         // console.log("dateRequests records: ", records);
         const list = records.map((record: any) => {
-          const { datetimeOfDate: datetimeTemp } = record._fields[1].properties;
-          console.log(`datetimeTemp: ${datetimeTemp}`);
-          console.log(`datetimeTemp type: ${typeof datetimeTemp}`)
-          const datetimeOfDate = datetimeTemp.includes(" ") ? datetimeTemp : convertDateToEpoch(datetimeTemp);
+          const { datetimeOfDate, creationTime, description, id, open } = record._fields[1].properties;
           console.log('datetimeOfDate: ', datetimeOfDate);
 
           return {
-            id: record._fields[1].properties.id,
-            creator: record._fields[0].properties,
-            creationTime: record._fields[1].properties.creationTime,
+            id,
+            creationTime,
             datetimeOfDate,
-            description: record._fields[1].properties.description,
+            description,
+            open,
+            creator: record._fields[0].properties,
             num_bids: record._fields[2],
-            open: record._fields[1].properties.open
         }
       });
         // console.log('dateRequests list: ',list);
