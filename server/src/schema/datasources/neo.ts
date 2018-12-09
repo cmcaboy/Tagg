@@ -432,6 +432,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
         const list = records.map((record: any) => {
           const { datetimeOfDate: datetimeTemp } = record._fields[1].properties;
           console.log(`datetimeTemp: ${datetimeTemp}`);
+          console.log(`datetimeTemp type: ${typeof datetimeTemp}`)
           const datetimeOfDate = typeof datetimeTemp === 'number' ? datetimeTemp : convertDateToEpoch(datetimeTemp);
           console.log('datetimeOfDate: ', datetimeOfDate);
 
