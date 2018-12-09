@@ -69,8 +69,8 @@ export const GET_USER_PROFILE = gql`
 
 // I may expand this later to include date requests for queue users
 export const GET_QUEUE = gql`
-  query getQueue($id: String) {
-    user(id: $id) {
+  query getQueue {
+    user {
       id
       token
       followerDisplay
@@ -121,8 +121,8 @@ export const MORE_QUEUE = gql`
 `;
 
 export const GET_MATCHES = gql`
-  query getMatches($id: String) {
-    user(id: $id) {
+  query getMatches {
+    user {
       id
       name
       profilePic

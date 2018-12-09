@@ -104,7 +104,7 @@ class Matches extends Component<Props, State> {
                   <MyAppText>{formatName('You havent created a date yet')}</MyAppText>
                 </View>
               )}
-              {dateRequests.map(( date: any ) => (
+              {dateRequests.map(( date: any ) => ( 
                 <ListItem
                   accessible={false}
                   key={date.id}
@@ -150,9 +150,9 @@ class Matches extends Component<Props, State> {
               {({
                 loading, error, data, refetch,
               }) => {
-                console.log('data in matches: ', data);
-                console.log('error: ',error);
-                console.log('loading: ',loading);
+                // console.log('data in matches: ', data);
+                // console.log('error: ',error);
+                // console.log('loading: ',loading);
                 if (loading) return <Spinner />;
                 if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
 

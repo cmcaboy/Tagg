@@ -56,10 +56,10 @@ class StaggContainer extends Component<Props, State> {
     return (
       <GetQueue query={GET_QUEUE} fetchPolicy="network-only" >
         {({ error, data, loading, fetchMore, networkStatus, refetch }) => {
-          console.log('data stagg: ', data);
-          console.log('error stagg: ',error);
-          console.log('loading stagg: ',loading);
-          console.log('networkStatus: ', networkStatus);
+          // console.log('data stagg: ', data);
+          // console.log('error stagg: ',error);
+          // console.log('loading stagg: ',loading);
+          // console.log('networkStatus: ', networkStatus);
           switch (networkStatus) {
             case 1: return <Spinner />;
             case 2: return <Spinner />;
@@ -95,14 +95,14 @@ class StaggContainer extends Component<Props, State> {
               variables: { id, followerDisplay, cursor: data.user.queue.cursor },
               updateQuery: (prev, { fetchMoreResult }) => {
                 console.log('fetchMore queue');
-                console.log('new queue: ', fetchMoreResult);
+                // console.log('new queue: ', fetchMoreResult);
                 // console.log('prev: ',prev);
 
                 const newQueue = fetchMoreResult.moreQueue.list;
                 const newCursor = fetchMoreResult.moreQueue.cursor;
 
-                console.log('oldList: ', prev.user.queue.list);
-                console.log('new addition: ', newQueue);
+                // console.log('oldList: ', prev.user.queue.list);
+                // console.log('new addition: ', newQueue);
 
                 // const newList = new Set([...prev.user.queue.list,...newQueue]);
 
@@ -119,7 +119,7 @@ class StaggContainer extends Component<Props, State> {
                     },
                   },
                 };
-                console.log('moreQueue New Result: ', result);
+                // console.log('moreQueue New Result: ', result);
                 return result;
               },
             });
@@ -132,7 +132,6 @@ class StaggContainer extends Component<Props, State> {
                     { ( setPushToken ) => {
                         const startSetCoords = (latitude: number, longitude: number) => setCoords({ variables: { id, latitude, longitude } });
                         const startSetPushToken = ( token: string ) => setPushToken({ variables: { id, token } });
-                        console.log('above stagg');
                         return (
                           <Stagg
                             id={id}
