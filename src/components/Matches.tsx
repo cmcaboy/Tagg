@@ -153,9 +153,8 @@ class Matches extends Component<Props, State> {
                 loading, error, data, refetch,
               }) => {
                 console.log('data in matches: ', data);
-                // console.log('error: ',error);
-                // console.log('loading: ',loading);
-                // console.log('networkStatus: ',networkStatus);
+                console.log('error: ',error);
+                console.log('loading: ',loading);
                 if (loading) return <Spinner />;
                 if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
 

@@ -92,7 +92,6 @@ export const Mutation: MutationResolvers.Type = {
     // createDatePush is an async function so execution will not wait for
     // push notifications to be sent out.
     createDatePush(id, date);
-    console.log('date: ', date);
     return date;
   },
   chooseWinner: async (

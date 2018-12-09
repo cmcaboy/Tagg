@@ -61,10 +61,12 @@ class NewDateModal extends React.Component<Props, State> {
     this.setState(this.blankState);
   };
 
-  onCompleted = (data: any) => {
+  onCompleted = async (data: any) => {
     this.closeModal();
+
     toastMessage({
       text: 'Your date request has been created!',
+      duration: 3000,
     });
   };
 
@@ -117,7 +119,6 @@ class NewDateModal extends React.Component<Props, State> {
                       // console.log('datetime: ', datetime);
                       // console.log('datetimeOfDate Epoch: ', convertDateToEpoch(datetime));
 
-                      this.disableSubmitButton();
                       this.setError('');
 
                       return newDate({

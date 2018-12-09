@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, StyleSheet, Dimensions, ViewStyle, TextStyle,
+  View, StyleSheet, Dimensions, ViewStyle, TextStyle, ScrollView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, Text } from 'native-base';
@@ -50,12 +50,12 @@ class ErrorMessage extends React.Component<Props, State> {
     const { error } = this.props;
     const { errorStyle } = styles;
     return (
-      <View style={errorStyle}>
+      <ScrollView contentContainerStyle={errorStyle}>
         <Ionicons name="md-sad" size={100} color="black" />
         <MyAppText>{`Whoops! Something with wrong: ${error}`}</MyAppText>
         {this.refreshButton()}
         <LogoutButton />
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -69,7 +69,7 @@ interface Style {
 }
 const styles = StyleSheet.create<Style>({
   errorStyle: {
-    flex: 1,
+    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFF',

@@ -6,6 +6,7 @@ interface Params {
   buttonText?: string;
   position?: 'bottom' | 'top' | 'center';
   // position?: string;
+  type?: 'success' | 'warning' | 'danger';
 }
 
 // First parameter: object containing details about the test message including
@@ -14,7 +15,7 @@ interface Params {
 
 const ToastMessage = (
   {
-    text, duration = 6000, buttonText = 'Okay', position = 'bottom',
+    text, duration = 6000, buttonText = 'Okay', position = 'bottom', type = 'success',
   }: Params,
   onClose = () => {},
 ) => Toast.show({

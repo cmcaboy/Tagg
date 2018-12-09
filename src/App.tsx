@@ -12,6 +12,7 @@ YellowBox.ignoreWarnings([
   'Warning: isMounted(...) is deprecated',
   'Module RCTImageLoader',
   'Warning',
+  'Deprecation warning',
 ]);
 YellowBox.ignoreWarnings(['Require cycle:']);
 

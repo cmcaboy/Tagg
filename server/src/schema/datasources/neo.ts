@@ -2,6 +2,7 @@ import { QUEUE_PAGE_LENGTH } from "../resolvers/variables";
 import { getQueue } from "../../middleware/queue";
 import { newUserDefaults } from '../defaults';
 import { DateItem } from '../../types/DateItem';
+import { convertDateToEpoch } from "../../middleware/format";
 
 const { DataSource } = require("apollo-datasource");
 
@@ -63,7 +64,14 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
             RETURN d`
       )
       .then((result: any) => result.records[0])
-      .then((record: any) => record._fields[0].properties)
+      .then((record: any) => {
+        console.log(`date props: ${record._fields[0].properties}`)
+        const datetimeOfDate = typeof record._fields[0].properties.datetimeOfDate === 'number' ? record._fields[0].properties.datetimeOfDate : convertDateToEpoch(record._fields[0].properties.datetimeOfDate);
+        return {
+          ...record._fields[0].properties,
+          datetimeOfDate,
+        };
+      })
       .catch((e: string) => {
         console.log("date error: ", e);
         return null;
