@@ -26,8 +26,6 @@ export const Query: QueryResolvers.Type = {
       console.log('User not authenticated');
       throw new AuthenticationError('User not authenticated');
     }
-    console.log(`otherBids resolver with dateId ${dateId}`);
-
     return await dataSources.neoAPI.findOtherBids({ id: dateId });
   },
   moreMessages: async (_, { id, cursor }, { dataSources }) => await dataSources.firestoreAPI.getMoreMessages({ id, cursor }),

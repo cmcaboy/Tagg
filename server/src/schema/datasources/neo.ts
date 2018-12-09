@@ -79,7 +79,6 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
   };
 
   findOtherBids = ({ id }: { id: string }) => {
-    console.log('in findOtherBids with id ', id);
     return this.session
       .run(
         `MATCH(b:User)-[r:BID]->(d:Date{id:'${id}'}) 
@@ -90,9 +89,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       )
       .then((result: any) => result.records)
       .then((records: Array<any>) => {
-        console.log('records: ', records);
         const list = records.map((record: any) => {
-          console.log('record: ', record);
           return {
             id: record._fields[0],
             datetimeOfBid: record._fields[1].properties.datetimeOfBid,

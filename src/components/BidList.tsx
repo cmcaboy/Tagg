@@ -63,14 +63,14 @@ class BidList extends React.Component<Props, State> {
         },
       },
     } = this.props;
+
     return (
       <Container>
         <Content>
-          <GetBids query={GET_BIDS} variables={{ id: dateId }}>
+          <GetBids query={GET_BIDS} variables={{ id: dateId }} fetchPolicy="network-only">
             {({
               data, loading, error, refetch,
             }) => {
-              console.log('BidList data: ', data);
               if (loading) return <Spinner />;
               if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
               if (!data.otherBids.list.length) {
