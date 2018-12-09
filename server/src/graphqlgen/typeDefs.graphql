@@ -20,7 +20,7 @@ type User {
   match: Boolean
   distanceApart: Float
   order: Float
-  registerDateTime: String
+  registerDateTime: Int
   pics: [String]
   profilePic: String
   hasDateOpen: Boolean
@@ -79,7 +79,7 @@ type DateItem {
 
 type DateBid {
   id: String
-  datetimeOfBid: String
+  datetimeOfBid: Int
   bidDescription: String
   bidPlace: String
   dateUser: User
@@ -108,7 +108,7 @@ type Match {
   matchId: String
   user: User
   description: String
-  datetimeOfDate: String
+  datetimeOfDate: Int
   messages: Message
   lastMessage: MessageItem
 }
@@ -146,7 +146,7 @@ type Mutation {
     token: String
     latitude: Float
     longitude: Float
-    registerDateTime: String
+    registerDateTime: Int
     minAgePreference: Int
     maxAgePreference: Int
     followerDisplay: String
@@ -177,7 +177,7 @@ type Mutation {
     token: String
     latitude: Float
     longitude: Float
-    registerDateTime: String
+    registerDateTime: Int
     minAgePreference: Int
     maxAgePreference: Int
     followerDisplay: String

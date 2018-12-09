@@ -21,7 +21,7 @@ const typeDefs = `
         match: Boolean
         distanceApart: Float
         order: Float
-        registerDateTime: String
+        registerDateTime: Int
         pics: [String]
         profilePic: String
         hasDateOpen: Boolean
@@ -68,7 +68,7 @@ const typeDefs = `
         id: String
         creator: User
         winner: User
-        creationTime: String
+        creationTime: Int
         datetimeOfDate: Int
         description: String
         bids: DateBidList
@@ -80,7 +80,7 @@ const typeDefs = `
 
     type DateBid {
         id: String
-        datetimeOfBid: String
+        datetimeOfBid: Int
         bidDescription: String
         bidPlace: String
         dateUser: User
@@ -109,7 +109,7 @@ const typeDefs = `
         matchId: String
         user: User
         description: String
-        datetimeOfDate: String
+        datetimeOfDate: Int
         messages: Message
         lastMessage: MessageItem
     }
@@ -147,7 +147,7 @@ const typeDefs = `
             token: String
             latitude: Float
             longitude: Float
-            registerDateTime: String
+            registerDateTime: Int
             minAgePreference: Int
             maxAgePreference: Int
             followerDisplay: String
@@ -178,7 +178,7 @@ const typeDefs = `
             token: String
             latitude: Float
             longitude: Float
-            registerDateTime: String
+            registerDateTime: Int
             minAgePreference: Int
             maxAgePreference: Int
             followerDisplay: String

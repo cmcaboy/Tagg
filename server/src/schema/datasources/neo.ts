@@ -433,7 +433,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
           const { datetimeOfDate: datetimeTemp } = record._fields[1].properties;
           console.log(`datetimeTemp: ${datetimeTemp}`);
           console.log(`datetimeTemp type: ${typeof datetimeTemp}`)
-          const datetimeOfDate = !datetimeTemp.includes(" ") ? datetimeTemp : convertDateToEpoch(datetimeTemp);
+          const datetimeOfDate = datetimeTemp.includes(" ") ? datetimeTemp : convertDateToEpoch(datetimeTemp);
           console.log('datetimeOfDate: ', datetimeOfDate);
 
           return {
@@ -529,7 +529,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     !!args.work && (query = query + `a.work="${args.work}",`);
     !!args.token && (query = query + `a.token='${args.token}',`);
     !!args.registerDateTime &&
-      (query = query + `a.registerDateTime='${args.registerDateTime}',`);
+      (query = query + `a.registerDateTime=${args.registerDateTime},`);
     isBoolean(args.sendNotifications) &&
       (query = query + `a.sendNotifications=${args.sendNotifications},`);
     !!args.distance && (query = query + `a.distance=${args.distance},`);
@@ -618,7 +618,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     !!args.work && (query = query + `work:"${args.work}",`);
     !!args.token && (query = query + `token:'${args.token}',`);
     !!args.registerDateTime &&
-      (query = query + `registerDateTime:'${args.registerDateTime}',`);
+      (query = query + `registerDateTime:${args.registerDateTime},`);
     !!args.sendNotifications &&
       (query = query + `sendNotifications:${args.sendNotifications},`);
     !!args.distance && (query = query + `distance:${args.distance},`);
@@ -698,14 +698,14 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     bidId: String;
     bidPlace: String;
     bidDescription: String;
-    datetimeOfBid: String;
+    datetimeOfBid: Number;
   }) => {
     // grab id from context
     const id = argsId || this.context.user.id;
     let query = `MATCH (a:User {id:'${id}'}), (d:Date {id:'${
       dateId
     }'}) 
-              MERGE (a)-[r:BID{id: '${bidId}',datetimeOfBid: '${datetimeOfBid}',`;
+              MERGE (a)-[r:BID{id: '${bidId}',datetimeOfBid: ${datetimeOfBid},`;
     !!bidPlace &&
       (query = query + `bidPlace:"${bidPlace}",`) +
         !!bidDescription &&
@@ -733,7 +733,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       id
     }',creationTime:'${creationTime}',open:TRUE,`;
     !!datetimeOfDate &&
-      (query = query + `datetimeOfDate:"${datetimeOfDate}",`) +
+      (query = query + `datetimeOfDate:${datetimeOfDate},`) +
         !!description &&
       (query = query + `description:"${description}",`);
 

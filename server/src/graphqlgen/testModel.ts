@@ -20,7 +20,7 @@ export interface User {
   match: boolean | null;
   distanceApart: number | null;
   order: number | null;
-  registerDateTime: string | null;
+  registerDateTime: number | null;
   pics: string[] | null;
   profilePic: string | null;
   hasDateOpen: boolean | null;
@@ -39,7 +39,7 @@ export interface DateBidList {
 }
 export interface DateBid {
   id: string | null;
-  datetimeOfBid: string | null;
+  datetimeOfBid: number | null;
   bidDescription: string | null;
   bidPlace: string | null;
 }
@@ -72,7 +72,7 @@ export interface Match {
   id: string | null;
   matchId: string | null;
   description: string | null;
-  datetimeOfDate: string | null;
+  datetimeOfDate: number | null;
 }
 export interface Message {
   id: string | null;

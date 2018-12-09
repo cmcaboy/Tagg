@@ -409,7 +409,7 @@ export namespace UserResolvers {
     args: {},
     ctx: Context,
     info: GraphQLResolveInfo
-  ) => string | null | Promise<string | null>;
+  ) => number | null | Promise<number | null>;
 
   export type PicsResolver = (
     parent: User,
@@ -634,7 +634,7 @@ export namespace UserResolvers {
       args: {},
       ctx: Context,
       info: GraphQLResolveInfo
-    ) => string | null | Promise<string | null>;
+    ) => number | null | Promise<number | null>;
 
     pics: (
       parent: User,
@@ -837,7 +837,7 @@ export namespace DateBidResolvers {
     args: {},
     ctx: Context,
     info: GraphQLResolveInfo
-  ) => string | null | Promise<string | null>;
+  ) => number | null | Promise<number | null>;
 
   export type BidDescriptionResolver = (
     parent: DateBid,
@@ -887,7 +887,7 @@ export namespace DateBidResolvers {
       args: {},
       ctx: Context,
       info: GraphQLResolveInfo
-    ) => string | null | Promise<string | null>;
+    ) => number | null | Promise<number | null>;
 
     bidDescription: (
       parent: DateBid,
@@ -1306,7 +1306,7 @@ export namespace MatchResolvers {
     args: {},
     ctx: Context,
     info: GraphQLResolveInfo
-  ) => string | null | Promise<string | null>;
+  ) => number | null | Promise<number | null>;
 
   export type MessagesResolver = (
     parent: Match,
@@ -1356,7 +1356,7 @@ export namespace MatchResolvers {
       args: {},
       ctx: Context,
       info: GraphQLResolveInfo
-    ) => string | null | Promise<string | null>;
+    ) => number | null | Promise<number | null>;
 
     messages: (
       parent: Match,
@@ -1562,7 +1562,7 @@ export namespace MutationResolvers {
     token: string | null;
     latitude: number | null;
     longitude: number | null;
-    registerDateTime: string | null;
+    registerDateTime: number | null;
     minAgePreference: number | null;
     maxAgePreference: number | null;
     followerDisplay: string | null;
@@ -1595,7 +1595,7 @@ export namespace MutationResolvers {
     token: string | null;
     latitude: number | null;
     longitude: number | null;
-    registerDateTime: string | null;
+    registerDateTime: number | null;
     minAgePreference: number | null;
     maxAgePreference: number | null;
     followerDisplay: string | null;
