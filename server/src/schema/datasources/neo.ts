@@ -231,7 +231,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     )
     .then((result: any) => result.records[0])
     .then((record: any) => record._fields[0].properties)
-    .catch((e: string) => console.log("winner error: ", e));
+    .catch((e: string) => console.log("getDateCreator error: ", e));
   };
 
   findDateBidder = ({ id }: { id: string }) => {
@@ -244,7 +244,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       )
       .then((result: any) => result.records[0])
       .then((record: any) => record._fields[0].properties)
-      .catch((e: string) => console.log("winner error: ", e));
+      .catch((e: string) => console.log("findDateBidder error: ", e));
   };
 
   findDateFromBid = ({ id }: { id: string }) => {
@@ -257,7 +257,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     )
     .then((result: any) => result.records[0])
     .then((record: any) => record._fields[0].properties)
-    .catch((e: string) => console.log("winner error: ", e));
+    .catch((e: string) => console.log("findDateFromBid error: ", e));
   }
 
   findCreatorFromDate = ({ id }: { id: string }) => {
@@ -291,7 +291,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       )
       .then((result: any) => result.records[0])
       .then((record: any) => record._fields[0].properties)
-      .catch((e: string) => console.log("winner error: ", e));
+      .catch((e: string) => console.log("findDateWinner error: ", e));
   }
   findBidsFromDate = ({ id }: { id: string }) => {
     return this.session
