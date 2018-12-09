@@ -5,9 +5,8 @@ export const DateBid: DateBidResolvers.Type = {
 
   dateUser: async ({ id }, _, { dataSources }) => await dataSources.neoAPI.getDateCreator({ id }),
   bidUser: async ({ id }, args, { dataSources }) => {
-    console.log('arg: ', args);
     console.log('bidUser parent id: ', id);
-    return await dataSources.neoAPI.findDateBidder({ id });
+    return await dataSources.neoAPI.findUser({ id });
   },
   date: async ({ id }, _, { dataSources }) => await dataSources.neoAPI.findDateFromBid({ id }),
 };

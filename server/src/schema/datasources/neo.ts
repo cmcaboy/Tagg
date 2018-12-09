@@ -84,7 +84,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       .run(
         `MATCH(b:User)-[r:BID]->(d:Date{id:'${id}'}) 
           WITH b,r,d, r.datetimeOfBid as order
-          RETURN b,r
+          RETURN b.id,r
           ORDER BY order DESC
         `
       )
@@ -94,16 +94,10 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
         const list = records.map((record: any) => {
           console.log('record: ', record);
           return {
-            id: record._fields[0].properties.id,
+            id: record._fields[0],
             datetimeOfBid: record._fields[1].properties.datetimeOfBid,
             bidDescription: record._fields[1].properties.bidDescription,
             bidPlace: record._fields[1].properties.bidPlace,
-            bidUser: {
-              ...record._fields[0].properties,
-              profilePic: !!record._fields[0].properties.pics
-                ? record._fields[0].properties.pics[0]
-                : null
-            }
           }
         });
         return {
