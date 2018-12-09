@@ -89,18 +89,21 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       )
       .then((result: any) => result.records)
       .then((records: Array<any>) => {
-        const list = records.map((record: any) => ({
-          id: record._fields[0].properties.id,
-          datetimeOfBid: record._fields[1].properties.datetimeOfBid,
-          bidDescription: record._fields[1].properties.bidDescription,
-          bidPlace: record._fields[1].properties.bidPlace,
-          bidUser: {
-            ...record._fields[0].properties,
-            profilePic: !!record._fields[0].properties.pics
-              ? record._fields[0].properties.pics[0]
-              : null
+        const list = records.map((record: any) => {
+          console.log('record: ', record);
+          return {
+            id: record._fields[0].properties.id,
+            datetimeOfBid: record._fields[1].properties.datetimeOfBid,
+            bidDescription: record._fields[1].properties.bidDescription,
+            bidPlace: record._fields[1].properties.bidPlace,
+            bidUser: {
+              ...record._fields[0].properties,
+              profilePic: !!record._fields[0].properties.pics
+                ? record._fields[0].properties.pics[0]
+                : null
+            }
           }
-        }));
+        });
         return {
           id: `${id}b`,
           list,
@@ -431,7 +434,6 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
         // console.log("dateRequests records: ", records);
         const list = records.map((record: any) => {
           const { datetimeOfDate, creationTime, description, id, open } = record._fields[1].properties;
-          console.log('datetimeOfDate: ', datetimeOfDate);
 
           return {
             id,
