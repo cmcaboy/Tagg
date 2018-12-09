@@ -46,7 +46,7 @@ export interface DateBid {
 export interface DateItem {
   id: string | null;
   creationTime: string | null;
-  datetimeOfDate: string | null;
+  datetimeOfDate: number | null;
   description: string | null;
   num_bids: number | null;
   open: boolean | null;

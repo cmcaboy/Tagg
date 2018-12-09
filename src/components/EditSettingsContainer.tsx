@@ -49,9 +49,9 @@ class EditSettingsContainer extends Component<Props, State> {
         {({
           loading, error, data, refetch,
         }) => {
-          // console.log('loading: ',loading);
-          // console.log('error: ',error);
-          // console.log('data: ',data);
+          console.log('loading: ', loading);
+          console.log('error: ', error);
+          console.log('data: ', data);
           if (loading) return <Spinner />;
           if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
           const {

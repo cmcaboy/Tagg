@@ -39,7 +39,7 @@ export interface getMatches_user_dateRequests_list {
   id: string | null;
   num_bids: number | null;
   open: boolean | null;
-  datetimeOfDate: string | null;
+  datetimeOfDate: number | null;
   description: string | null;
 }
 

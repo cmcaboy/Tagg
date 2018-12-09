@@ -547,36 +547,6 @@ class NeoAPI extends DataSource {
         this.createDateWinner = ({ id: argsID, winnerId, dateId }) => __awaiter(this, void 0, void 0, function* () {
             const id = argsID || this.context.user.id;
             let date;
-            console.log('id: ', id);
-            console.log('dateId: ', dateId);
-            console.log('winnerId: ', winnerId);
-            const data2 = yield this.session.run(`MATCH (a:User{id:'${id}'}) RETURN a`);
-            console.log('data2: ', data2.records[0]._fields[0]);
-            const data3 = yield this.session.run(`MATCH (b:User{id:'${winnerId}'}) RETURN b`);
-            console.log('data3: ', data3.records[0]._fields[0]);
-            const data4 = yield this.session.run(`MATCH (d:Date{id:'${dateId}'}) RETURN d`);
-            console.log('data4: ', data4.records[0]._fields[0]);
-            try {
-                const data5 = yield this.session.run(`MATCH (a:User)-[r:CREATE]->(d:Date{id:'${dateId}'}) RETURN r,d,a`);
-                console.log('data5: ', data5);
-                console.log('data5a: ', data5.records[0]._fields[0]);
-                console.log('data5b: ', data5.records[0]._fields[1]);
-                console.log('data5c: ', data5.records[0]._fields[2]);
-            }
-            catch (e) {
-                console.log('Error data5: ', e);
-            }
-            try {
-                const data6 = yield this.session.run(`MATCH (d:Date{id:'${dateId}'})<-[r:BID]-(b:User) RETURN d, r, b`);
-                console.log('data6: ', data6);
-                console.log('data6a: ', data6.records[0]._fields[0]);
-                console.log('data6b: ', data6.records[0]._fields[1]);
-                console.log('data6c: ', data6.records[0]._fields[2]);
-                console.log('data6c length: ', data6.records.length);
-            }
-            catch (e) {
-                console.log('Error data6: ', e);
-            }
             try {
                 const data = yield this.session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'}) 
                   WITH d,a,b,r
@@ -584,7 +554,6 @@ class NeoAPI extends DataSource {
                   d.winner='${winnerId}',
                   d.open=FALSE
                   return d,a,b`);
-                console.log("data: ", data);
                 date = Object.assign({}, data.records[0]._fields[0].properties, { creator: data.records[0]._fields[1].properties, winner: data.records[0]._fields[2].properties });
             }
             catch (e) {

@@ -120,7 +120,7 @@
     "native-base": "^2.7.2",
     "plist": "^3.0.1",
     "react": "^16.5.2",
-    "react-apollo": "^2.1.4",
+    "react-apollo": "2.2.4",
     "react-composer": "^5.0.1",
     "react-native": "0.57.0",
     "react-native-action-button": "^2.8.5",

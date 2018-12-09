@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const NEW_DATE = gql`
-  mutation createDate($id: String!, $datetimeOfDate: String, $description: String) {
+  mutation createDate($id: String!, $datetimeOfDate: Int, $description: String) {
     createDate(id: $id, datetimeOfDate: $datetimeOfDate, description: $description) {
       id
       creationTime

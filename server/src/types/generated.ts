@@ -978,7 +978,7 @@ export namespace DateItemResolvers {
     args: {},
     ctx: Context,
     info: GraphQLResolveInfo
-  ) => string | null | Promise<string | null>;
+  ) => number | null | Promise<number | null>;
 
   export type DescriptionResolver = (
     parent: DateItem,
@@ -1056,7 +1056,7 @@ export namespace DateItemResolvers {
       args: {},
       ctx: Context,
       info: GraphQLResolveInfo
-    ) => string | null | Promise<string | null>;
+    ) => number | null | Promise<number | null>;
 
     description: (
       parent: DateItem,
@@ -1636,7 +1636,7 @@ export namespace MutationResolvers {
 
   export interface ArgsCreateDate {
     id: string;
-    datetimeOfDate: string | null;
+    datetimeOfDate: number | null;
     description: string | null;
   }
 

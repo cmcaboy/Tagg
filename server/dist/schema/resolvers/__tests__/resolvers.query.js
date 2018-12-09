@@ -21,6 +21,7 @@ describe('Query.user', () => {
             },
         }), engine: null }));
     const { query } = createTestClient(testServer);
+    jest.setTimeout(10000);
     it('GET_QUEUE no params', () => __awaiter(this, void 0, void 0, function* () {
         const res = yield query({ query: queries_1.GET_QUEUE });
         expect(res).toMatchSnapshot();

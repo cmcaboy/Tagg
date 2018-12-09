@@ -261,8 +261,8 @@ class Stagg extends Component<Props, State> {
   render() {
     const { id, refetchQueue, fetchMoreQueue  } = this.props;
     const { queue, newDateModal, filterModal, loading } = this.state;
-    console.log('queue: ', queue);
-    console.log('queue.length: ', queue._data.length);
+    // console.log('queue: ', queue);
+    // console.log('queue.length: ', queue._data.length);
     return (
       // I'll need to change this to a FlatList eventually
       <View style={styles.staggContainer}>

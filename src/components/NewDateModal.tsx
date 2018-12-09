@@ -7,8 +7,9 @@ import {
 import DatePicker from 'react-native-datepicker';
 import { Mutation } from 'react-apollo';
 import { Button } from 'native-base';
+import { ApolloError } from 'apollo-client';
 import {
-  MyAppText, HorizontalLine, MyTitleText, MyAppModal,
+  MyAppText, HorizontalLine, MyTitleText, MyAppModal, Spinner,
 } from './common';
 import { DATE_FORMAT, convertDateToEpoch } from '../format';
 import toastMessage from '../services/toastMessage';
@@ -27,9 +28,11 @@ interface State {
   location: string;
   description: string;
   datetime: string;
+  buttonDisabled: boolean;
+  error: string;
 }
 
-class NewDate extends Mutation<createDate, createDateVariables> {};
+class NewDate extends Mutation<createDate, createDateVariables> {}
 
 class NewDateModal extends React.Component<Props, State> {
   public blankState: State = {
@@ -38,6 +41,8 @@ class NewDateModal extends React.Component<Props, State> {
     location: '',
     description: '',
     datetime: '',
+    buttonDisabled: false,
+    error: '',
   };
 
   constructor(props: Props) {
@@ -46,12 +51,26 @@ class NewDateModal extends React.Component<Props, State> {
     this.state = this.blankState;
   }
 
+  setError = (error: string) => this.setState({ error });
+
   closeModal = () => {
     const { isVisible, flipNewDateModal } = this.props;
     if (isVisible) {
       flipNewDateModal();
     }
     this.setState(this.blankState);
+  };
+
+  onCompleted = (data: any) => {
+    this.closeModal();
+    toastMessage({
+      text: 'Your date request has been created!',
+    });
+  };
+
+  onError = (error: ApolloError) => {
+    console.log('error: ', error);
+    this.setError(error.message);
   };
 
   render() {
@@ -81,36 +100,45 @@ class NewDateModal extends React.Component<Props, State> {
             maxLength={300}
           />
           <View style={styles.buttonView}>
-            <NewDate mutation={NEW_DATE}>
-              {newDate => (
-                <Button
-                  accessible={false}
-                  block
-                  onPress={() => {
-                    this.closeModal();
-                    console.log('datetimeOfDate Epoch: ', convertDateToEpoch(datetime));
+            {!!this.state.error && (
+              <MyAppText style={styles.errorTextStyle}>{this.state.error}</MyAppText>
+            )}
+            <NewDate mutation={NEW_DATE} onCompleted={this.onCompleted} onError={this.onError}>
+              {(newDate, { loading }) => {
+                if (loading) {
+                  return <Spinner />;
+                }
+                return (
+                  <Button
+                    accessible={false}
+                    block
+                    onPress={() => {
+                      console.log('button press');
+                      // console.log('datetime: ', datetime);
+                      // console.log('datetimeOfDate Epoch: ', convertDateToEpoch(datetime));
 
-                    return newDate({
-                      variables: {
-                        id,
-                        description,
-                        datetimeOfDate: convertDateToEpoch(datetime),
-                      },
-                      update: (store, data) => {
-                        console.log('data from newDate mutation: ', data);
-                        console.log('store: ', store);
-                        toastMessage({
-                          text: 'Your date request has been created!',
-                        });
-                      },
-                    });
-                  }}
-                >
-                  <MyAppText style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>
-                    {'Submit'}
-                  </MyAppText>
-                </Button>
-              )}
+                      this.disableSubmitButton();
+                      this.setError('');
+
+                      return newDate({
+                        variables: {
+                          id,
+                          description,
+                          datetimeOfDate: convertDateToEpoch(datetime),
+                        },
+                        update: (store, data) => {
+                          console.log('data from newDate mutation: ', data);
+                          // console.log('store: ', store);
+                        },
+                      });
+                    }}
+                  >
+                    <MyAppText style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>
+                      {'Submit'}
+                    </MyAppText>
+                  </Button>
+                );
+              }}
             </NewDate>
             <TouchableOpacity style={styles.cancelButton} onPress={this.closeModal}>
               <MyAppText style={styles.cancelText}>Cancel</MyAppText>
@@ -128,6 +156,7 @@ interface Style {
   buttonView: ViewStyle;
   cancelText: TextStyle;
   cancelButton: ViewStyle;
+  errorTextStyle: TextStyle;
 }
 
 const styles = StyleSheet.create<Style>({
@@ -155,6 +184,13 @@ const styles = StyleSheet.create<Style>({
   },
   cancelButton: {
     marginVertical: 15,
+  },
+  errorTextStyle: {
+    fontSize: 16,
+    alignSelf: 'center',
+    textAlign: 'center',
+    color: 'red',
+    marginTop: 15,
   },
 });
 

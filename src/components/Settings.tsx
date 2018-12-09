@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Query } from 'react-apollo';
+import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import {
   CirclePicture, MyAppText, Spinner, ErrorMessage,
 } from './common';
@@ -17,21 +18,20 @@ import {
   ICON_SIZE,
 } from '../variables';
 import { GET_PROFILE } from '../apollo/queries';
-import { GET_ID } from '../apollo/local/queries';
+// import { GET_ID } from '../apollo/local/queries';
 import LogoutButton from './LogoutButton';
-import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
-import { getId } from '../apollo/queries/__generated__/getId';
+// import { getId } from '../apollo/queries/__generated__/getId';
 import { getProfile, getProfileVariables } from '../apollo/queries/__generated__/getProfile';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationRoute<{}>, {}>;
 }
 
-interface State {};
+interface State {}
 
-class GetID extends Query<getId, {}> {};
+// class GetID extends Query<getId, {}> {};
 
-class GetProfile extends Query<getProfile, getProfileVariables> {};
+class GetProfile extends Query<getProfile, getProfileVariables> {}
 
 class Settings extends React.Component<Props, State> {
   renderSubheading = (work: string, school: string): JSX.Element => {
@@ -55,8 +55,16 @@ class Settings extends React.Component<Props, State> {
   };
 
   renderContent({
-    work, school, name, pics,
-  }:{ work: string; school: string; name: string; pics: string[]}) {
+    work,
+    school,
+    name,
+    pics,
+  }: {
+  work: string;
+  school: string;
+  name: string;
+  pics: string[];
+  }) {
     const {
       navigation: { navigate },
     } = this.props;
@@ -100,35 +108,34 @@ class Settings extends React.Component<Props, State> {
   }
 
   render() {
+    // return (
+    // <GetID query={GET_ID}>
+    //   {({ loading: loadingLocal, error: errorLocal, data: dataLocal }) => {
+    //     // console.log('local data: ',data);
+    //     // console.log('local error: ',error);
+    //     // console.log('local loading: ',loading);
+    //     if (loadingLocal) return <Spinner />;
+    //     if (errorLocal) return <ErrorMessage error={errorLocal.message} />;
+
+    // const { id } = dataLocal.user;
     return (
-      <GetID query={GET_ID}>
-        {({ loading: loadingLocal, error: errorLocal, data: dataLocal }) => {
-          // console.log('local data: ',data);
-          // console.log('local error: ',error);
-          // console.log('local loading: ',loading);
-          if (loadingLocal) return <Spinner />;
-          if (errorLocal) return <ErrorMessage error={errorLocal.message} />;
-
-          const { id } = dataLocal.user;
-
-          return (
-            <GetProfile query={GET_PROFILE} variables={{ id }}>
-              {({
-                loading, error, data, refetch,
-              }) => {
-                console.log('loading: ', loading);
-                // console.log('error: ',error);
-                console.log('data: ', data);
-                if (loading) return <Spinner />;
-                if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
-                if (!data.user) return <ErrorMessage error={PROFILE_NOT_FOUND} refetch={refetch} />;
-                return this.renderContent(data.user);
-              }}
-            </GetProfile>
-          );
+      <GetProfile query={GET_PROFILE}>
+        {({
+          loading, error, data, refetch,
+        }) => {
+          console.log('loading: ', loading);
+          // console.log('error: ',error);
+          console.log('data: ', data);
+          if (loading) return <Spinner />;
+          if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
+          if (!data.user) return <ErrorMessage error={PROFILE_NOT_FOUND} refetch={refetch} />;
+          return this.renderContent(data.user);
         }}
-      </GetID>
+      </GetProfile>
     );
+    //     }}
+    //   </GetID>
+    // );
   }
 }
 

@@ -9,7 +9,7 @@ export interface createDate_createDate {
   __typename: "DateItem";
   id: string | null;
   creationTime: string | null;
-  datetimeOfDate: string | null;
+  datetimeOfDate: number | null;
   description: string | null;
 }
 
@@ -19,6 +19,6 @@ export interface createDate {
 
 export interface createDateVariables {
   id: string;
-  datetimeOfDate?: string | null;
+  datetimeOfDate?: number | null;
   description?: string | null;
 }

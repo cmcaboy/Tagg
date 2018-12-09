@@ -1631,7 +1631,7 @@ export namespace MutationResolvers {
 
   export interface ArgsCreateDate {
     id: string;
-    datetimeOfDate: string | null;
+    datetimeOfDate: number | null;
     description: string | null;
   }
 

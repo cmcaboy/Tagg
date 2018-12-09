@@ -69,7 +69,7 @@ const typeDefs = `
         creator: User
         winner: User
         creationTime: String
-        datetimeOfDate: String
+        datetimeOfDate: Int
         description: String
         bids: DateBidList
         num_bids: Int
@@ -200,7 +200,7 @@ const typeDefs = `
         follow (id: String!, followId: String!, isFollowing: Boolean): User
         unFollow (id: String!, unFollowId: String!): User
         bid(id: String!, dateId: String!, bidPlace: String, bidDescription: String): DateBid
-        createDate(id: String!, datetimeOfDate: String, description: String): DateItem
+        createDate(id: String!, datetimeOfDate: Int, description: String): DateItem
         chooseWinner(id: String!, winnerId: String!, dateId: String!): DateItem
         flag(id: String!, flaggedId: String!, block: Boolean): User
         block(id: String!, blockedId: String!): User

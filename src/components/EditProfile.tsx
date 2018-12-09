@@ -18,7 +18,7 @@ import {
 // import expandArrayToFive from '../selectors/expandArrayToFive';
 import PhotoSelector from './PhotoSelector';
 import { PRIMARY_COLOR, PHOTO_HINT } from '../variables';
-import { GET_ID } from '../apollo/local/queries';
+// import { GET_ID } from '../apollo/local/queries';
 import { GET_EDIT_PROFILE } from '../apollo/queries';
 import {
   SET_NAME,
@@ -37,7 +37,7 @@ import { setWork, setWorkVariables } from '../apollo/mutations/__generated__/set
 import { setDescriptionVariables, setDescription } from '../apollo/mutations/__generated__/setDescription';
 import { getEditProfile, getEditProfileVariables, getEditProfile_user } from '../apollo/queries/__generated__/getEditProfile';
 import { setName, setNameVariables } from '../apollo/mutations/__generated__/setName';
-import { getId } from '../apollo/queries/__generated__/getId';
+// import { getId } from '../apollo/queries/__generated__/getId';
 
 
 class SetPics extends Mutation<setPics, setPicsVariables> {};
@@ -48,7 +48,7 @@ class SetSchool extends Mutation<setSchool, setSchoolVariables> {};
 class SetWork extends Mutation<setWork, setWorkVariables> {};
 class SetDescription extends Mutation<setDescription, setDescriptionVariables> {};
 class GetEditProfile extends Query<getEditProfile, getEditProfileVariables> {};
-class GetID extends Query<getId, {}> {};
+// class GetID extends Query<getId, {}> {};
 
 interface UserEditProfile extends getEditProfile_user {
   id: string | null;
@@ -177,19 +177,19 @@ class EditProfile extends Component<Props, State> {
   };
 
   render() {
-    return (
-      <GetID query={GET_ID}>
-        {({ loading, error, data }) => {
-          // console.log('local data: ',data);
-          // console.log('local error: ',error);
-          // console.log('local loading: ',loading);
-          if (loading) return <Spinner />;
-          if (error) return <ErrorMessage error={error.message} />;
+    // return (
+    //   <GetID query={GET_ID}>
+    //     {({ loading, error, data }) => {
+    //       // console.log('local data: ',data);
+    //       // console.log('local error: ',error);
+    //       // console.log('local loading: ',loading);
+    //       if (loading) return <Spinner />;
+    //       if (error) return <ErrorMessage error={error.message} />;
 
-          const { id } = data.user;
+    //       const { id } = data.user;
 
           return (
-            <GetEditProfile query={GET_EDIT_PROFILE} variables={{ id }}>
+            <GetEditProfile query={GET_EDIT_PROFILE}>
               {({ loading, error, data }) => {
                 // console.log('data: ',data);
                 // console.log('error: ',error);
@@ -200,9 +200,9 @@ class EditProfile extends Component<Props, State> {
               }}
             </GetEditProfile>
           );
-        }}
-      </GetID>
-    );
+    //     }}
+    //   </GetID>
+    // );
   }
 }
 

@@ -1,4 +1,4 @@
-import { User } from "./User";
+import { User } from './User';
 
 export interface DateItem {
   id: string;
@@ -6,7 +6,7 @@ export interface DateItem {
   creator?: User;
   winner?: User;
   creationTime?: string;
-  datetimeOfDate?: string;
+  datetimeOfDate?: number;
   description?: string;
   num_bids?: number;
   open?: boolean;
