@@ -64,7 +64,6 @@ class Matches extends Component<Props, State> {
         <View style={styles.newMatchesContainer}>
           <MyAppText style={styles.heading}>My Matched Dates</MyAppText>
           <ScrollView horizontal>
-            {console.log('matches length: ', matches.length)}
             {!matches.length && (
               <View style={styles.newMatch}>
                 <CirclePicture imageURL={PLACEHOLDER_PHOTO} picSize="small" />
@@ -99,7 +98,6 @@ class Matches extends Component<Props, State> {
           <MyAppText style={styles.heading}>My Open Dates</MyAppText>
           <ScrollView>
             <List>
-              {console.log('dateRequests length: ', dateRequests.length)}
               {!dateRequests.length && (
                 <View style={styles.newMatch}>
                   <CirclePicture imageURL={PLACEHOLDER_PHOTO} picSize="small" />

@@ -428,7 +428,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       )
       .then((result: any) => result.records)
       .then((records: any) => {
-        console.log("dateRequests records: ", records);
+        // console.log("dateRequests records: ", records);
         const list = records.map((record: any) => {
           const { datetimeOfDate: datetimeTemp } = record._fields[1].properties;
           console.log(`datetimeTemp: ${datetimeTemp}`);
@@ -445,7 +445,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
             open: record._fields[1].properties.open
         }
       });
-        console.log('dateRequests list: ',list);
+        // console.log('dateRequests list: ',list);
         return {
           id: `${id}d`,
           list,
