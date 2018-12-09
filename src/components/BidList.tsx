@@ -157,12 +157,12 @@ class BidList extends React.Component<Props, State> {
                                     }
                                   `;
 
-                                  console.log(id);
+                                  // console.log(id);
                                   storeData = store.readFragment({
                                     id: `${id}d`,
                                     fragment: fragmentDateList,
                                   });
-                                  console.log(`storeData for ${id}d: `, storeData);
+                                  // console.log(`storeData for ${id}d: `, storeData);
                                   // storeData.forEach(datum => console.log('datum: ',datum));
 
                                   store.writeFragment({

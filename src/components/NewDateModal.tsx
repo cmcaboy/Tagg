@@ -75,6 +75,20 @@ class NewDateModal extends React.Component<Props, State> {
     this.setError(error.message);
   };
 
+  validateForm = () => {
+    if (!this.state.datetime) {
+      this.setError('Please select a date/time for your date');
+      return false;
+    }
+    if (!this.state.description) {
+      this.setError(
+        'Please provide a description so that others know what kind of date your are looking for!',
+      );
+      return false;
+    }
+    return true; // all tests pass
+  };
+
   render() {
     const { id, isVisible } = this.props;
     const { datetime, description } = this.state;
@@ -115,10 +129,13 @@ class NewDateModal extends React.Component<Props, State> {
                     accessible={false}
                     block
                     onPress={() => {
-                      console.log('button press');
+                      // console.log('button press');
                       // console.log('datetime: ', datetime);
                       // console.log('datetimeOfDate Epoch: ', convertDateToEpoch(datetime));
-
+                      if (!this.validateForm()) {
+                        return;
+                      }
+                      
                       this.setError('');
 
                       return newDate({
@@ -128,7 +145,7 @@ class NewDateModal extends React.Component<Props, State> {
                           datetimeOfDate: convertDateToEpoch(datetime),
                         },
                         update: (store, data) => {
-                          console.log('data from newDate mutation: ', data);
+                          // console.log('data from newDate mutation: ', data);
                           // console.log('store: ', store);
                         },
                       });
