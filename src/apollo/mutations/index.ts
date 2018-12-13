@@ -260,3 +260,29 @@ export const REMOVE_USER = gql`
     }
   }
 `;
+
+export const FLAG_USER = gql`
+  mutation flag($id: String!, $flaggedId: String!) {
+    flag(id: $id, flaggedId: $flaggedId) {
+      id
+      viewObjectionable
+    }
+  }
+`;
+
+export const FLAG_AND_BLOCK_USER = gql`
+  mutation flag($id: String!, $flaggedId: String!, $block: Boolean) {
+    flag(id: $id, flaggedId: $flaggedId, block: $block) {
+      id
+      viewObjectionable
+    }
+  }
+`;
+
+export const BLOCK_USER = gql`
+  mutation block($id: String!, $blockedId: String!) {
+    block(id: $id, blockedId: $blockedId) {
+      id
+    }
+  }
+`;

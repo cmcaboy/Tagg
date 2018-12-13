@@ -31,6 +31,10 @@ const context = ({ req }) => __awaiter(this, void 0, void 0, function* () {
     const email = auth;
     let neoRaw;
     let user;
+    if (!email) {
+        console.log('No email in header!');
+        return { user: null };
+    }
     try {
         neoRaw = yield session.run(`MATCH (a:User{id:'${email}'}) RETURN a.id, a.email, a.token, a.roles`);
         user = {
@@ -42,7 +46,7 @@ const context = ({ req }) => __awaiter(this, void 0, void 0, function* () {
     }
     catch (e) {
         console.log(`Error retreiving user ${email} from database: ${e}`);
-        return null;
+        return { user: null };
     }
     return { user };
 });

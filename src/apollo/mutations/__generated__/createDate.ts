@@ -8,7 +8,7 @@
 export interface createDate_createDate {
   __typename: "DateItem";
   id: string | null;
-  creationTime: string | null;
+  creationTime: number | null;
   datetimeOfDate: number | null;
   description: string | null;
 }

@@ -68,6 +68,8 @@ class LoginForm extends Component<Props, State> {
 
   setError = ( e: string ) => this.setState({ emailError: e });
 
+  setLoading = ( loading: boolean ) => this.setState({ loading });
+
   modalClose = () => this.setState({ modalDisplay: false });
 
   emailLogin = async ({ client }: { client: any }) => {
@@ -175,6 +177,8 @@ class LoginForm extends Component<Props, State> {
                       <FBLoginButton
                         client={client}
                         startNewUser={startNewUser}
+                        setError={this.setError}
+                        setLoading={this.setLoading}
                         // startSetId={startSetId} // switched to asyncstorage
                       />
                     )}

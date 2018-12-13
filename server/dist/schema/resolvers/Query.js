@@ -19,13 +19,12 @@ exports.Query = Object.assign({}, generated_1.QueryResolvers.defaultResolvers, {
         return yield dataSources.neoAPI.findUser({ id, hostId });
     }), messages: (_, { id }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.firestoreAPI.getMessages({ id }); }), date: (_, { id }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.findDate({ id }); }), dates: (_, __) => {
         throw new Error('Resolver not implemented');
-    }, otherBids: (_, { id: argsId }, { dataSources, user }) => __awaiter(this, void 0, void 0, function* () {
+    }, otherBids: (_, { id: dateId }, { dataSources, user }) => __awaiter(this, void 0, void 0, function* () {
         if (!user || !user.id) {
             console.log('User not authenticated');
             throw new AuthenticationError('User not authenticated');
         }
-        const id = argsId || user.id;
-        return yield dataSources.neoAPI.findOtherBids({ id });
+        return yield dataSources.neoAPI.findOtherBids({ id: dateId });
     }), moreMessages: (_, { id, cursor }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.firestoreAPI.getMoreMessages({ id, cursor }); }), moreQueue: (_, { cursor, followerDisplay }, { dataSources, user }) => __awaiter(this, void 0, void 0, function* () {
         if (!user || !user.id) {
             console.log('User not authenticated');

@@ -23,7 +23,7 @@ export interface getMatches_user_matchedDates_list {
   __typename: "Match";
   id: string | null;
   matchId: string | null;
-  datetimeOfDate: string | null;
+  datetimeOfDate: number | null;
   user: getMatches_user_matchedDates_list_user | null;
   lastMessage: getMatches_user_matchedDates_list_lastMessage | null;
 }
@@ -61,8 +61,4 @@ export interface getMatches_user {
 
 export interface getMatches {
   user: getMatches_user | null;
-}
-
-export interface getMatchesVariables {
-  id?: string | null;
 }

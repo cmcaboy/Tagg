@@ -3,14 +3,19 @@ import {
   View, Image, TouchableOpacity, StyleSheet, ViewStyle, TextStyle,
 } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ActionSheet } from 'native-base';
+import { Mutation } from 'react-apollo';
 import DateOpenButton from './DateOpenButton';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {
   formatDistanceApart, formatName, formatSchool, formatWork,
 } from '../format';
 import { WideCard, MyAppText, FollowButton } from './common';
 import { PICTURE_WIDTH } from '../variables';
+import { BLOCK_USER, FLAG_AND_BLOCK_USER } from '../apollo/mutations';
+import { blockVariables, block } from '../apollo/mutations/__generated__/block';
+import { flag, flagVariables } from '../apollo/mutations/__generated__/flag';
 
 interface Props {
   hostId: string;
@@ -29,7 +34,11 @@ interface Style {
   distance: TextStyle;
   iconText: TextStyle;
   schoolText: TextStyle;
+  topView: ViewStyle;
 }
+
+class BlockUser extends Mutation<block, blockVariables> {}
+class FlagUser extends Mutation<flag, flagVariables> {}
 
 const StaggCard: SFC<Props> = ({
   hostId,
@@ -47,6 +56,38 @@ const StaggCard: SFC<Props> = ({
 
   const onPress = () => navigation.navigate('UserProfile', { id, name, hostId });
 
+  const BUTTONS = ['Report', 'Block', 'Cancel'];
+  const REPORT_INDEX = 0;
+  const BLOCK_INDEX = 1;
+  const REPORT_AND_BLOCK_INDEX = 2;
+  const CANCEL_INDEX = 3;
+
+  const openMenu = ({
+    blockUser,
+    flagUser,
+  }: {
+  blockUser: (options: any) => void;
+  flagUser: (options: any) => void;
+  }) => {
+    ActionSheet.show(
+      { options: BUTTONS, cancelButtonIndex: CANCEL_INDEX, title: 'Options' },
+      (selectedIndex) => {
+        switch (selectedIndex) {
+          case REPORT_INDEX:
+            blockUser({ variables: { id: hostId, blockedId: id } });
+            return;
+          case BLOCK_INDEX:
+            // Should also remove from cache
+            flagUser({ variables: { id: hostId, flaggedId: id } });
+            return;
+          case REPORT_AND_BLOCK_INDEX:
+            // Should also remove from cache
+            flagUser({ variables: { id: hostId, flaggedId: id, block: true } });
+        }
+      },
+    );
+  };
+
   return (
     <WideCard footer={!!hasDateOpen}>
       <View style={styles.bodyStyle}>
@@ -59,12 +100,26 @@ const StaggCard: SFC<Props> = ({
         <View style={styles.userInfo}>
           <View style={{ justifyContent: 'space-between' }}>
             <View style={styles.description}>
-              <TouchableOpacity onPress={onPress} accessible={false}>
-                <View style={{ flexDirection: 'row' }}>
-                  <MyAppText style={styles.nameText}>{formatName(name)}</MyAppText>
-                  <MyAppText style={styles.ageText}>{age ? `, ${age}` : null}</MyAppText>
-                </View>
-              </TouchableOpacity>
+              <View style={styles.topView}>
+                <TouchableOpacity onPress={onPress} accessible={false}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <MyAppText style={styles.nameText}>{formatName(name)}</MyAppText>
+                    <MyAppText style={styles.ageText}>{age ? `, ${age}` : null}</MyAppText>
+                  </View>
+                </TouchableOpacity>
+                {/*I could place this in its own component so I can reuse*/}
+                <BlockUser mutation={BLOCK_USER}>
+                  {blockUser => (
+                    <FlagUser mutation={FLAG_AND_BLOCK_USER}>
+                      {flagUser => (
+                        <TouchableOpacity onPress={() => openMenu({ blockUser, flagUser })}>
+                          <MaterialCommunityIcons name="dots-vertical" size={14} />
+                        </TouchableOpacity>
+                      )}
+                    </FlagUser>
+                  )}
+                </BlockUser>
+              </View>
               {!!school && (
                 <View style={styles.subHeading}>
                   {/* <Ionicons name="md-school" size={14} color="black" style={styles.iconText}/> */}
@@ -104,6 +159,10 @@ const styles = StyleSheet.create<Style>({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     padding: 10,
+  },
+  topView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   rightCard: {
     flexDirection: 'row',

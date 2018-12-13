@@ -9,5 +9,5 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const generated_1 = require("../../types/generated");
-exports.DateBid = Object.assign({}, generated_1.DateBidResolvers.defaultResolvers, { dateUser: ({ id }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.getDateCreator({ id }); }), bidUser: ({ id }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.findDateBidder({ id }); }), date: ({ id }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.findDateFromBid({ id }); }) });
+exports.DateBid = Object.assign({}, generated_1.DateBidResolvers.defaultResolvers, { dateUser: ({ id }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.getDateCreator({ id }); }), bidUser: ({ id }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return dataSources.neoAPI.findUser({ id }); }), date: ({ id }, _, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.findDateFromBid({ id }); }) });
 //# sourceMappingURL=DateBid.js.map

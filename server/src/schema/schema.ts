@@ -43,6 +43,11 @@ const context = async ({ req }: { req: any }) => {
   let neoRaw;
   let user;
 
+  if (!email) {
+    console.log('No email in header!');
+    return { user: null };
+  }
+
   try {
     neoRaw = await session.run(
       `MATCH (a:User{id:'${email}'}) RETURN a.id, a.email, a.token, a.roles`,
@@ -56,7 +61,7 @@ const context = async ({ req }: { req: any }) => {
   } catch (e) {
     // I could throw a real error here
     console.log(`Error retreiving user ${email} from database: ${e}`);
-    return null;
+    return { user: null };
   }
 
   return { user };

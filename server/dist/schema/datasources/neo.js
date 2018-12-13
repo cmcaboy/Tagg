@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const variables_1 = require("../resolvers/variables");
 const queue_1 = require("../../middleware/queue");
 const defaults_1 = require("../defaults");
+const format_1 = require("../../middleware/format");
 const { DataSource } = require("apollo-datasource");
 class NeoAPI extends DataSource {
     constructor({ session }) {
@@ -31,7 +32,11 @@ class NeoAPI extends DataSource {
                 .run(`MATCH(d:Date{id:'${id}'}) 
             RETURN d`)
                 .then((result) => result.records[0])
-                .then((record) => record._fields[0].properties)
+                .then((record) => {
+                console.log(`date props: ${record._fields[0].properties}`);
+                const datetimeOfDate = typeof record._fields[0].properties.datetimeOfDate === 'number' ? record._fields[0].properties.datetimeOfDate : format_1.convertDateToEpoch(record._fields[0].properties.datetimeOfDate);
+                return Object.assign({}, record._fields[0].properties, { datetimeOfDate });
+            })
                 .catch((e) => {
                 console.log("date error: ", e);
                 return null;
@@ -41,20 +46,19 @@ class NeoAPI extends DataSource {
             return this.session
                 .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${id}'}) 
           WITH b,r,d, r.datetimeOfBid as order
-          RETURN b,r
+          RETURN b.id,r
           ORDER BY order DESC
         `)
                 .then((result) => result.records)
                 .then((records) => {
-                const list = records.map((record) => ({
-                    id: record._fields[0].properties.id,
-                    datetimeOfBid: record._fields[1].properties.datetimeOfBid,
-                    bidDescription: record._fields[1].properties.bidDescription,
-                    bidPlace: record._fields[1].properties.bidPlace,
-                    bidUser: Object.assign({}, record._fields[0].properties, { profilePic: !!record._fields[0].properties.pics
-                            ? record._fields[0].properties.pics[0]
-                            : null })
-                }));
+                const list = records.map((record) => {
+                    return {
+                        id: record._fields[0],
+                        datetimeOfBid: record._fields[1].properties.datetimeOfBid,
+                        bidDescription: record._fields[1].properties.bidDescription,
+                        bidPlace: record._fields[1].properties.bidPlace,
+                    };
+                });
                 return {
                     id: `${id}b`,
                     list,
@@ -149,7 +153,7 @@ class NeoAPI extends DataSource {
                 RETURN a`)
                 .then((result) => result.records[0])
                 .then((record) => record._fields[0].properties)
-                .catch((e) => console.log("winner error: ", e));
+                .catch((e) => console.log("getDateCreator error: ", e));
         };
         this.findDateBidder = ({ id }) => {
             return this.session
@@ -157,7 +161,7 @@ class NeoAPI extends DataSource {
                   RETURN b`)
                 .then((result) => result.records[0])
                 .then((record) => record._fields[0].properties)
-                .catch((e) => console.log("winner error: ", e));
+                .catch((e) => console.log("findDateBidder error: ", e));
         };
         this.findDateFromBid = ({ id }) => {
             return this.session
@@ -165,7 +169,7 @@ class NeoAPI extends DataSource {
                 RETURN d`)
                 .then((result) => result.records[0])
                 .then((record) => record._fields[0].properties)
-                .catch((e) => console.log("winner error: ", e));
+                .catch((e) => console.log("findDateFromBid error: ", e));
         };
         this.findCreatorFromDate = ({ id }) => {
             return this.session
@@ -190,7 +194,7 @@ class NeoAPI extends DataSource {
                   RETURN b`)
                 .then((result) => result.records[0])
                 .then((record) => record._fields[0].properties)
-                .catch((e) => console.log("winner error: ", e));
+                .catch((e) => console.log("findDateWinner error: ", e));
         };
         this.findBidsFromDate = ({ id }) => {
             return this.session
@@ -288,15 +292,18 @@ class NeoAPI extends DataSource {
         `)
                 .then((result) => result.records)
                 .then((records) => {
-                const list = records.map((record) => ({
-                    id: record._fields[1].properties.id,
-                    creator: record._fields[0].properties,
-                    creationTime: record._fields[1].properties.creationTime,
-                    datetimeOfDate: record._fields[1].properties.datetimeOfDate,
-                    description: record._fields[1].properties.description,
-                    num_bids: record._fields[2],
-                    open: record._fields[1].properties.open
-                }));
+                const list = records.map((record) => {
+                    const { datetimeOfDate, creationTime, description, id, open } = record._fields[1].properties;
+                    return {
+                        id,
+                        creationTime,
+                        datetimeOfDate,
+                        description,
+                        open,
+                        creator: record._fields[0].properties,
+                        num_bids: record._fields[2],
+                    };
+                });
                 return {
                     id: `${id}d`,
                     list,
@@ -364,7 +371,7 @@ class NeoAPI extends DataSource {
             !!args.work && (query = query + `a.work="${args.work}",`);
             !!args.token && (query = query + `a.token='${args.token}',`);
             !!args.registerDateTime &&
-                (query = query + `a.registerDateTime='${args.registerDateTime}',`);
+                (query = query + `a.registerDateTime=${args.registerDateTime},`);
             isBoolean(args.sendNotifications) &&
                 (query = query + `a.sendNotifications=${args.sendNotifications},`);
             !!args.distance && (query = query + `a.distance=${args.distance},`);
@@ -441,7 +448,7 @@ class NeoAPI extends DataSource {
             !!args.work && (query = query + `work:"${args.work}",`);
             !!args.token && (query = query + `token:'${args.token}',`);
             !!args.registerDateTime &&
-                (query = query + `registerDateTime:'${args.registerDateTime}',`);
+                (query = query + `registerDateTime:${args.registerDateTime},`);
             !!args.sendNotifications &&
                 (query = query + `sendNotifications:${args.sendNotifications},`);
             !!args.distance && (query = query + `distance:${args.distance},`);
@@ -501,7 +508,7 @@ class NeoAPI extends DataSource {
         this.createBid = ({ id: argsId, dateId, bidId, bidPlace, bidDescription, datetimeOfBid }) => __awaiter(this, void 0, void 0, function* () {
             const id = argsId || this.context.user.id;
             let query = `MATCH (a:User {id:'${id}'}), (d:Date {id:'${dateId}'}) 
-              MERGE (a)-[r:BID{id: '${bidId}',datetimeOfBid: '${datetimeOfBid}',`;
+              MERGE (a)-[r:BID{id: '${bidId}',datetimeOfBid: ${datetimeOfBid},`;
             !!bidPlace &&
                 (query = query + `bidPlace:"${bidPlace}",`) +
                     !!bidDescription &&
@@ -520,7 +527,7 @@ class NeoAPI extends DataSource {
             const id = argsId || this.context.user.id;
             let query = `CREATE (d:Date {id:'${dateId}',creator:'${id}',creationTime:'${creationTime}',open:TRUE,`;
             !!datetimeOfDate &&
-                (query = query + `datetimeOfDate:"${datetimeOfDate}",`) +
+                (query = query + `datetimeOfDate:${datetimeOfDate},`) +
                     !!description &&
                 (query = query + `description:"${description}",`);
             query = query.slice(-1) === "," ? query.slice(0, -1) : query;

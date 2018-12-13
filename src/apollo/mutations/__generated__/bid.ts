@@ -14,7 +14,7 @@ export interface bid_bid_date {
 export interface bid_bid {
   __typename: "DateBid";
   id: string | null;
-  datetimeOfBid: string | null;
+  datetimeOfBid: number | null;
   bidDescription: string | null;
   bidPlace: string | null;
   date: bid_bid_date | null;

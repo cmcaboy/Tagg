@@ -39,7 +39,3 @@ export interface getQueue_user {
 export interface getQueue {
   user: getQueue_user | null;
 }
-
-export interface getQueueVariables {
-  id?: string | null;
-}

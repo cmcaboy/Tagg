@@ -15,7 +15,7 @@ export interface otherBids_otherBids_list_bidUser {
 export interface otherBids_otherBids_list {
   __typename: "DateBid";
   id: string | null;
-  datetimeOfBid: string | null;
+  datetimeOfBid: number | null;
   bidDescription: string | null;
   bidPlace: string | null;
   bidUser: otherBids_otherBids_list_bidUser | null;
