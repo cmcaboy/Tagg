@@ -56,7 +56,7 @@ const StaggCard: SFC<Props> = ({
 
   const onPress = () => navigation.navigate('UserProfile', { id, name, hostId });
 
-  const BUTTONS = ['Report', 'Block', 'Cancel'];
+  const BUTTONS = ['Report', 'Block', 'Report and Block', 'Cancel'];
   const REPORT_INDEX = 0;
   const BLOCK_INDEX = 1;
   const REPORT_AND_BLOCK_INDEX = 2;
@@ -69,20 +69,39 @@ const StaggCard: SFC<Props> = ({
   blockUser: (options: any) => void;
   flagUser: (options: any) => void;
   }) => {
+    console.log('openMenu');
     ActionSheet.show(
-      { options: BUTTONS, cancelButtonIndex: CANCEL_INDEX, title: 'Options' },
+      { options: BUTTONS, cancelButtonIndex: CANCEL_INDEX, title: name },
       (selectedIndex) => {
+        console.log('selectedIndex: ', selectedIndex);
         switch (selectedIndex) {
-          case REPORT_INDEX:
-            blockUser({ variables: { id: hostId, blockedId: id } });
-            return;
           case BLOCK_INDEX:
+            console.log('BLOCK_INDEX: ', BLOCK_INDEX);
+            blockUser({
+              variables: { id: hostId, blockedId: id },
+              update: (data: any, store: any) => {
+                console.log(`data: ${data}`);
+              },
+            });
+            return;
+          case REPORT_INDEX:
+            console.log('REPORT_INDEX: ', REPORT_INDEX);
             // Should also remove from cache
-            flagUser({ variables: { id: hostId, flaggedId: id } });
+            flagUser({
+              variables: { id: hostId, flaggedId: id },
+              update: (_: any, data: any) => {
+                console.log(`data: ${JSON.stringify(data)}`);
+              },
+            });
             return;
           case REPORT_AND_BLOCK_INDEX:
             // Should also remove from cache
-            flagUser({ variables: { id: hostId, flaggedId: id, block: true } });
+            flagUser({
+              variables: { id: hostId, flaggedId: id, block: true },
+              update: (data: any, store: any) => {
+                console.log(`data: ${data}`);
+              },
+            });
         }
       },
     );
@@ -107,7 +126,7 @@ const StaggCard: SFC<Props> = ({
                     <MyAppText style={styles.ageText}>{age ? `, ${age}` : null}</MyAppText>
                   </View>
                 </TouchableOpacity>
-                {/*I could place this in its own component so I can reuse*/}
+                {/* I could place this in its own component so I can reuse */}
                 <BlockUser mutation={BLOCK_USER}>
                   {blockUser => (
                     <FlagUser mutation={FLAG_AND_BLOCK_USER}>

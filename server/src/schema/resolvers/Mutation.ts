@@ -129,5 +129,5 @@ export const Mutation: MutationResolvers.Type = {
     return date;
   },
   flag: async (_, { flaggedId, block }, { dataSources }) => await dataSources.neoAPI.setFlagUser({ flaggedId, block }),
-  block: async (_, { blockedId }, { dataSources }) => await dataSources.neoAPI.setUserBlock({ blockedId }),
+  block: async (_, { blockedId }, { dataSources }) => await dataSources.neoAPI.setBlockUser({ blockedId }),
 };
