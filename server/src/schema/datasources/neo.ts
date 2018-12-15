@@ -165,6 +165,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
               exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
               where
               NOT (b)-[:BLOCK]->(a) AND
+              NOT (a)-[:BLOCK]->(b) AND
               NOT b.id=a.id AND
               NOT b.gender=a.gender AND
               distanceApart < a.distance AND

@@ -59,8 +59,11 @@ session: any;
     ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
     exists((a)-[:FOLLOWING]->(b)) as isFollowing,
     exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
+    exists((b)-[:BLOCK]->(a)) as blockedUser
+    exists((a)-[:BLOCK]->(b)) as blocks
     where 
-    NOT (b)-[:BLOCK]->(a) AND
+    NOT blockedUser AND
+    NOT blocks AND
     NOT b.id=a.id AND
     NOT b.gender=a.gender AND
     distanceApart < a.distance
