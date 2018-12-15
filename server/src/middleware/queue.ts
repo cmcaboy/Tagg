@@ -1,10 +1,14 @@
-import { driver } from '../db/neo4j';
-
-const session = driver.session();
-
 const QUEUE_PAGE_LENGTH = 5;
 
-export const getQueue = async ({ id, followerDisplay }: { id: string; followerDisplay: any }) => {
+export const getQueue = async ({
+  id,
+  followerDisplay,
+  session,
+}: {
+id: string;
+followerDisplay: any;
+session: any;
+}) => {
   // console.log('id: ', id);
   // console.log('args: ',args);
   // for pagination, I would like to sort by the following algorithm
@@ -35,7 +39,6 @@ export const getQueue = async ({ id, followerDisplay }: { id: string; followerDi
       `MATCH(a:User{id:'${id}}) return a.viewObjectionable`,
     );
     const viewObjectionableResult = viewObjectionableRaw.records[0].fields[0];
-
     if (viewObjectionableResult) {
       viewObjectionable = 'AND NOT (a)-[:]->(b:{ objectionable: true} )';
     } else {

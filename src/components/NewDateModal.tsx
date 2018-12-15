@@ -61,13 +61,13 @@ class NewDateModal extends React.Component<Props, State> {
     this.setState(this.blankState);
   };
 
-  onCompleted = async (data: any) => {
-    this.closeModal();
-
+  onCompleted = (data: any) => {
     toastMessage({
       text: 'Your date request has been created!',
       duration: 3000,
+      position: 'top',
     });
+    this.closeModal();
   };
 
   onError = (error: ApolloError) => {
@@ -94,75 +94,75 @@ class NewDateModal extends React.Component<Props, State> {
     const { datetime, description } = this.state;
     return (
       <MyAppModal isVisible={isVisible} close={this.closeModal}>
-        <MyTitleText>New Date Request</MyTitleText>
-        <HorizontalLine />
-        <View style={{ alignItems: 'stretch' }}>
-          <DatePicker
-            style={styles.dateInput}
-            mode="datetime"
-            date={datetime}
-            format={DATE_FORMAT}
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            onDateChange={d => this.setState({ datetime: d })}
-            placeholder="When will this date take place?"
-          />
-          <TextInput
-            style={styles.textInput}
-            multiline
-            placeholder="What kind of date are you looking for?"
-            onChangeText={text => this.setState({ description: text })}
-            value={description}
-            maxLength={300}
-          />
-          <View style={styles.buttonView}>
-            {!!this.state.error && (
-              <MyAppText style={styles.errorTextStyle}>{this.state.error}</MyAppText>
-            )}
-            <NewDate mutation={NEW_DATE} onCompleted={this.onCompleted} onError={this.onError}>
-              {(newDate, { loading }) => {
-                if (loading) {
-                  return <Spinner />;
-                }
-                return (
-                  <Button
-                    accessible={false}
-                    block
-                    onPress={() => {
-                      // console.log('button press');
-                      // console.log('datetime: ', datetime);
-                      // console.log('datetimeOfDate Epoch: ', convertDateToEpoch(datetime));
-                      if (!this.validateForm()) {
-                        return;
-                      }
-                      
-                      this.setError('');
+          <MyTitleText>New Date Request</MyTitleText>
+          <HorizontalLine />
+          <View style={{ alignItems: 'stretch' }}>
+            <DatePicker
+              style={styles.dateInput}
+              mode="datetime"
+              date={datetime}
+              format={DATE_FORMAT}
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              onDateChange={d => this.setState({ datetime: d })}
+              placeholder="When will this date take place?"
+            />
+            <TextInput
+              style={styles.textInput}
+              multiline
+              placeholder="What kind of date are you looking for?"
+              onChangeText={text => this.setState({ description: text })}
+              value={description}
+              maxLength={300}
+            />
+            <View style={styles.buttonView}>
+              {!!this.state.error && (
+                <MyAppText style={styles.errorTextStyle}>{this.state.error}</MyAppText>
+              )}
+              <NewDate mutation={NEW_DATE} onCompleted={this.onCompleted} onError={this.onError}>
+                {(newDate, { loading }) => {
+                  if (loading) {
+                    return <Spinner />;
+                  }
+                  return (
+                    <Button
+                      accessible={false}
+                      block
+                      onPress={() => {
+                        // console.log('button press');
+                        // console.log('datetime: ', datetime);
+                        // console.log('datetimeOfDate Epoch: ', convertDateToEpoch(datetime));
+                        if (!this.validateForm()) {
+                          return;
+                        }
 
-                      return newDate({
-                        variables: {
-                          id,
-                          description,
-                          datetimeOfDate: convertDateToEpoch(datetime),
-                        },
-                        update: (store, data) => {
-                          // console.log('data from newDate mutation: ', data);
-                          // console.log('store: ', store);
-                        },
-                      });
-                    }}
-                  >
-                    <MyAppText style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>
-                      {'Submit'}
-                    </MyAppText>
-                  </Button>
-                );
-              }}
-            </NewDate>
-            <TouchableOpacity style={styles.cancelButton} onPress={this.closeModal}>
-              <MyAppText style={styles.cancelText}>Cancel</MyAppText>
-            </TouchableOpacity>
+                        this.setError('');
+
+                        return newDate({
+                          variables: {
+                            id,
+                            description,
+                            datetimeOfDate: convertDateToEpoch(datetime),
+                          },
+                          update: (store, data) => {
+                            // console.log('data from newDate mutation: ', data);
+                            // console.log('store: ', store);
+                          },
+                        });
+                      }}
+                    >
+                      <MyAppText style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>
+                        {'Submit'}
+                      </MyAppText>
+                    </Button>
+                  );
+                }}
+              </NewDate>
+              <TouchableOpacity style={styles.cancelButton} onPress={this.closeModal}>
+                <MyAppText style={styles.cancelText}>Cancel</MyAppText>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
       </MyAppModal>
     );
   }

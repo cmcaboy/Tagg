@@ -125,24 +125,22 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
 
     let viewObjectionable!: string;
 
-    try {
-      const viewObjectionableRaw: any = await this.session.run(
-        `MATCH(a:User{id:'${id}}) return a.viewObjectionable`
-      );
-      const viewObjectionableResult: boolean =
-        viewObjectionableRaw.records[0].fields[0];
-
-      if (viewObjectionableResult) {
-        viewObjectionable = `AND viewObjectionable`;
-      } else {
-        viewObjectionable = `AND NOT viewObjectionable`;
-      }
-    } catch (e) {
-      console.log(
-        "Not able to objection viewObjectionable preference. Defaulting to view non-objectionable content"
-      );
-      viewObjectionable = `AND NOT viewObjectionable`;
+  try {
+    const viewObjectionableRaw = await this.session.run(
+      `MATCH(a:User{id:'${id}}) return a.viewObjectionable`,
+    );
+    const viewObjectionableResult = viewObjectionableRaw.records[0].fields[0];
+    if (viewObjectionableResult) {
+      viewObjectionable = 'AND NOT (a)-[:]->(b:{ objectionable: true} )';
+    } else {
+      viewObjectionable = '';
     }
+  } catch (e) {
+    console.log(
+      'Not able to obtain viewObjectionable preference. Defaulting to view non-objectionable content',
+    );
+    viewObjectionable = '';
+  }
 
     if (!cursor) {
       console.log(
@@ -449,7 +447,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
   };
   getUserQueue = ({ followerDisplay }: { followerDisplay: string | null }): Object => {
     const id = this.context.user.id;
-    return getQueue({ id, followerDisplay });
+    return getQueue({ id, followerDisplay, session: this.session });
   };
   getMatchedDates = () => {
     // A potential performance improvement would be to query Firestore directly
