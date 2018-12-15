@@ -58,8 +58,8 @@ session: any;
     distance(point(a),point(b))*0.000621371 as distanceApart,
     ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
     exists((a)-[:FOLLOWING]->(b)) as isFollowing,
-    exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
-    exists((b)-[:BLOCK]->(a)) as blockedUser
+    exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen,
+    exists((b)-[:BLOCK]->(a)) as blockedUser,
     exists((a)-[:BLOCK]->(b)) as blocks
     where 
     NOT blockedUser AND
