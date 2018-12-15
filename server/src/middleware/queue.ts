@@ -40,7 +40,7 @@ session: any;
     );
     const viewObjectionableResult = viewObjectionableRaw.records[0].fields[0];
     if (viewObjectionableResult) {
-      viewObjectionable = 'AND NOT (a)-[:]->(b:{ objectionable: true} )';
+      viewObjectionable = 'AND NOT viewObjectionable';
     } else {
       viewObjectionable = '';
     }
@@ -60,7 +60,8 @@ session: any;
     exists((a)-[:FOLLOWING]->(b)) as isFollowing,
     exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen,
     exists((b)-[:BLOCK]->(a)) as blockedUser,
-    exists((a)-[:BLOCK]->(b)) as blocks
+    exists((a)-[:BLOCK]->(b)) as blocks,
+    exists((a)-[:]->(b:{ objectionable: true} )) as viewObjectionable
     where 
     NOT blockedUser AND
     NOT blocks AND

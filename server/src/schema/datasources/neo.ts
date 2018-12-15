@@ -131,7 +131,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     );
     const viewObjectionableResult = viewObjectionableRaw.records[0].fields[0];
     if (viewObjectionableResult) {
-      viewObjectionable = 'AND NOT (a)-[:]->(b:{ objectionable: true} )';
+      viewObjectionable = 'AND NOT viewObjectionable';
     } else {
       viewObjectionable = '';
     }
@@ -163,9 +163,12 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
               distance(point(a),point(b))*0.000621371 as distanceApart,
               exists((a)-[:FOLLOWING]->(b)) as isFollowing,
               exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
-              where
-              NOT (b)-[:BLOCK]->(a) AND
-              NOT (a)-[:BLOCK]->(b) AND
+              exists((b)-[:BLOCK]->(a)) as blockedUser,
+              exists((a)-[:BLOCK]->(b)) as blocks,
+              exists((a)-[:]->(b:{ objectionable: true} )) as viewObjectionable
+              where 
+              NOT blockedUser AND
+              NOT blocks AND
               NOT b.id=a.id AND
               NOT b.gender=a.gender AND
               distanceApart < a.distance AND
