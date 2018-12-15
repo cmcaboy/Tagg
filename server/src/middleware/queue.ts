@@ -61,7 +61,7 @@ session: any;
     exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen,
     exists((b)-[:BLOCK]->(a)) as blockedUser,
     exists((a)-[:BLOCK]->(b)) as blocks,
-    exists((a)-[]->(b:{ objectionable: true} )) as viewObjectionable
+    exists((a)-[]->(b { objectionable: true} )) as viewObjectionable
     where 
     NOT blockedUser AND
     NOT blocks AND
