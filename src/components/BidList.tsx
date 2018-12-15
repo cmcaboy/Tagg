@@ -17,12 +17,14 @@ import {
 import { Mutation, Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { NavigationScreenProps } from 'react-navigation';
+import { listenerCount } from 'cluster';
 import EmptyList from './EmptyList';
 import { MyAppText, Spinner, ErrorMessage } from './common';
 import { CHOOSE_WINNER } from '../apollo/mutations';
 import { GET_BIDS } from '../apollo/queries';
 import { formatDescription } from '../format';
 import { otherBids, otherBidsVariables } from '../apollo/queries/__generated__/otherBids';
+import { GET_MATCHES } from '../apollo/queries/index';
 
 interface State {}
 
@@ -33,7 +35,7 @@ interface Params {
   id: string;
 }
 
-class GetBids extends Query<otherBids, otherBidsVariables> {};
+class GetBids extends Query<otherBids, otherBidsVariables> {}
 
 class BidList extends React.Component<Props, State> {
   static navigationOptions = () => ({
@@ -130,51 +132,91 @@ class BidList extends React.Component<Props, State> {
                                 update: (store, newData) => {
                                   console.log('store: ', store);
                                   console.log('newData: ', newData);
-                                  const fragment = gql`
-                                    fragment chooseWinner on DateItem {
-                                      open
-                                    }
-                                  `;
-                                  let storeData: any = store.readFragment({
-                                    fragment,
-                                    id: newData.data.chooseWinner.id,
-                                  });
-                                  store.writeFragment({
-                                    fragment,
-                                    id: newData.data.chooseWinner.id,
+
+                                  // grab matches query in local cache
+                                  const {
+                                    user,
+                                    user: {
+                                      matchedDates,
+                                      matchedDates: { list: matchList },
+                                      dateRequests,
+                                      dateRequests: { list: dateList },
+                                    },
+                                  } = store.readQuery({ query: GET_MATCHES });
+                                  console.log('user: ', user);
+
+                                  // Update the cache with after chooseWinner completes
+                                  store.writeQuery({
+                                    query: GET_MATCHES,
                                     data: {
-                                      ...storeData,
-                                      open: newData.data.chooseWinner.open,
+                                      user: {
+                                        ...user,
+                                        dateRequests: {
+                                          ...dateRequests,
+                                          list: dateList.filter(
+                                            (date: any) => date.id !== newData.data.chooseWinner.id,
+                                          ),
+                                        },
+                                        matchedDates: {
+                                          ...matchedDates,
+                                          list: [newData.data.chooseWinner.id, ...matchList],
+                                        },
+                                      },
                                     },
                                   });
+                                  // onCompleted is a bit buggy at the moment
+                                  // So I am using this logic
 
-                                  const fragmentDateList = gql`
-                                    fragment dateRequests on DateList {
-                                      id
-                                      list {
-                                        id
-                                      }
-                                    }
-                                  `;
+                                  // Read Query for GET_MATCHES
+                                  // Write Query for GET_MATCHES
+                                  // Remove the entry for DateRequest
+                                  // Add an entry for matchedDates
 
-                                  console.log(id);
-                                  storeData = store.readFragment({
-                                    id: `${id}d`,
-                                    fragment: fragmentDateList,
-                                  });
-                                  console.log(`storeData for ${id}d: `, storeData);
-                                  // storeData.forEach(datum => console.log('datum: ',datum));
+                                  // const fragment = gql`
+                                  //   fragment chooseWinner on DateItem {
+                                  //     open
+                                  //   }
+                                  // `;
+                                  // let storeData: any = store.readFragment({
+                                  //   fragment,
+                                  //   id: newData.data.chooseWinner.id,
+                                  // });
+                                  // store.writeFragment({
+                                  //   fragment,
+                                  //   id: newData.data.chooseWinner.id,
+                                  //   data: {
+                                  //     ...storeData,
+                                  //     open: newData.data.chooseWinner.open,
+                                  //   },
+                                  // });
 
-                                  store.writeFragment({
-                                    id: `${id}d`,
-                                    fragment: fragmentDateList,
-                                    data: {
-                                      ...storeData,
-                                      list: storeData.list.filter(
-                                        ( d: any ) => d.id !== newData.data.chooseWinner.id,
-                                      ),
-                                    },
-                                  });
+                                  // const fragmentDateList = gql`
+                                  //   fragment dateRequests on DateList {
+                                  //     id
+                                  //     list {
+                                  //       id
+                                  //     }
+                                  //   }
+                                  // `;
+
+                                  // console.log(id);
+                                  // storeData = store.readFragment({
+                                  //   id: `${id}d`,
+                                  //   fragment: fragmentDateList,
+                                  // });
+                                  // console.log(`storeData for ${id}d: `, storeData);
+                                  // // storeData.forEach(datum => console.log('datum: ',datum));
+
+                                  // store.writeFragment({
+                                  //   id: `${id}d`,
+                                  //   fragment: fragmentDateList,
+                                  //   data: {
+                                  //     ...storeData,
+                                  //     list: storeData.list.filter(
+                                  //       ( d: any ) => d.id !== newData.data.chooseWinner.id,
+                                  //     ),
+                                  //   },
+                                  // });
 
                                   // const fragmentMatchList = gql`
                                   //     fragment matchedDates on MatchList {
@@ -215,9 +257,9 @@ class BidList extends React.Component<Props, State> {
                                   //     }
                                   // });
 
-                                  if (!newData.data.chooseWinner.optimistic) {
-                                    refetch();
-                                  }
+                                  // if (!newData.data.chooseWinner.optimistic) {
+                                  //   refetch();
+                                  // }
                                 },
                               });
                               return goBack();

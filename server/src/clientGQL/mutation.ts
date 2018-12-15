@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const NEW_DATE = gql`
-  mutation createDate($id: String!, $datetimeOfDate: String, $description: String) {
+  mutation createDate($id: String!, $datetimeOfDate: Int, $description: String) {
     createDate(id: $id, datetimeOfDate: $datetimeOfDate, description: $description) {
       id
       creationTime
@@ -96,6 +96,10 @@ export const CHOOSE_WINNER = gql`
     chooseWinner(id: $id, winnerId: $winnerId, dateId: $dateId) {
       id
       open
+      matchId
+      datetimeOfDate
+      user
+      lastMessage
     }
   }
 `;
@@ -256,6 +260,32 @@ export const SET_EMAIL = gql`
 export const REMOVE_USER = gql`
   mutation removeUser($id: String) {
     removeUser(id: $id) {
+      id
+    }
+  }
+`;
+
+export const FLAG_USER = gql`
+  mutation flag($id: String!, $flaggedId: String!) {
+    flag(id: $id, flaggedId: $flaggedId) {
+      id
+      viewObjectionable
+    }
+  }
+`;
+
+export const FLAG_AND_BLOCK_USER = gql`
+  mutation flag($id: String!, $flaggedId: String!, $block: Boolean) {
+    flag(id: $id, flaggedId: $flaggedId, block: $block) {
+      id
+      viewObjectionable
+    }
+  }
+`;
+
+export const BLOCK_USER = gql`
+  mutation block($id: String!, $blockedId: String!) {
+    block(id: $id, blockedId: $blockedId) {
       id
     }
   }

@@ -18,7 +18,7 @@ import {
 } from '../format';
 import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 // import { getId } from '../apollo/queries/__generated__/getId';
-import { getMatches, getMatchesVariables } from '../apollo/queries/__generated__/getMatches';
+import { getMatches } from '../apollo/queries/__generated__/getMatches';
 
 interface Params {};
 
@@ -29,7 +29,7 @@ interface Props {
 interface State {};
 
 // class GetId extends Query<getId, {}> {};
-class GetMatches extends Query<getMatches, getMatchesVariables> {};
+class GetMatches extends Query<getMatches, {}> {};
 
 class Matches extends Component<Props, State> {
   noMatches = () => (

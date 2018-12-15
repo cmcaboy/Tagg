@@ -96,6 +96,10 @@ export const CHOOSE_WINNER = gql`
     chooseWinner(id: $id, winnerId: $winnerId, dateId: $dateId) {
       id
       open
+      matchId
+      datetimeOfDate
+      user
+      lastMessage
     }
   }
 `;

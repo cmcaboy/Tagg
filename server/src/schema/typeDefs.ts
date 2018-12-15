@@ -201,7 +201,7 @@ const typeDefs = `
         unFollow (id: String!, unFollowId: String!): User
         bid(id: String!, dateId: String!, bidPlace: String, bidDescription: String): DateBid
         createDate(id: String!, datetimeOfDate: Int, description: String): DateItem
-        chooseWinner(id: String!, winnerId: String!, dateId: String!): DateItem
+        chooseWinner(id: String!, winnerId: String!, dateId: String!): Match
         flag(id: String!, flaggedId: String!, block: Boolean): User
         block(id: String!, blockedId: String!): User
         removeUser(id: String): User
