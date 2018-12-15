@@ -162,10 +162,10 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
               ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
               distance(point(a),point(b))*0.000621371 as distanceApart,
               exists((a)-[:FOLLOWING]->(b)) as isFollowing,
-              exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
+              exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen,
               exists((b)-[:BLOCK]->(a)) as blockedUser,
               exists((a)-[:BLOCK]->(b)) as blocks,
-              exists((a)-[:]->(b:{ objectionable: true} )) as viewObjectionable
+              exists((a)-[]->(b{ objectionable: true} )) as viewObjectionable
               where 
               NOT blockedUser AND
               NOT blocks AND
