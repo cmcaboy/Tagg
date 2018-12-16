@@ -32,6 +32,7 @@ interface State {};
 class GetMatches extends Query<getMatches, {}> {};
 
 class Matches extends Component<Props, State> {
+
   noMatches = () => (
     <View style={styles.noMatches}>
       <Ionicons name="md-sad" size={100} color="black" />

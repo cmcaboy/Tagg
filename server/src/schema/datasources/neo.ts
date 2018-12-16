@@ -582,6 +582,8 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
 
   createUser = async (tempArgs: any) => {
     const args = { ...newUserDefaults, ...tempArgs };
+    console.log('createUser latitude: ', args.latitude);
+    console.log('createUser longitude: ', args.longitude);
 
     let idAlreadyExist;
     try {

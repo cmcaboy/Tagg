@@ -6,8 +6,10 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: 'https://manhattanmatch-9f9fe.firebaseio.com',
 });
+const settings = { timestampsInSnapshots: true };
 const db = admin.firestore();
 exports.db = db;
+db.settings(settings);
 const messaging = admin.messaging();
 exports.messaging = messaging;
 //# sourceMappingURL=firestore.js.map

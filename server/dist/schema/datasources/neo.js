@@ -29,7 +29,7 @@ class NeoAPI extends DataSource {
         };
         this.findDate = ({ id }) => {
             return this.session
-                .run(`MATCH(d:Date{id:'${id}'}) 
+                .run(`MATCH(d:Date{id:'${id}'})
             RETURN d`)
                 .then((result) => result.records[0])
                 .then((record) => {
@@ -44,7 +44,7 @@ class NeoAPI extends DataSource {
         };
         this.findOtherBids = ({ id }) => {
             return this.session
-                .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${id}'}) 
+                .run(`MATCH(b:User)-[r:BID]->(d:Date{id:'${id}'})
           WITH b,r,d, r.datetimeOfBid as order
           RETURN b.id,r
           ORDER BY order DESC
@@ -85,15 +85,15 @@ class NeoAPI extends DataSource {
                 const viewObjectionableRaw = yield this.session.run(`MATCH(a:User{id:'${id}}) return a.viewObjectionable`);
                 const viewObjectionableResult = viewObjectionableRaw.records[0].fields[0];
                 if (viewObjectionableResult) {
-                    viewObjectionable = `AND viewObjectionable`;
+                    viewObjectionable = 'AND NOT viewObjectionable';
                 }
                 else {
-                    viewObjectionable = `AND NOT viewObjectionable`;
+                    viewObjectionable = '';
                 }
             }
             catch (e) {
-                console.log("Not able to objection viewObjectionable preference. Defaulting to view non-objectionable content");
-                viewObjectionable = `AND NOT viewObjectionable`;
+                console.log('Not able to obtain viewObjectionable preference. Defaulting to view non-objectionable content');
+                viewObjectionable = '';
             }
             if (!cursor) {
                 console.log("No cursor passed in. You must be at the end of the list. No more values to retreive.");
@@ -107,14 +107,18 @@ class NeoAPI extends DataSource {
                 console.error("Error! No id passed in!");
             }
             return this.session
-                .run(`MATCH(a:User{id:'${id}'}),(b:User) 
+                .run(`MATCH(a:User{id:'${id}'}),(b:User)
               WITH a,b, size((b)<-[:FOLLOWING]-()) as num_likes,
               ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
               distance(point(a),point(b))*0.000621371 as distanceApart,
               exists((a)-[:FOLLOWING]->(b)) as isFollowing,
-              exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
+              exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen,
+              exists((b)-[:BLOCK]->(a)) as blockedUser,
+              exists((a)-[:BLOCK]->(b)) as blocks,
+              exists((a)-[]->(b{ objectionable: true} )) as viewObjectionable
               where
-              NOT (b)-[:BLOCK]->(a) AND
+              NOT blockedUser AND
+              NOT blocks AND
               NOT b.id=a.id AND
               NOT b.gender=a.gender AND
               distanceApart < a.distance AND
@@ -212,14 +216,13 @@ class NeoAPI extends DataSource {
         };
         this.userHasDateOpen = ({ id }) => {
             return this.session
-                .run(`MATCH(a:User{id:'${id}'}) 
-                      WITH a, 
+                .run(`MATCH(a:User{id:'${id}'})
+                      WITH a,
                       exists((a)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
                       RETURN hasDateOpen`)
                 .then((result) => result.records)
                 .then((records) => {
                 const hasDateOpen = records[0]._fields[0];
-                console.log("hasDateOpen: ", hasDateOpen);
                 return hasDateOpen;
             })
                 .catch((e) => console.log("hasDateOpen error: ", e));
@@ -251,8 +254,8 @@ class NeoAPI extends DataSource {
         this.getFollowersFromUser = () => {
             const id = this.context.user.id;
             return this.session
-                .run(`MATCH(a:User{id:'${id}'})-[r:FOLLOWING]->(b:User) 
-          WITH a,r,b, 
+                .run(`MATCH(a:User{id:'${id}'})-[r:FOLLOWING]->(b:User)
+          WITH a,r,b,
           exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
           WHERE NOT (b)-[:BLOCK]->(a)
           RETURN b,hasDateOpen`)
@@ -284,7 +287,7 @@ class NeoAPI extends DataSource {
         this.findDateRequests = () => {
             const id = this.context.user.id;
             return this.session
-                .run(`MATCH(a:User{id:'${id}'})-[:CREATE]->(d:Date) 
+                .run(`MATCH(a:User{id:'${id}'})-[:CREATE]->(d:Date)
           WITH a, d, size((d)<-[:BID]-(:User)) as num_bids, d.datetimeOfDate as order
           WHERE d.open=TRUE
           RETURN a,d,num_bids
@@ -314,7 +317,7 @@ class NeoAPI extends DataSource {
         };
         this.getUserQueue = ({ followerDisplay }) => {
             const id = this.context.user.id;
-            return queue_1.getQueue({ id, followerDisplay });
+            return queue_1.getQueue({ id, followerDisplay, session: this.session });
         };
         this.getMatchedDates = () => {
             const id = this.context.user.id;
@@ -324,7 +327,7 @@ class NeoAPI extends DataSource {
                 (a)-[:BID{winner:TRUE}]->(d)<-[:CREATE]-(b)
               ) AND
                 NOT (a)-[:BLOCK]->(b)
-              RETURN b, d.id, d.description, d.datetimeOfDate
+              RETURN b, d.id, d.description, d.datetimeOfDate, b.id
               ORDER BY d.datetimeOfDate`;
             return this.session
                 .run(query)
@@ -336,7 +339,7 @@ class NeoAPI extends DataSource {
                     return {
                         user: record._fields[0].properties,
                         matchId: record._fields[1],
-                        id: record._fields[1],
+                        id: record._fields[4],
                         description: record._fields[2],
                         datetimeOfDate: record._fields[3]
                     };
@@ -507,7 +510,7 @@ class NeoAPI extends DataSource {
         };
         this.createBid = ({ id: argsId, dateId, bidId, bidPlace, bidDescription, datetimeOfBid }) => __awaiter(this, void 0, void 0, function* () {
             const id = argsId || this.context.user.id;
-            let query = `MATCH (a:User {id:'${id}'}), (d:Date {id:'${dateId}'}) 
+            let query = `MATCH (a:User {id:'${id}'}), (d:Date {id:'${dateId}'})
               MERGE (a)-[r:BID{id: '${bidId}',datetimeOfBid: ${datetimeOfBid},`;
             !!bidPlace &&
                 (query = query + `bidPlace:"${bidPlace}",`) +
@@ -555,7 +558,7 @@ class NeoAPI extends DataSource {
             const id = argsID || this.context.user.id;
             let date;
             try {
-                const data = yield this.session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'}) 
+                const data = yield this.session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'})
                   WITH d,a,b,r
                   SET r.winner=TRUE,
                   d.winner='${winnerId}',
@@ -573,7 +576,7 @@ class NeoAPI extends DataSource {
             const id = argsId || this.context.user.id;
             if (block) {
                 this.session
-                    .run(`MATCH (a:User{id:'${id}'}), (b:User{id:'${flaggedId}'}) 
+                    .run(`MATCH (a:User{id:'${id}'}), (b:User{id:'${flaggedId}'})
             CREATE (a)-[r:BLOCK { active: true }]->(b)
             return a`)
                     .then((result) => {
@@ -594,7 +597,7 @@ class NeoAPI extends DataSource {
         this.setBlockUser = ({ blockedId }) => {
             const id = this.context.user.id;
             return this.session
-                .run(`MATCH (a:User{id:'${id}'}), (b:User{id:'${blockedId}'}) 
+                .run(`MATCH (a:User{id:'${id}'}), (b:User{id:'${blockedId}'})
           CREATE (a)-[r:BLOCK { active: true }]->(b)
           return b`)
                 .then((result) => {

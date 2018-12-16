@@ -38,8 +38,8 @@ export const SCREEN_WIDTH = Dimensions.get('window').width;
 export const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 export const settingDefaults = {
-  latitude: DEFAULT_LATITUDE,
-  longitude: DEFAULT_LONGITUDE,
+  // latitude: DEFAULT_LATITUDE,
+  // longitude: DEFAULT_LONGITUDE,
   sendNotifications: true,
   distance: 15,
   minAgePreference: 18,

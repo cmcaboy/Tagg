@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const schema_1 = require("../../schema");
 const defaults_1 = require("../../defaults");
 const mutation_1 = require("../../../clientGQL/mutation");
+const moment = require('moment');
 const { createTestClient } = require('apollo-server-testing');
 const { ApolloServer } = require('apollo-server-express');
 const TEST_ID = 'cory.mcaboy@gmail.com';
@@ -45,7 +46,7 @@ describe('Mutation ', () => {
         expect(res).toMatchSnapshot();
     }));
     it('NEW_DATE', () => __awaiter(this, void 0, void 0, function* () {
-        const datetimeOfDate = 'May 7, 2019 10:00:00';
+        const datetimeOfDate = moment().unix() + 10000;
         const description = 'Looking for a walk of the beach';
         const res = yield mutate({
             mutation: mutation_1.NEW_DATE,
@@ -57,12 +58,13 @@ describe('Mutation ', () => {
         });
         DATE_ID = res.data.createDate.id;
         expect(res.data.createDate).toMatchSnapshot({
-            creationTime: expect.any(String),
-            datetimeOfDate,
+            creationTime: expect.any(Number),
+            datetimeOfDate: expect.any(Number),
             description,
             id: expect.any(String),
         });
-        console.log('DATE_ID NEW_DATE: ', res.data.createDate.id);
+        expect(res.data.createDate.datetimeOfDate).toEqual(datetimeOfDate);
+        expect(res.data.createDate.description).toEqual(description);
     }));
     it('BID', () => __awaiter(this, void 0, void 0, function* () {
         const bidDescription = 'Looking for a walk of the beach';
@@ -83,7 +85,7 @@ describe('Mutation ', () => {
                 id: expect.any(String),
                 num_bids: expect.any(Number),
             },
-            datetimeOfBid: expect.any(String),
+            datetimeOfBid: expect.any(Number),
             id: expect.any(String),
         });
     }));
@@ -119,8 +121,14 @@ describe('Mutation ', () => {
         });
         expect(res.data.chooseWinner).toMatchSnapshot({
             id: expect.any(String),
-            open: false,
+            datetimeOfDate: expect.any(Number),
+            matchId: expect.any(String),
+            lastMessage: null,
+            user: expect.any(Object),
         });
+        expect(res.data.chooseWinner.matchId).toBe(DATE_ID);
+        expect(res.data.chooseWinner.id).toBe(TEST_ID);
+        expect(res.data.chooseWinner.user.id).toBe(TEST_ID);
     }));
     it('FOLLOW', () => __awaiter(this, void 0, void 0, function* () {
         const res = yield mutate({
@@ -304,7 +312,6 @@ describe('Mutation ', () => {
             },
         });
         expect(res).toMatchSnapshot();
-        console.log('res: ', res);
         expect(res.data.removeUser.id).toEqual(TEST_USER.id);
     }));
 });

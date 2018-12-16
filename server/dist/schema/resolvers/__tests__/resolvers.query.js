@@ -93,7 +93,7 @@ describe('Query.otherBids', () => {
                 id: TEST_ID,
                 email: TEST_ID,
             },
-        }) }));
+        }), engine: null }));
     const { query } = createTestClient(testServer);
     it('GET_BIDS no params', () => __awaiter(this, void 0, void 0, function* () {
         const res = yield query({ query: queries_1.GET_BIDS });

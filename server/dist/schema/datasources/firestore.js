@@ -38,7 +38,7 @@ class FirestoreAPI extends DataSource {
                     avatar: docData.avatar,
                     uid: docData.uid,
                     text: docData.text,
-                    createdAt: docData.createdAt,
+                    createdAt: docData.createdAt.toDate(),
                     order: docData.order,
                     _id: docData._id,
                 };
@@ -77,7 +77,7 @@ class FirestoreAPI extends DataSource {
                     avatar: docData.avatar,
                     uid: docData.uid,
                     text: docData.text,
-                    createdAt: docData.createdAt,
+                    createdAt: docData.createdAt.toDate(),
                     order: docData.order,
                     _id: docData._id,
                 };
@@ -109,7 +109,7 @@ class FirestoreAPI extends DataSource {
                         avatar: docData.avatar,
                         uid: docData.uid,
                         text: docData.text,
-                        createdAt: docData.createdAt,
+                        createdAt: docData.createdAt.toDate(),
                         order: docData.order,
                         _id: docData._id,
                     };
@@ -154,7 +154,7 @@ class FirestoreAPI extends DataSource {
                     avatar: docData.avatar,
                     uid: docData.uid,
                     text: docData.text,
-                    createdAt: docData.createdAt,
+                    createdAt: docData.createdAt.toDate(),
                     order: docData.order,
                     _id: docData._id,
                 };
@@ -174,7 +174,6 @@ class FirestoreAPI extends DataSource {
             };
         });
         this.createMessage = ({ matchId, message }) => __awaiter(this, void 0, void 0, function* () {
-            console.log('createMessage message: ', message);
             try {
                 yield this.db.collection(`matches/${matchId}/messages`).add(message);
                 return true;
@@ -193,7 +192,7 @@ class FirestoreAPI extends DataSource {
                     user1: id,
                     user2: winnerId,
                     matchTime: format_1.getCurrentDateFirestore(),
-                    datetimeOfDate: date.datetimeOfDate,
+                    datetimeOfDate: date.datetimeOfDate.low,
                     description: date.description,
                 });
             }

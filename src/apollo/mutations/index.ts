@@ -201,6 +201,15 @@ export const SET_FOLLOWER_DISPLAY = gql`
   }
 `;
 
+export const SET_VIEW_OBJECTIONABLE = gql`
+  mutation setViewObjectionable($id: String!, $viewObjectionable: Boolean) {
+    editUser(id: $id, viewObjectionable: $viewObjectionable) {
+      id
+      viewObjectionable
+    }
+  }
+`;
+
 export const SET_NAME = gql`
   mutation setName($id: String!, $name: String) {
     editUser(id: $id, name: $name) {

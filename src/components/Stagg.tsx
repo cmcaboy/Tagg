@@ -195,7 +195,7 @@ class Stagg extends Component<Props, State> {
     this.setState(prev => ({ filterModal: !prev.filterModal }));
   };
 
-  trackLocation = () => {
+  trackLocation = async () => {
     const { id } = this.props;
 
     BackgroundGeolocation.on('location', this.onLocation, this.onError);
@@ -210,8 +210,8 @@ class Stagg extends Component<Props, State> {
       // Application config
       debug: false, // <-- enable this hear sounds for background-geolocation life-cycle.
       logLevel: BackgroundGeolocation.LOG_LEVEL_OFF,
-      stopOnTerminate: false,   // <-- [Default: true] Allow the background-service to continue tracking when user closes the app.
-      startOnBoot: true,        // <-- Auto start tracking when device is powered-up.
+      stopOnTerminate: true,   // <-- [Default: true] Allow the background-service to continue tracking when user closes the app.
+      startOnBoot: false,        // <-- Auto start tracking when device is powered-up.
       // HTTP / SQLite config
       // url: FUNCTION_PATH + '/coords',
       url: GEO_LOCATION_URL,

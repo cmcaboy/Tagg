@@ -65,10 +65,11 @@ exports.GET_USER_PROFILE = graphql_tag_1.default `
   }
 `;
 exports.GET_QUEUE = graphql_tag_1.default `
-  query getQueue($id: String) {
-    user(id: $id) {
+  query getQueue {
+    user {
       id
       token
+      followerDisplay
       queue {
         id
         cursor
@@ -113,8 +114,8 @@ exports.MORE_QUEUE = graphql_tag_1.default `
   }
 `;
 exports.GET_MATCHES = graphql_tag_1.default `
-  query getMatches($id: String) {
-    user(id: $id) {
+  query getMatches {
+    user {
       id
       name
       profilePic

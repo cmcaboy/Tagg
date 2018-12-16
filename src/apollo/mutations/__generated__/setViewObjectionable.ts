@@ -2,21 +2,20 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: flag
+// GraphQL mutation operation: setViewObjectionable
 // ====================================================
 
-export interface flag_flag {
+export interface setViewObjectionable_editUser {
   __typename: "User";
   id: string | null;
   viewObjectionable: boolean | null;
 }
 
-export interface flag {
-  flag: flag_flag | null;
+export interface setViewObjectionable {
+  editUser: setViewObjectionable_editUser | null;
 }
 
-export interface flagVariables {
+export interface setViewObjectionableVariables {
   id: string;
-  flaggedId: string;
-  block?: boolean | null;
+  viewObjectionable?: boolean | null;
 }

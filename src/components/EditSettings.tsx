@@ -6,18 +6,20 @@ import { Picker } from 'native-base';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Card } from './common';
+import { Card, MyAppText } from './common';
 import {
   SET_AGE_PREFERENCE,
   SET_DISTANCE,
   SET_NOTIFICATIONS,
   SET_FOLLOWER_DISPLAY,
+  SET_VIEW_OBJECTIONABLE,
 } from '../apollo/mutations';
 import { SCREEN_WIDTH } from '../variables';
 import { setAgePreference, setAgePreferenceVariables } from '../apollo/mutations/__generated__/setAgePreference';
 import { setDistance, setDistanceVariables } from '../apollo/mutations/__generated__/setDistance';
 import { setFollowerDisplayVariables, setFollowerDisplay } from '../apollo/mutations/__generated__/setFollowerDisplay';
 import { setNotifications, setNotificationsVariables } from '../apollo/mutations/__generated__/setNotifications';
+import { setViewObjectionable, setViewObjectionableVariables } from '../apollo/mutations/__generated__/setViewObjectionable';
 
 const SLIDER_WIDTH = SCREEN_WIDTH * 0.85;
 
@@ -29,6 +31,7 @@ interface Props {
   id: string;
   followerDisplay: string;
   hideNotifications: boolean;
+  viewObjectionable: boolean;
 }
 
 interface State {
@@ -36,12 +39,14 @@ interface State {
   distance: number;
   sendNotifications: boolean;
   followerDisplay: string;
+  viewObjectionable: boolean;
 }
 
 class SetAgePreference extends Mutation<setAgePreference, setAgePreferenceVariables> {};
 class SetDistance extends Mutation<setDistance, setDistanceVariables> {};
 class SetFollowerDisplay extends Mutation<setFollowerDisplay, setFollowerDisplayVariables> {};
 class SetNotifications extends Mutation<setNotifications, setNotificationsVariables> {};
+class SetViewObjectionable extends Mutation<setViewObjectionable, setViewObjectionableVariables> {};
 
 class EditSettings extends Component<Props, State> {
   constructor(props: Props) {
@@ -53,13 +58,15 @@ class EditSettings extends Component<Props, State> {
       distance,
       sendNotifications,
       followerDisplay,
+      viewObjectionable,
     } = this.props;
 
     this.state = {
       distance,
       sendNotifications,
       ageValues: [minAgePreference, maxAgePreference],
-      followerDisplay: followerDisplay || 'Both',
+      followerDisplay: followerDisplay || 'Both', // Set to 'Both' by deafult
+      viewObjectionable: viewObjectionable || true, // Set to true by default
     };
   }
 
@@ -69,7 +76,7 @@ class EditSettings extends Component<Props, State> {
 
   render() {
     const {
-      ageValues, distance, sendNotifications, followerDisplay,
+      ageValues, distance, sendNotifications, followerDisplay, viewObjectionable,
     } = this.state;
     const { id, hideNotifications } = this.props;
     return (
@@ -96,7 +103,7 @@ class EditSettings extends Component<Props, State> {
                     onValuesChangeFinish={av => updateAgePreference({
                       variables: { id, minAgePreference: av[0], maxAgePreference: av[1] },
                       optimisticResponse: {
-                        __typename: 'Mutation',
+                        // __typename: 'Mutation',
                         editUser: {
                           id,
                           minAgePreference: av[0],
@@ -153,7 +160,7 @@ class EditSettings extends Component<Props, State> {
                     onSlidingComplete={d => updateDistance({
                       variables: { id, distance: d },
                       optimisticResponse: {
-                        __typename: 'Mutation',
+                        // __typename: 'Mutation',
                         editUser: {
                           id,
                           distance: d,
@@ -207,7 +214,7 @@ class EditSettings extends Component<Props, State> {
                           sendNotifications: newSendNotifications,
                         },
                         optimisticResponse: {
-                          __typename: 'Mutation',
+                          // __typename: 'Mutation',
                           editUser: {
                             id,
                             sendNotifications: newSendNotifications,
@@ -246,6 +253,7 @@ class EditSettings extends Component<Props, State> {
         )}
         <Card>
           <View style={styles.titleSlider}>
+            <MyAppText>Display Category</MyAppText>
             <SetFollowerDisplay mutation={SET_FOLLOWER_DISPLAY}>
               {changeFollowerDisplay => (
                 <Picker
@@ -260,7 +268,7 @@ class EditSettings extends Component<Props, State> {
                         followerDisplay: newFollowerDisplay,
                       },
                       optimisticResponse: {
-                        __typename: 'Mutation',
+                        // __typename: 'Mutation',
                         editUser: {
                           id,
                           followerDisplay: newFollowerDisplay,
@@ -268,6 +276,7 @@ class EditSettings extends Component<Props, State> {
                         },
                       },
                       update: (store, data) => {
+                        // I could also update the user queue with the updated settings
                         console.log('store: ', store);
 
                         console.log('data: ', data);
@@ -302,6 +311,67 @@ class EditSettings extends Component<Props, State> {
                 </Picker>
               )}
             </SetFollowerDisplay>
+          </View>
+        </Card>
+        <Card>
+          <View style={styles.titleSlider}>
+            <MyAppText>View Objectionable Content</MyAppText>
+            <SetViewObjectionable mutation={SET_VIEW_OBJECTIONABLE}>
+              {changeViewObjectionable => (
+                <Picker
+                  // placeholder={{ label: this.props.followerDisplay, value: this.props.followerDisplay }}
+                  mode="dropdown"
+                  selectedValue={viewObjectionable}
+                  onValueChange={(newViewObjectionable) => {
+                    console.log('newViewObjectionable: ', newViewObjectionable);
+                    changeViewObjectionable({
+                      variables: {
+                        id,
+                        viewObjectionable: newViewObjectionable,
+                      },
+                      optimisticResponse: {
+                        // __typename: 'Mutation',
+                        editUser: {
+                          id,
+                          viewObjectionable: newViewObjectionable,
+                          __typename: 'User',
+                        },
+                      },
+                      update: (store, data) => {
+                        // I could also update the user queue with the updated settings
+                        console.log('store: ', store);
+
+                        console.log('data: ', data);
+                        const fragment = gql`
+                          fragment updateViewObjectionable on User {
+                            viewObjectionable
+                          }
+                        `;
+                        const storeData = store.readFragment({
+                          fragment,
+                          id: data.data.editUser.id,
+                        });
+
+                        console.log('storeData: ', storeData);
+                        store.writeFragment({
+                          fragment,
+                          id: data.data.editUser.id,
+                          data: {
+                            ...storeData,
+                            viewObjectionable: data.data.editUser.viewObjectionable,
+                          },
+                        });
+                        console.log('store: ', store);
+                        this.setState({ viewObjectionable: data.data.editUser.viewObjectionable });
+                      },
+                    });
+                  }}
+                >
+                  <Picker.Item label="Yes" value={ true } />
+                  <Picker.Item label="No" value={ false } />
+                </Picker>
+              )}
+            </SetViewObjectionable>
           </View>
         </Card>
       </View>

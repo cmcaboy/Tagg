@@ -8,10 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const neo4j_1 = require("../db/neo4j");
-const session = neo4j_1.driver.session();
 const QUEUE_PAGE_LENGTH = 5;
-exports.getQueue = ({ id, followerDisplay }) => __awaiter(this, void 0, void 0, function* () {
+exports.getQueue = ({ id, followerDisplay, session, }) => __awaiter(this, void 0, void 0, function* () {
     let followQuery;
     switch (followerDisplay) {
         case 'Following Only':
@@ -28,7 +26,7 @@ exports.getQueue = ({ id, followerDisplay }) => __awaiter(this, void 0, void 0, 
         const viewObjectionableRaw = yield session.run(`MATCH(a:User{id:'${id}}) return a.viewObjectionable`);
         const viewObjectionableResult = viewObjectionableRaw.records[0].fields[0];
         if (viewObjectionableResult) {
-            viewObjectionable = 'AND NOT (a)-[:]->(b:{ objectionable: true} )';
+            viewObjectionable = 'AND NOT viewObjectionable';
         }
         else {
             viewObjectionable = '';
@@ -43,9 +41,13 @@ exports.getQueue = ({ id, followerDisplay }) => __awaiter(this, void 0, void 0, 
     distance(point(a),point(b))*0.000621371 as distanceApart,
     ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
     exists((a)-[:FOLLOWING]->(b)) as isFollowing,
-    exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
+    exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen,
+    exists((b)-[:BLOCK]->(a)) as blockedUser,
+    exists((a)-[:BLOCK]->(b)) as blocks,
+    exists((a)-[]->(b { objectionable: true} )) as viewObjectionable
     where 
-    NOT (b)-[:BLOCK]->(a) AND
+    NOT blockedUser AND
+    NOT blocks AND
     NOT b.id=a.id AND
     NOT b.gender=a.gender AND
     distanceApart < a.distance

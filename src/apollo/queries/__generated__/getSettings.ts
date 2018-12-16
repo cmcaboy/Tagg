@@ -13,6 +13,7 @@ export interface getSettings_user {
   distance: number | null;
   sendNotifications: boolean | null;
   followerDisplay: string | null;
+  viewObjectionable: boolean | null;
 }
 
 export interface getSettings {

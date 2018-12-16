@@ -2444,7 +2444,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "DateItem",
+              "name": "Match",
               "ofType": null
             },
             "isDeprecated": false,

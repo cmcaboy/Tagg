@@ -72,7 +72,6 @@ exports.Mutation = Object.assign({}, generated_1.MutationResolvers.defaultResolv
             winnerId,
             dateId,
         });
-        console.log('date: ', date);
         const firestoreCreation = yield dataSources.firestoreAPI.createDateChat({
             id,
             winnerId,
@@ -84,6 +83,11 @@ exports.Mutation = Object.assign({}, generated_1.MutationResolvers.defaultResolv
         }
         chooseWinnerPush_1.chooseWinnerPushWinner(date);
         chooseWinnerPush_1.chooseWinnerPushLoser(date);
-        return date;
-    }), flag: (_, { flaggedId, block }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.setFlagUser({ flaggedId, block }); }), block: (_, { blockedId }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.setUserBlock({ blockedId }); }) });
+        return {
+            id: winnerId,
+            matchId: dateId,
+            description: date.description,
+            datetimeOfDate: date.datetimeOfDate,
+        };
+    }), flag: (_, { flaggedId, block }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.setFlagUser({ flaggedId, block }); }), block: (_, { blockedId }, { dataSources }) => __awaiter(this, void 0, void 0, function* () { return yield dataSources.neoAPI.setBlockUser({ blockedId }); }) });
 //# sourceMappingURL=Mutation.js.map

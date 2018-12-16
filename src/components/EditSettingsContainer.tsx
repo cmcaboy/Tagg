@@ -60,6 +60,7 @@ class EditSettingsContainer extends Component<Props, State> {
             distance,
             sendNotifications,
             followerDisplay,
+            viewObjectionable,
             id,
           } = data.user;
           return (
@@ -71,6 +72,7 @@ class EditSettingsContainer extends Component<Props, State> {
               sendNotifications={sendNotifications}
               followerDisplay={followerDisplay}
               hideNotifications={hideNotifications}
+              viewObjectionable={viewObjectionable}
               // refetchQueue={refetchQueue}
             />
           );

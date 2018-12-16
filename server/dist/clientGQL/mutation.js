@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const graphql_tag_1 = require("graphql-tag");
 exports.NEW_DATE = graphql_tag_1.default `
-  mutation createDate($id: String!, $datetimeOfDate: String, $description: String) {
+  mutation createDate($id: String!, $datetimeOfDate: Int, $description: String) {
     createDate(id: $id, datetimeOfDate: $datetimeOfDate, description: $description) {
       id
       creationTime
@@ -91,7 +91,18 @@ exports.CHOOSE_WINNER = graphql_tag_1.default `
   mutation chooseWinner($id: String!, $winnerId: String!, $dateId: String!) {
     chooseWinner(id: $id, winnerId: $winnerId, dateId: $dateId) {
       id
-      open
+      matchId
+      datetimeOfDate
+      user {
+        id
+        name
+        pics
+      }
+      lastMessage {
+        text
+        name
+        createdAt
+      }
     }
   }
 `;
@@ -237,6 +248,29 @@ exports.SET_EMAIL = graphql_tag_1.default `
 exports.REMOVE_USER = graphql_tag_1.default `
   mutation removeUser($id: String) {
     removeUser(id: $id) {
+      id
+    }
+  }
+`;
+exports.FLAG_USER = graphql_tag_1.default `
+  mutation flag($id: String!, $flaggedId: String!) {
+    flag(id: $id, flaggedId: $flaggedId) {
+      id
+      viewObjectionable
+    }
+  }
+`;
+exports.FLAG_AND_BLOCK_USER = graphql_tag_1.default `
+  mutation flag($id: String!, $flaggedId: String!, $block: Boolean) {
+    flag(id: $id, flaggedId: $flaggedId, block: $block) {
+      id
+      viewObjectionable
+    }
+  }
+`;
+exports.BLOCK_USER = graphql_tag_1.default `
+  mutation block($id: String!, $blockedId: String!) {
+    block(id: $id, blockedId: $blockedId) {
       id
     }
   }

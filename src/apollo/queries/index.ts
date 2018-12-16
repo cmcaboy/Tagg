@@ -204,6 +204,7 @@ export const GET_SETTINGS = gql`
       distance
       sendNotifications
       followerDisplay
+      viewObjectionable
     }
   }
 `;

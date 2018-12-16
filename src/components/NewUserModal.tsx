@@ -16,7 +16,7 @@ import { Button } from 'native-base';
 import { Mutation } from 'react-apollo';
 import RadioGroup, { GroupItem } from 'react-native-radio-buttons-group';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { PHOTO_HINT, settingDefaults, PRIMARY_COLOR } from '../variables/index';
+import { PHOTO_HINT, settingDefaults, PRIMARY_COLOR, DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from '../variables/index';
 import { Card, MyAppText, Spinner, MyTitleText, CardSection } from './common';
 import PhotoSelector from './PhotoSelector';
 import { NEW_USER } from '../apollo/mutations';
@@ -24,6 +24,7 @@ import toastMessage from '../services/toastMessage';
 import emailValidation from '../services/emailValidation';
 import emailSignup from '../services/emailSignup';
 import { newUser, newUserVariables } from '../apollo/mutations/__generated__/newUser';
+import BackgroundGeolocation from 'react-native-background-geolocation';
 
 interface Props {
   closeModal: () => void;
@@ -148,7 +149,7 @@ export default class NewUserModal extends Component<Props, State> {
     return true;
   }
 
-  submitNewUser = (newUser: (user: any) => void) => {
+  submitNewUser = async (newUser: (user: any) => void) => {
     this.setState({ loading: true, error: '' });
     const { name, age, school, work, description, gender, pics, password } = this.state;
     let { email } = this.state;
@@ -162,6 +163,30 @@ export default class NewUserModal extends Component<Props, State> {
       return false;
     }
 
+    let location;
+    let latitude;
+    let longitude;
+    
+    try {
+      location = await BackgroundGeolocation.getCurrentPosition({
+        timeout: 15,          // 30 second timeout to fetch location
+        maximumAge: 5000,     // Accept the last-known-location if not older than 5000 ms.
+        desiredAccuracy: 10,  // Try to fetch a location with an accuracy of `10` meters.
+        samples: 3,           // How many location samples to attempt.
+      });
+      // console.log('location from getCurrentPosition: ', location);
+      latitude = location.coords.latitude;
+      longitude = location.coords.longitude;
+    }
+    catch (e) {
+      console.log('Error: ', e);
+      console.log('Error fetching coords during signup; Setting default coords.');
+      latitude = DEFAULT_LATITUDE;
+      longitude = DEFAULT_LONGITUDE;
+    }
+    
+    console.log('latitude: ', latitude);
+    console.log('longitude: ', longitude);
     console.log('validation complete');
 
     return newUser({
@@ -177,6 +202,8 @@ export default class NewUserModal extends Component<Props, State> {
         active: true,
         gender: gender.filter(g => g.selected)[0].label,
         ...settingDefaults,
+        latitude,
+        longitude,
       },
       update: async (_: any, data: any) => {
         console.log('newUser udpate function');
