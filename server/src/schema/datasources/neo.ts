@@ -60,7 +60,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
   findDate = ({ id }: { id: string }) => {
     return this.session
       .run(
-        `MATCH(d:Date{id:'${id}'}) 
+        `MATCH(d:Date{id:'${id}'})
             RETURN d`
       )
       .then((result: any) => result.records[0])
@@ -81,7 +81,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
   findOtherBids = ({ id }: { id: string }) => {
     return this.session
       .run(
-        `MATCH(b:User)-[r:BID]->(d:Date{id:'${id}'}) 
+        `MATCH(b:User)-[r:BID]->(d:Date{id:'${id}'})
           WITH b,r,d, r.datetimeOfBid as order
           RETURN b.id,r
           ORDER BY order DESC
@@ -157,7 +157,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
 
     return this.session
       .run(
-        `MATCH(a:User{id:'${id}'}),(b:User) 
+        `MATCH(a:User{id:'${id}'}),(b:User)
               WITH a,b, size((b)<-[:FOLLOWING]-()) as num_likes,
               ((distance(point(a),point(b))*0.000621371)*(1/toFloat((SIZE((b)<-[:FOLLOWING]-())+1)))) as order,
               distance(point(a),point(b))*0.000621371 as distanceApart,
@@ -166,7 +166,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
               exists((b)-[:BLOCK]->(a)) as blockedUser,
               exists((a)-[:BLOCK]->(b)) as blocks,
               exists((a)-[]->(b{ objectionable: true} )) as viewObjectionable
-              where 
+              where
               NOT blockedUser AND
               NOT blocks AND
               NOT b.id=a.id AND
@@ -306,8 +306,8 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
   userHasDateOpen = ({ id }: {id: string }) => {
     return this.session
       .run(
-        `MATCH(a:User{id:'${id}'}) 
-                      WITH a, 
+        `MATCH(a:User{id:'${id}'})
+                      WITH a,
                       exists((a)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
                       RETURN hasDateOpen`
       )
@@ -315,7 +315,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       .then(
         (records: any[]): boolean => {
           const hasDateOpen: boolean = records[0]._fields[0];
-          console.log("hasDateOpen: ", hasDateOpen);
+          // console.log("hasDateOpen: ", hasDateOpen);
           return hasDateOpen;
         }
       )
@@ -363,8 +363,8 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     // Need to factor in pagination
     return this.session
       .run(
-        `MATCH(a:User{id:'${id}'})-[r:FOLLOWING]->(b:User) 
-          WITH a,r,b, 
+        `MATCH(a:User{id:'${id}'})-[r:FOLLOWING]->(b:User)
+          WITH a,r,b,
           exists((b)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
           WHERE NOT (b)-[:BLOCK]->(a)
           RETURN b,hasDateOpen`
@@ -417,7 +417,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     const id = this.context.user.id;
     return this.session
       .run(
-        `MATCH(a:User{id:'${id}'})-[:CREATE]->(d:Date) 
+        `MATCH(a:User{id:'${id}'})-[:CREATE]->(d:Date)
           WITH a, d, size((d)<-[:BID]-(:User)) as num_bids, d.datetimeOfDate as order
           WHERE d.open=TRUE
           RETURN a,d,num_bids
@@ -465,7 +465,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
                 (a)-[:BID{winner:TRUE}]->(d)<-[:CREATE]-(b)
               ) AND
                 NOT (a)-[:BLOCK]->(b)
-              RETURN b, d.id, d.description, d.datetimeOfDate
+              RETURN b, d.id, d.description, d.datetimeOfDate, b.id
               ORDER BY d.datetimeOfDate`;
 
     // console.log("query: ", query);
@@ -481,7 +481,8 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
           return {
             user: record._fields[0].properties,
             matchId: record._fields[1], // Call it dateId?
-            id: record._fields[1],
+            // id: record._fields[1],
+            id: record._fields[4],
             description: record._fields[2],
             datetimeOfDate: record._fields[3]
           };
@@ -576,7 +577,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     } catch (e) {
       console.log("editUserQueue error: ", e);
       return null;
-    };  
+    };
   }
 
   createUser = async (tempArgs: any) => {
@@ -698,7 +699,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     const id = argsId || this.context.user.id;
     let query = `MATCH (a:User {id:'${id}'}), (d:Date {id:'${
       dateId
-    }'}) 
+    }'})
               MERGE (a)-[r:BID{id: '${bidId}',datetimeOfBid: ${datetimeOfBid},`;
     !!bidPlace &&
       (query = query + `bidPlace:"${bidPlace}",`) +
@@ -768,7 +769,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     let date;
 
     try {
-      const data = await this.session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'}) 
+      const data = await this.session.run(`MATCH (a:User{id:'${id}'})-[:CREATE]->(d:Date{id:'${dateId}'})<-[r:BID]-(b:User{id:'${winnerId}'})
                   WITH d,a,b,r
                   SET r.winner=TRUE,
                   d.winner='${winnerId}',
@@ -792,7 +793,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     if (block) {
       this.session
         .run(
-          `MATCH (a:User{id:'${id}'}), (b:User{id:'${flaggedId}'}) 
+          `MATCH (a:User{id:'${id}'}), (b:User{id:'${flaggedId}'})
             CREATE (a)-[r:BLOCK { active: true }]->(b)
             return a`
         )
@@ -822,7 +823,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     const id = this.context.user.id;
     return this.session
       .run(
-        `MATCH (a:User{id:'${id}'}), (b:User{id:'${blockedId}'}) 
+        `MATCH (a:User{id:'${id}'}), (b:User{id:'${blockedId}'})
           CREATE (a)-[r:BLOCK { active: true }]->(b)
           return b`
       )

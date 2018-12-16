@@ -8,15 +8,18 @@ Object {
     "id": Any<String>,
     "num_bids": Any<Number>,
   },
-  "datetimeOfBid": Any<String>,
+  "datetimeOfBid": Any<Number>,
   "id": Any<String>,
 }
 `;
 
 exports[`Mutation  CHOOSE_WINNER 1`] = `
 Object {
+  "datetimeOfDate": Any<Number>,
   "id": Any<String>,
-  "open": false,
+  "lastMessage": null,
+  "matchId": Any<String>,
+  "user": Any<Object>,
 }
 `;
 
@@ -40,8 +43,8 @@ Object {
 
 exports[`Mutation  NEW_DATE 1`] = `
 Object {
-  "creationTime": Any<String>,
-  "datetimeOfDate": "May 7, 2019 10:00:00",
+  "creationTime": Any<Number>,
+  "datetimeOfDate": Any<Number>,
   "description": "Looking for a walk of the beach",
   "id": Any<String>,
 }

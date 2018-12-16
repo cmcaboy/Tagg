@@ -1722,7 +1722,7 @@ export namespace MutationResolvers {
     args: ArgsChooseWinner,
     ctx: Context,
     info: GraphQLResolveInfo
-  ) => DateItem | null | Promise<DateItem | null>;
+  ) => Match | null | Promise<Match | null>;
 
   export type FlagResolver = (
     parent: undefined,
@@ -1807,7 +1807,7 @@ export namespace MutationResolvers {
       args: ArgsChooseWinner,
       ctx: Context,
       info: GraphQLResolveInfo
-    ) => DateItem | null | Promise<DateItem | null>;
+    ) => Match | null | Promise<Match | null>;
 
     flag: (
       parent: undefined,

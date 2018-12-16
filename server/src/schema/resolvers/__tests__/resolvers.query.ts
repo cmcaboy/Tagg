@@ -107,6 +107,7 @@ describe('Query.otherBids', () => {
         email: TEST_ID,
       },
     }),
+    engine: null,
   });
   const { query } = createTestClient(testServer);
 

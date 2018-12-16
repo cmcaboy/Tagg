@@ -110,7 +110,6 @@ export const Mutation: MutationResolvers.Type = {
       winnerId,
       dateId,
     });
-    console.log('date: ', date);
 
     // Create new document in Firestore for match
     const firestoreCreation = await dataSources.firestoreAPI.createDateChat({
@@ -126,7 +125,13 @@ export const Mutation: MutationResolvers.Type = {
 
     chooseWinnerPushWinner(date);
     chooseWinnerPushLoser(date);
-    return date;
+    // return date;
+    return {
+      id: winnerId,
+      matchId: dateId,
+      description: date.description,
+      datetimeOfDate: date.datetimeOfDate,
+    };
   },
   flag: async (_, { flaggedId, block }, { dataSources }) => await dataSources.neoAPI.setFlagUser({ flaggedId, block }),
   block: async (_, { blockedId }, { dataSources }) => await dataSources.neoAPI.setBlockUser({ blockedId }),

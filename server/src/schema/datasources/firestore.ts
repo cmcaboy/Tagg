@@ -1,5 +1,5 @@
 import { MESSAGE_PAGE_LENGTH } from '../resolvers/variables';
-import { DateItem } from '../../types/DateItem';
+// import { DateItem } from '../../types/DateItem';
 import { getCurrentDateFirestore } from '../../middleware/format';
 
 const { DataSource } = require('apollo-datasource');
@@ -41,7 +41,7 @@ export default class FirestoreAPI extends (DataSource as { new (): any }) {
         avatar: docData.avatar,
         uid: docData.uid,
         text: docData.text,
-        createdAt: docData.createdAt,
+        createdAt: docData.createdAt.toDate(),
         order: docData.order,
         _id: docData._id,
       };
@@ -93,7 +93,7 @@ export default class FirestoreAPI extends (DataSource as { new (): any }) {
         avatar: docData.avatar,
         uid: docData.uid,
         text: docData.text,
-        createdAt: docData.createdAt,
+        createdAt: docData.createdAt.toDate(),
         order: docData.order,
         _id: docData._id,
       };
@@ -135,7 +135,7 @@ export default class FirestoreAPI extends (DataSource as { new (): any }) {
           avatar: docData.avatar,
           uid: docData.uid,
           text: docData.text,
-          createdAt: docData.createdAt,
+          createdAt: docData.createdAt.toDate(),
           order: docData.order,
           _id: docData._id,
         };
@@ -184,7 +184,7 @@ export default class FirestoreAPI extends (DataSource as { new (): any }) {
         avatar: docData.avatar,
         uid: docData.uid,
         text: docData.text,
-        createdAt: docData.createdAt,
+        createdAt: docData.createdAt.toDate(),
         order: docData.order,
         _id: docData._id,
       };
@@ -216,7 +216,6 @@ export default class FirestoreAPI extends (DataSource as { new (): any }) {
   };
 
   createMessage = async ({ matchId, message }: { matchId: string; message: any }) => {
-    console.log('createMessage message: ', message);
     try {
       await this.db.collection(`matches/${matchId}/messages`).add(message);
       return true;
@@ -235,7 +234,7 @@ export default class FirestoreAPI extends (DataSource as { new (): any }) {
   id: string;
   winnerId: string;
   dateId: string;
-  date: DateItem;
+  date: any;
   }) => {
     try {
       await this.db
@@ -245,7 +244,7 @@ export default class FirestoreAPI extends (DataSource as { new (): any }) {
           user1: id,
           user2: winnerId,
           matchTime: getCurrentDateFirestore(),
-          datetimeOfDate: date.datetimeOfDate,
+          datetimeOfDate: date.datetimeOfDate.low,
           description: date.description,
         });
     } catch (e) {
