@@ -7,7 +7,7 @@ import {
 } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Query } from 'react-apollo';
-import { PRIMARY_COLOR, PLACEHOLDER_PHOTO } from '../variables';
+import { PRIMARY_COLOR, PLACEHOLDER_PHOTO, TAB_BAR_HEIGHT } from '../variables';
 import {
   CirclePicture, MyAppText, Spinner, ErrorMessage,
 } from './common';
@@ -96,7 +96,7 @@ class Matches extends Component<Props, State> {
         </View>
         <View style={styles.messagesContainer}>
           <MyAppText style={styles.heading}>My Open Dates</MyAppText>
-          <ScrollView>
+          <ScrollView style={{ flex: 1 }}>
             <List>
               {!dateRequests.length && (
                 <View style={styles.newMatch}>
@@ -198,6 +198,7 @@ const styles = StyleSheet.create<Style>({
   },
   messagesContainer: {
     // flex: 5,
+    flex: 1,
   },
   newMatch: {
     margin: 5,
