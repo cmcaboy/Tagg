@@ -18,9 +18,12 @@ interface Props {
   id: string;
   name: string;
   hostId: string;
+  size?: number;
 }
 
-const FlagMenu: SFC<Props> = ({ id, hostId, name }) => {
+const FlagMenu: SFC<Props> = ({
+  id, hostId, name, size = 14,
+}) => {
   const BUTTONS = ['Report', 'Block', 'Report and Block', 'Cancel'];
   const REPORT_INDEX = 0;
   const BLOCK_INDEX = 1;
@@ -148,7 +151,7 @@ const FlagMenu: SFC<Props> = ({ id, hostId, name }) => {
         <FlagUser mutation={FLAG_AND_BLOCK_USER} onCompleted={onCompleted} onError={onError}>
           {flagUser => (
             <TouchableOpacity onPress={() => openMenu({ blockUser, flagUser })}>
-              <MaterialCommunityIcons name="dots-vertical" size={14} />
+              <MaterialCommunityIcons name="dots-vertical" size={size} />
             </TouchableOpacity>
           )}
         </FlagUser>

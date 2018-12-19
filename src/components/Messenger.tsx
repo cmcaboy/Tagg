@@ -146,7 +146,7 @@ const styles = StyleSheet.create<Style>({
     alignItems: 'stretch',
     marginLeft: 0,
     marginRight: 0,
-    backgroundColor: '#FFF',
+    // backgroundColor: '#FFF',
   },
   textHeader: {
     alignSelf: 'center',

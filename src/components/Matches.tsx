@@ -7,7 +7,8 @@ import {
 } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Query } from 'react-apollo';
-import { PRIMARY_COLOR, PLACEHOLDER_PHOTO, TAB_BAR_HEIGHT } from '../variables';
+import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
+import { PRIMARY_COLOR, PLACEHOLDER_PHOTO } from '../variables';
 import {
   CirclePicture, MyAppText, Spinner, ErrorMessage,
 } from './common';
@@ -16,23 +17,21 @@ import { GET_MATCHES } from '../apollo/queries';
 import {
   formatDescription, formatDate, formatBids, formatDay, formatName,
 } from '../format';
-import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 // import { getId } from '../apollo/queries/__generated__/getId';
 import { getMatches } from '../apollo/queries/__generated__/getMatches';
 
-interface Params {};
+interface Params {}
 
 interface Props {
   navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
 }
 
-interface State {};
+interface State {}
 
 // class GetId extends Query<getId, {}> {};
-class GetMatches extends Query<getMatches, {}> {};
+class GetMatches extends Query<getMatches, {}> {}
 
 class Matches extends Component<Props, State> {
-
   noMatches = () => (
     <View style={styles.noMatches}>
       <Ionicons name="md-sad" size={100} color="black" />
@@ -42,15 +41,20 @@ class Matches extends Component<Props, State> {
   );
 
   renderContent({
-    matches, dateRequests, id, name, pic, refetch,
+    matches,
+    dateRequests,
+    id,
+    name,
+    pic,
+    refetch,
   }: {
-    matches: any[];
-    dateRequests: any[];
-    id: string;
-    name: string;
-    pic: string,
-    
-    refetch: () => void;
+  matches: any[];
+  dateRequests: any[];
+  id: string;
+  name: string;
+  pic: string;
+
+  refetch: () => void;
   }) {
     const {
       navigation: { navigate },
@@ -71,7 +75,7 @@ class Matches extends Component<Props, State> {
                 <MyAppText>{formatName('No matches')}</MyAppText>
               </View>
             )}
-            {matches.map(( match: any ) => (
+            {matches.map((match: any) => (
               <TouchableOpacity
                 accessible={false}
                 onPress={() => navigate('MessengerContainer', {
@@ -84,7 +88,7 @@ class Matches extends Component<Props, State> {
                   otherPic: match.user.pics[0],
                 })
                 }
-                key={match.user.id}
+                key={match.id}
               >
                 <View style={styles.newMatch}>
                   <CirclePicture imageURL={match.user.pics[0]} picSize="small" />
@@ -105,7 +109,7 @@ class Matches extends Component<Props, State> {
                   <MyAppText>{formatName('You havent created a date yet')}</MyAppText>
                 </View>
               )}
-              {dateRequests.map(( date: any ) => ( 
+              {dateRequests.map((date: any) => (
                 <ListItem
                   accessible={false}
                   key={date.id}
@@ -137,45 +141,33 @@ class Matches extends Component<Props, State> {
   }
 
   render() {
-    // return (
-    //   <GetId query={GET_ID}>
-    //     {({ loading: loadingLocal, error: errorLocal, data: dataLocal }) => {
-    //       console.log('local data: ',dataLocal);
-    //       // console.log('local error: ',errorLocal);
-    //       // console.log('local loading: ',loadingLocal);
-    //       if (loadingLocal) return <Spinner />;
-    //       if (errorLocal) return <ErrorMessage error={errorLocal.message} />;
-    //       const { id } = dataLocal.user;
-          return (
-            <GetMatches query={GET_MATCHES} fetchPolicy="network-only">
-              {({
-                loading, error, data, refetch,
-              }) => {
-                // console.log('data in matches: ', data);
-                // console.log('error: ',error);
-                // console.log('loading: ',loading);
-                if (loading) return <Spinner />;
-                if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
+    return (
+      <GetMatches query={GET_MATCHES} fetchPolicy="network-only">
+        {({
+          loading, error, data, refetch,
+        }) => {
+          console.log('data in matches: ', data);
+          // console.log('error: ',error);
+          // console.log('loading: ',loading);
+          if (loading) return <Spinner />;
+          if (error) return <ErrorMessage error={error.message} refetch={refetch} />;
 
-                if (!data.user) {
-                  console.log('noMatches');
-                  return this.noMatches();
-                }
-                const { id } = data.user;
-                return this.renderContent({
-                  id,
-                  refetch,
-                  matches: data.user.matchedDates.list,
-                  dateRequests: data.user.dateRequests.list,
-                  name: data.user.name,
-                  pic: data.user.profilePic,
-                });
-              }}
-            </GetMatches>
-          );
-    //     }}
-    //   </GetId>
-    // );
+          if (!data.user) {
+            console.log('noMatches');
+            return this.noMatches();
+          }
+          const { id } = data.user;
+          return this.renderContent({
+            id,
+            refetch,
+            matches: data.user.matchedDates.list,
+            dateRequests: data.user.dateRequests.list,
+            name: data.user.name,
+            pic: data.user.profilePic,
+          });
+        }}
+      </GetMatches>
+    );
   }
 }
 
@@ -186,7 +178,7 @@ interface Style {
   newMatch: ViewStyle;
   noMatches: ViewStyle;
   heading: TextStyle;
-};
+}
 const styles = StyleSheet.create<Style>({
   matchContainer: {
     flex: 1,

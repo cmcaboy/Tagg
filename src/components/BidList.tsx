@@ -15,9 +15,7 @@ import {
   Thumbnail,
 } from 'native-base';
 import { Mutation, Query } from 'react-apollo';
-import gql from 'graphql-tag';
 import { NavigationScreenProps } from 'react-navigation';
-import { listenerCount } from 'cluster';
 import EmptyList from './EmptyList';
 import { MyAppText, Spinner, ErrorMessage } from './common';
 import { CHOOSE_WINNER } from '../apollo/mutations';
@@ -123,7 +121,7 @@ class BidList extends React.Component<Props, State> {
                                 },
                                 optimisticResponse: {
                                   chooseWinner: {
-                                    id,
+                                    id: dateId,
                                     matchId: dateId,
                                     open: false,
                                     lastMessage: null,
@@ -139,8 +137,8 @@ class BidList extends React.Component<Props, State> {
                                   },
                                 },
                                 update: (store, newData) => {
-                                  console.log('store: ', store);
-                                  console.log('newData: ', newData);
+                                  // console.log('store: ', store);
+                                  // console.log('newData: ', newData);
 
                                   // grab matches query in local cache
                                   const {
@@ -152,7 +150,7 @@ class BidList extends React.Component<Props, State> {
                                       dateRequests: { list: dateList },
                                     },
                                   } = store.readQuery({ query: GET_MATCHES });
-                                  console.log('user: ', user);
+                                  // console.log('user: ', user);
 
                                   // Update the cache with after chooseWinner completes
                                   store.writeQuery({
@@ -173,102 +171,6 @@ class BidList extends React.Component<Props, State> {
                                       },
                                     },
                                   });
-                                  // onCompleted is a bit buggy at the moment
-                                  // So I am using this logic
-
-                                  // Read Query for GET_MATCHES
-                                  // Write Query for GET_MATCHES
-                                  // Remove the entry for DateRequest
-                                  // Add an entry for matchedDates
-
-                                  // const fragment = gql`
-                                  //   fragment chooseWinner on DateItem {
-                                  //     open
-                                  //   }
-                                  // `;
-                                  // let storeData: any = store.readFragment({
-                                  //   fragment,
-                                  //   id: newData.data.chooseWinner.id,
-                                  // });
-                                  // store.writeFragment({
-                                  //   fragment,
-                                  //   id: newData.data.chooseWinner.id,
-                                  //   data: {
-                                  //     ...storeData,
-                                  //     open: newData.data.chooseWinner.open,
-                                  //   },
-                                  // });
-
-                                  // const fragmentDateList = gql`
-                                  //   fragment dateRequests on DateList {
-                                  //     id
-                                  //     list {
-                                  //       id
-                                  //     }
-                                  //   }
-                                  // `;
-
-                                  // console.log(id);
-                                  // storeData = store.readFragment({
-                                  //   id: `${id}d`,
-                                  //   fragment: fragmentDateList,
-                                  // });
-                                  // console.log(`storeData for ${id}d: `, storeData);
-                                  // // storeData.forEach(datum => console.log('datum: ',datum));
-
-                                  // store.writeFragment({
-                                  //   id: `${id}d`,
-                                  //   fragment: fragmentDateList,
-                                  //   data: {
-                                  //     ...storeData,
-                                  //     list: storeData.list.filter(
-                                  //       ( d: any ) => d.id !== newData.data.chooseWinner.id,
-                                  //     ),
-                                  //   },
-                                  // });
-
-                                  // const fragmentMatchList = gql`
-                                  //     fragment matchedDates on MatchList {
-                                  //         id
-                                  //         list {
-                                  //             id
-                                  //             user {
-                                  //                 id
-                                  //                 __typename
-                                  //             }
-                                  //             __typename
-                                  //         }
-                                  //     }
-                                  //     `;
-
-                                  // const newDate = {
-                                  //     id: newData.data.chooseWinner.id,
-                                  //     matchId: newData.data.chooseWinner.id,
-                                  //     user: {
-                                  //         id: date.bidUser.id,
-                                  //         __typename: 'User',
-                                  //     },
-                                  //     __typename: 'Match'
-                                  // }
-
-                                  // storeData = store.readFragment({
-                                  //     id: `${id}m`,
-                                  //     fragment: fragmentMatchList,
-                                  // });
-                                  // console.log(`storeData for ${id}m: ${storeData}`)
-                                  // store.writeFragment({
-                                  //     id: `${id}m`,
-                                  //     fragment: fragmentMatchList,
-                                  //     data: {
-                                  //         id: `${id}m`,
-                                  //         list: [newDate,...storeData.list],
-                                  //         __typename: 'MatchList'
-                                  //     }
-                                  // });
-
-                                  // if (!newData.data.chooseWinner.optimistic) {
-                                  //   refetch();
-                                  // }
                                 },
                               });
                               return goBack();

@@ -16,7 +16,11 @@ import {
 import { PRIMARY_COLOR } from '../variables';
 import { formatDistanceApart, formatName } from '../format';
 import { GET_USER_PROFILE } from '../apollo/queries';
-import { getUserProfile, getUserProfileVariables } from '../apollo/queries/__generated__/getUserProfile';
+import {
+  getUserProfile,
+  getUserProfileVariables,
+} from '../apollo/queries/__generated__/getUserProfile';
+import FlagMenu from './common/FlagMenu';
 
 interface Params {
   name: string;
@@ -30,16 +34,22 @@ interface Props {
 
 interface State {}
 
-class GetUserProfile extends Query<getUserProfile, getUserProfileVariables> {};
+class GetUserProfile extends Query<getUserProfile, getUserProfileVariables> {}
 
 class UserProfile extends Component<Props, State> {
   static navigationOptions = ({
     navigation,
+    navigation: {
+      state: {
+        params: { id, hostId, name },
+      },
+    },
   }: {
   navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
   }) => ({
     // title: `${navigation.state.params.name}`,
-    headerRight: <View />,
+    // headerRight: <View />,
+    headerRight: <FlagMenu name={name} id={id} hostId={hostId} size={22} />,
     headerTitle: (
       <View style={styles.headerViewStyle}>
         <MyAppText style={styles.textHeader}>{`${navigation.state.params.name}`}</MyAppText>
@@ -175,6 +185,8 @@ const styles = StyleSheet.create<Style>({
   },
   headerViewStyle: {
     flexDirection: 'row',
+    // flex: 1,
+    // justifyContent: 'flex-end',
     paddingVertical: 5,
   },
   textHeader: {
