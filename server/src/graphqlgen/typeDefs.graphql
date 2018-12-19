@@ -100,7 +100,7 @@ type MessageItem {
 type Message {
   id: String
   cursor: Float
-  list: [MessageItem]!
+  list: [MessageItem]
 }
 
 type Match {

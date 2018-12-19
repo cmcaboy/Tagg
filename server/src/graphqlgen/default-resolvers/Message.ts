@@ -4,9 +4,5 @@
 import { MessageResolvers } from "../../types/generated";
 
 export const Message: MessageResolvers.Type = {
-  ...MessageResolvers.defaultResolvers,
-
-  list: (parent, args, ctx) => {
-    throw new Error("Resolver not implemented");
-  }
+  ...MessageResolvers.defaultResolvers
 };

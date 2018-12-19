@@ -78,6 +78,7 @@ export interface Match {
 export interface Message {
   id: string | null;
   cursor: number | null;
+  list: any | null;
 }
 export interface MessageItem {
   name: string | null;

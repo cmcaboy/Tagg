@@ -1394,7 +1394,8 @@ export namespace MessageResolvers {
   export const defaultResolvers = {
     id: (parent: Message) => (parent.id === undefined ? null : parent.id),
     cursor: (parent: Message) =>
-      parent.cursor === undefined ? null : parent.cursor
+      parent.cursor === undefined ? null : parent.cursor,
+    list: (parent: Message) => (parent.list === undefined ? null : parent.list)
   };
 
   export type IdResolver = (
@@ -1416,7 +1417,7 @@ export namespace MessageResolvers {
     args: {},
     ctx: Context,
     info: GraphQLResolveInfo
-  ) => MessageItem[] | Promise<MessageItem[]>;
+  ) => MessageItem[] | null | Promise<MessageItem[] | null>;
 
   export interface Type {
     id: (
@@ -1438,7 +1439,7 @@ export namespace MessageResolvers {
       args: {},
       ctx: Context,
       info: GraphQLResolveInfo
-    ) => MessageItem[] | Promise<MessageItem[]>;
+    ) => MessageItem[] | null | Promise<MessageItem[] | null>;
   }
 }
 
