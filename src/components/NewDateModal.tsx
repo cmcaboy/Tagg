@@ -15,6 +15,7 @@ import { DATE_FORMAT, convertDateToEpoch } from '../format';
 import toastMessage from '../services/toastMessage';
 import { NEW_DATE } from '../apollo/mutations';
 import { createDate, createDateVariables } from '../apollo/mutations/__generated__/createDate';
+import { GET_MATCHES } from '../apollo/queries';
 
 interface Props {
   isVisible: boolean;
@@ -94,75 +95,107 @@ class NewDateModal extends React.Component<Props, State> {
     const { datetime, description } = this.state;
     return (
       <MyAppModal isVisible={isVisible} close={this.closeModal}>
-          <MyTitleText>New Date Request</MyTitleText>
-          <HorizontalLine />
-          <View style={{ alignItems: 'stretch' }}>
-            <DatePicker
-              style={styles.dateInput}
-              mode="datetime"
-              date={datetime}
-              format={DATE_FORMAT}
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              onDateChange={d => this.setState({ datetime: d })}
-              placeholder="When will this date take place?"
-            />
-            <TextInput
-              style={styles.textInput}
-              multiline
-              placeholder="What kind of date are you looking for?"
-              onChangeText={text => this.setState({ description: text })}
-              value={description}
-              maxLength={300}
-            />
-            <View style={styles.buttonView}>
-              {!!this.state.error && (
-                <MyAppText style={styles.errorTextStyle}>{this.state.error}</MyAppText>
-              )}
-              <NewDate mutation={NEW_DATE} onCompleted={this.onCompleted} onError={this.onError}>
-                {(newDate, { loading }) => {
-                  if (loading) {
-                    return <Spinner />;
-                  }
-                  return (
-                    <Button
-                      accessible={false}
-                      block
-                      onPress={() => {
-                        // console.log('button press');
-                        // console.log('datetime: ', datetime);
-                        // console.log('datetimeOfDate Epoch: ', convertDateToEpoch(datetime));
-                        if (!this.validateForm()) {
-                          return;
-                        }
+        <MyTitleText>New Date Request</MyTitleText>
+        <HorizontalLine />
+        <View style={{ alignItems: 'stretch' }}>
+          <DatePicker
+            style={styles.dateInput}
+            mode="datetime"
+            date={datetime}
+            format={DATE_FORMAT}
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            onDateChange={d => this.setState({ datetime: d })}
+            placeholder="When will this date take place?"
+          />
+          <TextInput
+            style={styles.textInput}
+            multiline
+            placeholder="What kind of date are you looking for?"
+            onChangeText={text => this.setState({ description: text })}
+            value={description}
+            maxLength={300}
+          />
+          <View style={styles.buttonView}>
+            {!!this.state.error && (
+              <MyAppText style={styles.errorTextStyle}>{this.state.error}</MyAppText>
+            )}
+            <NewDate mutation={NEW_DATE} onCompleted={this.onCompleted} onError={this.onError}>
+              {(newDate, { loading }) => {
+                if (loading) {
+                  return <Spinner />;
+                }
+                return (
+                  <Button
+                    accessible={false}
+                    block
+                    onPress={() => {
+                      // console.log('button press');
+                      // console.log('datetime: ', datetime);
+                      // console.log('datetimeOfDate Epoch: ', convertDateToEpoch(datetime));
+                      if (!this.validateForm()) {
+                        return;
+                      }
 
-                        this.setError('');
+                      this.setError('');
 
-                        return newDate({
-                          variables: {
-                            id,
-                            description,
-                            datetimeOfDate: convertDateToEpoch(datetime),
-                          },
-                          update: (store, data) => {
-                            // console.log('data from newDate mutation: ', data);
-                            // console.log('store: ', store);
-                          },
-                        });
-                      }}
-                    >
-                      <MyAppText style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>
-                        {'Submit'}
-                      </MyAppText>
-                    </Button>
-                  );
-                }}
-              </NewDate>
-              <TouchableOpacity style={styles.cancelButton} onPress={this.closeModal}>
-                <MyAppText style={styles.cancelText}>Cancel</MyAppText>
-              </TouchableOpacity>
-            </View>
+                      return newDate({
+                        variables: {
+                          id,
+                          description,
+                          datetimeOfDate: convertDateToEpoch(datetime),
+                        },
+                        update: (store, newData) => {
+                          // Update the new date in the cache
+                          // Do I need an optimistic response?
+
+                          console.log('data from newDate mutation: ', newData);
+                          console.log('store: ', store);
+
+                          // grab matches query in local cache
+                          const {
+                            user,
+                            user: {
+                              matchedDates,
+                              dateRequests,
+                              dateRequests: { list: dateList },
+                            },
+                          } = store.readQuery({ query: GET_MATCHES });
+                          console.log('user: ', user);
+
+                          const newList = [
+                            ...dateList,
+                            newData.data.createDate,
+                          ].sort((a, b) => a.datetimeOfDate - b.datetimeOfDate);
+
+                          store.writeQuery({
+                            query: GET_MATCHES,
+                            data: {
+                              user: {
+                                ...user,
+                                dateRequests: {
+                                  ...dateRequests,
+                                  list: newList,
+                                },
+                              },
+                            },
+                          });
+                        },
+                      });
+                    }}
+                  >
+                    <MyAppText style={{ fontWeight: 'bold', color: '#fff', fontSize: 18 }}>
+                      {'Submit'}
+                    </MyAppText>
+                  </Button>
+                );
+              }}
+            </NewDate>
+            <TouchableOpacity style={styles.cancelButton} onPress={this.closeModal}>
+              <MyAppText style={styles.cancelText}>Cancel</MyAppText>
+            </TouchableOpacity>
           </View>
+        </View>
       </MyAppModal>
     );
   }

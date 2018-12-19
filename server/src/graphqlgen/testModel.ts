@@ -71,6 +71,7 @@ export interface MatchList {
 export interface Match {
   id: string | null;
   matchId: string | null;
+  winnerId: string | null;
   description: string | null;
   datetimeOfDate: number | null;
 }

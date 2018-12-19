@@ -123,10 +123,19 @@ class BidList extends React.Component<Props, State> {
                                 },
                                 optimisticResponse: {
                                   chooseWinner: {
-                                    id: dateId,
+                                    id,
+                                    matchId: dateId,
                                     open: false,
-                                    __typename: 'DateItem',
+                                    lastMessage: null,
+                                    datetimeOfDate: 0,
+                                    __typename: 'Match',
                                     optimistic: true,
+                                    user: {
+                                      id,
+                                      name: date.bidUser.name,
+                                      pics: [date.bidUser.profilePic],
+                                      __typename: 'User',
+                                    },
                                   },
                                 },
                                 update: (store, newData) => {
@@ -154,12 +163,12 @@ class BidList extends React.Component<Props, State> {
                                         dateRequests: {
                                           ...dateRequests,
                                           list: dateList.filter(
-                                            (date: any) => date.id !== newData.data.chooseWinner.id,
+                                            (date: any) => date.id !== newData.data.chooseWinner.matchId,
                                           ),
                                         },
                                         matchedDates: {
                                           ...matchedDates,
-                                          list: [newData.data.chooseWinner.id, ...matchList],
+                                          list: [newData.data.chooseWinner, ...matchList],
                                         },
                                       },
                                     },

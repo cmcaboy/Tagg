@@ -7,6 +7,8 @@ export const NEW_DATE = gql`
       creationTime
       datetimeOfDate
       description
+      num_bids
+      open
     }
   }
 `;

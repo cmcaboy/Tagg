@@ -127,7 +127,8 @@ export const Mutation: MutationResolvers.Type = {
     chooseWinnerPushLoser(date);
     // return date;
     return {
-      id: winnerId,
+      id: dateId,
+      winnerId,
       matchId: dateId,
       description: date.description,
       datetimeOfDate: date.datetimeOfDate,

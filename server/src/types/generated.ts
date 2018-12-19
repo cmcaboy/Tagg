@@ -1267,6 +1267,8 @@ export namespace MatchResolvers {
     id: (parent: Match) => (parent.id === undefined ? null : parent.id),
     matchId: (parent: Match) =>
       parent.matchId === undefined ? null : parent.matchId,
+    winnerId: (parent: Match) =>
+      parent.winnerId === undefined ? null : parent.winnerId,
     description: (parent: Match) =>
       parent.description === undefined ? null : parent.description,
     datetimeOfDate: (parent: Match) =>
@@ -1281,6 +1283,13 @@ export namespace MatchResolvers {
   ) => string | null | Promise<string | null>;
 
   export type MatchIdResolver = (
+    parent: Match,
+    args: {},
+    ctx: Context,
+    info: GraphQLResolveInfo
+  ) => string | null | Promise<string | null>;
+
+  export type WinnerIdResolver = (
     parent: Match,
     args: {},
     ctx: Context,
@@ -1331,6 +1340,13 @@ export namespace MatchResolvers {
     ) => string | null | Promise<string | null>;
 
     matchId: (
+      parent: Match,
+      args: {},
+      ctx: Context,
+      info: GraphQLResolveInfo
+    ) => string | null | Promise<string | null>;
+
+    winnerId: (
       parent: Match,
       args: {},
       ctx: Context,

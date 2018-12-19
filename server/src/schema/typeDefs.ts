@@ -107,6 +107,7 @@ const typeDefs = `
     type Match {
         id: String
         matchId: String
+        winnerId: String
         user: User
         description: String
         datetimeOfDate: Int

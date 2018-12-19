@@ -460,13 +460,13 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     const id = this.context.user.id;
 
     const query = `MATCH(a:User{id:'${id}'}),(b:User),(d:Date)
-              WHERE (
-                (a)-[:CREATE]->(d)<-[:BID{winner:TRUE}]-(b) OR
-                (a)-[:BID{winner:TRUE}]->(d)<-[:CREATE]-(b)
-              ) AND
-                NOT (a)-[:BLOCK]->(b)
-              RETURN b, d.id, d.description, d.datetimeOfDate, b.id
-              ORDER BY d.datetimeOfDate`;
+      WHERE (
+        (a)-[:CREATE]->(d)<-[:BID{winner:TRUE}]-(b) OR
+        (a)-[:BID{winner:TRUE}]->(d)<-[:CREATE]-(b)
+      ) AND
+        NOT (a)-[:BLOCK]->(b)
+      RETURN b, d.id, d.description, d.datetimeOfDate, b.id
+      ORDER BY d.datetimeOfDate`;
 
     // console.log("query: ", query);
     return this.session
@@ -481,8 +481,8 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
           return {
             user: record._fields[0].properties,
             matchId: record._fields[1], // Call it dateId?
-            // id: record._fields[1],
-            id: record._fields[4],
+            id: record._fields[1],
+            winnerId: record._fields[4],
             description: record._fields[2],
             datetimeOfDate: record._fields[3]
           };

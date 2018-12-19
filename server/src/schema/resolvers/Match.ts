@@ -2,7 +2,7 @@ import { MatchResolvers } from '../../types/generated';
 
 export const Match: MatchResolvers.Type = {
   ...MatchResolvers.defaultResolvers,
-  user: async ({ id }, _, { dataSources, id: hostId }) => await dataSources.neoAPI.findUser({ id, hostId }),
+  user: async ({ winnerId: id }, _, { dataSources, id: hostId }) => await dataSources.neoAPI.findUser({ id, hostId }),
   // user: async ({ matchId: id }, _, { dataSources }) => {
   //   console.log('Match.user id: ', id);
   //   return await dataSources.neoAPI.findCreatorFromDate({ id });
