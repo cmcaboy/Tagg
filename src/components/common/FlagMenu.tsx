@@ -4,12 +4,13 @@ import { Mutation } from 'react-apollo';
 import { ActionSheet } from 'native-base';
 import { DataProxy } from 'apollo-cache';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { withNavigation, NavigationInjectedProps } from 'react-navigation';
 import { BLOCK_USER } from '../../apollo/mutations';
 import { block, blockVariables } from '../../apollo/mutations/__generated__/block';
 import { flag, flagVariables } from '../../apollo/mutations/__generated__/flag';
 import ToastMessage from '../../services/toastMessage';
 import { FLAG_AND_BLOCK_USER } from '../../apollo/mutations/index';
-import { GET_QUEUE } from '../../apollo/queries/index';
+import { GET_QUEUE, GET_MATCHES } from '../../apollo/queries/index';
 
 class BlockUser extends Mutation<block, blockVariables> {}
 class FlagUser extends Mutation<flag, flagVariables> {}
@@ -19,10 +20,19 @@ interface Props {
   name: string;
   hostId: string;
   size?: number;
+  // navigation?: NavigationScreenProp<NavigationRoute<Params>, Params>;
+  inProfile: boolean; // true if user is in UserProfile or Messenger
+  // If true, we will go back 1 item in the stack navigation
+  // This is used if the user blocks the user in question.
 }
 
-const FlagMenu: SFC<Props> = ({
-  id, hostId, name, size = 14,
+const FlagMenu: SFC<Props & NavigationInjectedProps> = ({
+  id,
+  hostId,
+  name,
+  size = 14,
+  navigation: { goBack },
+  inProfile = false,
 }) => {
   const BUTTONS = ['Report', 'Block', 'Report and Block', 'Cancel'];
   const REPORT_INDEX = 0;
@@ -33,6 +43,13 @@ const FlagMenu: SFC<Props> = ({
   const onCompleted = (data: any) => {
     console.log('onCompleted');
     // console.log('data: ', data);
+
+    // If operation involves block and the user is in the UserProfile or
+    // Messenger component, navigate 1 directory back.
+    // We may need to implement a more robust solution.
+    if (!data.flag && inProfile) {
+      goBack();
+    }
     const text = data.flag
       ? `Thank you for reporting ${name}. We will investigate.`
       : `${name} has been blocked.`;
@@ -97,6 +114,33 @@ const FlagMenu: SFC<Props> = ({
                     },
                   },
                 });
+                // Remove user from dateRequests and matchedDates queues if applicable
+                const {
+                  user: userMatches,
+                  user: {
+                    matchedDates,
+                    matchedDates: { list: matchList },
+                    dateRequests,
+                    dateRequests: { list: dateList },
+                  },
+                } = cache.readQuery({ query: GET_MATCHES });
+
+                cache.writeQuery({
+                  query: GET_MATCHES,
+                  data: {
+                    user: {
+                      ...userMatches,
+                      dateRequests: {
+                        ...dateRequests,
+                        list: dateList.filter((date: any) => date.user.id !== data.data.flag.id),
+                      },
+                      matchedDates: {
+                        ...matchedDates,
+                        list: matchList.filter((date: any) => date.user.id !== data.data.flag.id),
+                      },
+                    },
+                  },
+                });
                 onCompleted(data);
               },
             });
@@ -111,7 +155,6 @@ const FlagMenu: SFC<Props> = ({
             });
             return;
           case REPORT_AND_BLOCK_INDEX:
-            // Should also remove from cache
             flagUser({
               variables: { id: hostId, flaggedId: id, block: true },
               update: (cache: DataProxy, data: any) => {
@@ -137,6 +180,37 @@ const FlagMenu: SFC<Props> = ({
                     },
                   },
                 });
+
+                // Remove user from dateRequests and matchedDates queues if applicable
+                // This is done in chooseWinner via BidList
+                const {
+                  user: userMatches,
+                  user: {
+                    matchedDates,
+                    matchedDates: { list: matchList },
+                    dateRequests,
+                    dateRequests: { list: dateList },
+                  },
+                } = cache.readQuery({ query: GET_MATCHES });
+
+                // Remove entry from dateRequest and matchedDates list in cache
+                cache.writeQuery({
+                  query: GET_MATCHES,
+                  data: {
+                    user: {
+                      ...userMatches,
+                      dateRequests: {
+                        ...dateRequests,
+                        list: dateList.filter((date: any) => date.user.id !== data.data.flag.id),
+                      },
+                      matchedDates: {
+                        ...matchedDates,
+                        list: matchList.filter((date: any) => date.user.id !== data.data.flag.id),
+                      },
+                    },
+                  },
+                });
+
                 onCompleted(data);
               },
             });
@@ -162,4 +236,4 @@ const FlagMenu: SFC<Props> = ({
 
 // const styles = StyleSheet.create({});
 
-export default FlagMenu;
+export default withNavigation(FlagMenu);

@@ -49,7 +49,7 @@ class UserProfile extends Component<Props, State> {
   }) => ({
     // title: `${navigation.state.params.name}`,
     // headerRight: <View />,
-    headerRight: <FlagMenu name={name} id={id} hostId={hostId} size={22} />,
+    headerRight: <FlagMenu name={name} id={id} hostId={hostId} size={22} inProfile />,
     headerTitle: (
       <View style={styles.headerViewStyle}>
         <MyAppText style={styles.textHeader}>{`${navigation.state.params.name}`}</MyAppText>

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import {
+  View, TouchableOpacity, StyleSheet, ViewStyle, TextStyle,
+} from 'react-native';
 import { Query, Mutation } from 'react-apollo';
+import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import {
   CirclePicture, MyAppText, Spinner, ErrorMessage,
 } from './common';
@@ -8,13 +11,13 @@ import Messenger from './Messenger';
 import { GET_NEW_MESSAGES } from '../apollo/subscriptions';
 import { SEND_MESSAGE } from '../apollo/mutations';
 import { GET_MESSAGES, MORE_MESSAGES } from '../apollo/queries';
-import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import { sendMessage, sendMessageVariables } from '../apollo/mutations/__generated__/sendMessage';
 // import { getMessages, getMessagesVariables } from '../apollo/queries/__generated__/getMessages';
+import FlagMenu from './common/FlagMenu';
 
 // class GetMessages extends Query<getMessages, getMessagesVariables> {};
-class GetMessages extends Query<any, any> {};
-class SendMessage extends Mutation<sendMessage, sendMessageVariables> {};
+class GetMessages extends Query<any, any> {}
+class SendMessage extends Mutation<sendMessage, sendMessageVariables> {}
 
 interface Params {
   otherId?: string;
@@ -30,19 +33,28 @@ interface Props {
   navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
 }
 
-interface State {};
+interface State {}
 
 class MessengerContainer extends Component<Props, State> {
-  static navigationOptions = ({ navigation }: { navigation: NavigationScreenProp<NavigationRoute<Params>, Params>}) => ({
+  static navigationOptions = ({
+    navigation,
+    navigation: {
+      state: {
+        params: { otherId: id, otherName: name, id: hostId },
+      },
+    },
+  }: {
+  navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
+  }) => ({
     // title: `${navigation.state.params.otherName}`,
     headerTitle: (
       <View style={styles.headerViewStyle}>
         {console.log('navigation params: ', navigation.state.params)}
         <TouchableOpacity
           onPress={() => navigation.navigate('UserProfile', {
-            id: navigation.state.params.otherId,
-            name: navigation.state.params.otherName,
-            hostId: navigation.state.params.id,
+            id,
+            name,
+            hostId,
           })
           }
         >
@@ -52,6 +64,7 @@ class MessengerContainer extends Component<Props, State> {
         <View style={{ width: 30 }} />
       </View>
     ),
+    headerRight: <FlagMenu name={name} id={id} hostId={hostId} size={22} />,
     headerTitleStyle: {
       alignSelf: 'center',
       textAlign: 'center',
@@ -91,7 +104,7 @@ class MessengerContainer extends Component<Props, State> {
           console.log('messages container data: ', data);
 
           // We have to change the format of our messages in order to satisfy RN Gifted Chat
-          const messages = data.messages.list.map(( message: any ) => ({
+          const messages = data.messages.list.map((message: any) => ({
             _id: message._id,
             text: message.text,
             createdAt: message.createdAt,
