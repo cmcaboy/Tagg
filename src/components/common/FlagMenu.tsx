@@ -21,7 +21,7 @@ interface Props {
   hostId: string;
   size?: number;
   // navigation?: NavigationScreenProp<NavigationRoute<Params>, Params>;
-  inProfile: boolean; // true if user is in UserProfile or Messenger
+  inProfile?: boolean; // true if user is in UserProfile or Messenger
   // If true, we will go back 1 item in the stack navigation
   // This is used if the user blocks the user in question.
 }
@@ -150,6 +150,10 @@ const FlagMenu: SFC<Props & NavigationInjectedProps> = ({
             flagUser({
               variables: { id: hostId, flaggedId: id },
               update: (_: any, data: any) => {
+                // viewObjectionable should be updated in the cache
+                // automatically; May need to check. I could also
+                // check the cache to see if the user has the viewObjectionable
+                // option turned on. If it is, I should hide the current user.
                 console.log(`data: ${JSON.stringify(data)}`);
               },
             });
