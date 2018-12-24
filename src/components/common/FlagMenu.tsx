@@ -4,7 +4,12 @@ import { Mutation } from 'react-apollo';
 import { ActionSheet } from 'native-base';
 import { DataProxy } from 'apollo-cache';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { withNavigation, NavigationInjectedProps } from 'react-navigation';
+import {
+  // withNavigation,
+  NavigationInjectedProps,
+  NavigationScreenProp,
+  NavigationRoute,
+} from 'react-navigation';
 import { BLOCK_USER } from '../../apollo/mutations';
 import { block, blockVariables } from '../../apollo/mutations/__generated__/block';
 import { flag, flagVariables } from '../../apollo/mutations/__generated__/flag';
@@ -20,18 +25,20 @@ interface Props {
   name: string;
   hostId: string;
   size?: number;
-  // navigation?: NavigationScreenProp<NavigationRoute<Params>, Params>;
+  // navigation: NavigationScreenProp<NavigationRoute<{}>, {}>;
+  navigation: any;
   inProfile?: boolean; // true if user is in UserProfile or Messenger
   // If true, we will go back 1 item in the stack navigation
   // This is used if the user blocks the user in question.
 }
 
-const FlagMenu: SFC<Props & NavigationInjectedProps> = ({
+const FlagMenu: SFC<Props> = ({
   id,
   hostId,
   name,
   size = 14,
-  navigation: { goBack },
+  navigation,
+  // navigation: { goBack = () => {} },
   inProfile = false,
 }) => {
   const BUTTONS = ['Report', 'Block', 'Report and Block', 'Cancel'];
@@ -40,6 +47,7 @@ const FlagMenu: SFC<Props & NavigationInjectedProps> = ({
   const REPORT_AND_BLOCK_INDEX = 2;
   const CANCEL_INDEX = 3;
 
+  console.log('navigation: ', navigation);
   const onCompleted = (data: any) => {
     console.log('onCompleted');
     // console.log('data: ', data);
@@ -48,7 +56,7 @@ const FlagMenu: SFC<Props & NavigationInjectedProps> = ({
     // Messenger component, navigate 1 directory back.
     // We may need to implement a more robust solution.
     if (!data.flag && inProfile) {
-      goBack();
+      navigation.goBack();
     }
     const text = data.flag
       ? `Thank you for reporting ${name}. We will investigate.`
@@ -121,7 +129,6 @@ const FlagMenu: SFC<Props & NavigationInjectedProps> = ({
                     matchedDates,
                     matchedDates: { list: matchList },
                     dateRequests,
-                    dateRequests: { list: dateList },
                   },
                 } = cache.readQuery({ query: GET_MATCHES });
 
@@ -132,7 +139,6 @@ const FlagMenu: SFC<Props & NavigationInjectedProps> = ({
                       ...userMatches,
                       dateRequests: {
                         ...dateRequests,
-                        list: dateList.filter((date: any) => date.user.id !== data.data.flag.id),
                       },
                       matchedDates: {
                         ...matchedDates,
@@ -193,7 +199,6 @@ const FlagMenu: SFC<Props & NavigationInjectedProps> = ({
                     matchedDates,
                     matchedDates: { list: matchList },
                     dateRequests,
-                    dateRequests: { list: dateList },
                   },
                 } = cache.readQuery({ query: GET_MATCHES });
 
@@ -205,7 +210,6 @@ const FlagMenu: SFC<Props & NavigationInjectedProps> = ({
                       ...userMatches,
                       dateRequests: {
                         ...dateRequests,
-                        list: dateList.filter((date: any) => date.user.id !== data.data.flag.id),
                       },
                       matchedDates: {
                         ...matchedDates,
@@ -240,4 +244,4 @@ const FlagMenu: SFC<Props & NavigationInjectedProps> = ({
 
 // const styles = StyleSheet.create({});
 
-export default withNavigation(FlagMenu);
+export default FlagMenu;

@@ -12,6 +12,7 @@
     "skipLibCheck": true,
     "declaration": true,
     "noUnusedLocals": true,
+    "esModuleInterop": true,
     "strictNullChecks": false
   },
   "exclude": ["node_modules", "server"]

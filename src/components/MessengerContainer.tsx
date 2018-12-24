@@ -64,7 +64,7 @@ class MessengerContainer extends Component<Props, State> {
         <View style={{ width: 30 }} />
       </View>
     ),
-    headerRight: <FlagMenu name={name} id={id} hostId={hostId} size={22} />,
+    headerRight: <FlagMenu navigation={navigation} name={name} id={id} hostId={hostId} size={22} />,
     headerTitleStyle: {
       alignSelf: 'center',
       textAlign: 'center',

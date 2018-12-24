@@ -5,7 +5,7 @@ interface Props {
   children?: ReactNode;
   style?: ViewStyle;
   onPress: () => any;
-  position?: string;
+  position?: 'bottomRight' | 'bottomLeft' | 'topLeft' | 'topRight';
 }
 
 interface Style {

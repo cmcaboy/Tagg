@@ -12,7 +12,7 @@ import { CardSection, ActionIcon } from './index';
 
 interface Props {
   lowerCaseOnly?: boolean;
-  updateValue: (any: any) => any;
+  updateValue: (value: any) => any;
   value: string | number | string[];
   multiline?: boolean;
   secureTextEntry?: boolean;
@@ -29,9 +29,9 @@ class CondInput extends Component<Props, State> {
     super(props);
     const { value, lowerCaseOnly = false } = this.props;
     this.state = {
-      isEdit: false,
       value,
       lowerCaseOnly,
+      isEdit: false,
     };
   }
 

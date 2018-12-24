@@ -34,7 +34,7 @@ class FollowButton extends React.Component<Props, State> {
       <Follow mutation={FOLLOW} ignoreResults>
         {(follow, _) => {
           const updateFollow = (isFollowingParam: boolean) => {
-            console.log('isFollowing: ', isFollowing);
+            // console.log('isFollowing: ', isFollowing);
             follow({
               variables: {
                 id,
@@ -43,8 +43,8 @@ class FollowButton extends React.Component<Props, State> {
               },
               optimisticResponse: {
                 follow: {
-                  id: followId,
                   isFollowing,
+                  id: followId,
                   __typename: 'User',
                 },
               },

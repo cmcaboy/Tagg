@@ -20,7 +20,7 @@ export const GET_DATES = gql`
 `;
 
 export const GET_BIDS = gql`
-  query otherBids($id: String!) {
+  query otherBids($id: String) {
     otherBids(id: $id) {
       id
       cursor

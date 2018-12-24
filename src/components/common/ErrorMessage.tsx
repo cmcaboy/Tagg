@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, StyleSheet, Dimensions, ViewStyle, TextStyle, ScrollView,
+  StyleSheet, Dimensions, ViewStyle, TextStyle, ScrollView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, Text } from 'native-base';

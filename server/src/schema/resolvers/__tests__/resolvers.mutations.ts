@@ -165,7 +165,7 @@ describe('Mutation ', () => {
       user: expect.any(Object),
     });
     expect(res.data.chooseWinner.matchId).toBe(DATE_ID);
-    expect(res.data.chooseWinner.id).toBe(TEST_ID);
+    expect(res.data.chooseWinner.id).toBe(DATE_ID);
     expect(res.data.chooseWinner.user.id).toBe(TEST_ID);
   });
   it('FOLLOW', async () => {

@@ -78,11 +78,35 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       });
   };
 
-  findOtherBids = ({ id }: { id: string }) => {
+  findOtherBids = async ({ id, hostId }: { id: string; hostId: string }) => {
+    let viewObjectionable!: string;
+
+    try {
+      const viewObjectionableRaw = await this.session.run(
+        `MATCH(a:User{id:'${id}}) return a.viewObjectionable`,
+      );
+      const viewObjectionableResult = viewObjectionableRaw.records[0].fields[0];
+      if (viewObjectionableResult) {
+        viewObjectionable = 'AND NOT viewObjectionable';
+      } else {
+        viewObjectionable = '';
+      }
+    } catch (e) {
+      console.log(
+        'Not able to obtain viewObjectionable preference. Defaulting to view non-objectionable content',
+      );
+      viewObjectionable = '';
+    }
+
     return this.session
       .run(
-        `MATCH(b:User)-[r:BID]->(d:Date{id:'${id}'})
-          WITH b,r,d, r.datetimeOfBid as order
+        `MATCH(b:User)-[r:BID]->(d:Date{id:'${id}'}),(a:User {id: '${hostId}'})
+          WITH b,r,d, r.datetimeOfBid as order, 
+          a.viewObjectionable as viewObjectionable,
+          exists((a)-[:BLOCK]->(b)) as blockedUser
+          where 
+          NOT blockedUser
+          ${viewObjectionable}
           RETURN b.id,r
           ORDER BY order DESC
         `
