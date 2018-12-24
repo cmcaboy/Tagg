@@ -288,12 +288,38 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       .catch((e: string) => console.log("creator error: ", e));
   }
 
-  findNumberOfBidsFromDate = ({ id }: { id: string }) => {
+  findNumberOfBidsFromDate = async ({ id, hostId }: { id: string; hostId: string }) => {
+    let viewObjectionable!: string;
+
+    try {
+      const viewObjectionableRaw = await this.session.run(
+        `MATCH(a:User{id:'${hostId}'}) return a.viewObjectionable`,
+      );
+      const viewObjectionableResult = viewObjectionableRaw.records[0].fields[0];
+      if (viewObjectionableResult) {
+        viewObjectionable = 'AND NOT viewObjectionable';
+      } else {
+        viewObjectionable = '';
+      }
+    } catch (e) {
+      console.log(
+        'Not able to obtain viewObjectionable preference. Defaulting to view non-objectionable content',
+      );
+      viewObjectionable = '';
+    }
+
     return this.session
       .run(
-        `MATCH(d:Date{id:'${id}'})
-                  WITH size((d)<-[:BID]-(:User)) as num_bids
-                  return num_bids`
+        `MATCH(d:Date{id:'${id}'}),(a:User { id: '${hostId}'}),(b:User)
+          WITH size((d)<-[:BID]-(b:User)) as num_bids,
+          exists((a)-[]->(b{ objectionable: true} )) as viewObjectionable,
+          exists((b)-[:BLOCK]->(a)) as blockedUser,
+          exists((a)-[:BLOCK]->(b)) as blocks
+          WHERE
+          NOT blockedUser
+          AND NOT blocks 
+          ${viewObjectionable}
+          return num_bids`
       )
       .then((result: any) => result.records[0])
       .then((record: any) => record._fields[0])

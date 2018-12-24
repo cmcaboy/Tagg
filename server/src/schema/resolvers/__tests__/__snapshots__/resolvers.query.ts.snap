@@ -124,7 +124,7 @@ Object {
             "datetimeOfDate": 1545849000,
             "description": "dsfds dsfsdf dsfsdf sd",
             "id": "0f4862f2-4618-42aa-a847-2d7c1e86922c",
-            "num_bids": 1,
+            "num_bids": 0,
             "open": true,
           },
           Object {
@@ -132,7 +132,7 @@ Object {
             "datetimeOfDate": 1545417120,
             "description": "fsdf sdfsdf sdf",
             "id": "2625d5ad-1c9a-4096-aadb-c3aacbd75501",
-            "num_bids": 1,
+            "num_bids": 0,
             "open": true,
           },
           Object {
@@ -284,7 +284,7 @@ Object {
             "datetimeOfDate": 1544898600,
             "description": "Looking for something more mature",
             "id": "2109e038-297c-4112-be1b-2317bc132c06",
-            "num_bids": 9,
+            "num_bids": 0,
             "open": true,
           },
           Object {
@@ -474,7 +474,7 @@ Object {
             "datetimeOfDate": 1545849000,
             "description": "dsfds dsfsdf dsfsdf sd",
             "id": "0f4862f2-4618-42aa-a847-2d7c1e86922c",
-            "num_bids": 1,
+            "num_bids": 0,
             "open": true,
           },
           Object {
@@ -482,7 +482,7 @@ Object {
             "datetimeOfDate": 1545417120,
             "description": "fsdf sdfsdf sdf",
             "id": "2625d5ad-1c9a-4096-aadb-c3aacbd75501",
-            "num_bids": 1,
+            "num_bids": 0,
             "open": true,
           },
           Object {
@@ -634,7 +634,7 @@ Object {
             "datetimeOfDate": 1544898600,
             "description": "Looking for something more mature",
             "id": "2109e038-297c-4112-be1b-2317bc132c06",
-            "num_bids": 9,
+            "num_bids": 0,
             "open": true,
           },
           Object {
@@ -877,14 +877,14 @@ Object {
             "datetimeOfDate": 1545849000,
             "description": "dsfds dsfsdf dsfsdf sd",
             "id": "0f4862f2-4618-42aa-a847-2d7c1e86922c",
-            "num_bids": 1,
+            "num_bids": 0,
             "open": true,
           },
           Object {
             "datetimeOfDate": 1545417120,
             "description": "fsdf sdfsdf sdf",
             "id": "2625d5ad-1c9a-4096-aadb-c3aacbd75501",
-            "num_bids": 1,
+            "num_bids": 0,
             "open": true,
           },
           Object {
@@ -1017,7 +1017,7 @@ Object {
             "datetimeOfDate": 1544898600,
             "description": "Looking for something more mature",
             "id": "2109e038-297c-4112-be1b-2317bc132c06",
-            "num_bids": 9,
+            "num_bids": 0,
             "open": true,
           },
           Object {
@@ -1193,14 +1193,14 @@ Object {
             "datetimeOfDate": 1545849000,
             "description": "dsfds dsfsdf dsfsdf sd",
             "id": "0f4862f2-4618-42aa-a847-2d7c1e86922c",
-            "num_bids": 1,
+            "num_bids": 0,
             "open": true,
           },
           Object {
             "datetimeOfDate": 1545417120,
             "description": "fsdf sdfsdf sdf",
             "id": "2625d5ad-1c9a-4096-aadb-c3aacbd75501",
-            "num_bids": 1,
+            "num_bids": 0,
             "open": true,
           },
           Object {
@@ -1333,7 +1333,7 @@ Object {
             "datetimeOfDate": 1544898600,
             "description": "Looking for something more mature",
             "id": "2109e038-297c-4112-be1b-2317bc132c06",
-            "num_bids": 9,
+            "num_bids": 0,
             "open": true,
           },
           Object {
