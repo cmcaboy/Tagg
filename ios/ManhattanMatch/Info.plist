@@ -73,6 +73,8 @@
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to your microphone (for videos)</string>
+	<key>CodePushDeploymentKey</key>
+	<string>__RN_CONFIG_CODE_PUSH_KEY</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Motion updates increase battery efficiency by intelligently toggling location-services when device is detected to be moving</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

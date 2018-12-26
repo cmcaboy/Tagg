@@ -6,6 +6,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.CallbackManager;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.react.ReactApplication;
+import com.microsoft.codepush.react.CodePush;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import io.sentry.RNSentryPackage;
@@ -45,6 +46,7 @@ public class MainApplication extends Application implements ReactApplication {
     return mCallbackManager;
   }
 
+
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
     public boolean getUseDeveloperSupport() {
@@ -55,6 +57,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new CodePush(BuildConfig.CODE_PUSH_KEY, getApplicationContext(), BuildConfig.DEBUG),
             new SplashScreenReactPackage(),
             new RNFetchBlobPackage(),
             new RNSentryPackage(),
@@ -78,6 +81,10 @@ public class MainApplication extends Application implements ReactApplication {
       );
     }
 
+  @Override
+  protected String getJSBundleFile() {
+      return CodePush.getJSBundleFile();
+  }
     @Override
     protected String getJSMainModuleName() {
       return "index";

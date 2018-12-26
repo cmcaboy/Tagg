@@ -12,6 +12,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 apply from: "../../node_modules/react-native-sentry/sentry.gradle"
 
 project.ext.vectoricons = [
@@ -99,6 +100,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-code-push')
     compile project(':react-native-splash-screen')
     compile project(':rn-fetch-blob')
     compile project(':react-native-sentry')

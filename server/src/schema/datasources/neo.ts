@@ -2,7 +2,7 @@ import { QUEUE_PAGE_LENGTH } from "../resolvers/variables";
 import { getQueue } from "../../middleware/queue";
 import { newUserDefaults } from '../defaults';
 import { DateItem } from '../../types/DateItem';
-import { convertDateToEpoch } from "../../middleware/format";
+import { convertDateToEpoch, getCurrentDateNeo } from "../../middleware/format";
 
 const { DataSource } = require("apollo-datasource");
 
@@ -354,21 +354,23 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
   };
 
   userHasDateOpen = ({ id }: {id: string }) => {
+    const currentTime = getCurrentDateNeo();
     return this.session
       .run(
-        `MATCH(a:User{id:'${id}'})
-                      WITH a,
-                      exists((a)-[:CREATE]->(:Date{open:TRUE})) as hasDateOpen
-                      RETURN hasDateOpen`
+        `MATCH(a:User{id:'${id}'})-[:CREATE]->(d:Date)
+          WHERE
+          d.open = true
+          AND d.datetimeOfDate > ${currentTime}
+          RETURN d`
       )
-      .then((result: any): any[] => result.records)
-      .then(
-        (records: any[]): boolean => {
-          const hasDateOpen: boolean = records[0]._fields[0];
-          // console.log("hasDateOpen: ", hasDateOpen);
-          return hasDateOpen;
-        }
-      )
+      .then((result: any): any => !!result.records.length)
+      // .then(
+      //   (records: any[]): boolean => {
+      //     const hasDateOpen: boolean = records[0]._fields[0];
+      //     // console.log("hasDateOpen: ", hasDateOpen);
+      //     return hasDateOpen;
+      //   }
+      // )
       .catch((e: string) => console.log("hasDateOpen error: ", e));
   };
   userDistanceApart = ({ id, distanceApart }: { id: string, distanceApart: number | null }) => {
@@ -465,11 +467,14 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
   };
   findDateRequests = () => {
     const id = this.context.user.id;
+    const currentTime = getCurrentDateNeo();
+    console.log('currentTime: ', currentTime);
     return this.session
       .run(
         `MATCH(a:User{id:'${id}'})-[:CREATE]->(d:Date)
           WITH a, d, size((d)<-[:BID]-(:User)) as num_bids, d.datetimeOfDate as order
           WHERE d.open=TRUE
+          AND d.datetimeOfDate > ${currentTime}
           RETURN a,d,num_bids
           ORDER BY order DESC
         `
