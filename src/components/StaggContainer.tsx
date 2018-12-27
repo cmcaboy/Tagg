@@ -84,7 +84,8 @@ class StaggContainer extends Component<Props, State> {
               console.log('queue empty or returning an error');
               return null;
             }
-            if (!data.user.queue.cursor) {
+            console.log('cursor: ', data.user.queue.cursor);
+            if (!data.user.queue.cursor && data.user.queue.cursor !== 0) {
               // If the cursor is null, don't call refetch because
               // you are at the end of the queue.
               console.log('You are at the end of the queue. There is nothing left to fetch.');

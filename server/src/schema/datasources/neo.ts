@@ -166,7 +166,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     viewObjectionable = '';
   }
 
-    if (!cursor) {
+    if (!cursor && cursor !== 0) {
       console.log(
         "No cursor passed in. You must be at the end of the list. No more values to retreive."
       );
