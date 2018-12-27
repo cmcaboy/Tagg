@@ -43,7 +43,7 @@ const StaggCard: SFC<Props> = ({
   // user = object containing user information: name, age, distanceApart, school, work, profilePic
   // navigation = react navigation object
 
-  console.log('isFollowing: ', isFollowing);
+  // console.log('isFollowing: ', isFollowing);
 
   const onPress = () => navigation.navigate('UserProfile', { id, name, hostId });
 
@@ -67,7 +67,7 @@ const StaggCard: SFC<Props> = ({
                   </View>
                 </TouchableOpacity>
                 {/* I could place this in its own component so I can reuse */}
-                <FlagMenu name={name} id={id} hostId={hostId} />
+                <FlagMenu name={name} id={id} hostId={hostId} navigation={navigation} />
               </View>
               {!!school && (
                 <View style={styles.subHeading}>

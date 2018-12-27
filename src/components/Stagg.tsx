@@ -13,7 +13,7 @@ import BackgroundGeolocation, { Location } from 'react-native-background-geoloca
 import { RecyclerListView, DataProvider, LayoutProvider } from 'recyclerlistview';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { FloatingActionButton } from './common';
+import { FloatingActionButton, Spinner } from './common';
 import StaggCard from './StaggCard';
 // import StaggHeader from './StaggHeader';
 import NewDateModal from './NewDateModal';
@@ -27,6 +27,7 @@ import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
+const ON_END_THRESHOLD = 400;
 
 interface Params {};
 
@@ -39,6 +40,8 @@ interface Props {
   fetchMoreQueue: () => void;
   refetchQueue: () => void;
   pushToken: string;
+  cursor: number | null;
+  fetchMoreLoading: boolean;
 }
 
 interface State {
@@ -242,6 +245,29 @@ class Stagg extends Component<Props, State> {
 
   rowRenderer = (_: any, data: any) => this.renderCard(data.user);
 
+  // Do a custom onEndThreshold implementation rather than using the built in onEndThreshold
+  checkRefetch = (scrollEvent: any, x: number, y: number) => {
+    const { nativeEvent: { layoutMeasurement: { height: layoutHeight }, contentSize: { height: contentHeight } } } = scrollEvent;
+    const { fetchMoreQueue, cursor } = this.props
+    if (cursor === null) {
+      return;
+    }
+
+    if (y >= ((contentHeight - layoutHeight) - ON_END_THRESHOLD)) {
+      console.log('fetchMoreQueue');
+      fetchMoreQueue();
+    }
+  }
+
+  renderFooter = (): JSX.Element | null => {
+    const { fetchMoreLoading } = this.props;
+    console.log('fetchMoreLoading: ', fetchMoreLoading);
+    if (fetchMoreLoading) {
+      return (<Spinner />);
+    } 
+    return null;
+  }
+
   renderCard = (prospect: any) => {
     // Instead of rendering a card, I could render an ImageBackground
     // console.log('stagg ancillary: ',prospect.ancillaryPics);
@@ -299,14 +325,20 @@ class Stagg extends Component<Props, State> {
         {queue._data.length ? (
           <RecyclerListView
             // style={{ flex: 1 } as ViewStyle}
-            onEndReached={() => {
-              console.log('end reached');
-              fetchMoreQueue();
-            }}
-            onEndReachedThreshold={400}
+            // onEndReached={() => {
+            //   console.log('end reached');
+            //   fetchMoreQueue();
+            // }}
+            // onEndReachedThreshold={ON_END_THRESHOLD}
             rowRenderer={this.rowRenderer}
             dataProvider={queue}
             layoutProvider={this.layoutProvider}
+            // onScroll={({ nativeEvent: { layoutMeasurement: { height: layoutHeight }, contentSize: { height: contentHeight } } }, x, y) => this.checkRefetch({layoutHeight, contentHeight, x, y})}
+            onScroll={this.checkRefetch}
+            renderFooter={this.renderFooter}
+    
+            // onRecreate={(params) => console.log('onRecreate params: ', params)}
+            // canChangeSize={true} // did not fix
             scrollViewProps={{
               refreshControl: (
                 <RefreshControl

@@ -21,7 +21,9 @@ interface Props {
   navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
 }
 
-interface State {};
+interface State {
+  fetchMoreLoading: boolean;
+};
 
 // class GetID extends Query<getId, {}> {};
 // class GetQueue extends Query<getQueue | moreQueue, getQueueVariables | moreQueueVariables> {};
@@ -33,6 +35,12 @@ class SetPushToken extends Mutation<setPushToken, setPushTokenVariables> {};
 
 
 class StaggContainer extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      fetchMoreLoading: false,
+    }
+  }
   componentDidMount = () => {
     const tempId = AsyncStorage.getItem("TaggToken");
     console.log('tempId: ', tempId);
@@ -59,7 +67,7 @@ class StaggContainer extends Component<Props, State> {
           // console.log('data stagg: ', data);
           // console.log('error stagg: ',error);
           // console.log('loading stagg: ',loading);
-          // console.log('networkStatus: ', networkStatus);
+          console.log('networkStatus: ', networkStatus);
           switch (networkStatus) {
             case 1: return <Spinner />;
             case 2: return <Spinner />;
@@ -80,6 +88,10 @@ class StaggContainer extends Component<Props, State> {
           const { followerDisplay, id } = data.user;
           const fetchMoreQueue = () => {
             console.log('in fetchMoreQueue');
+            if(this.state.fetchMoreLoading) {
+              return;
+            }
+            this.setState({ fetchMoreLoading: true });
             if (!data.user.queue) {
               console.log('queue empty or returning an error');
               return null;
@@ -95,6 +107,7 @@ class StaggContainer extends Component<Props, State> {
               query: MORE_QUEUE,
               variables: { id, followerDisplay, cursor: data.user.queue.cursor },
               updateQuery: (prev, { fetchMoreResult }) => {
+                
                 console.log('fetchMore queue');
                 // console.log('new queue: ', fetchMoreResult);
                 // console.log('prev: ',prev);
@@ -121,6 +134,7 @@ class StaggContainer extends Component<Props, State> {
                   },
                 };
                 // console.log('moreQueue New Result: ', result);
+                this.setState({ fetchMoreLoading: false });
                 return result;
               },
             });
@@ -143,6 +157,8 @@ class StaggContainer extends Component<Props, State> {
                             fetchMoreQueue={fetchMoreQueue}
                             refetchQueue={refetchQueue}
                             pushToken={data.user.token}
+                            cursor={data.user.queue ? data.user.queue.cursor : null}
+                            fetchMoreLoading={this.state.fetchMoreLoading}
                           />
                         );
                     } }

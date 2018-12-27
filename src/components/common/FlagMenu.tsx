@@ -4,12 +4,12 @@ import { Mutation } from 'react-apollo';
 import { ActionSheet } from 'native-base';
 import { DataProxy } from 'apollo-cache';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {
-  // withNavigation,
-  NavigationInjectedProps,
-  NavigationScreenProp,
-  NavigationRoute,
-} from 'react-navigation';
+// import {
+//   // withNavigation,
+//   NavigationInjectedProps,
+//   NavigationScreenProp,
+//   NavigationRoute,
+// } from 'react-navigation';
 import { BLOCK_USER } from '../../apollo/mutations';
 import { block, blockVariables } from '../../apollo/mutations/__generated__/block';
 import { flag, flagVariables } from '../../apollo/mutations/__generated__/flag';
@@ -47,7 +47,7 @@ const FlagMenu: SFC<Props> = ({
   const REPORT_AND_BLOCK_INDEX = 2;
   const CANCEL_INDEX = 3;
 
-  console.log('navigation: ', navigation);
+  // console.log('navigation: ', navigation);
   const onCompleted = (data: any) => {
     console.log('onCompleted');
     // console.log('data: ', data);
