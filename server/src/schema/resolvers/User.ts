@@ -30,7 +30,9 @@ export const User: UserResolvers.Type = {
   queue: async ({ id: idParent, followerDisplay }, _, { dataSources, user }) => {
     const id = idParent || user.id;
     // console.log('queue id: ', id);
-    return await dataSources.neoAPI.getUserQueue({ id, followerDisplay });
+    const ret = await dataSources.neoAPI.getUserQueue({ id, followerDisplay });
+    console.log('ret in queue: ', ret);
+    return ret;
   },
   matchedDates: async ({ id: idParent }, _, { dataSources, user }) => {
     const id = idParent || user.id;

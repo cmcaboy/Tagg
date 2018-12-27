@@ -100,7 +100,7 @@ session: any;
       const newCursor = list.length >= QUEUE_PAGE_LENGTH ? list[list.length - 1].order : null;
       // console.log('newCursor: ', newCursor);
 
-      // console.log('queue list: ', list);
+      console.log('queue list: ', list);
       return {
         list,
         cursor: newCursor,
