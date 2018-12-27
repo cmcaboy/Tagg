@@ -36,7 +36,7 @@ session: any;
 
   try {
     const viewObjectionableRaw = await session.run(
-      `MATCH(a:User{id:'${id}}) return a.viewObjectionable`,
+      `MATCH(a:User{id:'${id}'}) return a.viewObjectionable`,
     );
     const viewObjectionableResult = viewObjectionableRaw.records[0].fields[0];
     if (viewObjectionableResult) {
