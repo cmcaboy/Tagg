@@ -4,6 +4,8 @@ import neoAPI from './datasources/neo';
 import firestoreAPI from './datasources/firestore';
 import { driver } from '../db/neo4j';
 import { db } from '../db/firestore';
+// import { GraphQLError } from 'graphql';
+const { AuthenticationError } = require('apollo-server');
 
 // import statement did not work here
 const { ApolloServer } = require('apollo-server-express');
@@ -45,7 +47,7 @@ const context = async ({ req }: { req: any }) => {
 
   if (!email) {
     console.log('No email in header!');
-    return { user: null };
+    throw new AuthenticationError('User not authenticated; Please try to logout and login again.');
   }
 
   try {
@@ -61,7 +63,7 @@ const context = async ({ req }: { req: any }) => {
   } catch (e) {
     // I could throw a real error here
     console.log(`Error retreiving user ${email} from database: ${e}`);
-    return { user: null };
+    throw new AuthenticationError('User not authenticated; Please try to logout and login again.');
   }
 
   return { user };

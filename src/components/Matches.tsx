@@ -156,12 +156,14 @@ class Matches extends Component<Props, State> {
             console.log('noMatches');
             return this.noMatches();
           }
+          const matches = data.user.matchedDates ? data.user.matchedDates.list : [];
+          const dateRequests = data.user.dateRequests ? data.user.dateRequests.list : [];
           const { id } = data.user;
           return this.renderContent({
             id,
             refetch,
-            matches: data.user.matchedDates.list,
-            dateRequests: data.user.dateRequests.list,
+            matches,
+            dateRequests,
             name: data.user.name,
             pic: data.user.profilePic,
           });
