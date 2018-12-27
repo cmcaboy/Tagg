@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 // import { Root } from 'native-base';
+import { createAppContainer } from 'react-navigation';
 import { Spinner } from './common';
 import LoginForm from './LoginForm';
 import MainNavigator from '../navigator';

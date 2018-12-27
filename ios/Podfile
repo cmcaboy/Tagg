@@ -43,6 +43,8 @@ target 'ManhattanMatch' do
 
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
   target 'ManhattanMatchTests' do
     inherit! :search_paths
     # Pods for testing

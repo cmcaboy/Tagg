@@ -83,7 +83,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
 
     try {
       const viewObjectionableRaw = await this.session.run(
-        `MATCH(a:User{id:'${id}}) return a.viewObjectionable`,
+        `MATCH(a:User{id:'${id}'}) return a.viewObjectionable`,
       );
       const viewObjectionableResult = viewObjectionableRaw.records[0].fields[0];
       if (viewObjectionableResult) {
@@ -151,7 +151,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
 
   try {
     const viewObjectionableRaw = await this.session.run(
-      `MATCH(a:User{id:'${id}}) return a.viewObjectionable`,
+      `MATCH(a:User{id:'${id}'}) return a.viewObjectionable`,
     );
     const viewObjectionableResult = viewObjectionableRaw.records[0].fields[0];
     if (viewObjectionableResult) {

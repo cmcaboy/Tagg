@@ -70,7 +70,7 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This App would like to track your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to your microphone (for videos)</string>
 	<key>CodePushDeploymentKey</key>

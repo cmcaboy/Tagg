@@ -1,5 +1,5 @@
 import React from 'react';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import { createStackNavigator, createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -20,11 +20,11 @@ import BidDate from '../components/BidDate';
 import BidList from '../components/BidList';
 import { TAB_BAR_HEIGHT, PRIMARY_COLOR } from '../variables';
 
-const Tabs = TabNavigator(
+const Tabs = createMaterialTopTabNavigator(
   {
     Settings: {
       screen: Settings,
-      navigationOptions: {
+      defaultNavigationOptions: {
         tabBarLabel: 'Settings',
         tabBarIcon: ({ tintColor }: { tintColor: string }) => (
           <MaterialCommunityIcons name="account" size={24} color={tintColor} />
@@ -33,7 +33,7 @@ const Tabs = TabNavigator(
     },
     StaggContainer: {
       screen: StaggContainer,
-      navigationOptions: {
+      defaultNavigationOptions: {
         tabBarLabel: 'StaggContainer',
         tabBarIcon: ({ tintColor }: { tintColor: string }) => (
           <Entypo name="heart" size={24} color={tintColor} />
@@ -42,7 +42,7 @@ const Tabs = TabNavigator(
     },
     Matches: {
       screen: Matches,
-      navigationOptions: {
+      defaultNavigationOptions: {
         tabBarLabel: 'Matches',
         tabBarIcon: ({ tintColor }: { tintColor: string }) => (
           <Entypo name="chat" size={24} color={tintColor} />
@@ -52,9 +52,7 @@ const Tabs = TabNavigator(
   },
   {
     initialRouteName: 'StaggContainer',
-    navigationOptions: {
-      header: null,
-    },
+    defaultNavigationOptions: {},
     tabBarOptions: {
       activeTintColor: Platform.OS === 'ios' ? PRIMARY_COLOR : 'white',
       showLabel: false,
@@ -74,7 +72,7 @@ const Tabs = TabNavigator(
   },
 );
 
-const MainNavigator = StackNavigator(
+const MainNavigator = createStackNavigator(
   {
     Home: {
       screen: Tabs,
@@ -104,7 +102,7 @@ const MainNavigator = StackNavigator(
   {
     mode: 'card',
     headerMode: 'screen',
-    navigationOptions: {
+    defaultNavigationOptions: {
       // headerForceInset: { top: 'never' },
     },
 
@@ -115,4 +113,4 @@ const MainNavigator = StackNavigator(
   },
 );
 
-export default MainNavigator;
+export default createAppContainer(MainNavigator);
