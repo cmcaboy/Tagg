@@ -30,14 +30,18 @@ export const Query: QueryResolvers.Type = {
   },
   moreMessages: async (_, { id, cursor }, { dataSources }) => await dataSources.firestoreAPI.getMoreMessages({ id, cursor }),
   moreQueue: async (_, { cursor, followerDisplay }, { dataSources, user }) => {
+    console.log('moreQueue');
     if (!user || !user.id) {
       console.log('User not authenticated');
       throw new AuthenticationError('User not authenticated');
     }
-    return await dataSources.neoAPI.getQueueMore({
+    const ret = await dataSources.neoAPI.getQueueMore({
       cursor,
       followerDisplay,
     });
+
+    console.log('ret: ', ret);
+    return ret;
   },
   moreDates: (_, __) => {
     throw new Error('Resolver not implemented');
