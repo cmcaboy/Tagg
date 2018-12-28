@@ -45,6 +45,8 @@ class StaggContainer extends Component<Props, State> {
   componentDidMount = () => {
     // const tempId = AsyncStorage.getItem("TaggToken");
     // console.log('tempId: ', tempId);
+    analytics.setMinimumSessionDuration(1000);
+    analytics.setAnalyticsCollectionEnabled(true);
     return SplashScreen.hide();
   }
 

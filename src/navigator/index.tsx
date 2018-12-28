@@ -140,8 +140,8 @@ const NavWrapper = createAppContainer(MainNavigator);
 const GANavigationWrapper = () => (
   <NavWrapper
     onNavigationStateChange={(prevState, currentState) => {
-      console.log('currentState: ', currentState);
-      console.log('prevState: ', prevState);
+      // console.log('currentState: ', currentState);
+      // console.log('prevState: ', prevState);
       const currentScreen = getActiveRouteName(currentState);
       const prevScreen = getActiveRouteName(prevState);
 
@@ -150,7 +150,7 @@ const GANavigationWrapper = () => (
         // change the tracker here to use other Mobile analytics SDK.
         analytics.setCurrentScreen(currentScreen);
         analytics.logEvent(`Page_${currentScreen}`);
-        console.log('currentScreen: ', currentScreen);
+        // console.log('currentScreen: ', currentScreen);
       }
     }}
   />
