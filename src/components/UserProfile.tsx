@@ -49,6 +49,7 @@ class UserProfile extends Component<Props, State> {
   }) => ({
     // title: `${navigation.state.params.name}`,
     // headerRight: <View />,
+    headerMode: 'screen',
     headerRight: (
       <FlagMenu navigation={navigation} name={name} id={id} hostId={hostId} size={22} inProfile />
     ),

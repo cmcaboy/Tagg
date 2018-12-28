@@ -124,7 +124,7 @@ class Stagg extends Component<Props, State> {
       const { notification }: { notification: any } = notificationOpen;
       pushNotificationHandler(id, notification._data, navigation);
     }
-    console.log('CheckPermissions: ', checkPermissions());
+    // console.log('CheckPermissions: ', checkPermissions());
     if (checkPermissions()) {
       this.pushNotification();
     }
@@ -164,11 +164,11 @@ class Stagg extends Component<Props, State> {
 
   pushNotification = async () => {
     const { pushToken, startSetPushToken, id, navigation } = this.props;
-    console.log('firebase messaging: ', firebase.messaging());
+    // console.log('firebase messaging: ', firebase.messaging());
     // Get Token
     const fcmToken = await firebase.messaging().getToken();
     if (fcmToken) {
-      console.log('User has a device token: ', fcmToken);
+      // console.log('User has a device token: ', fcmToken);
       if (fcmToken !== pushToken) {
         console.log('push token has changed since last login. Uploading to datastore');
         startSetPushToken(fcmToken);
@@ -285,7 +285,7 @@ class Stagg extends Component<Props, State> {
   }
 
   render() {
-    const { id, refetchQueue, fetchMoreQueue  } = this.props;
+    const { id, refetchQueue  } = this.props;
     const { queue, newDateModal, filterModal, loading } = this.state;
     // console.log('queue: ', queue);
     // console.log('queue.length: ', queue._data.length);
@@ -336,9 +336,6 @@ class Stagg extends Component<Props, State> {
             // onScroll={({ nativeEvent: { layoutMeasurement: { height: layoutHeight }, contentSize: { height: contentHeight } } }, x, y) => this.checkRefetch({layoutHeight, contentHeight, x, y})}
             onScroll={this.checkRefetch}
             renderFooter={this.renderFooter}
-    
-            // onRecreate={(params) => console.log('onRecreate params: ', params)}
-            // canChangeSize={true} // did not fix
             scrollViewProps={{
               refreshControl: (
                 <RefreshControl

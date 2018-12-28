@@ -3,6 +3,7 @@ import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import { Button } from 'native-base';
 import { MyAppText, MyAppModal } from './common';
 import EditSettingsContainer from './EditSettingsContainer';
+import { analytics } from '../firebase';
 
 interface Props {
   isVisible: boolean;
@@ -30,6 +31,11 @@ class FilterModal extends React.Component<Props, State> {
 
     this.state = blankState;
   }
+
+  componentDidMount = () => {
+    analytics.setCurrentScreen('Filter Modal');
+    analytics.logEvent('Page_Filter_Modal');
+  };
 
   closeModal = () => {
     const { isVisible, flipFilterModal, refetchQueue } = this.props;

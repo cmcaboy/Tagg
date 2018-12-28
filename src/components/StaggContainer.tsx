@@ -42,8 +42,8 @@ class StaggContainer extends Component<Props, State> {
     }
   }
   componentDidMount = () => {
-    const tempId = AsyncStorage.getItem("TaggToken");
-    console.log('tempId: ', tempId);
+    // const tempId = AsyncStorage.getItem("TaggToken");
+    // console.log('tempId: ', tempId);
     return SplashScreen.hide();
   }
 

@@ -25,6 +25,7 @@ import emailValidation from '../services/emailValidation';
 import emailSignup from '../services/emailSignup';
 import { newUser, newUserVariables } from '../apollo/mutations/__generated__/newUser';
 import BackgroundGeolocation from 'react-native-background-geolocation';
+import { analytics } from '../firebase';
 
 interface Props {
   closeModal: () => void;
@@ -85,6 +86,11 @@ export default class NewUserModal extends Component<Props, State> {
       password: '',
       validatePassword: '',
     };
+  }
+
+  componentDidMount = () => {
+    analytics.setCurrentScreen('New_User_Modal');
+    analytics.logEvent('Page_New_User_Modal');
   }
 
   passwordInput = ( password: string ) => this.setState({ password });

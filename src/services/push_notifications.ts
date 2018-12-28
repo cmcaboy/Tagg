@@ -4,7 +4,7 @@ import { firebase } from '../firebase';
 export const checkPermissions = async () => {
   const enabled = await firebase.messaging().hasPermission();
   if (enabled) {
-    console.log('User has permissions');
+    // console.log('User has permissions');
     return enabled;
   }
   // Ask for permissiosn

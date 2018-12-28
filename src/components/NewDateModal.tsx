@@ -16,6 +16,7 @@ import toastMessage from '../services/toastMessage';
 import { NEW_DATE } from '../apollo/mutations';
 import { createDate, createDateVariables } from '../apollo/mutations/__generated__/createDate';
 import { GET_MATCHES } from '../apollo/queries';
+import { analytics } from '../firebase';
 
 interface Props {
   isVisible: boolean;
@@ -50,6 +51,11 @@ class NewDateModal extends React.Component<Props, State> {
     super(props);
 
     this.state = this.blankState;
+  }
+
+  componentDidMount = () => {
+    analytics.setCurrentScreen('New Date Modal');
+    analytics.logEvent('Page_New_Date_Modal');
   }
 
   setError = (error: string) => this.setState({ error });
@@ -161,7 +167,7 @@ class NewDateModal extends React.Component<Props, State> {
                               dateRequests: { list: dateList },
                             },
                           } = store.readQuery({ query: GET_MATCHES });
-                          console.log('user: ', user);
+                          // console.log('user: ', user);
 
                           const newList = [
                             ...dateList,

@@ -4,12 +4,11 @@ import {
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 // import { Root } from 'native-base';
-import { createAppContainer } from 'react-navigation';
 import { Spinner } from './common';
 import LoginForm from './LoginForm';
-import MainNavigator from '../navigator';
 import { firebase } from '../firebase';
 import { STATUS_BAR_COLOR } from '../variables';
+import GANavigationWrapper from '../navigator';
 
 interface State {
   loggedIn: boolean;
@@ -42,7 +41,7 @@ class Authentication extends React.Component<Props, State> {
   componentWillMount() {
     // Firebase authentication details gathered from my firebase account.
     firebase.auth().onAuthStateChanged((user: string) => {
-      console.log('user: ', user);
+      // console.log('Authentication user: ', user);
       // console.log('firebase auth: ',firebase.auth());
       // console.log('firebase uid: ',firebase.auth().currentUser);
       if (user) {
@@ -67,7 +66,7 @@ class Authentication extends React.Component<Props, State> {
 
     switch (loggedIn) {
       case true:
-        return <MainNavigator />;
+        return <GANavigationWrapper />;
       // <LoginForm />
       // return <Settings />
       // <CardSection><Button onPress={() => firebase.auth().signOut()}>Log Out</Button></CardSection>
