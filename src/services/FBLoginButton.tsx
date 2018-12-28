@@ -3,7 +3,7 @@ import { View, AsyncStorage } from 'react-native';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import gql from 'graphql-tag';
 import { ApolloClient } from 'apollo-client';
-import { firebase } from '../firebase';
+import { firebase, analytics } from '../firebase';
 import uploadImage from '../firebase/uploadImage';
 import { DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from '../variables';
 import { Spinner } from '../components/common';
@@ -51,6 +51,7 @@ class FBLoginButton extends Component<Props, State> {
         <LoginButton
           readPermissions={['public_profile', 'email']}
           onLoginFinished={async (error, result) => {
+            analytics.logEvent('Click_FB_login');
             this.setState({ loading: true });
             console.log('error: ', error);
             console.log('result: ', result);
@@ -61,6 +62,7 @@ class FBLoginButton extends Component<Props, State> {
               return;
             }
             if (result.isCancelled) {
+              analytics.logEvent('Event_FB_login_cancelled');
               console.log('Login was cancelled');
               setLoading(false);
               return;
@@ -111,6 +113,7 @@ class FBLoginButton extends Component<Props, State> {
             // If we do not have record of the user's email, this is a new user.
             // We should build their profile from their facebook profile
             if (!isRegistered) {
+              analytics.logEvent('Event_FB_login_newUser');
               console.log('new user');
               // An alternative approach would be to run this all on the graphql server
               const responseRaw = await fetch(
@@ -170,6 +173,7 @@ class FBLoginButton extends Component<Props, State> {
             // await startSetId(email);
             await AsyncStorage.setItem('TaggToken', email);
 
+            analytics.logEvent('Event_FB_login_success');
             this.setState({ loading: false });
             console.log('fb login complete');
           }}

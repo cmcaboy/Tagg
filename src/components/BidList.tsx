@@ -23,6 +23,7 @@ import { GET_BIDS } from '../apollo/queries';
 import { formatDescription } from '../format';
 import { otherBids, otherBidsVariables } from '../apollo/queries/__generated__/otherBids';
 import { GET_MATCHES } from '../apollo/queries/index';
+import { analytics } from '../firebase';
 
 interface State {}
 
@@ -87,12 +88,14 @@ class BidList extends React.Component<Props, State> {
                   <ListItem
                     thumbnail
                     key={date.bidUser.id}
-                    onPress={() => navigate('UserProfile', {
-                      id: date.bidUser.id,
-                      name: date.bidUser.name,
-                      hostId: id,
-                    })
-                    }
+                    onPress={() => {
+                      analytics.logEvent('Click_bidList_picture');
+                      navigate('UserProfile', {
+                        id: date.bidUser.id,
+                        name: date.bidUser.name,
+                        hostId: id,
+                      });
+                    }}
                   >
                     <Left>
                       <Thumbnail square source={{ uri: date.bidUser.profilePic }} />
@@ -112,6 +115,7 @@ class BidList extends React.Component<Props, State> {
                           <Button
                             transparent
                             onPress={() => {
+                              analytics.logEvent('Click_bidList_chooseWinner');
                               console.log('winnerId: ', date.bidUser.id);
                               chooseWinner({
                                 variables: {

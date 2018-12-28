@@ -16,6 +16,7 @@ import { flag, flagVariables } from '../../apollo/mutations/__generated__/flag';
 import ToastMessage from '../../services/toastMessage';
 import { FLAG_AND_BLOCK_USER } from '../../apollo/mutations/index';
 import { GET_QUEUE, GET_MATCHES } from '../../apollo/queries/index';
+import { analytics } from '../../firebase';
 
 class BlockUser extends Mutation<block, blockVariables> {}
 class FlagUser extends Mutation<flag, flagVariables> {}
@@ -86,6 +87,7 @@ const FlagMenu: SFC<Props> = ({
   blockUser: (options: any) => void;
   flagUser: (options: any) => void;
   }) => {
+    analytics.logEvent('Click_FlagMenu_open');
     console.log('openMenu');
     ActionSheet.show(
       { options: BUTTONS, cancelButtonIndex: CANCEL_INDEX, title: name },
@@ -93,6 +95,7 @@ const FlagMenu: SFC<Props> = ({
         console.log('selectedIndex: ', selectedIndex);
         switch (selectedIndex) {
           case BLOCK_INDEX:
+            analytics.logEvent('Click_FlagMenu_block');
             console.log('BLOCK_INDEX: ', BLOCK_INDEX);
             // Should also remove from cache
             blockUser({
@@ -152,6 +155,7 @@ const FlagMenu: SFC<Props> = ({
             });
             return;
           case REPORT_INDEX:
+            analytics.logEvent('Click_FlagMenu_report');
             console.log('REPORT_INDEX: ', REPORT_INDEX);
             flagUser({
               variables: { id: hostId, flaggedId: id },
@@ -165,6 +169,7 @@ const FlagMenu: SFC<Props> = ({
             });
             return;
           case REPORT_AND_BLOCK_INDEX:
+            analytics.logEvent('Click_FlagMenu_report_and_block');
             flagUser({
               variables: { id: hostId, flaggedId: id, block: true },
               update: (cache: DataProxy, data: any) => {

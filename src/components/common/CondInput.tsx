@@ -9,6 +9,7 @@ import {
   TextStyle,
 } from 'react-native';
 import { CardSection, ActionIcon } from './index';
+import { analytics } from '../../firebase';
 
 interface Props {
   lowerCaseOnly?: boolean;
@@ -36,10 +37,11 @@ class CondInput extends Component<Props, State> {
   }
 
   confirmUpdate = () => {
-    const { updateValue } = this.props;
+    const { updateValue, field } = this.props;
     const { value } = this.state;
     updateValue(value);
     this.setState({ isEdit: false });
+    analytics.logEvent(`Click__${field}_update`);
   };
 
   onChangeText = (v: string) => {
@@ -50,7 +52,11 @@ class CondInput extends Component<Props, State> {
     }
   };
 
-  enableEditMode = () => this.setState({ isEdit: true });
+  enableEditMode = () => {
+    const { field } = this.props;
+    this.setState({ isEdit: true });
+    analytics.logEvent(`Click_${field}_edit`);
+  };
 
   render() {
     const { isEdit, value } = this.state;

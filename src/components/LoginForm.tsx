@@ -61,19 +61,26 @@ class LoginForm extends Component<Props, State> {
     };
   }
 
-  toggleEmail = () => this.setState(prev => ({ showEmail: !prev.showEmail }));
+  toggleEmail = () => {
+    analytics.logEvent('Click_LoginForm_useEmailInstead');
+    this.setState(prev => ({ showEmail: !prev.showEmail }));
+  }
 
   emailInput = ( email: string ) => this.setState({ email });
 
   passwordInput = ( password: string ) => this.setState({ password });
 
-  setError = ( e: string ) => this.setState({ emailError: e });
+  setError = ( e: string ) => {
+    analytics.logEvent(`Error_Login_${e}`.substring(0, 31))
+    this.setState({ emailError: e });
+  }
 
   setLoading = ( loading: boolean ) => this.setState({ loading });
 
   modalClose = () => this.setState({ modalDisplay: false });
 
   emailLogin = async ({ client }: { client: any }) => {
+    analytics.logEvent('Click_Login_emailLogin');
     const { email, password } = this.state;
 
     // Display a loading spinner and remove error display
@@ -115,7 +122,10 @@ class LoginForm extends Component<Props, State> {
   };
 
   // activate modal - Modal is activated when modalDisplay is set to true
-  emailSignup = () => this.setState({ error: '', modalDisplay: true, loading: false });
+  emailSignup = () => {
+    analytics.logEvent('Click_LoginForm_signup');
+    this.setState({ error: '', modalDisplay: true, loading: false });
+  }
 
   componentWillUpdate = () => {
     UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -126,7 +136,7 @@ class LoginForm extends Component<Props, State> {
   componentDidMount = () => {
     SplashScreen.hide();
     analytics.setCurrentScreen('Login screen');
-    analytics.logEvent('Page_Login screen');
+    analytics.logEvent('Login screen');
   }
 
   render() {

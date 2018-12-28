@@ -1,4 +1,5 @@
 import { Toast } from 'native-base';
+import { analytics } from '../firebase';
 
 interface Params {
   text: string;
@@ -18,18 +19,22 @@ const ToastMessage = (
     text, duration = 6000, buttonText = 'Okay', position = 'bottom', type = 'success',
   }: Params,
   onClose = () => {},
-) => Toast.show({
-  text,
-  buttonText,
-  duration,
-  position,
-  onClose: (reason) => {
-    console.log('toast close reason: ', reason);
-    // reason can be user or timeout
-    if (reason === 'user') {
-      onClose();
-    }
-  },
-});
+) => {
+  analytics.logEvent('Event_toast_message');
+  return Toast.show({
+    text,
+    buttonText,
+    duration,
+    position,
+    onClose: (reason) => {
+      console.log('toast close reason: ', reason);
+      // reason can be user or timeout
+      if (reason === 'user') {
+        analytics.logEvent('Click_toast_message_close');
+        onClose();
+      }
+    },
+  });
+};
 
 export default ToastMessage;

@@ -10,6 +10,7 @@ import {
 import { WideCard, MyAppText, FollowButton } from './common';
 import { PICTURE_WIDTH } from '../variables';
 import FlagMenu from './common/FlagMenu';
+import { analytics } from '../firebase';
 
 interface Props {
   hostId: string;
@@ -45,12 +46,24 @@ const StaggCard: SFC<Props> = ({
 
   // console.log('isFollowing: ', isFollowing);
 
-  const onPress = () => navigation.navigate('UserProfile', { id, name, hostId });
+  const onPress = () => {
+    navigation.navigate('UserProfile', { id, name, hostId });
+  };
+
+  const onPressPicture = () => {
+    analytics.logEvent('Click_StaggCard_user_picture');
+    onPress();
+  };
+
+  const onPressName = () => {
+    analytics.logEvent('Click_StaggCard_user_name');
+    onPress();
+  };
 
   return (
     <WideCard footer={!!hasDateOpen}>
       <View style={styles.bodyStyle}>
-        <TouchableOpacity accessible={false} onPress={onPress}>
+        <TouchableOpacity accessible={false} onPress={onPressPicture}>
           <Image
             source={{ uri: profilePic }}
             style={{ height: PICTURE_WIDTH, width: PICTURE_WIDTH, borderRadius: 5 }}
@@ -60,7 +73,7 @@ const StaggCard: SFC<Props> = ({
           <View style={{ justifyContent: 'space-between' }}>
             <View style={styles.description}>
               <View style={styles.topView}>
-                <TouchableOpacity onPress={onPress} accessible={false}>
+                <TouchableOpacity onPress={onPressName} accessible={false}>
                   <View style={{ flexDirection: 'row' }}>
                     <MyAppText style={styles.nameText}>{formatName(name)}</MyAppText>
                     <MyAppText style={styles.ageText}>{age ? `, ${age}` : null}</MyAppText>

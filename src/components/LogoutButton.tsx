@@ -5,7 +5,7 @@ import {
 import { Mutation } from 'react-apollo';
 import { LoginManager } from 'react-native-fbsdk';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { auth } from '../firebase';
+import { auth, analytics } from '../firebase';
 import { SET_ID_LOCAL } from '../apollo/local/mutations';
 import { ICON_SIZE, ICON_OPACITY } from '../variables';
 import { MyAppText, Spinner } from './common';
@@ -28,6 +28,7 @@ export default class LogoutButton extends Component<Props, State> {
   }
 
   startLogout = (setId: (obj: any) => void) => {
+    analytics.logEvent('Click_logoutButton');
     // Render Spinner
     this.setState({ loading: true });
     // sign out of Firebase auth

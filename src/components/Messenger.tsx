@@ -6,6 +6,7 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import { GET_MESSAGES } from '../apollo/queries';
 import { getCurrentTime } from '../format';
+import { analytics } from '../firebase';
 
 interface Props {
   subscribeToNewMessages: () => () => void;
@@ -45,6 +46,8 @@ class Messenger extends Component<Props, State> {
   sendNewMessage = (messages: any[]) => {
     console.log('in sendNewMessage');
     console.log('messages: ', messages);
+
+    analytics.logEvent('Click_Messenger_sendMessage');
 
     // If messages is array, we may need to change
     const now = getCurrentTime();
@@ -120,8 +123,10 @@ class Messenger extends Component<Props, State> {
           onSend={message => this.sendNewMessage(message)}
           user={{ name, _id: `${id}`, avatar: pic }}
           showUserAvatar={false}
-          onPressAvatar={user => navigate('UserProfile', { id: user._id, name: user.name, hostId: id })
-          }
+          onPressAvatar={user => {
+            analytics.logEvent('Click_Messenger_avatar');
+            return navigate('UserProfile', { id: user._id, name: user.name, hostId: id })
+          }}
           // The following 3 variables relate to pagination.
           loadEarlier={!!cursor}
           onLoadEarlier={() => fetchMoreMessages()}

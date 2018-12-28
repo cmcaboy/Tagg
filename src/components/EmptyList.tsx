@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { MyAppText } from './common';
+import { analytics } from '../firebase';
 
 interface Props {
   refetch?: () => any;
@@ -21,6 +22,10 @@ class EmptyList extends React.Component<Props, State> {
     };
   }
 
+  componentDidMount = () => {
+    analytics.logEvent('Event_EmptyList');
+  };
+
   render() {
     const { refetch = () => {}, text = '', subText = '' } = this.props;
     const { loading } = this.state;
@@ -34,6 +39,7 @@ class EmptyList extends React.Component<Props, State> {
               this.setState({ loading: true });
               await refetch();
               this.setState({ loading: false });
+              analytics.logEvent('Click_EmptyList_Refresh');
             }}
           />
 )}

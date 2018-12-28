@@ -47,6 +47,7 @@ class FilterModal extends React.Component<Props, State> {
     if (refetchQueue) {
       refetchQueue();
     }
+    analytics.logEvent('Click_FilterModal_closeModal');
   };
 
   render() {

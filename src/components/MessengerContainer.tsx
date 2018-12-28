@@ -14,6 +14,7 @@ import { GET_MESSAGES, MORE_MESSAGES } from '../apollo/queries';
 import { sendMessage, sendMessageVariables } from '../apollo/mutations/__generated__/sendMessage';
 // import { getMessages, getMessagesVariables } from '../apollo/queries/__generated__/getMessages';
 import FlagMenu from './common/FlagMenu';
+import { analytics } from '../firebase';
 
 // class GetMessages extends Query<getMessages, getMessagesVariables> {};
 class GetMessages extends Query<any, any> {}
@@ -51,12 +52,14 @@ class MessengerContainer extends Component<Props, State> {
       <View style={styles.headerViewStyle}>
         {console.log('navigation params: ', navigation.state.params)}
         <TouchableOpacity
-          onPress={() => navigation.navigate('UserProfile', {
-            id,
-            name,
-            hostId,
-          })
-          }
+          onPress={() => {
+            analytics.logEvent('Click_Messenger_heading_circlePicture');
+            return navigation.navigate('UserProfile', {
+              id,
+              name,
+              hostId,
+            })
+          }}
         >
           <CirclePicture imageURL={navigation.state.params.otherPic} picSize="mini" />
         </TouchableOpacity>
@@ -132,6 +135,7 @@ class MessengerContainer extends Component<Props, State> {
                   fetchMoreMessages={() => {
                     // This method is used for pagination. Our initial query only returns 20 messages. If
                     // more messages are needed, this function is called and 20 more are received.
+                    analytics.logEvent('Event_fetchMoreMessages');
                     console.log('in fetchMoreMessages');
                     return fetchMore({
                       query: MORE_MESSAGES,
@@ -186,6 +190,7 @@ class MessengerContainer extends Component<Props, State> {
                             __typename: 'Message',
                           },
                         };
+                        analytics.logEvent('Event_Messenger_newMessageReceived')
                         return newSubMessages;
                       },
                     });

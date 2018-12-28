@@ -6,6 +6,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { MyAppText } from './common';
 import { PRIMARY_COLOR } from '../variables';
 import { formatName } from '../format';
+import { analytics } from '../firebase';
 
 interface Props {
   hasDateOpen?: boolean;
@@ -43,13 +44,15 @@ const DateOpenButton: SFC<Props> = ({
       />
       <TouchableOpacity
         accessible={false}
-        onPress={() => navigation.navigate('OpenDateList', {
-          id: hostId,
-          otherId: id,
-          otherName: name,
-          otherPic: profilePic,
-        })
-        }
+        onPress={() => {
+          analytics.logEvent('Click_HasDateOpenButton');
+          navigation.navigate('OpenDateList', {
+            id: hostId,
+            otherId: id,
+            otherName: name,
+            otherPic: profilePic,
+          });
+        }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
           <View style={styles.footerContent}>

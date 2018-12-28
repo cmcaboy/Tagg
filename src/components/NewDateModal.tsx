@@ -58,7 +58,15 @@ class NewDateModal extends React.Component<Props, State> {
     analytics.logEvent('Page_New_Date_Modal');
   }
 
-  setError = (error: string) => this.setState({ error });
+  setError = (error: string) => {
+    analytics.logEvent(`Error_NewDateModal_${error}`);
+    this.setState({ error });
+  }
+
+  cancel = () => {
+    analytics.logEvent('Click_NewDateModal_cancel');
+    this.closeModal();
+  }
 
   closeModal = () => {
     const { isVisible, flipNewDateModal } = this.props;
@@ -69,6 +77,7 @@ class NewDateModal extends React.Component<Props, State> {
   };
 
   onCompleted = (data: any) => {
+    analytics.logEvent(`Event_newDateCreated`);
     toastMessage({
       text: 'Your date request has been created!',
       duration: 3000,
@@ -80,6 +89,7 @@ class NewDateModal extends React.Component<Props, State> {
   onError = (error: ApolloError) => {
     console.log('error: ', error);
     this.setError(error.message);
+    analytics.logEvent(`Error_NewDateModal_${error}`);
   };
 
   validateForm = () => {
@@ -93,6 +103,7 @@ class NewDateModal extends React.Component<Props, State> {
       );
       return false;
     }
+    analytics.logEvent('Event_NewDateModal_Validation_Successful')
     return true; // all tests pass
   };
 
@@ -162,7 +173,7 @@ class NewDateModal extends React.Component<Props, State> {
                           const {
                             user,
                             user: {
-                              matchedDates,
+                              // matchedDates,
                               dateRequests,
                               dateRequests: { list: dateList },
                             },
@@ -197,7 +208,7 @@ class NewDateModal extends React.Component<Props, State> {
                 );
               }}
             </NewDate>
-            <TouchableOpacity style={styles.cancelButton} onPress={this.closeModal}>
+            <TouchableOpacity style={styles.cancelButton} onPress={this.cancel}>
               <MyAppText style={styles.cancelText}>Cancel</MyAppText>
             </TouchableOpacity>
           </View>

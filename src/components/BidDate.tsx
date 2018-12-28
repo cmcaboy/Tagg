@@ -17,6 +17,7 @@ import toastMessage from '../services/toastMessage';
 import { formatDate } from '../format';
 import { BID } from '../apollo/mutations';
 import { bid, bidVariables } from '../apollo/mutations/__generated__/bid';
+import { analytics } from '../firebase';
 
 // Steps to incorporate types
 // 1) Define State and Props interfaces
@@ -63,11 +64,14 @@ class BidDate extends React.Component<Props, State> {
       headerTitle: (
         <View style={styles.headerViewStyle}>
           <TouchableOpacity
-            onPress={() => navigate('UserProfile', {
-              id: otherId,
-              name: otherName,
-              hostId: id,
-            })
+            onPress={() => {
+              analytics.logEvent('Click_circlePic_on_BidDate_header');
+              return navigate('UserProfile', {
+                id: otherId,
+                name: otherName,
+                hostId: id,
+              })
+            }
             }
           >
             <CirclePicture imageURL={otherPic} picSize="mini" />
@@ -102,6 +106,7 @@ class BidDate extends React.Component<Props, State> {
   }
 
   bid = (bid: (obj: any) => any) => {
+    analytics.logEvent('Click_bid');
     const {
       navigation,
       navigation: { goBack },

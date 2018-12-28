@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import { Button } from './Button';
 import { FOLLOW } from '../../apollo/mutations';
 import { follow, followVariables } from '../../apollo/mutations/__generated__/follow';
+import { analytics } from '../../firebase';
 
 class Follow extends Mutation<follow, followVariables> {}
 
@@ -34,6 +35,7 @@ class FollowButton extends React.Component<Props, State> {
       <Follow mutation={FOLLOW} ignoreResults>
         {(follow, _) => {
           const updateFollow = (isFollowingParam: boolean) => {
+            analytics.logEvent('Click_followButton_press');
             // console.log('isFollowing: ', isFollowing);
             follow({
               variables: {

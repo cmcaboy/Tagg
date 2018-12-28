@@ -22,6 +22,7 @@ import { GET_PROFILE } from '../apollo/queries';
 import LogoutButton from './LogoutButton';
 // import { getId } from '../apollo/queries/__generated__/getId';
 import { getProfile, getProfileVariables } from '../apollo/queries/__generated__/getProfile';
+import { analytics } from '../firebase';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationRoute<{}>, {}>;
@@ -68,6 +69,12 @@ class Settings extends React.Component<Props, State> {
     const {
       navigation: { navigate },
     } = this.props;
+
+    analytics.setUserProperty('work', work);
+    analytics.setUserProperty('school', school);
+    analytics.setUserProperty('name', name);
+    analytics.setUserProperty('num_pics', `${pics.length}`);
+
     const profilePic = pics[0] || PLACEHOLDER_PHOTO;
     return (
       <View style={styles.settingsContainer}>
@@ -81,7 +88,10 @@ class Settings extends React.Component<Props, State> {
         </View>
         <View style={styles.options}>
           <TouchableOpacity
-            onPress={() => navigate('EditSettingsContainer')}
+            onPress={() => {
+              analytics.logEvent('Click_Settings_editSettings');
+              navigate('EditSettingsContainer');
+            }}
             style={styles.buttons}
           >
             <Ionicons
@@ -92,7 +102,13 @@ class Settings extends React.Component<Props, State> {
             />
             <MyAppText style={styles.optionText}>Settings</MyAppText>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigate('EditProfile')} style={styles.buttons}>
+          <TouchableOpacity
+            onPress={() => {
+              analytics.logEvent('Click_Settings_editProfile');
+              navigate('EditProfile');
+            }}
+            style={styles.buttons}
+          >
             <MaterialCommunityIcons
               name="account-edit"
               size={ICON_SIZE}

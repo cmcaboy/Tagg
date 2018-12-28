@@ -11,6 +11,7 @@ import {
 import FastImage, { ImageStyle } from 'react-native-fast-image';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { PHOTO_ADD_URL } from '../variables';
+import { analytics } from '../firebase';
 
 // Add custom styling
 // Add child props that get passed into background image
@@ -74,8 +75,11 @@ class UserProfilePhotos extends Component<Props, State> {
     const { currentImage } = this.state;
 
     if (currentImage > 0) {
-      this.setState(prevState => ({ currentImage: prevState.currentImage - 1 }));
+      analytics.logEvent('Click_UserProfilePhotos_move_left');
+      return this.setState(prevState => ({ currentImage: prevState.currentImage - 1 }));
     }
+
+    analytics.logEvent('Click_UserProfilePhotos_move_left_end');
   };
 
   clickRightSide = () => {
@@ -83,8 +87,10 @@ class UserProfilePhotos extends Component<Props, State> {
     const { pics } = this.state;
 
     if (currentImage < pics.length - 1) {
+      analytics.logEvent('Click_UserProfilePhotos_move_right');
       this.setState(prevState => ({ currentImage: prevState.currentImage + 1 }));
     }
+    analytics.logEvent('Click_UserProfilePhotos_move_right_end');
   };
 
   render() {

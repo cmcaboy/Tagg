@@ -7,6 +7,7 @@ import { Button, Text } from 'native-base';
 import { MyAppText } from './MyAppText';
 import { Spinner } from './Spinner';
 import LogoutButton from '../LogoutButton';
+import { analytics } from '../../firebase';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -26,7 +27,13 @@ class ErrorMessage extends React.Component<Props, State> {
     };
   }
 
+  componentDidMount = () => {
+    const { error } = this.props;
+    analytics.logEvent(`Error__${error}`.substring(0, 31));
+  };
+
   attemptRefresh = async () => {
+    analytics.logEvent('Click_errorMes_refreshBtn');
     this.setState({ loading: true });
     await this.props.refetch();
     this.setState({ loading: false });

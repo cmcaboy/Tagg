@@ -11,7 +11,8 @@ import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 // import { getId } from '../apollo/queries/__generated__/getId';
 import { setCoords, setCoordsVariables } from '../apollo/mutations/__generated__/setCoords';
 import { setPushToken, setPushTokenVariables } from '../apollo/mutations/__generated__/setPushToken';
-import { AsyncStorage } from 'react-native';
+import { analytics } from '../firebase';
+// import { AsyncStorage } from 'react-native';
 // import { getQueue, getQueueVariables } from '../apollo/queries/__generated__/getQueue';
 // import { moreQueue, moreQueueVariables } from '../apollo/queries/__generated__/moreQueue';
 
@@ -93,16 +94,19 @@ class StaggContainer extends Component<Props, State> {
             }
             this.setState({ fetchMoreLoading: true });
             if (!data.user.queue) {
+              analytics.logEvent('Event_Stagg_fetchMoreQueue_endOfList');
               console.log('queue empty or returning an error');
               return null;
             }
             console.log('cursor: ', data.user.queue.cursor);
             if (!data.user.queue.cursor && data.user.queue.cursor !== 0) {
+              analytics.logEvent('Event_Stagg_fetchMoreQueue_endOfList');
               // If the cursor is null, don't call refetch because
               // you are at the end of the queue.
               console.log('You are at the end of the queue. There is nothing left to fetch.');
               return null;
             }
+            analytics.logEvent('Event_Stagg_fetchMoreQueue');
             return fetchMore({
               query: MORE_QUEUE,
               variables: { id, followerDisplay, cursor: data.user.queue.cursor },

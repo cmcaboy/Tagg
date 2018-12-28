@@ -63,12 +63,12 @@ export const pushNotificationHandler = (
     case 'CREATE_DATE':
       console.log('CREATE_DATE handler');
       navigation.navigate('BidDate', {
+        id, // was id: this.props.id
         date: {
           datetimeOfDate: data.datetimeOfDate,
           description: data.description,
           id: data.dateId,
         },
-        id, // was id: this.props.id
         otherId: data.id,
         otherName: data.name,
         otherPic: data.profilePic,

@@ -19,6 +19,7 @@ import {
 } from '../format';
 // import { getId } from '../apollo/queries/__generated__/getId';
 import { getMatches } from '../apollo/queries/__generated__/getMatches';
+import { analytics } from '../firebase';
 
 interface Params {}
 
@@ -32,13 +33,17 @@ interface State {}
 class GetMatches extends Query<getMatches, {}> {}
 
 class Matches extends Component<Props, State> {
-  noMatches = () => (
-    <View style={styles.noMatches}>
-      <Ionicons name="md-sad" size={100} color="black" />
-      <MyAppText>You do not have any matches.</MyAppText>
-      <MyAppText>Better get after it!</MyAppText>
-    </View>
-  );
+  noMatches = () => {
+    analytics.logEvent('Event_Matches_noMatchedDates');
+    analytics.logEvent('Event_Matches_noDateRequests');
+    return (
+      <View style={styles.noMatches}>
+        <Ionicons name="md-sad" size={100} color="black" />
+        <MyAppText>You do not have any matches.</MyAppText>
+        <MyAppText>Better get after it!</MyAppText>
+      </View>
+    )
+  };
 
   renderContent({
     matches,
@@ -53,17 +58,27 @@ class Matches extends Component<Props, State> {
   id: string;
   name: string;
   pic: string;
-
   refetch: () => void;
   }) {
     const {
       navigation: { navigate },
     } = this.props;
 
+    analytics.setUserProperty('num_matcheDates', `${matches.length}`)
+    analytics.setUserProperty('num_dateRequests', `${dateRequests.length}`)
+
     if (matches.length === 0 && dateRequests.length === 0) {
       return this.noMatches();
     }
-    console.log('matches: ', matches);
+    // console.log('matches: ', matches);
+
+    if (dateRequests.length === 0) {
+      analytics.logEvent('Event_Matches_noDateRequests');
+    } 
+    if (matches.length === 0) {
+      analytics.logEvent('Event_Matches_matchedDates');
+    }
+
     return (
       <View style={styles.matchContainer}>
         <View style={styles.newMatchesContainer}>
@@ -78,16 +93,18 @@ class Matches extends Component<Props, State> {
             {matches.map((match: any) => (
               <TouchableOpacity
                 accessible={false}
-                onPress={() => navigate('MessengerContainer', {
-                  id,
-                  name,
-                  pic,
-                  matchId: match.matchId,
-                  otherId: match.user.id,
-                  otherName: match.user.name,
-                  otherPic: match.user.pics[0],
-                })
-                }
+                onPress={() => {
+                  analytics.logEvent('Click_Matches_MatchedDate')
+                  return navigate('MessengerContainer', {
+                    id,
+                    name,
+                    pic,
+                    matchId: match.matchId,
+                    otherId: match.user.id,
+                    otherName: match.user.name,
+                    otherPic: match.user.pics[0],
+                  })
+                  }}
                 key={match.id}
               >
                 <View style={styles.newMatch}>
@@ -114,13 +131,15 @@ class Matches extends Component<Props, State> {
                   accessible={false}
                   key={date.id}
                   style={{ marginLeft: 0 }}
-                  onPress={() => navigate('BidList', {
-                    id,
-                    refetch,
-                    dateId: date.id,
-                    datetimeOfDate: date.datetimeOfDate,
-                  })
-                  }
+                  onPress={() => {
+                    analytics.logEvent('Click_Matches_dateRequestItem')
+                    return navigate('BidList', {
+                      id,
+                      refetch,
+                      dateId: date.id,
+                      datetimeOfDate: date.datetimeOfDate,
+                    })
+                  }}
                 >
                   <Body>
                     <Text>{formatDate(date.datetimeOfDate)}</Text>

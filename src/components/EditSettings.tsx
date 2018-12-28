@@ -20,6 +20,7 @@ import { setDistance, setDistanceVariables } from '../apollo/mutations/__generat
 import { setFollowerDisplayVariables, setFollowerDisplay } from '../apollo/mutations/__generated__/setFollowerDisplay';
 import { setNotifications, setNotificationsVariables } from '../apollo/mutations/__generated__/setNotifications';
 import { setViewObjectionable, setViewObjectionableVariables } from '../apollo/mutations/__generated__/setViewObjectionable';
+import { analytics } from '../firebase';
 
 const SLIDER_WIDTH = SCREEN_WIDTH * 0.85;
 
@@ -70,6 +71,25 @@ class EditSettings extends Component<Props, State> {
     };
   }
 
+  componentDidMount = () => {
+
+    const {
+      minAgePreference,
+      maxAgePreference,
+      distance,
+      sendNotifications,
+      followerDisplay,
+      viewObjectionable,
+    } = this.props;
+
+    analytics.setUserProperty('minAgePreference', `${ minAgePreference }`);
+    analytics.setUserProperty('maxAgePreference', `${ maxAgePreference }`);
+    analytics.setUserProperty('distance', `${ distance }`);
+    analytics.setUserProperty('sendNotifications', `${ sendNotifications }`);
+    analytics.setUserProperty('followerDisplay', `${ followerDisplay }`);
+    analytics.setUserProperty('viewObjectionable', `${ viewObjectionable }`);
+  }
+
   notificationChange = () => {
     this.setState(prevState => ({ sendNotifications: !prevState.sendNotifications }));
   };
@@ -100,7 +120,9 @@ class EditSettings extends Component<Props, State> {
                     max={45}
                     min={18}
                     onValuesChange={av => this.setState({ ageValues: av })}
-                    onValuesChangeFinish={av => updateAgePreference({
+                    onValuesChangeFinish={av => {
+                      analytics.logEvent('Click_change_age_pref')
+                      return updateAgePreference({
                       variables: { id, minAgePreference: av[0], maxAgePreference: av[1] },
                       optimisticResponse: {
                         // __typename: 'Mutation',
@@ -134,7 +156,7 @@ class EditSettings extends Component<Props, State> {
                         });
                       },
                     })
-                    }
+                    }}
                   />
                 )}
               </SetAgePreference>
@@ -157,7 +179,9 @@ class EditSettings extends Component<Props, State> {
                     minimumValue={1}
                     disabled={false}
                     onValueChange={d => this.setState({ distance: d })}
-                    onSlidingComplete={d => updateDistance({
+                    onSlidingComplete={d => {
+                      analytics.logEvent('Click_change_distance_pref')
+                      return updateDistance({
                       variables: { id, distance: d },
                       optimisticResponse: {
                         // __typename: 'Mutation',
@@ -192,7 +216,7 @@ class EditSettings extends Component<Props, State> {
                         });
                       },
                     })
-                    }
+                    }}
                   />
                 )}
               </SetDistance>
@@ -207,6 +231,7 @@ class EditSettings extends Component<Props, State> {
                 {updateSendNotifications => (
                   <Switch
                     onValueChange={() => {
+                    analytics.logEvent('Click_change_sendNotifications_pref')
                       const newSendNotifications = !sendNotifications;
                       updateSendNotifications({
                         variables: {
@@ -261,6 +286,7 @@ class EditSettings extends Component<Props, State> {
                   mode="dropdown"
                   selectedValue={followerDisplay}
                   onValueChange={(newFollowerDisplay) => {
+                    analytics.logEvent('Click_change_viewObjectionable_pref')
                     console.log('newFollowerDisplay: ', newFollowerDisplay);
                     changeFollowerDisplay({
                       variables: {
@@ -323,6 +349,7 @@ class EditSettings extends Component<Props, State> {
                   mode="dropdown"
                   selectedValue={viewObjectionable}
                   onValueChange={(newViewObjectionable) => {
+                    analytics.logEvent('Click_change_viewObjectionable_pref')
                     console.log('newViewObjectionable: ', newViewObjectionable);
                     changeViewObjectionable({
                       variables: {

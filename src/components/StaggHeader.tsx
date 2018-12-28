@@ -3,6 +3,7 @@ import {
   View, TouchableOpacity, StyleSheet, ViewStyle, TextStyle,
 } from 'react-native';
 import { MyAppText, HeaderCard } from './common';
+import { analytics } from '../firebase';
 
 interface Props {
   flipNewDateModal: () => void;
@@ -27,9 +28,15 @@ const StaggHeader: SFC<Props> = ({ flipNewDateModal, flipFilterModal }) => {
 
   // const viewDates = () => console.log('view dates');
 
-  const newDate = () => flipNewDateModal();
+  const newDate = () => {
+    analytics.logEvent('Click_StaggHeader_newDate');
+    flipNewDateModal();
+  };
 
-  const showFilter = () => flipFilterModal();
+  const showFilter = () => {
+    analytics.logEvent('Click_StaggHeader_showFilter');
+    flipFilterModal();
+  };
 
   return (
     <HeaderCard style={styles.overRide as ViewStyle}>

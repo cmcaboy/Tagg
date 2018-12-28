@@ -37,6 +37,7 @@ import { setWork, setWorkVariables } from '../apollo/mutations/__generated__/set
 import { setDescriptionVariables, setDescription } from '../apollo/mutations/__generated__/setDescription';
 import { getEditProfile, getEditProfileVariables, getEditProfile_user } from '../apollo/queries/__generated__/getEditProfile';
 import { setName, setNameVariables } from '../apollo/mutations/__generated__/setName';
+import { analytics } from '../firebase';
 // import { getId } from '../apollo/queries/__generated__/getId';
 
 
@@ -78,6 +79,7 @@ class EditProfile extends Component<Props, State> {
   });
 
   removeAccount = () => {
+    analytics.logEvent('Click_Remove_Account')
     console.log('Remove Account function');
     // this.props.startRemoveProfile();
     // this.props.startLogout();

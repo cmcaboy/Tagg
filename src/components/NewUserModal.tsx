@@ -93,6 +93,18 @@ export default class NewUserModal extends Component<Props, State> {
     analytics.logEvent('Page_New_User_Modal');
   }
 
+  onError = ({ error }:{ error: string }) => {
+    analytics.logEvent(`Error_NewUserModal_${error}`);
+    this.setState({ error });
+  }
+
+  cancel = (closeModal: () => void) => {
+    analytics.logEvent('Click_NewUserModal_cancel');
+    closeModal();
+  }
+
+  onEndEditting = (field: string) => analytics.logEvent(`Click_NewUserModal_${field}`)
+
   passwordInput = ( password: string ) => this.setState({ password });
 
   validatePasswordInput = ( validatePassword: string ) => this.setState({ validatePassword });
@@ -109,9 +121,15 @@ export default class NewUserModal extends Component<Props, State> {
 
   changeDescription = ( description: string ) => this.setState({ description });
 
-  changePics = (pics: string[]) => this.setState({ pics });
+  changePics = (pics: string[]) => {
+    analytics.logEvent('Click_NewUserModal_change_pics');
+    return this.setState({ pics });
+  }
 
-  changeGender = ( gender: GroupItem[] ) => this.setState({ gender });
+  changeGender = ( gender: GroupItem[] ) => {
+    analytics.logEvent('Click_NewUserModal_change_gender');
+    return this.setState({ gender });
+  }
 
   validatePassword = () => {
     const { password, validatePassword } = this.state;
@@ -124,31 +142,31 @@ export default class NewUserModal extends Component<Props, State> {
     const { name, gender, email, pics, password } = this.state;
     console.log('validate fields');
     if (!name) {
-      this.setState({ error: 'Please specify a name.' });
+      this.onError({ error: 'Please specify a name.' });
       return false;
     }
     if (!gender) {
-      this.setState({ error: 'Please specify a valid gender' });
+      this.onError({ error: 'Please specify a valid gender' });
       return false;
     }
     if (!pics.length) {
-      this.setState({ error: 'Please upload at least 1 picture' });
+      this.onError({ error: 'Please upload at least 1 picture' });
       return false;
     }
     if (!emailValidation(email)) {
       console.log('email: ', email);
       console.log('email test: ', emailValidation(email));
-      this.setState({ error: 'Please specify a valid email address.' });
+      this.onError({ error: 'Please specify a valid email address.' });
       return false;
     }
     if (!password.length) {
       console.log('no password inputted');
-      this.setState({ error: 'Please specify a password.' });
+      this.onError({ error: 'Please specify a password.' });
       return false;
     }
     if (!this.validatePassword()) {
       console.log('passwords do not match!');
-      this.setState({ error: 'Passwords do not match!' });
+      this.onError({ error: 'Passwords do not match!' });
       return false;
     }
     // all validation fields have passed; return true
@@ -156,6 +174,7 @@ export default class NewUserModal extends Component<Props, State> {
   }
 
   submitNewUser = async (newUser: (user: any) => void) => {
+    analytics.logEvent('Click_NewUserModal_submit');
     this.setState({ loading: true, error: '' });
     const { name, age, school, work, description, gender, pics, password } = this.state;
     let { email } = this.state;
@@ -195,6 +214,8 @@ export default class NewUserModal extends Component<Props, State> {
     console.log('longitude: ', longitude);
     console.log('validation complete');
 
+
+
     return newUser({
       variables: {
         name,
@@ -216,7 +237,8 @@ export default class NewUserModal extends Component<Props, State> {
         console.log('data: ', data);
         // check for an error
         if (!data) {
-          this.setState({ loading: false, error: 'Could not connect to the network' });
+          this.setState({ loading: false });
+          this.onError({ error: 'Could not connect to the network' })
           return false;
         }
         // This method can return an error. I need to check for an error before closing the modal
@@ -228,7 +250,8 @@ export default class NewUserModal extends Component<Props, State> {
         console.log('Check Authentication: ', checkAuthentication);
         if (checkAuthentication) {
           // If the authentication system update fails, remove the user from our records
-          this.setState({ loading: false, error: checkAuthentication });
+          this.setState({ loading: false });
+          this.onError({ error: checkAuthentication })
           await AsyncStorage.setItem("TaggToken", email);
           // startSetId(0); // replace with AsyncStorage
           // Need to add a function to remove the user in the event of a failure here
@@ -243,6 +266,7 @@ export default class NewUserModal extends Component<Props, State> {
         });
         console.log('after toast message');
         // Close modal
+        analytics.logEvent('Event_NewUserCreated');
         closeModal();
         console.log('after close modal');
         return true;
@@ -317,6 +341,7 @@ export default class NewUserModal extends Component<Props, State> {
             value={email}
             onChangeText={this.changeEmail}
             style={[textInputStyle, { opacity: email.length ? 1 : 0.4 }]}
+            onEndEditing={() => this.onEndEditting("Email")}
           />
           <TextInput
             placeholder="Name"
@@ -324,24 +349,28 @@ export default class NewUserModal extends Component<Props, State> {
             value={name}
             onChangeText={this.changeName}
             style={[textInputStyle, { opacity: name.length ? 1 : 0.4 }]}
+            onEndEditing={() => this.onEndEditting("Name")}
           />
           <TextInput
             placeholder="Age"
             value={age}
             onChangeText={this.changeAge}
             style={textInputStyle}
+            onEndEditing={() => this.onEndEditting("Age")}
           />
           <TextInput
             placeholder="Education"
             value={school}
             onChangeText={this.changeSchool}
             style={textInputStyle}
+            onEndEditing={() => this.onEndEditting("Education")}
           />
           <TextInput
             placeholder="Work"
             value={work}
             onChangeText={this.changeWork}
             style={textInputStyle}
+            onEndEditing={() => this.onEndEditting("Work")}
           />
           <TextInput
             placeholder="Description"
@@ -349,6 +378,7 @@ export default class NewUserModal extends Component<Props, State> {
             value={description}
             onChangeText={this.changeDescription}
             multiline
+            onEndEditing={() => this.onEndEditting("Description")}
           />
           <CardSection style={{ flexDirection: 'column' }}>
             <MyAppText>
@@ -370,6 +400,7 @@ export default class NewUserModal extends Component<Props, State> {
               placeholder="Password"
               value={password}
               onChangeText={this.passwordInput}
+              onEndEditing={() => this.onEndEditting("Password")}
             />
             <TextInput
               secureTextEntry
@@ -377,6 +408,7 @@ export default class NewUserModal extends Component<Props, State> {
               placeholder="Re-enter Password"
               value={validatePassword}
               onChangeText={this.validatePasswordInput}
+              onEndEditing={() => this.onEndEditting("Re-Password")}
             />
           </CardSection>
         </Card>
@@ -402,7 +434,7 @@ export default class NewUserModal extends Component<Props, State> {
                     { 'Submit' }
                   </MyAppText>
                 </Button>
-                <TouchableOpacity onPress={closeModal}>
+                <TouchableOpacity onPress={() => this.cancel(closeModal)}>
                   <MyAppText style={cancelButton}>
                     { 'Cancel' }
                   </MyAppText>

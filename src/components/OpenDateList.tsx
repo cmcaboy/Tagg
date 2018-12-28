@@ -13,6 +13,7 @@ import {
 } from './common';
 import { GET_DATES } from '../apollo/queries';
 import { getDates, getDatesVariables } from '../apollo/queries/__generated__/getDates';
+import { analytics } from '../firebase';
 
 interface Params {
   otherId: string;
@@ -46,12 +47,14 @@ class OpenDateList extends React.Component<Props, State> {
     headerTitle: (
       <View style={styles.headerViewStyle}>
         <TouchableOpacity
-          onPress={() => navigate('UserProfile', {
-            id: otherId,
-            name: otherName,
-            hostId: id,
-          })
-          }
+          onPress={() => {
+            analytics.logEvent('Click_OpenDateList_header_circle_picture');
+            return navigate('UserProfile', {
+              id: otherId,
+              name: otherName,
+              hostId: id,
+            });
+          }}
         >
           <CirclePicture imageURL={otherPic} picSize="mini" />
         </TouchableOpacity>
@@ -95,11 +98,13 @@ class OpenDateList extends React.Component<Props, State> {
                   .map((date: any) => (
                     <ListItem
                       key={date.id}
-                      onPress={() => navigate('BidDate', {
-                        date,
-                        ...params,
-                      })
-                      }
+                      onPress={() => {
+                        analytics.logEvent('Click_OpenDateList_DateClick');
+                        return navigate('BidDate', {
+                          date,
+                          ...params,
+                        });
+                      }}
                     >
                       <View style={styles.listItemText}>
                         <MyAppText>{formatDate(date.datetimeOfDate)}</MyAppText>

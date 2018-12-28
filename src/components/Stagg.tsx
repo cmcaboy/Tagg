@@ -22,7 +22,7 @@ import EmptyList from './EmptyList';
 import { checkPermissions, pushNotificationHandler } from '../services/push_notifications';
 import toastMessage from '../services/toastMessage';
 import { CARD_HEIGHT, CARD_FOOTER_HEIGHT, CARD_MARGIN, GEO_LOCATION_URL, SECONDARY_COLOR, PRIMARY_COLOR } from '../variables';
-import { firebase } from '../firebase';
+import { firebase, analytics } from '../firebase';
 import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -107,7 +107,9 @@ class Stagg extends Component<Props, State> {
   }
 
   componentDidMount = async () => { 
-    const { id, navigation } = this.props;
+    const { id, navigation, queue } = this.props;
+    analytics.setUserProperty('queue length', `${queue.length}`);
+    analytics.setUserId(id);
 
     // Track location via react-native-background-geolcation
     this.trackLocation();
@@ -119,6 +121,7 @@ class Stagg extends Component<Props, State> {
     // I could potentially put this in componentWillMount instead because it may navigate the user 
     // away and I wouldn't want to wait on the page load. However, this should work for now.
     if (notificationOpen) {
+      analytics.logEvent('Event_push_notification_press_app_closed')
       console.log('notificationOpen');
       // action prop also available from notificationOpen
       const { notification }: { notification: any } = notificationOpen;
@@ -151,7 +154,11 @@ class Stagg extends Component<Props, State> {
     LayoutAnimation.spring();
   }
 
-  onLocation = ( location: Location ) => console.log(' - [event] location: ', location);
+  onLocation = ( location: Location ) => {
+    analytics.setUserProperty('latitude',`${location.coords.latitude}`)
+    analytics.setUserProperty('longitude',`${location.coords.longitude}`)
+    return console.log(' - [event] location: ', location);
+  }
 
   onError = (e: string) => console.log(' - [error] location: ', e);
 
@@ -180,21 +187,33 @@ class Stagg extends Component<Props, State> {
     this.onTokenRefreshListener = firebase.messaging().onTokenRefresh(newFcmToken => startSetPushToken(newFcmToken));
 
     // Listen for Notification in the foreground
-    this.notificationListener = firebase.notifications().onNotification(( notification: any ) => toastMessage({ text: notification._title },
+    this.notificationListener = firebase.notifications().onNotification(( notification: any ) => {
+      analytics.logEvent('Event_push_notification_received_foreground');
+      return toastMessage({ text: notification._title },
       () => {
         console.log('notification: ', notification);
         return pushNotificationHandler(id, notification._data, navigation);
-      }));
+      })
+    });
 
     // Listen for notification press while app is in the background
-    this.notificationOpenedListener = firebase.notifications().onNotificationOpened(( notificationOpen: any ) => pushNotificationHandler(id, notificationOpen.notification._data, navigation));
+    this.notificationOpenedListener = firebase.notifications().onNotificationOpened(( notificationOpen: any ) => {
+      analytics.logEvent('Event_push_notification_pressed_app_in_background');
+      return pushNotificationHandler(id, notificationOpen.notification._data, navigation)
+    })
+    
+
     // const notificationOpen = await firebase.notifications().getInitialNotification();
 }
 
-  flipNewDateModal = () => this.setState(prev => ({ newDateModal: !prev.newDateModal }));
+  flipNewDateModal = () => {
+    analytics.logEvent('Click_Stagg_open_newDate_modal')
+    this.setState(prev => ({ newDateModal: !prev.newDateModal }));
+  }
 
   flipFilterModal = () => {
     // console.log('flip FilterModal status: ',this.state.filterModal);
+    analytics.logEvent('Click_Stagg_open_filter_modal')
     this.setState(prev => ({ filterModal: !prev.filterModal }));
   };
 
@@ -342,6 +361,7 @@ class Stagg extends Component<Props, State> {
                   refreshing={loading}
                   onRefresh={async () => {
                     this.setState({ loading: true });
+                    analytics.logEvent('Event_Stagg_pull_to_refresh');
                     await refetchQueue();
                     this.setState({ loading: false });
                   }}
