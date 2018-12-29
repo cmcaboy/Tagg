@@ -8,6 +8,7 @@ import { MyAppText } from './MyAppText';
 import { Spinner } from './Spinner';
 import LogoutButton from '../LogoutButton';
 import { analytics } from '../../firebase';
+import { formatAnalyticsError } from '../../format';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -29,7 +30,7 @@ class ErrorMessage extends React.Component<Props, State> {
 
   componentDidMount = () => {
     const { error } = this.props;
-    analytics.logEvent(`Error__${error}`.substring(0, 31));
+    analytics.logEvent(formatAnalyticsError(`Error__${error}`));
   };
 
   attemptRefresh = async () => {

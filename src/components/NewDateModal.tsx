@@ -11,7 +11,7 @@ import { ApolloError } from 'apollo-client';
 import {
   MyAppText, HorizontalLine, MyTitleText, MyAppModal, Spinner,
 } from './common';
-import { DATE_FORMAT, convertDateToEpoch } from '../format';
+import { DATE_FORMAT, convertDateToEpoch, formatAnalyticsError, formatInput } from '../format';
 import toastMessage from '../services/toastMessage';
 import { NEW_DATE } from '../apollo/mutations';
 import { createDate, createDateVariables } from '../apollo/mutations/__generated__/createDate';
@@ -54,12 +54,12 @@ class NewDateModal extends React.Component<Props, State> {
   }
 
   componentDidMount = () => {
-    analytics.setCurrentScreen('New Date Modal');
+    analytics.setCurrentScreen('New_Date_Modal');
     analytics.logEvent('Page_New_Date_Modal');
   }
 
   setError = (error: string) => {
-    analytics.logEvent(`Error_NewDateModal_${error}`);
+    analytics.logEvent(formatAnalyticsError(`Error_NewDateModal_${error}`));
     this.setState({ error });
   }
 
@@ -89,7 +89,7 @@ class NewDateModal extends React.Component<Props, State> {
   onError = (error: ApolloError) => {
     console.log('error: ', error);
     this.setError(error.message);
-    analytics.logEvent(`Error_NewDateModal_${error}`);
+    analytics.logEvent(formatAnalyticsError(`Error_NewDateModal_${error}`));
   };
 
   validateForm = () => {
@@ -103,9 +103,13 @@ class NewDateModal extends React.Component<Props, State> {
       );
       return false;
     }
-    analytics.logEvent('Event_NewDateModal_Validation_Successful')
+    analytics.logEvent('Event_NewDateModal_Val_Suc')
     return true; // all tests pass
   };
+
+  onChangeText = (description: string) => {
+    this.setState({ description: formatInput(description) })
+  }
 
   render() {
     const { id, isVisible } = this.props;
@@ -129,7 +133,7 @@ class NewDateModal extends React.Component<Props, State> {
             style={styles.textInput}
             multiline
             placeholder="What kind of date are you looking for?"
-            onChangeText={text => this.setState({ description: text })}
+            onChangeText={this.onChangeText}
             value={description}
             maxLength={300}
           />

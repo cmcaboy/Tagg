@@ -25,6 +25,7 @@ import NewUserModal from './NewUserModal';
 import emailValidation from '../services/emailValidation';
 import { newUser, newUserVariables } from '../apollo/mutations/__generated__/newUser';
 import { analytics } from '../firebase';
+import { formatInput, formatAnalyticsError } from '../format';
 // import { setId, setIdVariables } from '../apollo/local/mutations/__generated__/setId';
 
 interface Props {};
@@ -66,12 +67,12 @@ class LoginForm extends Component<Props, State> {
     this.setState(prev => ({ showEmail: !prev.showEmail }));
   }
 
-  emailInput = ( email: string ) => this.setState({ email });
+  emailInput = ( email: string ) => this.setState({ email: formatInput(email) });
 
   passwordInput = ( password: string ) => this.setState({ password });
 
   setError = ( e: string ) => {
-    analytics.logEvent(`Error_Login_${e}`.substring(0, 31))
+    analytics.logEvent(formatAnalyticsError(`Error_Login_${e}`));
     this.setState({ emailError: e });
   }
 
@@ -135,8 +136,8 @@ class LoginForm extends Component<Props, State> {
   // Hides default splash screen when the page is mounted.
   componentDidMount = () => {
     SplashScreen.hide();
-    analytics.setCurrentScreen('Login screen');
-    analytics.logEvent('Login screen');
+    analytics.setCurrentScreen('Login_screen');
+    analytics.logEvent('Login_screen');
   }
 
   render() {

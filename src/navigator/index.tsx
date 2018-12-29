@@ -24,6 +24,7 @@ import BidDate from '../components/BidDate';
 import BidList from '../components/BidList';
 import { TAB_BAR_HEIGHT, PRIMARY_COLOR } from '../variables';
 import { analytics } from '../firebase';
+import { formatAnalyticsError } from '../format/index';
 
 const Tabs = createMaterialTopTabNavigator(
   {
@@ -148,8 +149,8 @@ const GANavigationWrapper = () => (
       if (prevScreen !== currentScreen) {
         // the line below uses the Google Analytics tracker
         // change the tracker here to use other Mobile analytics SDK.
-        analytics.setCurrentScreen(currentScreen);
-        analytics.logEvent(`Page_${currentScreen}`);
+        analytics.setCurrentScreen(formatAnalyticsError(currentScreen));
+        analytics.logEvent(formatAnalyticsError(`Page_${currentScreen}`));
         // console.log('currentScreen: ', currentScreen);
       }
     }}

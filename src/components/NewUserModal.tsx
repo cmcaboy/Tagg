@@ -26,6 +26,8 @@ import emailSignup from '../services/emailSignup';
 import { newUser, newUserVariables } from '../apollo/mutations/__generated__/newUser';
 import BackgroundGeolocation from 'react-native-background-geolocation';
 import { analytics } from '../firebase';
+import { formatInput } from '../format';
+import { formatAnalyticsError } from '../format/index';
 
 interface Props {
   closeModal: () => void;
@@ -94,7 +96,7 @@ export default class NewUserModal extends Component<Props, State> {
   }
 
   onError = ({ error }:{ error: string }) => {
-    analytics.logEvent(`Error_NewUserModal_${error}`);
+    analytics.logEvent(formatAnalyticsError(`Error_NewUserModal_${error}`));
     this.setState({ error });
   }
 
@@ -103,31 +105,31 @@ export default class NewUserModal extends Component<Props, State> {
     closeModal();
   }
 
-  onEndEditting = (field: string) => analytics.logEvent(`Click_NewUserModal_${field}`)
+  onEndEditting = (field: string) => analytics.logEvent(formatAnalyticsError(`Click_NewUserModal_${field}`));
 
-  passwordInput = ( password: string ) => this.setState({ password });
+  passwordInput = ( password: string ) => this.setState({ password: formatInput(password)});
 
-  validatePasswordInput = ( validatePassword: string ) => this.setState({ validatePassword });
+  validatePasswordInput = ( validatePassword: string ) => this.setState({ validatePassword: formatInput(validatePassword)});
 
-  changeName = ( name: string ) => this.setState({ name });
+  changeName = ( name: string ) => this.setState({ name: formatInput(name) });
 
-  changeEmail = ( email: string ) => this.setState({ email });
+  changeEmail = ( email: string ) => this.setState({ email: formatInput(email)});
 
-  changeAge = (age: string) => this.setState({ age });
+  changeAge = (age: string) => this.setState({ age: formatInput(age) });
 
-  changeSchool = ( school: string ) => this.setState({ school });
+  changeSchool = ( school: string ) => this.setState({ school: formatInput(school)});
 
-  changeWork = ( work: string ) => this.setState({ work });
+  changeWork = ( work: string ) => this.setState({ work: formatInput(work)});
 
-  changeDescription = ( description: string ) => this.setState({ description });
+  changeDescription = ( description: string ) => this.setState({ description: formatInput(description)});
 
   changePics = (pics: string[]) => {
-    analytics.logEvent('Click_NewUserModal_change_pics');
+    analytics.logEvent('Click_NewUserModal_chngPics');
     return this.setState({ pics });
   }
 
   changeGender = ( gender: GroupItem[] ) => {
-    analytics.logEvent('Click_NewUserModal_change_gender');
+    analytics.logEvent('Click_NewUserModal_chngGen');
     return this.setState({ gender });
   }
 
@@ -174,7 +176,7 @@ export default class NewUserModal extends Component<Props, State> {
   }
 
   submitNewUser = async (newUser: (user: any) => void) => {
-    analytics.logEvent('Click_NewUserModal_submit');
+    analytics.logEvent('Click_NewUserModal_sbmt');
     this.setState({ loading: true, error: '' });
     const { name, age, school, work, description, gender, pics, password } = this.state;
     let { email } = this.state;

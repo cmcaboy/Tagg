@@ -33,7 +33,7 @@ class FilterModal extends React.Component<Props, State> {
   }
 
   componentDidMount = () => {
-    analytics.setCurrentScreen('Filter Modal');
+    analytics.setCurrentScreen('Filter_Modal');
     analytics.logEvent('Page_Filter_Modal');
   };
 

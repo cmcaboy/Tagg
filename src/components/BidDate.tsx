@@ -14,7 +14,7 @@ import {
 import { NavigationScreenProps } from 'react-navigation';
 import { MyAppText, CirclePicture } from './common';
 import toastMessage from '../services/toastMessage';
-import { formatDate } from '../format';
+import { formatDate, formatAnalyticsError, formatInput } from '../format';
 import { BID } from '../apollo/mutations';
 import { bid, bidVariables } from '../apollo/mutations/__generated__/bid';
 import { analytics } from '../firebase';
@@ -65,14 +65,13 @@ class BidDate extends React.Component<Props, State> {
         <View style={styles.headerViewStyle}>
           <TouchableOpacity
             onPress={() => {
-              analytics.logEvent('Click_circlePic_on_BidDate_header');
+              analytics.logEvent(formatAnalyticsError('Click_circlePic_on_BidDate_header'));
               return navigate('UserProfile', {
                 id: otherId,
                 name: otherName,
                 hostId: id,
-              })
-            }
-            }
+              });
+            }}
           >
             <CirclePicture imageURL={otherPic} picSize="mini" />
           </TouchableOpacity>
@@ -134,6 +133,10 @@ class BidDate extends React.Component<Props, State> {
     goBack();
   };
 
+  onChangeLocation = (location: string) => this.setState({ location: formatInput(location) });
+
+  onChangeDescription = (description: string) => this.setState({ description: formatInput(description) });
+
   render() {
     const { navigation } = this.props;
 
@@ -153,11 +156,11 @@ class BidDate extends React.Component<Props, State> {
             <Form>
               <Item floatingLabel style={{ marginLeft: 0 }}>
                 <Label>Date Location</Label>
-                <Input autoFocus onChangeText={location => this.setState({ location })} />
+                <Input autoFocus onChangeText={this.onChangeLocation} />
               </Item>
               <Item floatingLabel style={{ marginLeft: 0 }}>
                 <Label>Date Description</Label>
-                <Input onChangeText={desc => this.setState({ description: desc })} />
+                <Input onChangeText={this.onChangeDescription} />
               </Item>
               <BidMutation mutation={BID}>
                 {bid => (

@@ -26,3 +26,7 @@ export const formatDate = (date: number) => moment.unix(date).format(DATE_FORMAT
 export const formatDay = (date: any) => moment.unix(date).format(DAY_FORMAT);
 // export const convertDateToEpoch = (date: any) => date.moment().unix();
 export const convertDateToEpoch = (date: any) => moment(date).unix();
+
+export const formatAnalyticsError = (error: string) => error.replace(/[^0-9a-zA-Z]/g, '').substring(0, 31);
+
+export const formatInput = (input: string) => input.replace(/"/g, '');
