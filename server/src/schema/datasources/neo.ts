@@ -467,6 +467,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
   };
   findDateRequests = () => {
     const id = this.context.user.id;
+    console.log('id: ', id);
     const currentTime = getCurrentDateNeo();
     console.log('currentTime: ', currentTime);
     return this.session

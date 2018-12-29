@@ -86,7 +86,7 @@ class OpenDateList extends React.Component<Props, State> {
       <Container>
         <Content>
           <List>
-            <GetDates query={GET_DATES} variables={{ id: otherId }}>
+            <GetDates query={GET_DATES} variables={{ id: otherId }} fetchPolicy="network-only">
               {({
                 data, loading, error, refetch,
               }) => {
