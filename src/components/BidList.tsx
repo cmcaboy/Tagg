@@ -24,6 +24,7 @@ import { formatDescription } from '../format';
 import { otherBids, otherBidsVariables } from '../apollo/queries/__generated__/otherBids';
 import { GET_MATCHES } from '../apollo/queries/index';
 import { analytics } from '../firebase';
+import { SECONDARY_WHITE } from '../variables';
 
 interface State {}
 
@@ -66,7 +67,7 @@ class BidList extends React.Component<Props, State> {
     } = this.props;
 
     return (
-      <Container>
+      <Container style={styles.container as ViewStyle}>
         <Content>
           <GetBids query={GET_BIDS} variables={{ id: dateId }} fetchPolicy="network-only">
             {({
@@ -197,12 +198,16 @@ class BidList extends React.Component<Props, State> {
 }
 
 interface Style {
+  container: ViewStyle;
   textHeader: TextStyle;
   headerViewStyle: ViewStyle;
 }
 
 // We put the styles in the component
 const styles = StyleSheet.create<Style>({
+  container: {
+    backgroundColor: SECONDARY_WHITE,
+  },
   textHeader: {
     alignSelf: 'center',
     textAlign: 'center',

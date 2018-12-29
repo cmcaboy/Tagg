@@ -10,7 +10,7 @@ import { Query } from 'react-apollo';
 import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import { PRIMARY_COLOR, PLACEHOLDER_PHOTO } from '../variables';
 import {
-  CirclePicture, MyAppText, Spinner, ErrorMessage,
+  CirclePicture, MyAppText, Spinner, ErrorMessage, FloatingActionButton,
 } from './common';
 import { GET_MATCHES } from '../apollo/queries';
 // import { GET_ID } from '../apollo/local/queries';
@@ -20,6 +20,9 @@ import {
 // import { getId } from '../apollo/queries/__generated__/getId';
 import { getMatches } from '../apollo/queries/__generated__/getMatches';
 import { analytics } from '../firebase';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import NewDateModal from './NewDateModal';
+import { SECONDARY_COLOR } from '../variables/index';
 
 interface Params {}
 
@@ -27,12 +30,20 @@ interface Props {
   navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
 }
 
-interface State {}
+interface State {
+  newDateModal?: boolean;
+}
 
 // class GetId extends Query<getId, {}> {};
 class GetMatches extends Query<getMatches, {}> {}
 
 class Matches extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      newDateModal: false,
+    }
+  }
   noMatches = () => {
     analytics.logEvent('Event_Matches_noMatchedDates');
     analytics.logEvent('Event_Matches_noDateRequests');
@@ -44,6 +55,11 @@ class Matches extends Component<Props, State> {
       </View>
     )
   };
+
+  flipNewDateModal = () => {
+    analytics.logEvent('Click_Matches_open_newDt_mdl')
+    this.setState(prev => ({ newDateModal: !prev.newDateModal }));
+  }
 
   renderContent({
     matches,
@@ -81,6 +97,18 @@ class Matches extends Component<Props, State> {
 
     return (
       <View style={styles.matchContainer}>
+      <FloatingActionButton
+          onPress={this.flipNewDateModal}
+          style={{ backgroundColor: SECONDARY_COLOR, borderColor: PRIMARY_COLOR, borderWidth: 0 }}
+          position="bottomRight"
+        >
+          <MaterialIcons name="add" size={40} color="#000" />
+        </FloatingActionButton>
+        <NewDateModal
+          id={id}
+          isVisible={this.state.newDateModal}
+          flipNewDateModal={this.flipNewDateModal}
+        />
         <View style={styles.newMatchesContainer}>
           <MyAppText style={styles.heading}>My Matched Dates</MyAppText>
           <ScrollView horizontal>

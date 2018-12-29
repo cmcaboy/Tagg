@@ -14,6 +14,7 @@ import {
 import { GET_DATES } from '../apollo/queries';
 import { getDates, getDatesVariables } from '../apollo/queries/__generated__/getDates';
 import { analytics } from '../firebase';
+import { SECONDARY_WHITE } from '../variables';
 
 interface Params {
   otherId: string;
@@ -85,7 +86,7 @@ class OpenDateList extends React.Component<Props, State> {
     console.log('id: ', id);
     console.log('otherId: ', otherId);
     return (
-      <Container>
+      <Container style={styles.container as ViewStyle}>
         <Content>
           <List>
             <GetDates query={GET_DATES} variables={{ id: otherId }} fetchPolicy="network-only">
@@ -124,6 +125,7 @@ class OpenDateList extends React.Component<Props, State> {
 }
 
 interface Style {
+  container: ViewStyle;
   textHeader: TextStyle;
   headerViewStyle: ViewStyle;
   listItemText: TextStyle;
@@ -131,6 +133,9 @@ interface Style {
 
 // We put the styles in the component
 const styles = StyleSheet.create<Style>({
+  container: {
+    backgroundColor: SECONDARY_WHITE,
+  },
   textHeader: {
     alignSelf: 'center',
     textAlign: 'center',

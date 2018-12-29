@@ -18,6 +18,7 @@ import { formatDate, formatAnalyticsError, formatInput } from '../format';
 import { BID } from '../apollo/mutations';
 import { bid, bidVariables } from '../apollo/mutations/__generated__/bid';
 import { analytics } from '../firebase';
+import { SECONDARY_WHITE } from '../variables';
 
 // Steps to incorporate types
 // 1) Define State and Props interfaces
@@ -61,7 +62,7 @@ class BidDate extends React.Component<Props, State> {
     const otherPic = navigation.state.params ? navigation.state.params.otherPic : '';
     return {
       // title: `${otherName}`,
-      headerTitle: (
+      headerRight: (
         <View style={styles.headerViewStyle}>
           <TouchableOpacity
             onPress={() => {
@@ -204,6 +205,7 @@ const styles = StyleSheet.create<Style>({
   container: {
     paddingHorizontal: 15,
     paddingVertical: 0,
+    backgroundColor: SECONDARY_WHITE,
   },
   title: {
     fontWeight: 'bold',

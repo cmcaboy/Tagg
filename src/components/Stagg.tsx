@@ -24,7 +24,7 @@ import toastMessage from '../services/toastMessage';
 import { CARD_HEIGHT, CARD_FOOTER_HEIGHT, CARD_MARGIN, GEO_LOCATION_URL, SECONDARY_COLOR, PRIMARY_COLOR } from '../variables';
 import { firebase, analytics } from '../firebase';
 import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
-import Sentry, { SentrySeverity, SentryLog } from 'react-native-sentry';
+import Sentry from 'react-native-sentry';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
