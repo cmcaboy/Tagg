@@ -63,7 +63,7 @@ RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  // [SplashScreen show];
+  [SplashScreen show];
   return YES;
 }
 

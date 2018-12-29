@@ -82,8 +82,8 @@ const authLink = setContext(async (_, { headers }) => {
 // At this point, the link encapsulates logic to determine if the application is trying
 // to access a subscription, graphql server, or state management.
 export const client = new ApolloClient({
-  link: authLink.concat(link),
   cache,
+  link: authLink.concat(link),
   connectToDevTools: true,
   // experimental
   // dataIdFromObject: (object) => {

@@ -7,7 +7,7 @@ import {
 } from 'native-base';
 import { Query } from 'react-apollo';
 import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
-import { formatDate, formatDescription } from '../format';
+import { formatDate, formatDescription, trunc } from '../format';
 import {
   MyAppText, CirclePicture, Spinner, ErrorMessage,
 } from './common';
@@ -44,11 +44,11 @@ class OpenDateList extends React.Component<Props, State> {
   navigation: NavigationScreenProp<NavigationRoute<Params>, Params>;
   }) => ({
     // title: `${otherName}`,
-    headerTitle: (
+    headerRight: (
       <View style={styles.headerViewStyle}>
         <TouchableOpacity
           onPress={() => {
-            analytics.logEvent('Click_OpenDateList_header_circle_picture');
+            analytics.logEvent('Click_OpenDateList_head_pic');
             return navigate('UserProfile', {
               id: otherId,
               name: otherName,
@@ -58,7 +58,7 @@ class OpenDateList extends React.Component<Props, State> {
         >
           <CirclePicture imageURL={otherPic} picSize="mini" />
         </TouchableOpacity>
-        <MyAppText style={styles.textHeader}>{`${otherName}'s open dates`}</MyAppText>
+        <MyAppText style={styles.textHeader}>{trunc(`${otherName}'s open dates`, 30)}</MyAppText>
         <View style={{ width: 30 }} />
       </View>
     ),

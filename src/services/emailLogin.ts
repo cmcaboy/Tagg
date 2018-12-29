@@ -20,7 +20,8 @@ password: string;
   // Therefore, it is better to set the ID prior to attempting the authentication.
   // If the authentication fails, simply catch the error and reset the ID back to 0.
   // startSetId(email);
-  await AsyncStorage.setItem('Taggtoken', email);
+  // console.log('email login attempt: ', email);
+  await AsyncStorage.setItem('TaggToken', email);
 
   // Attempt login
   try {
@@ -29,11 +30,12 @@ password: string;
     // If authentication fails, reset the id back to 0.
     console.log('Error logging in: ', e);
     login = false;
-    await AsyncStorage.setItem('Taggtoken', email);
     // startSetId(0); // replace with asyncstorage
+    await AsyncStorage.setItem('TaggToken', '0');
     return 'Invalid username and password combination. Please try again.';
   }
 
+  // console.log('email login successful; token should be: ', email);
   console.log('login successful: ', login);
 
   // If execution successful, return null.

@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, View, TouchableOpacity, ViewStyle, TextStyle,
+  StyleSheet, TouchableOpacity, ViewStyle, TextStyle, AsyncStorage,
 } from 'react-native';
-import { Mutation } from 'react-apollo';
 import { LoginManager } from 'react-native-fbsdk';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { auth, analytics } from '../firebase';
-import { SET_ID_LOCAL } from '../apollo/local/mutations';
 import { ICON_SIZE, ICON_OPACITY } from '../variables';
 import { MyAppText, Spinner } from './common';
-import { setId, setIdVariables } from '../apollo/local/mutations/__generated__/setId';
 
 interface Props {}
 
 interface State {
   loading: boolean;
 }
-
-class SetID extends Mutation<setId, setIdVariables> {}
 
 export default class LogoutButton extends Component<Props, State> {
   constructor(props: Props) {
@@ -27,7 +22,7 @@ export default class LogoutButton extends Component<Props, State> {
     };
   }
 
-  startLogout = (setId: (obj: any) => void) => {
+  startLogout = async () => {
     analytics.logEvent('Click_logoutButton');
     // Render Spinner
     this.setState({ loading: true });
@@ -36,20 +31,19 @@ export default class LogoutButton extends Component<Props, State> {
     // sign out of FBSDK
     LoginManager.logOut();
     // set the id in our local catch to 0, which indicates to user is logged in.
-    setId({ variables: { id: 0 } });
+    await AsyncStorage.setItem('TaggToken', '0');
     // Turn the spinner off.
     this.setState({ loading: false });
   };
 
-  renderLogoutButton = (setId: (obj: any) => void) => {
+  render() {
     const { optionsText, buttons } = styles;
     const { loading } = this.state;
     if (loading) {
       return <Spinner />;
     }
-
     return (
-      <TouchableOpacity onPress={() => this.startLogout(setId)} style={buttons}>
+      <TouchableOpacity onPress={this.startLogout} style={buttons}>
         <MaterialCommunityIcons
           name="logout"
           size={ICON_SIZE}
@@ -58,14 +52,6 @@ export default class LogoutButton extends Component<Props, State> {
         />
         <MyAppText style={optionsText}>Log Out</MyAppText>
       </TouchableOpacity>
-    );
-  };
-
-  render() {
-    return (
-      <SetID mutation={SET_ID_LOCAL}>
-        {setId => <View>{this.renderLogoutButton(setId)}</View>}
-      </SetID>
     );
   }
 }

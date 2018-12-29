@@ -493,9 +493,9 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
             open,
             creator: record._fields[0].properties,
             num_bids: record._fields[2],
-        }
+          }
       });
-        // console.log('dateRequests list: ',list);
+        console.log('dateRequests list: ',list);
         return {
           id: `${id}d`,
           list,
