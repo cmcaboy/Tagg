@@ -466,8 +466,8 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
       )
       .catch((e: string) => console.log("bid error: ", e));
   };
-  findDateRequests = () => {
-    const id = this.context.user.id;
+  findDateRequests = ({ id: idParent }: { id?: string }) => {
+    const id = idParent || this.context.user.id;
     console.log('id: ', id);
     const currentTime = getCurrentDateNeo();
     console.log('currentTime: ', currentTime);

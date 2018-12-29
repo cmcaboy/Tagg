@@ -78,10 +78,12 @@ class OpenDateList extends React.Component<Props, State> {
         navigate,
         state: {
           params,
-          params: { otherId },
+          params: { otherId, id },
         },
       },
     } = this.props;
+    console.log('id: ', id);
+    console.log('otherId: ', otherId);
     return (
       <Container>
         <Content>
