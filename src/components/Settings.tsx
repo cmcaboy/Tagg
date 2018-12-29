@@ -135,7 +135,7 @@ class Settings extends React.Component<Props, State> {
 
     // const { id } = dataLocal.user;
     return (
-      <GetProfile query={GET_PROFILE}>
+      <GetProfile query={GET_PROFILE} fetchPolicy="network-only">
         {({
           loading, error, data, refetch,
         }) => {

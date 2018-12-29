@@ -45,7 +45,7 @@ class EditSettingsContainer extends Component<Props, State> {
     // const { id } = data.user;
 
     return (
-      <GetSettings query={GET_SETTINGS}>
+      <GetSettings query={GET_SETTINGS} fetchPolicy="network-only">
         {({
           loading, error, data, refetch,
         }) => {

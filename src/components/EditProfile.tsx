@@ -191,7 +191,7 @@ class EditProfile extends Component<Props, State> {
     //       const { id } = data.user;
 
           return (
-            <GetEditProfile query={GET_EDIT_PROFILE}>
+            <GetEditProfile query={GET_EDIT_PROFILE} fetchPolicy="network-only">
               {({ loading, error, data }) => {
                 // console.log('data: ',data);
                 // console.log('error: ',error);

@@ -11,7 +11,8 @@ import {
 import ImagePicker from 'react-native-image-picker';
 import uploadImage from '../firebase/uploadImage';
 import { Spinner } from './common';
-import { NUM_PHOTOS, PHOTO_ADD_URL } from '../variables';
+import { NUM_PHOTOS, PHOTO_ADD_URL, MAX_PHOTO_WIDTH } from '../variables';
+import { MAX_PHOTO_HEIGHT } from '../variables/index';
 
 const fillBlanks = (u: string[]) => {
   const ul = [];
@@ -84,16 +85,18 @@ class PhotoSelector extends React.Component<Props, State> {
 
     const options = {
       title: 'Select Avatar',
-      customButtons: [
-        { name: 'fb', title: 'Choose Photo from Facebook' },
-      ],
+      // customButtons: [
+      //   { name: 'fb', title: 'Choose Photo from Facebook' },
+      // ],
       storageOptions: {
         skipBackup: true,
         path: 'images',
       },
+      maxWidth: MAX_PHOTO_WIDTH,
+      maxHeight: MAX_PHOTO_HEIGHT,
     };
 
-    ImagePicker.showImagePicker(options, async (response) => {
+    ImagePicker.showImagePicker({ ...options, mediaType: 'photo' }, async (response) => {
       const { startChangePics } = this.props;
       const { urlList } = this.state;
 
@@ -113,6 +116,18 @@ class PhotoSelector extends React.Component<Props, State> {
         const source = response.uri;
         console.log('source: ', source);
 
+        this.setState(prevState => ({
+          urlList: prevState.urlList.map((item, index) =>(
+            index === i ? source : item
+          ))
+        }))
+
+        this.setState(prevState => ({
+          isLoading: prevState.isLoading.map((item, index) => (
+            index === i ? false : item
+          )),
+        }));
+
         // console.log('source: ', source);
 
         // You can also display the image using data:
@@ -124,14 +139,10 @@ class PhotoSelector extends React.Component<Props, State> {
         const newUrlList = urlList.map((item, index) => {
           return index === i ? url : item;
         });
+
         console.log('newUrlList: ', newUrlList);
         startChangePics(newUrlList);
 
-        this.setState(prevState => ({
-          isLoading: prevState.isLoading.map((item, index) => (
-            index === i ? false : item
-          )),
-        }));
       }
     });
   }

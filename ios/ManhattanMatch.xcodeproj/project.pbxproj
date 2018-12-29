@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -73,6 +74,7 @@
 		B7113EC9213C8B5200BCAB68 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7113EA8213C8B0C00BCAB68 /* libRCTPushNotification.a */; };
 		B7144249214D3E46001F6DAA /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7144248214D3E06001F6DAA /* libReactNativeConfig.a */; };
 		B71736BE21D3BF370070B0C5 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B717368B21D3BF160070B0C5 /* libCodePush.a */; };
+		B7444EF221D7D807003FAC00 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7444EEE21D7D7CD003FAC00 /* libRNGestureHandler.a */; };
 		B77610C4216236B60095F7C9 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77610C3216236B60095F7C9 /* SnapshotHelper.swift */; };
 		B7B1C19720CAFE7200E7D02F /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7B1C18C20CAFE7100E7D02F /* Octicons.ttf */; };
 		B7B1C19820CAFE7200E7D02F /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7B1C18D20CAFE7100E7D02F /* Feather.ttf */; };
@@ -428,6 +430,13 @@
 			remoteGlobalIDString = F886647B1F4ADB500036D01B;
 			remoteInfo = "CodePush-tvOS";
 		};
+		B7444EED21D7D7CD003FAC00 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7444EB821D7D7CD003FAC00 /* RNGestureHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNGestureHandler;
+		};
 		B798519221612AF100E87909 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -576,6 +585,7 @@
 		B7113E94213C8B0C00BCAB68 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		B7144243214D3E06001F6DAA /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
 		B717368321D3BF160070B0C5 /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
+		B7444EB821D7D7CD003FAC00 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		B77610C3216236B60095F7C9 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		B798518D21612AF100E87909 /* ManhattanMatchUITests2.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManhattanMatchUITests2.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B1C18C20CAFE7100E7D02F /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
@@ -629,6 +639,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7444EF221D7D807003FAC00 /* libRNGestureHandler.a in Frameworks */,
 				9CC1651CBFFC44AFB43067B8 /* libz.tbd in Frameworks */,
 				B71736BE21D3BF370070B0C5 /* libCodePush.a in Frameworks */,
 				B708C1B9218DCBFA008270A4 /* libSplashScreen.a in Frameworks */,
@@ -884,6 +895,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				B7444EB821D7D7CD003FAC00 /* RNGestureHandler.xcodeproj */,
 				B717368321D3BF160070B0C5 /* CodePush.xcodeproj */,
 				B7EB6BDC217BC361001A0F23 /* RNFetchBlob.xcodeproj */,
 				B7144243214D3E06001F6DAA /* ReactNativeConfig.xcodeproj */,
@@ -1050,6 +1062,14 @@
 			children = (
 				B717368921D3BF160070B0C5 /* libCodePush.a */,
 				B717368B21D3BF160070B0C5 /* libCodePush.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B7444EB921D7D7CD003FAC00 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B7444EEE21D7D7CD003FAC00 /* libRNGestureHandler.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1437,6 +1457,10 @@
 					ProjectRef = 859AB8EF92864D3A873DE178 /* RNFirebase.xcodeproj */;
 				},
 				{
+					ProductGroup = B7444EB921D7D7CD003FAC00 /* Products */;
+					ProjectRef = B7444EB821D7D7CD003FAC00 /* RNGestureHandler.xcodeproj */;
+				},
+				{
 					ProductGroup = B7B1C1F320CB40A700E7D02F /* Products */;
 					ProjectRef = 5F8A80645DBF4250BE6DECAF /* RNImagePicker.xcodeproj */;
 				},
@@ -1762,6 +1786,13 @@
 			fileType = archive.ar;
 			path = libCodePush.a;
 			remoteRef = B717368A21D3BF160070B0C5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B7444EEE21D7D7CD003FAC00 /* libRNGestureHandler.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGestureHandler.a;
+			remoteRef = B7444EED21D7D7CD003FAC00 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		B7B1C18A20CAFDA700E7D02F /* libRNVectorIcons.a */ = {

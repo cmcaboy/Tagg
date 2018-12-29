@@ -13,6 +13,9 @@ export const {
 } = Config;
 
 export const NUM_PHOTOS = 6;
+export const MAX_PHOTO_WIDTH = 300;
+export const MAX_PHOTO_HEIGHT = 300;
+
 export const TAB_BAR_HEIGHT = 56;
 
 export const PRIMARY_COLOR = '#03A9F4';

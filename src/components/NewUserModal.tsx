@@ -212,11 +212,9 @@ export default class NewUserModal extends Component<Props, State> {
       longitude = DEFAULT_LONGITUDE;
     }
     
-    console.log('latitude: ', latitude);
-    console.log('longitude: ', longitude);
     console.log('validation complete');
 
-
+    console.log('pics before newUser upload', pics);
 
     return newUser({
       variables: {
