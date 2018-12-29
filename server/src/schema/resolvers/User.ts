@@ -24,6 +24,7 @@ export const User: UserResolvers.Type = {
     return await dataSources.neoAPI.findBidsFromUser({ id });
   },
   dateRequests: async ({ id: idParent }, _, { dataSources, user }) => {
+    console.log('idParent in dateRequest: ', idParent);
     const id = idParent || user.id;
     return await dataSources.neoAPI.findDateRequests({ id });
   },
