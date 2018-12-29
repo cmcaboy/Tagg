@@ -59,12 +59,12 @@ const Tabs = createMaterialTopTabNavigator(
   {
     initialRouteName: 'StaggContainer',
     tabBarOptions: {
-      activeTintColor: Platform.OS === 'ios' ? PRIMARY_COLOR : '#FFF',
+      activeTintColor: Platform.OS === 'ios' ? '#FFF' : '#FFF',
       showLabel: false,
       showIcon: true,
       style: {
         height: TAB_BAR_HEIGHT,
-        backgroundColor: Platform.OS === 'ios' ? 'white' : PRIMARY_COLOR,
+        backgroundColor: Platform.OS === 'ios' ? PRIMARY_COLOR : PRIMARY_COLOR,
         shadowColor: 'rgba(0, 0, 0, 0.24)',
         shadowOffset: {
           width: 0,
