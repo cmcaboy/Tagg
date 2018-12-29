@@ -19,6 +19,7 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
   }
 
   findUser({ id, hostId }: { id: string, hostId: string }) {
+    console.log('findUser id:', id);
     if (id) {
       return this.session
         .run(`Match (n:User {id: '${id}'}) RETURN n`)

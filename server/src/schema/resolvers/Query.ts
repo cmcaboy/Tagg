@@ -12,7 +12,9 @@ export const Query: QueryResolvers.Type = {
       throw new AuthenticationError('User not authenticated');
     }
 
+    console.log('user query argsId: ', argsId);
     const id = argsId || user.id;
+    console.log('user query id: ', id);
 
     return await dataSources.neoAPI.findUser({ id, hostId });
   },
