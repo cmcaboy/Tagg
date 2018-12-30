@@ -45,10 +45,10 @@ const context = async ({ req }: { req: any }) => {
   let neoRaw;
   let user;
 
-  if (!email || email === '0') {
-    console.log('No email in header!');
-    throw new AuthenticationError('User not authenticated; Please try to logout and login again.');
-  }
+  // if (!email || email === '0') {
+  //   console.log('No email in header!');
+  //   throw new AuthenticationError('User not authenticated; Please try to logout and login again.');
+  // }
 
   try {
     neoRaw = await session.run(
@@ -63,7 +63,8 @@ const context = async ({ req }: { req: any }) => {
   } catch (e) {
     // I could throw a real error here
     console.log(`Error retreiving user ${email} from database: ${e}`);
-    throw new AuthenticationError('User not authenticated; Please try to logout and login again.');
+    // throw new AuthenticationError('User not authenticated; Please try to logout and login again.');
+    return { user: null };
   }
 
   return { user };
