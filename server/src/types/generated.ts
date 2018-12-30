@@ -1678,6 +1678,16 @@ export namespace MutationResolvers {
     id: string | null;
   }
 
+  export interface ArgsLogin {
+    email: string;
+    password: string;
+  }
+
+  export interface ArgsSignup {
+    newUser: User;
+    password: string;
+  }
+
   export type EditUserResolver = (
     parent: undefined,
     args: ArgsEditUser,
@@ -1761,6 +1771,20 @@ export namespace MutationResolvers {
     ctx: Context,
     info: GraphQLResolveInfo
   ) => User | null | Promise<User | null>;
+
+  export type LoginResolver = (
+    parent: undefined,
+    args: ArgsLogin,
+    ctx: Context,
+    info: GraphQLResolveInfo
+  ) => string | null | Promise<string | null>;
+
+  export type SignupResolver = (
+    parent: undefined,
+    args: ArgsSignup,
+    ctx: Context,
+    info: GraphQLResolveInfo
+  ) => string | null | Promise<string | null>;
 
   export interface Type {
     editUser: (
@@ -1846,6 +1870,20 @@ export namespace MutationResolvers {
       ctx: Context,
       info: GraphQLResolveInfo
     ) => User | null | Promise<User | null>;
+
+    login: (
+      parent: undefined,
+      args: ArgsLogin,
+      ctx: Context,
+      info: GraphQLResolveInfo
+    ) => string | null | Promise<string | null>;
+
+    signup: (
+      parent: undefined,
+      args: ArgsSignup,
+      ctx: Context,
+      info: GraphQLResolveInfo
+    ) => string | null | Promise<string | null>;
   }
 }
 

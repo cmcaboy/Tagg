@@ -114,7 +114,7 @@
     "apollo-cache": "^1.1.21",
     "apollo-cache-inmemory": "^1.2.1",
     "apollo-cache-persist": "^0.1.1",
-    "apollo-client": "^2.3.1",
+    "apollo-client": "^2.5.0-alpha.2",
     "apollo-link": "^1.2.2",
     "apollo-link-context": "^1.0.10",
     "apollo-link-http": "^1.5.4",

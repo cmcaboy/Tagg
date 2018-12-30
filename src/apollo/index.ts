@@ -85,6 +85,9 @@ export const client = new ApolloClient({
   cache,
   link: authLink.concat(link),
   connectToDevTools: true,
+  initializers: {
+    isLoggedIn: () => !!AsyncStorage.getItem('TaggToken'),
+  },
   // experimental
   // dataIdFromObject: (object) => {
   //   switch (object.__typename) {

@@ -206,6 +206,8 @@ const typeDefs = `
         flag(id: String!, flaggedId: String!, block: Boolean): User
         block(id: String!, blockedId: String!): User
         removeUser(id: String): User
+        login(email: String!, password: String!): String
+        signup(newUser: User!, password: String!): String
     }
     schema {
         query: Query

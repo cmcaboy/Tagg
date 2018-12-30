@@ -5,11 +5,68 @@ import { NEW_MESSAGE } from '../../pubsub/subscriptions';
 import { newMessagePush } from '../../middleware/newMessagePush';
 import { createDatePush } from '../../middleware/createDatePush';
 import { chooseWinnerPushWinner, chooseWinnerPushLoser } from '../../middleware/chooseWinnerPush';
+import { auth } from '../../db/firestore';
+
+const { AuthenticationError } = require('apollo-server');
 
 const uuid = require('node-uuid');
 
 export const Mutation: MutationResolvers.Type = {
   ...MutationResolvers.defaultResolvers,
+  login: async (_, { email, password }, { dataSources }) => {
+    // Check to make sure email exists
+    const emailCheck = await dataSources.NeoAPI.findUser({ id: email });
+
+    if (!emailCheck) {
+      throw new AuthenticationError('User does not exist');
+    }
+
+    // Log user in via Firebase auth
+    // I will call auth directly for now. If this works, move to its
+    // own datasource
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+    } catch (e) {
+      throw new AuthenticationError(e);
+    }
+
+    // return user's email as token
+    return emailCheck.email;
+  },
+  signup: async (_, { newUser, newUser: { email }, password }, { dataSources }) => {
+    // Check to see if email already exists
+    // if so, throw Authentication Error
+    // I can use neo datasource
+    const emailCheck = await dataSources.NeoAPI.findUser({ id: email });
+
+    if (emailCheck) {
+      throw new AuthenticationError('Whoops! Looks like this email has already been taken');
+    }
+
+    // Check to make sure user is not already registered with firebase auth
+    // This command also signs the user in.
+    // If so, throw Authentication Error
+    // Firebase auth could use Firebase datasource
+    try {
+      await auth.createUserWithEmailAndPassword(email, password);
+    } catch (e) {
+      throw new AuthenticationError(e);
+    }
+
+    // Load new user in database
+    // If operation fails, throw Authentication Error
+    // Can use neo datasource
+    try {
+      await dataSources.NeoAPI.createUser(newUser);
+    } catch (e) {
+      throw new AuthenticationError(e);
+    }
+
+    // return user's email as token
+    return email;
+  },
+  // facebookLogin = async (_, args, { dataSources }) => {},
+  // facebookSignUp = async (_, args, { dataSources }) => {},
   editUser: async (_, args, { dataSources }) => await dataSources.neoAPI.setUser(args),
   removeUser: async (_, args, { dataSources }) => {
     // Get users's dateId's

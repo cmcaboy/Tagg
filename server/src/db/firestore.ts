@@ -15,5 +15,8 @@ const db = admin.firestore();
 db.settings(settings);
 
 const messaging = admin.messaging();
+const auth = admin.auth();
 
-export { db, messaging };
+export {
+  db, messaging, admin, auth,
+};

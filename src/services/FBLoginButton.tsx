@@ -86,10 +86,6 @@ class FBLoginButton extends Component<Props, State> {
             let { email } = responseEmail;
             let isRegistered;
 
-            console.log('Before firebase auth');
-            await firebase.auth().signInWithCredential(credential);
-            console.log('after firebase auth');
-
             try {
               // Login via Firebase Auth
               // email = result.additionalUserInfo.profile.email;
@@ -111,11 +107,13 @@ class FBLoginButton extends Component<Props, State> {
               console.log('error: ', e);
               setLoading(false);
               await AsyncStorage.setItem('TaggToken', '0');
-              await firebase.auth().signOut();
+              // await firebase.auth().signOut();
               return setError('Cannot connect to network');
               // email = null;
               // isRegistered = false;
             }
+
+            await firebase.auth().signInWithCredential(credential);
 
             // If we do not have record of the user's email, this is a new user.
             // We should build their profile from their facebook profile
