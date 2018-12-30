@@ -38,6 +38,9 @@ const context = async ({ req }: { req: any }) => {
 
   // I am not doing any type of encryption at the moment;
   const email = auth;
+  if (!email) {
+    return { user: null };
+  }
 
   // I could check for email validity here
 

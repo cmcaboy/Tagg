@@ -16,7 +16,7 @@ export const Mutation: MutationResolvers.Type = {
   login: async (_, { email, password }, { dataSources }) => {
     // Check to make sure email exists
     console.log('login start');
-    const emailCheck = await dataSources.NeoAPI.findUser({ id: email });
+    const emailCheck = await dataSources.neoAPI.findUser({ id: email });
 
     if (!emailCheck) {
       console.log('User does not exist');
