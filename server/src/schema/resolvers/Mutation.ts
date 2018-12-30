@@ -15,9 +15,11 @@ export const Mutation: MutationResolvers.Type = {
   ...MutationResolvers.defaultResolvers,
   login: async (_, { email, password }, { dataSources }) => {
     // Check to make sure email exists
+    console.log('login start');
     const emailCheck = await dataSources.NeoAPI.findUser({ id: email });
 
     if (!emailCheck) {
+      console.log('User does not exist');
       throw new AuthenticationError('User does not exist');
     }
 
@@ -25,11 +27,14 @@ export const Mutation: MutationResolvers.Type = {
     // I will call auth directly for now. If this works, move to its
     // own datasource
     try {
+      console.log('Try to sign in with email and password');
       await auth.signInWithEmailAndPassword(email, password);
     } catch (e) {
+      console.log('Signin failed');
       throw new AuthenticationError(e);
     }
 
+    console.log('Signin succeeded');
     // return user's email as token
     return emailCheck.email;
   },
