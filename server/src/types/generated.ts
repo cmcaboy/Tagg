@@ -1684,8 +1684,28 @@ export namespace MutationResolvers {
   }
 
   export interface ArgsSignup {
-    newUser: User;
+    email: string;
     password: string;
+    id: string;
+    name: string;
+    active: boolean | null;
+    gender: string | null;
+    age: number | null;
+    description: string | null;
+    school: string | null;
+    work: string | null;
+    sendNotifications: boolean | null;
+    distance: number | null;
+    token: string | null;
+    latitude: number | null;
+    longitude: number | null;
+    registerDateTime: number | null;
+    minAgePreference: number | null;
+    maxAgePreference: number | null;
+    followerDisplay: string | null;
+    objectionable: boolean | null;
+    viewObjectionable: boolean | null;
+    pics: string[] | null;
   }
 
   export type EditUserResolver = (

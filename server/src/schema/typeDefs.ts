@@ -207,7 +207,30 @@ const typeDefs = `
         block(id: String!, blockedId: String!): User
         removeUser(id: String): User
         login(email: String!, password: String!): String
-        signup(newUser: User!, password: String!): String
+        signup(
+            email: String!
+            password: String!
+            id: String!
+            name: String!
+            active: Boolean
+            gender: String
+            age: Int
+            description: String
+            school: String
+            work: String
+            sendNotifications: Boolean
+            distance: Int
+            token: String
+            latitude: Float
+            longitude: Float
+            registerDateTime: Int
+            minAgePreference: Int
+            maxAgePreference: Int
+            followerDisplay: String
+            objectionable: Boolean
+            viewObjectionable: Boolean
+            pics: [String]
+        ): String
     }
     schema {
         query: Query
