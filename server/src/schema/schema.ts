@@ -31,7 +31,6 @@ const dataSources = () => ({
 // use the roles parameter to validate the user has permission
 // to execute a specific query
 const context = async ({ req }: { req: any }) => {
-  console.log('req: ', req);
   const auth = (req.headers && req.headers.authorization) || '';
   console.log('auth: ', auth);
   // const email = new Buffer(auth, 'base64').toString('ascii');
@@ -46,10 +45,10 @@ const context = async ({ req }: { req: any }) => {
   let neoRaw;
   let user;
 
-  if (!email || email === '0') {
-    console.log('No email in header!');
-    throw new AuthenticationError('User not authenticated; Please try to logout and login again.');
-  }
+  // if (!email || email === '0') {
+  //   console.log('No email in header!');
+  //   throw new AuthenticationError('User not authenticated; Please try to logout and login again.');
+  // }
 
   try {
     neoRaw = await session.run(
