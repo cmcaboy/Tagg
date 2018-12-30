@@ -45,10 +45,10 @@ const context = async ({ req }: { req: any }) => {
   let neoRaw;
   let user;
 
-  // if (!email || email === '0') {
-  //   console.log('No email in header!');
-  //   throw new AuthenticationError('User not authenticated; Please try to logout and login again.');
-  // }
+  if (!email || email === '0') {
+    console.log('No email in header!');
+    throw new AuthenticationError('User not authenticated; Please try to logout and login again.');
+  }
 
   try {
     neoRaw = await session.run(
