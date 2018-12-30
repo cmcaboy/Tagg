@@ -96,6 +96,8 @@ class FBLoginButton extends Component<Props, State> {
 
               console.log('email: ', email);
 
+              await AsyncStorage.setItem('TaggToken', email);
+
               const { data, errors }: { data: any; errors?: any } = await query({
                 query: GET_EMAIL_BY_TOKEN,
                 variables: { id: email },
@@ -108,6 +110,7 @@ class FBLoginButton extends Component<Props, State> {
             } catch (e) {
               console.log('error: ', e);
               setLoading(false);
+              await AsyncStorage.setItem('TaggToken', '0');
               await firebase.auth().signOut();
               return setError('Cannot connect to network');
               // email = null;
