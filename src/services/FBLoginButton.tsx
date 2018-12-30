@@ -106,8 +106,12 @@ class FBLoginButton extends Component<Props, State> {
               isRegistered = data.user ? !!data.user.email : false;
               console.log('isRegistered: ', isRegistered);
             } catch (e) {
-              email = null;
-              isRegistered = false;
+              console.log('error: ', e);
+              setLoading(false);
+              await firebase.auth().signOut();
+              return setError('Cannot connect to network');
+              // email = null;
+              // isRegistered = false;
             }
 
             // If we do not have record of the user's email, this is a new user.
