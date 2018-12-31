@@ -13,7 +13,7 @@ import {
   AsyncStorage,
 } from 'react-native';
 import { Button } from 'native-base';
-import { Mutation } from 'react-apollo';
+import { Mutation, ApolloConsumer } from 'react-apollo';
 import RadioGroup, { GroupItem } from 'react-native-radio-buttons-group';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { PHOTO_HINT, settingDefaults, PRIMARY_COLOR, DEFAULT_LATITUDE, DEFAULT_LONGITUDE } from '../variables/index';
@@ -175,7 +175,7 @@ export default class NewUserModal extends Component<Props, State> {
     return true;
   }
 
-  submitNewUser = async (newUser: (user: any) => void) => {
+  submitNewUser = async (newUser: (user: any) => void, client: any) => {
     analytics.logEvent('Click_NewUserModal_sbmt');
     this.setState({ loading: true, error: '' });
     const { name, age, school, work, description, gender, pics, password } = this.state;
@@ -244,7 +244,7 @@ export default class NewUserModal extends Component<Props, State> {
         // This method can return an error. I need to check for an error before closing the modal
         // and showing the user a sucess confirmation. Consider making this function async
         // startSetId(email); // replaced with asyncstorage
-        await AsyncStorage.setItem("TaggToken", email);
+        // await AsyncStorage.setItem("TaggToken", email);
         
         const checkAuthentication = await emailSignup({ email, password });
         console.log('Check Authentication: ', checkAuthentication);
@@ -252,7 +252,6 @@ export default class NewUserModal extends Component<Props, State> {
           // If the authentication system update fails, remove the user from our records
           this.setState({ loading: false });
           this.onError({ error: checkAuthentication })
-          await AsyncStorage.setItem("TaggToken", email);
           // startSetId(0); // replace with AsyncStorage
           // Need to add a function to remove the user in the event of a failure here
           return null;
@@ -269,6 +268,8 @@ export default class NewUserModal extends Component<Props, State> {
         analytics.logEvent('Event_NewUserCreated');
         closeModal();
         console.log('after close modal');
+        await AsyncStorage.setItem("TaggToken", email);
+        await client.writeData({ data: { isLoggedIn: true }});
         return true;
       },
     });
@@ -424,16 +425,20 @@ export default class NewUserModal extends Component<Props, State> {
             }
             return (
               <View>
-                <Button
-                  block
-                  onPress={() => this.submitNewUser(newUser)}
-                >
-                  <MyAppText
-                    style={submitButton}
-                  >
-                    { 'Submit' }
-                  </MyAppText>
-                </Button>
+                <ApolloConsumer>
+                  {(client) => (
+                    <Button
+                      block
+                      onPress={() => this.submitNewUser(newUser, client)}
+                    >
+                      <MyAppText
+                        style={submitButton}
+                      >
+                        { 'Submit' }
+                      </MyAppText>
+                    </Button>
+                  )}
+                </ApolloConsumer>
                 <TouchableOpacity onPress={() => this.cancel(closeModal)}>
                   <MyAppText style={cancelButton}>
                     { 'Cancel' }

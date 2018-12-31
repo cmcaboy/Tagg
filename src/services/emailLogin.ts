@@ -3,10 +3,12 @@ import { auth } from '../firebase';
 
 // This function attempts to login via Firebase email auth
 export default async ({
+  client,
   email,
   password,
 }: // startSetId, // replaced with asyncstorage
 {
+client: any;
 email: string;
 password: string;
 // startSetId: any; // replae with asyncstorage
@@ -21,7 +23,6 @@ password: string;
   // If the authentication fails, simply catch the error and reset the ID back to 0.
   // startSetId(email);
   // console.log('email login attempt: ', email);
-  await AsyncStorage.setItem('TaggToken', email);
 
   // Attempt login
   try {
@@ -31,12 +32,15 @@ password: string;
     console.log('Error logging in: ', e);
     login = false;
     // startSetId(0); // replace with asyncstorage
-    await AsyncStorage.setItem('TaggToken', '0');
+    // await AsyncStorage.setItem('TaggToken', '0');
     return 'Invalid username and password combination. Please try again.';
   }
 
   // console.log('email login successful; token should be: ', email);
   console.log('login successful: ', login);
+
+  await AsyncStorage.setItem('TaggToken', email);
+  await client.writeData({ data: { isLoggedIn: true } });
 
   // If execution successful, return null.
   return null;

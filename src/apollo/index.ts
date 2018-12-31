@@ -9,6 +9,7 @@ import { ApolloLink, split } from 'apollo-link';
 import { persistCache } from 'apollo-cache-persist';
 import { AsyncStorage } from 'react-native';
 import { PersistentStorage, PersistedData } from 'apollo-cache-persist/types';
+import gql from 'graphql-tag';
 import { GRAPHQL_SERVER, GRAPHQL_SERVER_WS } from '../variables';
 import { resolvers, defaults } from './localState';
 
@@ -79,10 +80,17 @@ const authLink = setContext(async (_, { headers }) => {
   };
 });
 
+const typeDefs = gql`
+  extend type Query {
+    isLoggedIn: Boolean!
+  }
+`;
+
 // At this point, the link encapsulates logic to determine if the application is trying
 // to access a subscription, graphql server, or state management.
 export const client = new ApolloClient({
   cache,
+  typeDefs,
   link: authLink.concat(link),
   connectToDevTools: true,
   initializers: {

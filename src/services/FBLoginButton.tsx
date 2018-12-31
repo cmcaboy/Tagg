@@ -42,7 +42,7 @@ class FBLoginButton extends Component<Props, State> {
       setError,
       setLoading,
       // startSetId, // replace with asyncstoarge
-      client: { query },
+      client: { query, writeData },
     } = this.props;
     const { loading } = this.state;
     if (loading) return <Spinner />;
@@ -92,7 +92,7 @@ class FBLoginButton extends Component<Props, State> {
 
               console.log('email: ', email);
 
-              await AsyncStorage.setItem('TaggToken', email);
+              // await AsyncStorage.setItem('TaggToken', email);
 
               const { data, errors }: { data: any; errors?: any } = await query({
                 query: GET_EMAIL_BY_TOKEN,
@@ -106,7 +106,7 @@ class FBLoginButton extends Component<Props, State> {
             } catch (e) {
               console.log('error: ', e);
               setLoading(false);
-              await AsyncStorage.setItem('TaggToken', '0');
+              // await AsyncStorage.setItem('TaggToken', '0');
               // await firebase.auth().signOut();
               return setError('Cannot connect to network');
               // email = null;
@@ -177,6 +177,7 @@ class FBLoginButton extends Component<Props, State> {
 
             // await startSetId(email);
             await AsyncStorage.setItem('TaggToken', email);
+            await writeData({ data: { isLoggedIn: true } });
 
             analytics.logEvent('Event_FB_login_success');
             this.setState({ loading: false });
@@ -185,7 +186,8 @@ class FBLoginButton extends Component<Props, State> {
           onLogoutFinished={async () => {
             firebase.auth().signOut();
             // await startSetId(0);
-            await AsyncStorage.setItem('TaggToken', '0');
+            await AsyncStorage.removeItem('TaggToken');
+            await writeData({ data: { isLoggedIn: false } });
           }}
         />
       </View>

@@ -94,7 +94,10 @@ class Authentication extends React.Component<Props, State> {
       <View style={styles.container}>
         <UdaciStatusBar backgroundColor={STATUS_BAR_COLOR} barStyle="light-content" />
         <IsUserLoggedIn query={IS_LOGGED_IN}>
-          {({ data }) => (data.isLoggedIn ? <GANavigationWrapper /> : <LoginForm />)}
+          {({ data }) => {
+            console.log('isUserLoggedIn data: ', data);
+            return data.isLoggedIn ? <GANavigationWrapper /> : <LoginForm />;
+          }}
         </IsUserLoggedIn>
         {/* {this.renderContent()} */}
       </View>

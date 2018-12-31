@@ -23,22 +23,11 @@ export const Mutation: MutationResolvers.Type = {
       throw new AuthenticationError('User does not exist');
     }
 
-    // Log user in via Firebase auth
-    // I will call auth directly for now. If this works, move to its
-    // own datasource
-    try {
-      console.log('Try to sign in with email and password');
-      await auth.signInWithEmailAndPassword(email, password);
-    } catch (e) {
-      console.log('Signin failed');
-      throw new AuthenticationError(e);
-    }
-
     console.log('Signin succeeded');
     // return user's email as token
     return emailCheck.email;
   },
-  signup: async (_, { newUser, newUser: { email }, password }, { dataSources }) => {
+  signup: async (_, { email, password, ...rest }, { dataSources }) => {
     // Check to see if email already exists
     // if so, throw Authentication Error
     // I can use neo datasource
@@ -48,21 +37,11 @@ export const Mutation: MutationResolvers.Type = {
       throw new AuthenticationError('Whoops! Looks like this email has already been taken');
     }
 
-    // Check to make sure user is not already registered with firebase auth
-    // This command also signs the user in.
-    // If so, throw Authentication Error
-    // Firebase auth could use Firebase datasource
-    try {
-      await auth.createUserWithEmailAndPassword(email, password);
-    } catch (e) {
-      throw new AuthenticationError(e);
-    }
-
     // Load new user in database
     // If operation fails, throw Authentication Error
     // Can use neo datasource
     try {
-      await dataSources.NeoAPI.createUser(newUser);
+      await dataSources.NeoAPI.createUser({ ...rest, email });
     } catch (e) {
       throw new AuthenticationError(e);
     }

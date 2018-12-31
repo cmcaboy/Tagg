@@ -39,6 +39,7 @@ const context = async ({ req }: { req: any }) => {
   // I am not doing any type of encryption at the moment;
   const email = auth;
   if (!email) {
+    console.log('No email in header');
     return { user: null };
   }
 

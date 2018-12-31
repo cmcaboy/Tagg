@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { LoginManager } from 'react-native-fbsdk';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ApolloConsumer } from 'react-apollo';
 import { auth, analytics } from '../firebase';
 import { ICON_SIZE, ICON_OPACITY } from '../variables';
 import { MyAppText, Spinner } from './common';
@@ -22,7 +23,7 @@ export default class LogoutButton extends Component<Props, State> {
     };
   }
 
-  startLogout = async () => {
+  startLogout = async (client: any) => {
     analytics.logEvent('Click_logoutButton');
     // Render Spinner
     this.setState({ loading: true });
@@ -31,7 +32,8 @@ export default class LogoutButton extends Component<Props, State> {
     // sign out of FBSDK
     LoginManager.logOut();
     // set the id in our local catch to 0, which indicates to user is logged in.
-    await AsyncStorage.setItem('TaggToken', '0');
+    await AsyncStorage.removeItem('TaggToken');
+    await client.writeData({ data: { isLoggedIn: false } });
     // Turn the spinner off.
     this.setState({ loading: false });
   };
@@ -43,15 +45,19 @@ export default class LogoutButton extends Component<Props, State> {
       return <Spinner />;
     }
     return (
-      <TouchableOpacity onPress={this.startLogout} style={buttons}>
-        <MaterialCommunityIcons
-          name="logout"
-          size={ICON_SIZE}
-          color="black"
-          style={{ opacity: ICON_OPACITY }}
-        />
-        <MyAppText style={optionsText}>Log Out</MyAppText>
-      </TouchableOpacity>
+      <ApolloConsumer>
+        {client => (
+          <TouchableOpacity onPress={() => this.startLogout(client)} style={buttons}>
+            <MaterialCommunityIcons
+              name="logout"
+              size={ICON_SIZE}
+              color="black"
+              style={{ opacity: ICON_OPACITY }}
+            />
+            <MyAppText style={optionsText}>Log Out</MyAppText>
+          </TouchableOpacity>
+        )}
+      </ApolloConsumer>
     );
   }
 }

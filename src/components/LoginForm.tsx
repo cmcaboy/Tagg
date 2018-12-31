@@ -110,6 +110,7 @@ class LoginForm extends Component<Props, State> {
     // Attempt login
     // If login is successful, the user is automatically routed to the functioning app (Stagg component)
     emailLogin({
+      client,
       password,
       // startSetId, // replaced with asyncstorage
       email: email.toLowerCase(),
