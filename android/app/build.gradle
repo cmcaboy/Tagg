@@ -46,7 +46,7 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         multiDexEnabled true
         versionCode 36
-        versionName "0.1.0"
+        versionName "0.2.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
