@@ -5,7 +5,6 @@ import { NEW_MESSAGE } from '../../pubsub/subscriptions';
 import { newMessagePush } from '../../middleware/newMessagePush';
 import { createDatePush } from '../../middleware/createDatePush';
 import { chooseWinnerPushWinner, chooseWinnerPushLoser } from '../../middleware/chooseWinnerPush';
-import { auth } from '../../db/firestore';
 
 const { AuthenticationError } = require('apollo-server');
 
@@ -13,7 +12,7 @@ const uuid = require('node-uuid');
 
 export const Mutation: MutationResolvers.Type = {
   ...MutationResolvers.defaultResolvers,
-  login: async (_, { email, password }, { dataSources }) => {
+  login: async (_, { email }, { dataSources }) => {
     // Check to make sure email exists
     console.log('login start');
     const emailCheck = await dataSources.neoAPI.findUser({ id: email });

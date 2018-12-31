@@ -5,7 +5,7 @@ import firestoreAPI from './datasources/firestore';
 import { driver } from '../db/neo4j';
 import { db } from '../db/firestore';
 // import { GraphQLError } from 'graphql';
-const { AuthenticationError } = require('apollo-server');
+// const { AuthenticationError } = require('apollo-server');
 
 // import statement did not work here
 const { ApolloServer } = require('apollo-server-express');
