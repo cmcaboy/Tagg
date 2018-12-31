@@ -58,3 +58,5 @@ ios/sentry.properties
 # Jest
 #
 .jest/
+
+server/firebase_config.json
