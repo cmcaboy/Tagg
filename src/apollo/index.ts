@@ -1,4 +1,4 @@
-import { ApolloClient } from 'apollo-client';
+// import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { withClientState } from 'apollo-link-state';
 import { setContext } from 'apollo-link-context';
@@ -88,14 +88,14 @@ const typeDefs = gql`
 
 // At this point, the link encapsulates logic to determine if the application is trying
 // to access a subscription, graphql server, or state management.
-export const client = new ApolloClient({
+export const client: any = {
   cache,
   typeDefs,
   link: authLink.concat(link),
   connectToDevTools: true,
-  initializers: {
-    isLoggedIn: () => !!AsyncStorage.getItem('TaggToken'),
-  },
+  // initializers: {
+  //   isLoggedIn: async () => !!(await AsyncStorage.getItem('TaggToken')),
+  // },
   // experimental
   // dataIdFromObject: (object) => {
   //   switch (object.__typename) {
@@ -105,7 +105,7 @@ export const client = new ApolloClient({
   //       return object.id;
   //   }
   // },
-});
+};
 
 // enable remote debugging
 // window.__APOLLO_CLIENT__ = client;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  StyleSheet, View, StatusBar, ViewStyle, StatusBarProps,
+  StyleSheet, View, StatusBar, ViewStyle, StatusBarProps, AsyncStorage,
 } from 'react-native';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
 // import { Root } from 'native-base';
@@ -49,7 +49,7 @@ class Authentication extends React.Component<Props, State> {
   //   loggedIn: false,
   // };
 
-  componentWillMount() {
+  componentWillMount = async () => {
     // Firebase authentication details gathered from my firebase account.
     // firebase.auth().onAuthStateChanged((user: string) => {
     //   // console.log('Authentication user: ', user);
@@ -64,7 +64,7 @@ class Authentication extends React.Component<Props, State> {
     //     // this.setState({loggedIn: false});
     //   }
     // });
-  }
+  };
 
   // renderContent() {
   //   // use a switch statement to render a login screen, logout screen, or a spinner
@@ -94,10 +94,7 @@ class Authentication extends React.Component<Props, State> {
       <View style={styles.container}>
         <UdaciStatusBar backgroundColor={STATUS_BAR_COLOR} barStyle="light-content" />
         <IsUserLoggedIn query={IS_LOGGED_IN}>
-          {({ data }) => {
-            console.log('isUserLoggedIn data: ', data);
-            return data.isLoggedIn ? <GANavigationWrapper /> : <LoginForm />;
-          }}
+          {({ data }) => (data.isLoggedIn ? <GANavigationWrapper /> : <LoginForm />)}
         </IsUserLoggedIn>
         {/* {this.renderContent()} */}
       </View>

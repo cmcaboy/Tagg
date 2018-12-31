@@ -42,7 +42,8 @@ class FBLoginButton extends Component<Props, State> {
       setError,
       setLoading,
       // startSetId, // replace with asyncstoarge
-      client: { query, writeData },
+      client,
+      client: { query },
     } = this.props;
     const { loading } = this.state;
     if (loading) return <Spinner />;
@@ -53,8 +54,8 @@ class FBLoginButton extends Component<Props, State> {
           onLoginFinished={async (error, result) => {
             analytics.logEvent('Click_FB_login');
             this.setState({ loading: true });
-            console.log('error: ', error);
-            console.log('result: ', result);
+            // console.log('error: ', error);
+            // console.log('result: ', result);
             if (error) {
               console.log('Login failed with error: ', error);
               setError(error);
@@ -113,7 +114,9 @@ class FBLoginButton extends Component<Props, State> {
               // isRegistered = false;
             }
 
+            // console.log('before firebase auth');
             await firebase.auth().signInWithCredential(credential);
+            // console.log('after firebase auth');
 
             // If we do not have record of the user's email, this is a new user.
             // We should build their profile from their facebook profile
@@ -175,9 +178,12 @@ class FBLoginButton extends Component<Props, State> {
               await startNewUser(newUser);
             }
 
+            // console.log('Before async and cache write');
             // await startSetId(email);
             await AsyncStorage.setItem('TaggToken', email);
-            await writeData({ data: { isLoggedIn: true } });
+            // console.log('after async setItem');
+            await client.writeData({ data: { isLoggedIn: true } });
+            // console.log('After async and cache write');
 
             analytics.logEvent('Event_FB_login_success');
             this.setState({ loading: false });
@@ -187,7 +193,7 @@ class FBLoginButton extends Component<Props, State> {
             firebase.auth().signOut();
             // await startSetId(0);
             await AsyncStorage.removeItem('TaggToken');
-            await writeData({ data: { isLoggedIn: false } });
+            await client.writeData({ data: { isLoggedIn: false } });
           }}
         />
       </View>

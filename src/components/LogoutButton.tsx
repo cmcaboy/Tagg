@@ -32,7 +32,7 @@ export default class LogoutButton extends Component<Props, State> {
     // sign out of FBSDK
     LoginManager.logOut();
     // set the id in our local catch to 0, which indicates to user is logged in.
-    await AsyncStorage.removeItem('TaggToken');
+    await AsyncStorage.setItem('TaggToken', '');
     await client.writeData({ data: { isLoggedIn: false } });
     // Turn the spinner off.
     this.setState({ loading: false });
