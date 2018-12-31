@@ -7,10 +7,10 @@ export const Query: QueryResolvers.Type = {
   user: async (_, { id: argsId, hostId }, { dataSources, user }) => {
     // if id was passed in as argument, use it. If not, use
     // the id in context`
-    if (!user || !user.id) {
-      console.log('User not authenticated');
-      throw new AuthenticationError('User not authenticated');
-    }
+    // if (!user || !user.id) {
+    //   console.log('User not authenticated');
+    //   throw new AuthenticationError('User not authenticated');
+    // }
 
     console.log('user query argsId: ', argsId);
     const id = argsId || user.id;
