@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1.0</string>
+	<string>0.2.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -30,7 +30,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>66</string>
+	<string>78</string>
+	<key>CodePushDeploymentKey</key>
+	<string>__RN_CONFIG_CODE_PUSH_KEY</string>
 	<key>FacebookAppID</key>
 	<string>1751170988304368</string>
 	<key>FacebookDisplayName</key>
@@ -70,11 +72,9 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This App would like to track your location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to your microphone (for videos)</string>
-	<key>CodePushDeploymentKey</key>
-	<string>__RN_CONFIG_CODE_PUSH_KEY</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Motion updates increase battery efficiency by intelligently toggling location-services when device is detected to be moving</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
