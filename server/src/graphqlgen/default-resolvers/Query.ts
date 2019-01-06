@@ -34,5 +34,11 @@ export const Query: QueryResolvers.Type = {
   },
   moreFollowing: (parent, args, ctx) => {
     throw new Error("Resolver not implemented");
+  },
+  likes: (parent, args, ctx) => {
+    throw new Error("Resolver not implemented");
+  },
+  dislikes: (parent, args, ctx) => {
+    throw new Error("Resolver not implemented");
   }
 };

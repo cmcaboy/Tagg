@@ -65,6 +65,16 @@ export namespace QueryResolvers {
     cursor: number;
   }
 
+  export interface ArgsLikes {
+    id: string | null;
+    cursor: number | null;
+  }
+
+  export interface ArgsDislikes {
+    id: string | null;
+    cursor: number | null;
+  }
+
   export type UserResolver = (
     parent: undefined,
     args: ArgsUser,
@@ -134,6 +144,20 @@ export namespace QueryResolvers {
     ctx: Context,
     info: GraphQLResolveInfo
   ) => Following | null | Promise<Following | null>;
+
+  export type LikesResolver = (
+    parent: undefined,
+    args: ArgsLikes,
+    ctx: Context,
+    info: GraphQLResolveInfo
+  ) => Queue | null | Promise<Queue | null>;
+
+  export type DislikesResolver = (
+    parent: undefined,
+    args: ArgsDislikes,
+    ctx: Context,
+    info: GraphQLResolveInfo
+  ) => Queue | null | Promise<Queue | null>;
 
   export interface Type {
     user: (
@@ -205,6 +229,20 @@ export namespace QueryResolvers {
       ctx: Context,
       info: GraphQLResolveInfo
     ) => Following | null | Promise<Following | null>;
+
+    likes: (
+      parent: undefined,
+      args: ArgsLikes,
+      ctx: Context,
+      info: GraphQLResolveInfo
+    ) => Queue | null | Promise<Queue | null>;
+
+    dislikes: (
+      parent: undefined,
+      args: ArgsDislikes,
+      ctx: Context,
+      info: GraphQLResolveInfo
+    ) => Queue | null | Promise<Queue | null>;
   }
 }
 

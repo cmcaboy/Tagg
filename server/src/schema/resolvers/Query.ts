@@ -45,7 +45,6 @@ export const Query: QueryResolvers.Type = {
     console.log('ret: ', ret);
     return ret;
   },
-
   likes: async (_, { id: argsId, cursor }, { dataSources, user: { id: contextId } }) => {
     if (!contextId) {
       console.log('User not authenticated');
@@ -57,7 +56,6 @@ export const Query: QueryResolvers.Type = {
     }
     return await dataSources.NeoAPI.getMoreLikes({ id, cursor });
   },
-
   dislikes: async (_, { id: argsId, cursor }, { dataSources, user: { id: contextId } }) => {
     if (!contextId) {
       console.log('User not authenticated');
@@ -69,7 +67,6 @@ export const Query: QueryResolvers.Type = {
     }
     return await dataSources.NeoAPI.getMoredislikes({ id, cursor });
   },
-
   moreDates: (_, __) => {
     throw new Error('Resolver not implemented');
   },

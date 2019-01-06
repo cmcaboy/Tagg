@@ -126,6 +126,8 @@ const typeDefs = `
         moreDates(id: String!, cursor: Float!): DateList
         moreDateBids(id:String!, cursor: Float!): DateBidList
         moreFollowing(id: String!, cursor: Float!): Following
+        likes(id: String, cursor: number): Queue
+        dislikes(id: String, cursor: number): Queue
     }
 
     type Subscription {
@@ -231,8 +233,6 @@ const typeDefs = `
             viewObjectionable: Boolean
             pics: [String]
         ): String
-        likes(id: String, cursor: number): Queue
-        dislikes(id: String, cursor: number): Queue
     }
     schema {
         query: Query
