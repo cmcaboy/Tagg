@@ -4,10 +4,10 @@
     "production": {
       "plugins": [
         ["@babel/plugin-transform-flow-strip-types"],
-        [
-          "@babel/plugin-proposal-decorators",
-          { "decoratorsBeforeExport": true, "legacy": true }
-        ],
+        // [
+        //   "@babel/plugin-proposal-decorators",
+        //   { "decoratorsBeforeExport": true, "legacy": true }
+        // ],
         ["@babel/plugin-proposal-class-properties"],
         ["transform-remove-console"]
       ]

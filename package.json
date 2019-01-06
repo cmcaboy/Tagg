@@ -1,6 +1,6 @@
 {
   "name": "Tagg",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "rnpm": {
     "assets": [
@@ -80,7 +80,10 @@
     "gentypes:queries": "apollo client:codegen --target=typescript --localSchemaFile=\"./schema.json\" --queries=\"./src/apollo/queries/*.ts\"",
     "gentypes:mutations": "apollo client:codegen --target=typescript --localSchemaFile=\"./schema.json\" --queries=\"./src/apollo/mutations/index.ts\"",
     "gentypes:subscriptions": "apollo client:codegen --target=typescript --localSchemaFile=\"./schema.json\" --queries=\"./src/apollo/subscriptions/index.ts\"",
-    "gentypes:apollo": "echo 'Make sure you have your local graphql server running!' && yarn run fetch:schema && yarn run gentypes:queries && yarn run gentypes:mutations && yarn run gentypes:subscriptions"
+    "gentypes:apollo": "echo 'Make sure you have your local graphql server running!' && yarn run fetch:schema && yarn run gentypes:queries && yarn run gentypes:mutations && yarn run gentypes:subscriptions",
+    "deploy:code-push": "appcenter codepush release-react -a McAboy-Digital/Tagg -d Production --plist-file ios/ManhattanMatch/Info.plist",
+    "deploy:ios": "cd ios && bundle exec fastlane release",
+    "deploy:android": "cd android && bundle exec fastlane deploy"
   },
   "jest": {
     "preset": "react-native",

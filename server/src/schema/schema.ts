@@ -81,7 +81,7 @@ export const server = {
   context,
   dataSources,
   engine: {
-    apiKey: 'service:cmcaboy-2497:fJtoyV5uQQfIQ0I11WiXqg',
+    apiKey: process.env.ENGINE_API_KEY,
   },
 };
 

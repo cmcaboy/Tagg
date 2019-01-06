@@ -231,6 +231,8 @@ const typeDefs = `
             viewObjectionable: Boolean
             pics: [String]
         ): String
+        likes(id: String, cursor: number): Queue
+        dislikes(id: String, cursor: number): Queue
     }
     schema {
         query: Query

@@ -45,6 +45,31 @@ export const Query: QueryResolvers.Type = {
     console.log('ret: ', ret);
     return ret;
   },
+
+  likes: async (_, { id: argsId, cursor }, { dataSources, user: { id: contextId } }) => {
+    if (!contextId) {
+      console.log('User not authenticated');
+      throw new AuthenticationError('User not authenticated');
+    }
+    const id = argsId || contextId;
+    if (cursor === null) {
+      return await dataSources.NeoAPI.getUserLikes({ id });
+    }
+    return await dataSources.NeoAPI.getMoreLikes({ id, cursor });
+  },
+
+  dislikes: async (_, { id: argsId, cursor }, { dataSources, user: { id: contextId } }) => {
+    if (!contextId) {
+      console.log('User not authenticated');
+      throw new AuthenticationError('User not authenticated');
+    }
+    const id = argsId || contextId;
+    if (cursor === null) {
+      return await dataSources.NeoAPI.getUserDislikes({ id });
+    }
+    return await dataSources.NeoAPI.getMoredislikes({ id, cursor });
+  },
+
   moreDates: (_, __) => {
     throw new Error('Resolver not implemented');
   },

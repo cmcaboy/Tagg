@@ -73,8 +73,8 @@
 		B70BC2FE2161250000408492 /* ManhattanMatchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70BC2FD2161250000408492 /* ManhattanMatchUITests.swift */; };
 		B7113EC9213C8B5200BCAB68 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7113EA8213C8B0C00BCAB68 /* libRCTPushNotification.a */; };
 		B7144249214D3E46001F6DAA /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7144248214D3E06001F6DAA /* libReactNativeConfig.a */; };
-		B71736BE21D3BF370070B0C5 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B717368B21D3BF160070B0C5 /* libCodePush.a */; };
 		B7444EF221D7D807003FAC00 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7444EEE21D7D7CD003FAC00 /* libRNGestureHandler.a */; };
+		B74BC1EC21E034F200C41827 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B74BC1E721E0348400C41827 /* libCodePush.a */; };
 		B77610C4216236B60095F7C9 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B77610C3216236B60095F7C9 /* SnapshotHelper.swift */; };
 		B7B1C19720CAFE7200E7D02F /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7B1C18C20CAFE7100E7D02F /* Octicons.ttf */; };
 		B7B1C19820CAFE7200E7D02F /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7B1C18D20CAFE7100E7D02F /* Feather.ttf */; };
@@ -416,26 +416,26 @@
 			remoteGlobalIDString = EB2648DF1C7BE17A00B8F155;
 			remoteInfo = ReactNativeConfig;
 		};
-		B717368821D3BF160070B0C5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B717368321D3BF160070B0C5 /* CodePush.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = CodePush;
-		};
-		B717368A21D3BF160070B0C5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B717368321D3BF160070B0C5 /* CodePush.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F886647B1F4ADB500036D01B;
-			remoteInfo = "CodePush-tvOS";
-		};
 		B7444EED21D7D7CD003FAC00 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B7444EB821D7D7CD003FAC00 /* RNGestureHandler.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNGestureHandler;
+		};
+		B74BC1E621E0348400C41827 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B74BC1E121E0348400C41827 /* CodePush.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = CodePush;
+		};
+		B74BC1E821E0348400C41827 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B74BC1E121E0348400C41827 /* CodePush.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F886647B1F4ADB500036D01B;
+			remoteInfo = "CodePush-tvOS";
 		};
 		B798519221612AF100E87909 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -586,8 +586,8 @@
 		B70BC2FF2161250000408492 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7113E94213C8B0C00BCAB68 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		B7144243214D3E06001F6DAA /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
-		B717368321D3BF160070B0C5 /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		B7444EB821D7D7CD003FAC00 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
+		B74BC1E121E0348400C41827 /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		B77610C3216236B60095F7C9 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		B798518D21612AF100E87909 /* ManhattanMatchUITests2.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManhattanMatchUITests2.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7B1C18C20CAFE7100E7D02F /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
@@ -639,9 +639,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7444EF221D7D807003FAC00 /* libRNGestureHandler.a in Frameworks */,
 				9CC1651CBFFC44AFB43067B8 /* libz.tbd in Frameworks */,
-				B71736BE21D3BF370070B0C5 /* libCodePush.a in Frameworks */,
+				B74BC1EC21E034F200C41827 /* libCodePush.a in Frameworks */,
+				B7444EF221D7D807003FAC00 /* libRNGestureHandler.a in Frameworks */,
 				B708C1B9218DCBFA008270A4 /* libSplashScreen.a in Frameworks */,
 				B7EB6C12217BC398001A0F23 /* libRNFetchBlob.a in Frameworks */,
 				B7144249214D3E46001F6DAA /* libReactNativeConfig.a in Frameworks */,
@@ -896,7 +896,7 @@
 			isa = PBXGroup;
 			children = (
 				B7444EB821D7D7CD003FAC00 /* RNGestureHandler.xcodeproj */,
-				B717368321D3BF160070B0C5 /* CodePush.xcodeproj */,
+				B74BC1E121E0348400C41827 /* CodePush.xcodeproj */,
 				B7EB6BDC217BC361001A0F23 /* RNFetchBlob.xcodeproj */,
 				B7144243214D3E06001F6DAA /* ReactNativeConfig.xcodeproj */,
 				B7113E94213C8B0C00BCAB68 /* RCTPushNotification.xcodeproj */,
@@ -1042,19 +1042,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B717368421D3BF160070B0C5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				B717368921D3BF160070B0C5 /* libCodePush.a */,
-				B717368B21D3BF160070B0C5 /* libCodePush.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		B7444EB921D7D7CD003FAC00 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				B7444EEE21D7D7CD003FAC00 /* libRNGestureHandler.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B74BC1E221E0348400C41827 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B74BC1E721E0348400C41827 /* libCodePush.a */,
+				B74BC1E921E0348400C41827 /* libCodePush.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1369,8 +1369,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = B717368421D3BF160070B0C5 /* Products */;
-					ProjectRef = B717368321D3BF160070B0C5 /* CodePush.xcodeproj */;
+					ProductGroup = B74BC1E221E0348400C41827 /* Products */;
+					ProjectRef = B74BC1E121E0348400C41827 /* CodePush.xcodeproj */;
 				},
 				{
 					ProductGroup = B7CDA4D421662806004F0B1D /* Products */;
@@ -1774,25 +1774,25 @@
 			remoteRef = B7144247214D3E06001F6DAA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B717368921D3BF160070B0C5 /* libCodePush.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCodePush.a;
-			remoteRef = B717368821D3BF160070B0C5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B717368B21D3BF160070B0C5 /* libCodePush.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCodePush.a;
-			remoteRef = B717368A21D3BF160070B0C5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		B7444EEE21D7D7CD003FAC00 /* libRNGestureHandler.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNGestureHandler.a;
 			remoteRef = B7444EED21D7D7CD003FAC00 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B74BC1E721E0348400C41827 /* libCodePush.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCodePush.a;
+			remoteRef = B74BC1E621E0348400C41827 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B74BC1E921E0348400C41827 /* libCodePush.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCodePush.a;
+			remoteRef = B74BC1E821E0348400C41827 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		B7B1C18A20CAFDA700E7D02F /* libRNVectorIcons.a */ = {
@@ -1982,15 +1982,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-ManhattanMatchTests-checkManifestLockResult.txt",
 			);
@@ -2004,15 +2000,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-ManhattanMatch-tvOSTests-checkManifestLockResult.txt",
 			);
@@ -2026,15 +2018,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-ManhattanMatch-checkManifestLockResult.txt",
 			);
@@ -2048,16 +2036,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ManhattanMatch/Pods-ManhattanMatch-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC/gRPCCertificates.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC-C++/gRPCCertificates.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
 			);
@@ -2071,15 +2055,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-ManhattanMatch-tvOS-checkManifestLockResult.txt",
 			);

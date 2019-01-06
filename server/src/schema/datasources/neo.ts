@@ -43,6 +43,118 @@ export default class NeoAPI extends ( DataSource as { new(): any; } ) {
     }
   }
 
+  getUserLikes = ({ id }: {id: string}) => {
+    return this.session
+      .run(`MATCH(a:User{id: '${id}'})-[:LIKE]->(b:User) 
+        WITH b.registerDateTime as order
+        RETURN b
+        ORDER by order
+        LIMIT ${QUEUE_PAGE_LENGTH} `) 
+          .then((result: any) => result.records)
+          .then((records: any) => { 
+            if(!records.length) { 
+              return {
+                id: `${id}likes`,
+                list: [],
+                cursor: null,
+              };
+            } 
+            const list = records.map(( record: any ) => record._fields[0].properties); 
+            const cursor = list.length >= QUEUE_PAGE_LENGTH ? list[list.length - 1].order : null;
+            return {
+              id: `${id}likes`,
+              list,
+              cursor,
+            }
+          })
+          .catch((e: string) => console.log(`Error fetching user likes: ${e}`))
+  }
+
+  getUserDislikes = ({ id }: {id: string}) => {
+    return this.session
+      .run(`MATCH(a:User{id: '${id}'})-[:DISLIKE]->(b:User) 
+        WITH b.registerDateTime as order
+        RETURN b
+        ORDER by order
+        LIMIT ${QUEUE_PAGE_LENGTH} `) 
+          .then((result: any) => result.records)
+          .then((records: any) => { 
+            if(!records.length) { 
+              return {
+                id: `${id}dislikes`,
+                list: [],
+                cursor: null,
+              };
+            } 
+            const list = records.map(( record: any ) => record._fields[0].properties); 
+            const cursor = list.length >= QUEUE_PAGE_LENGTH ? list[list.length - 1].order : null;
+            return {
+              id: `${id}dislikes`,
+              list,
+              cursor,
+            }
+          })
+          .catch((e: string) => console.log(`Error fetching user dislikes: ${e}`))
+  }
+
+  getMoreLikes = ({ id, cursor }: {id: string; cursor: number}) => {
+    if (cursor === null) {
+      return {
+        id: `${id}likes`,
+        list: [],
+        cursor: null,
+      }
+    }
+    return this.session
+      .run(`MATCH(a:User{id: '${id}'})-[:LIKE]->(b:User) 
+        WITH b.registerDateTime as order
+        WHERE 
+        order > ${cursor}
+        RETURN b
+        ORDER by order
+        LIMIT ${QUEUE_PAGE_LENGTH} `) 
+          .then((result: any) => result.records)
+          .then((records: any) => { if(!records.length) { return null; } 
+            const list = records.map(( record: any ) => record._fields[0].properties); 
+            const newCursor = list.length >= QUEUE_PAGE_LENGTH ? list[list.length - 1].order : null;
+            return {
+              id: `${id}likes`,
+              list,
+              cursor: newCursor,
+            }
+          })
+          .catch((e: string) => console.log(`Error fetching user likes: ${e}`))
+  }
+
+  getMoreDislikes = ({ id, cursor }: {id: string; cursor: number}) => {
+    if (cursor === null) {
+      return {
+        id: `${id}dislikes`,
+        list: [],
+        cursor: null,
+      }
+    }
+    return this.session
+      .run(`MATCH(a:User{id: '${id}'})-[:DISLIKE]->(b:User) 
+        WITH b.registerDateTime as order
+        WHERE 
+        order > ${cursor}
+        RETURN b
+        ORDER by order
+        LIMIT ${QUEUE_PAGE_LENGTH} `) 
+          .then((result: any) => result.records)
+          .then((records: any) => { if(!records.length) { return null; } 
+            const list = records.map(( record: any ) => record._fields[0].properties); 
+            const newCursor = list.length >= QUEUE_PAGE_LENGTH ? list[list.length - 1].order : null;
+            return {
+              id: `${id}dislikes`,
+              list,
+              cursor: newCursor,
+            }
+          })
+          .catch((e: string) => console.log(`Error fetching user dislikes: ${e}`))
+  }
+
   removeUser = ({ id }: { id: string }) => {
     return this.session
       .run(`MATCH(a:User{id:'${id}'}) DETACH DELETE a`)

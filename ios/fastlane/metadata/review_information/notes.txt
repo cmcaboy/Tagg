@@ -1,3 +1,19 @@
 You can login via facebook or through email. To login through email, click on "use email instead" and provide valid credentials.
 
 If you are a new user, you can either do login through facebook, which will automatically create a profile for you, or you can sign up via email. To do so, click on "Use email instead" and then on "Sign up with email". You must upload at least one image, input a name, and input an email in order to complete the signup process.
+
+There are a few items that have changed since my last submission:
+1) I am no longer tracking location in the background nor am I tracking location while the app is closed. I am only tracking location
+    while the app is in the foreground. I am tracking location in the foreground in order to help the user locate others within their
+    area. The user has the ability to change the search radius from 1-50 miles through the settings option.
+
+2) Users now have the ability to flag other users or dates as objectionable content. In addition, the user has the option to view or
+    not view objectionable content. This option can be done via the 3 vertical dots on the top right of the user or content.
+
+3) Users can block other users. Those users will no longer see any users that he or she has blocked. In addition, the blocked user will
+    not be able to see the user. This option can be done via the 3 vertical dots on the top right of the user or content.
+
+4) The screenshots have been updated to match the updated app.
+
+Please let me know if you have any questions.
+-Cory

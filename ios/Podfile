@@ -13,6 +13,7 @@ target 'ManhattanMatch' do
   pod 'Fabric', '~> 1.7.13'
   pod 'Crashlytics', '~> 3.10.9'
   pod 'Firebase/Performance', '~> 5.11.0'
+  pod 'GoogleAppMeasurement', '~> 5.3.0'
 
   # Pods for ManhattanMatch
   
@@ -41,9 +42,11 @@ target 'ManhattanMatch' do
 
   #pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
-  pod 'CodePush', :path => '../node_modules/react-native-code-push'
+  # I am using a manual link instead of Cocoapods
+  # pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
-  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+  # I am using a manual link instead of Cocoapods
+  # pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
   target 'ManhattanMatchTests' do
     inherit! :search_paths

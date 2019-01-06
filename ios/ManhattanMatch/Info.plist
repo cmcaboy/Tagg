@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CodePushDeploymentKey</key>
+	<string>__RN_CONFIG_CODE_PUSH_KEY</string>
 	<key>CFBundleDisplayName</key>
 	<string>Tagg</string>
 	<key>CFBundleExecutable</key>
@@ -31,8 +33,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>78</string>
-	<key>CodePushDeploymentKey</key>
-	<string>__RN_CONFIG_CODE_PUSH_KEY</string>
 	<key>FacebookAppID</key>
 	<string>1751170988304368</string>
 	<key>FacebookDisplayName</key>

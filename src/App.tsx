@@ -66,10 +66,8 @@ class MyApp extends Component<Props, State> {
   }
 }
 
-// codePush setup
-// --------------
-// Currently checking of updates on app start.
-// I could also do on app resume, but I feel that this may be too aggressive.
-const codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_START };
+const codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_START,
+};
 
 export default codePush(codePushOptions)(MyApp);

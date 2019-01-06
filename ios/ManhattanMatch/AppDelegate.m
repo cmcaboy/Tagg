@@ -7,9 +7,9 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+#import <CodePush/CodePush.h>
 #import <Firebase.h>
 #import "AppDelegate.h"
-#import <CodePush/CodePush.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #if __has_include(<React/RNSentry.h>)
@@ -49,6 +49,7 @@
                 #else
                     jsCodeLocation = [CodePush bundleURL];
                 #endif
+
 RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"Tagg"
                                                initialProperties:nil
@@ -63,7 +64,7 @@ RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  [SplashScreen show];
+  // [SplashScreen show];
   return YES;
 }
 
