@@ -81,7 +81,7 @@
     "gentypes:mutations": "apollo client:codegen --target=typescript --localSchemaFile=\"./schema.json\" --queries=\"./src/apollo/mutations/index.ts\"",
     "gentypes:subscriptions": "apollo client:codegen --target=typescript --localSchemaFile=\"./schema.json\" --queries=\"./src/apollo/subscriptions/index.ts\"",
     "gentypes:apollo": "echo 'Make sure you have your local graphql server running!' && yarn run fetch:schema && yarn run gentypes:queries && yarn run gentypes:mutations && yarn run gentypes:subscriptions",
-    "deploy:code-push": "appcenter codepush release-react -a McAboy-Digital/Tagg -d Production --plist-file ios/ManhattanMatch/Info.plist",
+    "deploy:codepush": "appcenter codepush release-react -a McAboy-Digital/Tagg -d Production --plist-file ios/ManhattanMatch/Info.plist --disable-duplicate-release-error",
     "deploy:ios": "cd ios && bundle exec fastlane release",
     "deploy:android": "cd android && bundle exec fastlane deploy"
   },

@@ -42,8 +42,8 @@ platform :ios do
       skip_waiting_for_build_processing: true
     )
     
-    code_push_login(access_key: )
-    code_push_release_react()
+    #code_push_login(access_key: )
+    #code_push_release_react()
 
     # These are cleanup steps recommended by Igor's udemy course
     clean_build_artifacts
