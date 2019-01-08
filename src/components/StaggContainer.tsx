@@ -12,7 +12,8 @@ import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import { setCoords, setCoordsVariables } from '../apollo/mutations/__generated__/setCoords';
 import { setPushToken, setPushTokenVariables } from '../apollo/mutations/__generated__/setPushToken';
 import { analytics } from '../firebase';
-// import { AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
+import EULAModal from './EULAModal';
 // import { getQueue, getQueueVariables } from '../apollo/queries/__generated__/getQueue';
 // import { moreQueue, moreQueueVariables } from '../apollo/queries/__generated__/moreQueue';
 
@@ -24,6 +25,7 @@ interface Props {
 
 interface State {
   fetchMoreLoading: boolean;
+  EULA: boolean;
 };
 
 // class GetID extends Query<getId, {}> {};
@@ -34,21 +36,28 @@ class SetCoords extends Mutation<setCoords, setCoordsVariables> {};
 // set push token
 class SetPushToken extends Mutation<setPushToken, setPushTokenVariables> {};
 
-
 class StaggContainer extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       fetchMoreLoading: false,
+      EULA: false,
     }
   }
-  componentDidMount = () => {
+  componentDidMount = async () => {
     // const tempId = AsyncStorage.getItem("TaggToken");
     // console.log('tempId: ', tempId);
     analytics.setMinimumSessionDuration(1000);
     analytics.setAnalyticsCollectionEnabled(true);
-    return SplashScreen.hide();
+    SplashScreen.hide();
+
+    const EULA = await AsyncStorage.getItem('TaggEULA');
+    if (!EULA) {
+      this.setState({ EULA: true });
+    }
   }
+
+  closeEULAModal = () => this.setState({ EULA: false });
 
   render() {
     const { navigation } = this.props;
@@ -154,18 +163,21 @@ class StaggContainer extends Component<Props, State> {
                         const startSetCoords = (latitude: number, longitude: number) => setCoords({ variables: { id, latitude, longitude } });
                         const startSetPushToken = ( token: string ) => setPushToken({ variables: { id, token } });
                         return (
-                          <Stagg
-                            id={id}
-                            queue={data.user.queue ? data.user.queue.list : []}
-                            startSetCoords={startSetCoords}
-                            startSetPushToken={startSetPushToken}
-                            navigation={navigation}
-                            fetchMoreQueue={fetchMoreQueue}
-                            refetchQueue={refetchQueue}
-                            pushToken={data.user.token}
-                            cursor={data.user.queue ? data.user.queue.cursor : null}
-                            fetchMoreLoading={this.state.fetchMoreLoading}
-                          />
+                          <>
+                            <EULAModal isVisible={this.state.EULA} closeEULAModal={this.closeEULAModal} />
+                            <Stagg
+                              id={id}
+                              queue={data.user.queue ? data.user.queue.list : []}
+                              startSetCoords={startSetCoords}
+                              startSetPushToken={startSetPushToken}
+                              navigation={navigation}
+                              fetchMoreQueue={fetchMoreQueue}
+                              refetchQueue={refetchQueue}
+                              pushToken={data.user.token}
+                              cursor={data.user.queue ? data.user.queue.cursor : null}
+                              fetchMoreLoading={this.state.fetchMoreLoading}
+                            />
+                          </>
                         );
                     } }
                     </SetPushToken>
